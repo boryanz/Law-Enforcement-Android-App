@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.katasampleapp"
+    namespace = "com.boryanz.upszakoni"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.katasampleapp"
+        applicationId = "com.boryanz.upszakoni"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

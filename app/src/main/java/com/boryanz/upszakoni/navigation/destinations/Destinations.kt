@@ -3,10 +3,16 @@ package com.boryanz.upszakoni.navigation.destinations
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object Screen1
+data object Dashboard
 
 @Serializable
-data object Screen2
+data object Laws
 
 @Serializable
-data object Screen3
+data object Offenses
+
+@Serializable
+data object Crimes
+
+@Serializable
+data object PoliceAuthorities

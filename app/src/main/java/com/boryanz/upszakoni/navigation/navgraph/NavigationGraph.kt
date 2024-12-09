@@ -5,10 +5,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.boryanz.upszakoni.navigation.destinations.Screen1
-import com.boryanz.upszakoni.navigation.destinations.Screen2
-import com.boryanz.upszakoni.ui.screens.Screen1
-import com.boryanz.upszakoni.ui.screens.Screen2
+import com.boryanz.upszakoni.data.DashboardItemDestination
+import com.boryanz.upszakoni.navigation.destinations.Crimes
+import com.boryanz.upszakoni.navigation.destinations.Dashboard
+import com.boryanz.upszakoni.navigation.destinations.Laws
+import com.boryanz.upszakoni.navigation.destinations.Offenses
+import com.boryanz.upszakoni.navigation.destinations.PoliceAuthorities
+import com.boryanz.upszakoni.ui.screens.Dashboard
+import com.boryanz.upszakoni.ui.screens.OffensesScreen
 
 @Composable
 fun NavigationGraph(
@@ -16,19 +20,23 @@ fun NavigationGraph(
 ) {
     NavHost(
         navController = navHostController,
-        startDestination = Screen1
+        startDestination = Dashboard
     ) {
-        composable<Screen1> {
-            Screen1(
-                onNavigateNext = {
-                    navHostController.navigate(Screen2)
+        composable<Dashboard> {
+            Dashboard(
+                onNavigateNext = { dashboardDestination ->
+                  val destination = when(dashboardDestination) {
+                        DashboardItemDestination.laws -> Laws
+                        DashboardItemDestination.offenses -> Offenses
+                        DashboardItemDestination.crimes -> Crimes
+                        DashboardItemDestination.authorities -> PoliceAuthorities
+                    }
+                    navHostController.navigate(destination)
                 }
             )
         }
-        composable<Screen2> {
-            Screen2(
-                onNavigateBack = { navHostController.navigateUp() }
-            )
+        composable<Offenses> {
+            OffensesScreen()
         }
     }
 }
