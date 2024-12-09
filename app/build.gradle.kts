@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -40,7 +41,21 @@ android {
 }
 
 dependencies {
-
+    implementation(libs.androidx.core.splashscreen)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.kotlin.stdlib)
+    implementation(libs.kotlinx.serialization.json)
+//    implementation(libs.retrofit.core)
+//    implementation(libs.retrofit.bom)
+//    implementation(libs.coil.kt)
+//    implementation(libs.coil.kt.compose)
+//    implementation(libs.okhttp)
+//    implementation(libs.okhttp.logging)
+//    implementation(libs.koin.bom)
+//    implementation(libs.koin.android)
+    implementation(libs.androidx.compose.material)
+    implementation(libs.androidx.compose.material.iconsExtended)
+    implementation(libs.gson)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
