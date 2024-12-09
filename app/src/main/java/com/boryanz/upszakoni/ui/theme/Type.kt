@@ -1,4 +1,4 @@
-package com.example.katasampleapp.ui.theme
+package com.boryanz.upszakoni.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

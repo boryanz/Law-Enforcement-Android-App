@@ -22,6 +22,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Kata Sample App"
+rootProject.name = "Ups zakoni 2"
 include(":app")
  

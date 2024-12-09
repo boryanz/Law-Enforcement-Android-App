@@ -1,4 +1,4 @@
-package com.example.katasampleapp.ui.screens
+package com.boryanz.upszakoni.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,18 +13,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun Screen2(
-    onNavigateBack: () -> Unit
+fun Screen1(
+    onNavigateNext: () -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text("Screen 2")
+        Text("Screen 1")
         Spacer(modifier = Modifier.padding(vertical = 12.dp))
-        Button(onClick = onNavigateBack) {
-            Text("Go back")
+        Button(onClick = onNavigateNext) {
+            Text("To screen 2")
         }
     }
 }

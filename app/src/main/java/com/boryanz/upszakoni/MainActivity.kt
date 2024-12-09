@@ -1,4 +1,4 @@
-package com.example.katasampleapp
+package com.boryanz.upszakoni
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -9,8 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.katasampleapp.navigation.navgraph.NavigationGraph
-import com.example.katasampleapp.ui.theme.KataSampleAppTheme
+import com.boryanz.upszakoni.navigation.navgraph.NavigationGraph
+import com.boryanz.upszakoni.ui.theme.KataSampleAppTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,4 +1,4 @@
-package com.example.katasampleapp.navigation.destinations
+package com.boryanz.upszakoni.navigation.destinations
 
 import kotlinx.serialization.Serializable
 

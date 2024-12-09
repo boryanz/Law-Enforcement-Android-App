@@ -1,4 +1,4 @@
-package com.example.katasampleapp
+package com.boryanz.upszakoni
 
 import org.junit.Test
 

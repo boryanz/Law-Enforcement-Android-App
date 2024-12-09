@@ -1,4 +1,4 @@
-package com.example.katasampleapp
+package com.boryanz.upszakoni
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
