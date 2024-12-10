@@ -15,6 +15,7 @@ import com.boryanz.upszakoni.navigation.destinations.Offenses
 import com.boryanz.upszakoni.navigation.destinations.PoliceAuthorities
 import com.boryanz.upszakoni.ui.screens.Dashboard
 import com.boryanz.upszakoni.ui.screens.CommonCrimes
+import com.boryanz.upszakoni.ui.screens.PoliceAuthorityScreen
 
 @Composable
 fun NavigationGraph(
@@ -49,6 +50,10 @@ fun NavigationGraph(
                 title = "Најчести кривични дела",
                 commonCrimesItems = crimesItems
             )
+        }
+
+        composable<PoliceAuthorities> {
+            PoliceAuthorityScreen()
         }
     }
 }
