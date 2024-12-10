@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.boryanz.upszakoni.data.DashboardItemDestination
 import com.boryanz.upszakoni.data.dashboardItems
-import com.boryanz.upszakoni.ui.components.UpsItem
+import com.boryanz.upszakoni.ui.components.IconWithTitleItem
 import com.boryanz.upszakoni.ui.components.UpsScaffold
 
 
@@ -37,7 +37,7 @@ fun DashboardScreen(
         ) {
             LazyColumn {
                 items(dashboardItems) {
-                    UpsItem(
+                    IconWithTitleItem(
                         title = it.title,
                         drawableRes = it.drawableRes,
                         onClick = { onNavigateNext(it.id) })

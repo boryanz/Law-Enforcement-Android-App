@@ -15,7 +15,7 @@ import com.boryanz.upszakoni.ui.theme.KataSampleAppTheme
 import com.boryanz.upszakoni.ui.theme.Typography
 
 @Composable
-fun UpsItem(
+fun IconWithTitleItem(
     title: String,
     @DrawableRes drawableRes: Int,
     onClick: () -> Unit,
@@ -23,8 +23,8 @@ fun UpsItem(
     RowItem(onClick = onClick) {
         Icon(
             modifier = Modifier
-                .height(50.dp)
-                .width(50.dp),
+                .height(30.dp)
+                .width(30.dp),
             painter = painterResource(drawableRes),
             contentDescription = null
         )
@@ -33,12 +33,11 @@ fun UpsItem(
     }
 }
 
-
 @Preview(showBackground = true)
 @Composable
 private fun DashboardItemPreview() {
     KataSampleAppTheme {
-        UpsItem(
+        IconWithTitleItem(
             title = "Law",
             drawableRes = R.drawable.zakonishta,
             onClick = {},

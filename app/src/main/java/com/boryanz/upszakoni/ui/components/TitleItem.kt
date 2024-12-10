@@ -8,8 +8,12 @@ import com.boryanz.upszakoni.ui.theme.KataSampleAppTheme
 import com.boryanz.upszakoni.ui.theme.Typography
 
 @Composable
-fun PoliceAuthorityItem(title: String) {
-    RowItem(isEnabled = false, onClick = {}) {
+fun TitleItem(
+    title: String,
+    isEnabled: Boolean = false,
+    onClick: () -> Unit
+) {
+    RowItem(isEnabled = isEnabled, onClick = onClick) {
         Text(text = title, textAlign = TextAlign.Start, style = Typography.titleMedium)
     }
 }
@@ -19,6 +23,6 @@ fun PoliceAuthorityItem(title: String) {
 @Composable
 private fun PoliceAuthorityPreview() {
     KataSampleAppTheme {
-        PoliceAuthorityItem("Приведување")
+        TitleItem("Приведување", onClick = {})
     }
 }

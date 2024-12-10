@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.boryanz.upszakoni.data.model.Offense
-import com.boryanz.upszakoni.ui.components.CrimeItem
+import com.boryanz.upszakoni.ui.components.ItemWithDescription
 import com.boryanz.upszakoni.ui.components.UpsScaffold
 
 @Composable
@@ -35,7 +35,7 @@ fun CommonCrimes(
         ) {
             LazyColumn {
                 items(commonCrimesItems) {
-                    CrimeItem(title = it.title, description = it.description)
+                    ItemWithDescription(title = it.title, description = it.description)
                     Spacer(modifier = Modifier.padding(vertical = 4.dp))
                 }
             }
