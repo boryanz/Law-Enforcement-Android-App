@@ -11,7 +11,7 @@ import com.boryanz.upszakoni.ui.theme.KataSampleAppTheme
 import com.boryanz.upszakoni.ui.theme.Typography
 
 @Composable
-fun OffenseItem(title: String, description: String) {
+fun CrimeItem(title: String, description: String) {
     RowItem(isEnabled = false, onClick = {}) {
         Column(
             horizontalAlignment = Alignment.Start,
@@ -28,6 +28,6 @@ fun OffenseItem(title: String, description: String) {
 @Composable
 private fun OffenseItemPreview() {
     KataSampleAppTheme {
-        OffenseItem(title = "Тепачка", description = "член 13 од ЗППЈРМ")
+        CrimeItem(title = "Тепачка", description = "член 13 од ЗППЈРМ")
     }
 }

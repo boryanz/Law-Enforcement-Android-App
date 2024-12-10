@@ -11,25 +11,29 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.boryanz.upszakoni.data.offensesItems
-import com.boryanz.upszakoni.ui.components.OffenseItem
+import com.boryanz.upszakoni.data.model.Offense
+import com.boryanz.upszakoni.ui.components.CrimeItem
 import com.boryanz.upszakoni.ui.components.UpsScaffold
 
 @Composable
-fun OffensesScreen() {
+fun CommonCrimes(
+    title: String,
+    commonCrimesItems: List<Offense>
+) {
     UpsScaffold(
-        topBarTitle = "Најчести прекршоци"
-    ) {
+        topBarTitle = title
+    ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .padding(paddingValues)
                 .padding(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
             LazyColumn {
-                items(offensesItems) {
-                    OffenseItem(title = it.title, description = it.description)
+                items(commonCrimesItems) {
+                    CrimeItem(title = it.title, description = it.description)
                     Spacer(modifier = Modifier.padding(vertical = 4.dp))
                 }
             }

@@ -21,10 +21,11 @@ import com.boryanz.upszakoni.ui.components.UpsScaffold
 fun Dashboard(
     onNavigateNext: (id: DashboardItemDestination) -> Unit
 ) {
-    UpsScaffold {
+    UpsScaffold { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .padding(paddingValues)
                 .padding(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top

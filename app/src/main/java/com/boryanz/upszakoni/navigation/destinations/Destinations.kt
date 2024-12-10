@@ -9,10 +9,10 @@ data object Dashboard
 data object Laws
 
 @Serializable
-data object Offenses
+data object Crimes
 
 @Serializable
-data object Crimes
+data object Offenses
 
 @Serializable
 data object PoliceAuthorities

@@ -3,6 +3,7 @@ package com.boryanz.upszakoni.data
 import com.boryanz.upszakoni.R
 import com.boryanz.upszakoni.data.model.Law
 import com.boryanz.upszakoni.data.model.Offense
+import com.boryanz.upszakoni.data.model.PoliceAuthority
 
 enum class DashboardItemDestination {
     laws,
@@ -27,3 +28,21 @@ val  offensesItems = listOf(
     Offense(title = "Оддвање на уживање на наркотични дроги", description = "чл. 20 од ЗППЈРМ"),
 )
 
+val  crimesItems = listOf(
+    Offense(title = "Кражба", description = "чл. 235 од КЗ"),
+    Offense(title = "Тешка кражба", description = "чл. 236 од КЗ"),
+    Offense(title = "Разбојништво", description = "чл. 237 од КЗ"),
+    Offense(title = "Предизвикување општа опасност", description = "чл. 288 од КЗ"),
+    Offense(title = "Одземање на моторно возило", description = "чл. 243 од КЗ"),
+    Offense(title = "Поттикнување на кривично дело", description = "чл. 22 од КЗ"),
+)
+
+val policeAuthorities = listOf(
+    PoliceAuthority(title = "Проверка и утврдување на идентитет"),
+    PoliceAuthority(title = "Собирање на информации"),
+    PoliceAuthority(title = "Повикување"),
+    PoliceAuthority(title = "Лишување од слобода"),
+    PoliceAuthority(title = "Приведување"),
+    PoliceAuthority(title = "Задржување"),
+    PoliceAuthority(title = "Потрага по лица и предмети"),
+)
