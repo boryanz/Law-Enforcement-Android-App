@@ -13,7 +13,7 @@ import com.boryanz.upszakoni.navigation.destinations.Dashboard
 import com.boryanz.upszakoni.navigation.destinations.Laws
 import com.boryanz.upszakoni.navigation.destinations.Offenses
 import com.boryanz.upszakoni.navigation.destinations.PoliceAuthorities
-import com.boryanz.upszakoni.ui.screens.Dashboard
+import com.boryanz.upszakoni.ui.screens.DashboardScreen
 import com.boryanz.upszakoni.ui.screens.CommonCrimes
 import com.boryanz.upszakoni.ui.screens.PoliceAuthorityScreen
 
@@ -26,7 +26,7 @@ fun NavigationGraph(
         startDestination = Dashboard
     ) {
         composable<Dashboard> {
-            Dashboard(
+            DashboardScreen(
                 onNavigateNext = { dashboardDestination ->
                     val destination = when (dashboardDestination) {
                         DashboardItemDestination.laws -> Laws
@@ -40,14 +40,14 @@ fun NavigationGraph(
         }
         composable<Offenses> {
             CommonCrimes(
-                title = "Најчести прекршоци",
+                title = "Прекршоци",
                 commonCrimesItems = offensesItems
             )
         }
 
         composable<Crimes> {
             CommonCrimes(
-                title = "Најчести кривични дела",
+                title = "Кривични дела",
                 commonCrimesItems = crimesItems
             )
         }
