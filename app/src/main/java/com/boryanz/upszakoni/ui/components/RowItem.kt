@@ -24,7 +24,7 @@ fun RowItem(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .border(width = 1.dp, shape = RoundedCornerShape(8.dp), color = Color.Black)
+            .border(width = 1.dp, shape = RoundedCornerShape(4.dp), color = Color.Black)
             .padding(all = 16.dp)
             .clickable(enabled = isEnabled, onClick = onClick),
         horizontalArrangement = Arrangement.Start,
