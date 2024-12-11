@@ -2,6 +2,7 @@ package com.boryanz.upszakoni.navigation.navgraph
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.os.bundleOf
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -36,7 +37,9 @@ fun NavigationGraph(
                         DashboardItemDestination.laws -> navHostController.navigate(Laws)
                         DashboardItemDestination.offenses -> navHostController.navigate(Offenses)
                         DashboardItemDestination.crimes -> navHostController.navigate(Crimes)
-                        DashboardItemDestination.authorities -> navHostController.navigate(PoliceAuthorities)
+                        DashboardItemDestination.authorities -> navHostController.navigate(
+                            PoliceAuthorities
+                        )
                     }
                 }
             )
@@ -44,14 +47,28 @@ fun NavigationGraph(
         composable<Offenses> {
             CommonCrimes(
                 title = "Прекршоци",
-                commonCrimesItems = offensesItems
+                commonCrimesItems = offensesItems,
+                onClick = { lawName, pagesToLoad ->
+                    val bundle = bundleOf(
+                        PdfViewerActivity.BUNDLE_LAW_TITLE to lawName,
+                        PdfViewerActivity.BUNDLE_PAGES_TO_LOAD to pagesToLoad.toIntArray()
+                    )
+                    context.startActivity(PdfViewerActivity.createIntent(context, bundle))
+                }
             )
         }
 
         composable<Crimes> {
             CommonCrimes(
                 title = "Кривични дела",
-                commonCrimesItems = crimesItems
+                commonCrimesItems = crimesItems,
+                onClick = { lawName, pagesToLoad ->
+                    val bundle = bundleOf(
+                        PdfViewerActivity.BUNDLE_LAW_TITLE to lawName,
+                        PdfViewerActivity.BUNDLE_PAGES_TO_LOAD to pagesToLoad.toIntArray()
+                    )
+                    context.startActivity(PdfViewerActivity.createIntent(context, bundle))
+                }
             )
         }
 
@@ -61,8 +78,9 @@ fun NavigationGraph(
 
         composable<Laws> {
             LawsScreen(
-                onClick = {
-                    context.startActivity(PdfViewerActivity.createIntent(context, it))
+                onClick = { lawName ->
+                    val bundle = bundleOf(PdfViewerActivity.BUNDLE_LAW_TITLE to lawName)
+                    context.startActivity(PdfViewerActivity.createIntent(context, bundle))
                 }
             )
         }

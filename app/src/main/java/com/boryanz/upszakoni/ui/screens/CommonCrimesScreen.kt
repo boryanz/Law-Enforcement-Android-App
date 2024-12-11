@@ -17,10 +17,13 @@ import com.boryanz.upszakoni.data.model.Offense
 import com.boryanz.upszakoni.ui.components.ItemWithDescription
 import com.boryanz.upszakoni.ui.components.UpsScaffold
 
+typealias PdfData = (String, List<Int>) -> Unit
+
 @Composable
 fun CommonCrimes(
     title: String,
-    commonCrimesItems: List<Offense>
+    commonCrimesItems: List<Offense>,
+    onClick: PdfData,
 ) {
     UpsScaffold(
         topBarTitle = { Text(text = title, fontWeight = FontWeight.Bold) }
@@ -35,7 +38,12 @@ fun CommonCrimes(
         ) {
             LazyColumn {
                 items(commonCrimesItems) {
-                    ItemWithDescription(title = it.title, description = it.description)
+                    ItemWithDescription(
+                        isEnabled = true,
+                        title = it.title,
+                        description = it.description,
+                        onClick = { onClick(it.lawName, it.pagesToLoad) }
+                    )
                     Spacer(modifier = Modifier.padding(vertical = 4.dp))
                 }
             }

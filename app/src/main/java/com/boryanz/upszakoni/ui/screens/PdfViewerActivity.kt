@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.boryanz.upszakoni.R
@@ -19,11 +20,12 @@ class PdfViewerActivity : AppCompatActivity() {
 
     companion object {
 
-        const val QUERY_LAW_NAME = "lawName"
+        const val BUNDLE_LAW_TITLE = "lawTitle"
+        const val BUNDLE_PAGES_TO_LOAD = "pagesToLoad"
 
-        fun createIntent(context: Context, lawName: String): Intent {
+        fun createIntent(context: Context, bundle: Bundle? = null): Intent {
             return Intent(context, PdfViewerActivity::class.java).apply {
-                putExtra(QUERY_LAW_NAME, lawName)
+                putExtras(bundle ?: bundleOf())
             }
         }
     }
@@ -38,11 +40,19 @@ class PdfViewerActivity : AppCompatActivity() {
             insets
         }
         pdfView = findViewById(R.id.pdfView)
-        val lawName = intent.getStringExtra(QUERY_LAW_NAME).orEmpty()
-        loadPdf(lawName)
+        val data = intent.extras
+        val lawName = data?.getString(BUNDLE_LAW_TITLE).orEmpty()
+        val pagesToLoad = data?.getIntArray(BUNDLE_PAGES_TO_LOAD) ?: intArrayOf()
+        loadPdf(lawName, pagesToLoad)
     }
 
-    private fun loadPdf(lawName: String) {
-        pdfView.fromAsset(lawName).scrollHandle(DefaultScrollHandle(this)).load()
+    private fun loadPdf(lawName: String, pagesToLoad: IntArray) {
+        pdfView.fromAsset(lawName).apply {
+            if (pagesToLoad.isNotEmpty()) {
+                pages(*pagesToLoad)
+            }
+            scrollHandle(DefaultScrollHandle(this@PdfViewerActivity))
+            load()
+        }
     }
 }

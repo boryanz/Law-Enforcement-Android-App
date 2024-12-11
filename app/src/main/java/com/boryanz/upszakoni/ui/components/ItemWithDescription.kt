@@ -11,8 +11,13 @@ import com.boryanz.upszakoni.ui.theme.KataSampleAppTheme
 import com.boryanz.upszakoni.ui.theme.Typography
 
 @Composable
-fun ItemWithDescription(title: String, description: String) {
-    RowItem(isEnabled = false, onClick = {}) {
+fun ItemWithDescription(
+    isEnabled: Boolean = false,
+    title: String,
+    description: String,
+    onClick: () -> Unit
+) {
+    RowItem(isEnabled = isEnabled, onClick = onClick) {
         Column(
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Center
@@ -28,6 +33,10 @@ fun ItemWithDescription(title: String, description: String) {
 @Composable
 private fun OffenseItemPreview() {
     KataSampleAppTheme {
-        ItemWithDescription(title = "Тепачка", description = "член 13 од ЗППЈРМ")
+        ItemWithDescription(
+            isEnabled = true,
+            title = "Тепачка",
+            description = "член 13 од ЗППЈРМ",
+            onClick = {})
     }
 }
