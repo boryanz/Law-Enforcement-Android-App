@@ -22,7 +22,7 @@ fun ItemWithDescription(
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Center
         ) {
-            Text(text = title, style = Typography.titleLarge)
+            Text(text = title, style = Typography.titleMedium)
             Spacer.Vertical(2.dp)
             Text(text = description, style = Typography.bodyMedium)
         }
@@ -31,7 +31,7 @@ fun ItemWithDescription(
 
 @Preview(showBackground = true)
 @Composable
-private fun OffenseItemPreview() {
+private fun ItemWithDescriptionPreview() {
     KataSampleAppTheme {
         ItemWithDescription(
             isEnabled = true,

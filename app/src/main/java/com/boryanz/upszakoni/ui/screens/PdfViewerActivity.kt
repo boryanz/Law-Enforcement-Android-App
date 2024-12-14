@@ -22,6 +22,7 @@ class PdfViewerActivity : AppCompatActivity() {
 
         const val BUNDLE_LAW_TITLE = "lawTitle"
         const val BUNDLE_PAGES_TO_LOAD = "pagesToLoad"
+        const val BUNDLE_IS_DARK_MODE = "isDarkMode"
 
         fun createIntent(context: Context, bundle: Bundle? = null): Intent {
             return Intent(context, PdfViewerActivity::class.java).apply {
@@ -43,14 +44,16 @@ class PdfViewerActivity : AppCompatActivity() {
         val data = intent.extras
         val lawName = data?.getString(BUNDLE_LAW_TITLE).orEmpty()
         val pagesToLoad = data?.getIntArray(BUNDLE_PAGES_TO_LOAD) ?: intArrayOf()
-        loadPdf(lawName, pagesToLoad)
+        val isInDarkMode = data?.getBoolean(BUNDLE_IS_DARK_MODE, false) ?: false
+        loadPdf(lawName, pagesToLoad, isInDarkMode)
     }
 
-    private fun loadPdf(lawName: String, pagesToLoad: IntArray) {
+    private fun loadPdf(lawName: String, pagesToLoad: IntArray, isInDarkMode: Boolean) {
         pdfView.fromAsset(lawName).apply {
             if (pagesToLoad.isNotEmpty()) {
                 pages(*pagesToLoad)
             }
+            nightMode(isInDarkMode)
             scrollHandle(DefaultScrollHandle(this@PdfViewerActivity))
             load()
         }

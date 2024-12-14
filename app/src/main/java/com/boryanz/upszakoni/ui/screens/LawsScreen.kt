@@ -35,7 +35,8 @@ fun LawsScreen(onClick: (String) -> Unit) {
         val context = LocalContext.current
         val laws by remember {
             mutableStateOf(
-                context.assets.list("")?.mapNotNull { it }.orEmpty().filter { it.contains(".pdf") })
+                context.assets.list("")?.mapNotNull { it }.orEmpty().filter { it.contains(".pdf") }
+            )
         }
         var searchQuery by remember { mutableStateOf("") }
 
@@ -58,7 +59,7 @@ fun LawsScreen(onClick: (String) -> Unit) {
             Spacer(modifier = Modifier.padding(vertical = 4.dp))
             LazyColumn {
                 items(laws.filter { it.contains(searchQuery) }, key = { it }) {
-                    TitleItem(isEnabled = true, title = it, onClick = { onClick(it) })
+                    TitleItem(isEnabled = true, title = it.replace(".pdf", "").trim(), onClick = { onClick(it) })
                     Spacer.Vertical(4.dp)
                 }
             }

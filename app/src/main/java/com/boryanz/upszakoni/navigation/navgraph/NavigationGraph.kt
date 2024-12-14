@@ -1,5 +1,6 @@
 package com.boryanz.upszakoni.navigation.navgraph
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.os.bundleOf
@@ -26,6 +27,7 @@ fun NavigationGraph(
     navHostController: NavHostController = rememberNavController(),
 ) {
     val context = LocalContext.current
+    val isInDarkMode = isSystemInDarkTheme()
     NavHost(
         navController = navHostController,
         startDestination = Dashboard
@@ -51,7 +53,8 @@ fun NavigationGraph(
                 onClick = { lawName, pagesToLoad ->
                     val bundle = bundleOf(
                         PdfViewerActivity.BUNDLE_LAW_TITLE to lawName,
-                        PdfViewerActivity.BUNDLE_PAGES_TO_LOAD to pagesToLoad.toIntArray()
+                        PdfViewerActivity.BUNDLE_PAGES_TO_LOAD to pagesToLoad.toIntArray(),
+                        PdfViewerActivity.BUNDLE_IS_DARK_MODE to isInDarkMode
                     )
                     context.startActivity(PdfViewerActivity.createIntent(context, bundle))
                 }
@@ -65,7 +68,8 @@ fun NavigationGraph(
                 onClick = { lawName, pagesToLoad ->
                     val bundle = bundleOf(
                         PdfViewerActivity.BUNDLE_LAW_TITLE to lawName,
-                        PdfViewerActivity.BUNDLE_PAGES_TO_LOAD to pagesToLoad.toIntArray()
+                        PdfViewerActivity.BUNDLE_PAGES_TO_LOAD to pagesToLoad.toIntArray(),
+                        PdfViewerActivity.BUNDLE_IS_DARK_MODE to isInDarkMode
                     )
                     context.startActivity(PdfViewerActivity.createIntent(context, bundle))
                 }
@@ -79,7 +83,10 @@ fun NavigationGraph(
         composable<Laws> {
             LawsScreen(
                 onClick = { lawName ->
-                    val bundle = bundleOf(PdfViewerActivity.BUNDLE_LAW_TITLE to lawName)
+                    val bundle = bundleOf(
+                        PdfViewerActivity.BUNDLE_LAW_TITLE to lawName,
+                        PdfViewerActivity.BUNDLE_IS_DARK_MODE to isInDarkMode
+                    )
                     context.startActivity(PdfViewerActivity.createIntent(context, bundle))
                 }
             )
