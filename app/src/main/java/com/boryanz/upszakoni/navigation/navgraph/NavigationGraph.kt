@@ -1,5 +1,7 @@
 package com.boryanz.upszakoni.navigation.navgraph
 
+import android.net.Uri
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
@@ -10,9 +12,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.boryanz.upszakoni.data.DashboardItemDestination
 import com.boryanz.upszakoni.data.crimesItems
+import com.boryanz.upszakoni.data.goldenQuestions
 import com.boryanz.upszakoni.data.offensesItems
+import com.boryanz.upszakoni.data.policeAuthorities
 import com.boryanz.upszakoni.navigation.destinations.Crimes
 import com.boryanz.upszakoni.navigation.destinations.Dashboard
+import com.boryanz.upszakoni.navigation.destinations.GoldenCrimeQuestions
 import com.boryanz.upszakoni.navigation.destinations.Laws
 import com.boryanz.upszakoni.navigation.destinations.Offenses
 import com.boryanz.upszakoni.navigation.destinations.PoliceAuthorities
@@ -20,7 +25,8 @@ import com.boryanz.upszakoni.ui.screens.DashboardScreen
 import com.boryanz.upszakoni.ui.screens.CommonCrimes
 import com.boryanz.upszakoni.ui.screens.LawsScreen
 import com.boryanz.upszakoni.ui.screens.PdfViewerActivity
-import com.boryanz.upszakoni.ui.screens.PoliceAuthorityScreen
+import com.boryanz.upszakoni.ui.screens.GoldenCrimeQuestionsScreen
+import com.boryanz.upszakoni.ui.screens.PoliceAuthoritiesScreen
 
 @Composable
 fun NavigationGraph(
@@ -39,9 +45,20 @@ fun NavigationGraph(
                         DashboardItemDestination.laws -> navHostController.navigate(Laws)
                         DashboardItemDestination.offenses -> navHostController.navigate(Offenses)
                         DashboardItemDestination.crimes -> navHostController.navigate(Crimes)
-                        DashboardItemDestination.authorities -> navHostController.navigate(
-                            PoliceAuthorities
-                        )
+                        DashboardItemDestination.authorities -> navHostController.navigate(PoliceAuthorities)
+                        DashboardItemDestination.wanted_criminals -> {
+                            val customTabIntent = CustomTabsIntent.Builder().apply {
+                                setShowTitle(true)
+                            }.build()
+                            customTabIntent.launchUrl(
+                                context,
+                                Uri.parse("https://mvr.gov.mk/potragi-ischeznati/potragi")
+                            )
+                        }
+
+                        DashboardItemDestination.writing_guide -> {
+                            navHostController.navigate(GoldenCrimeQuestions)
+                        }
                     }
                 }
             )
@@ -77,7 +94,11 @@ fun NavigationGraph(
         }
 
         composable<PoliceAuthorities> {
-            PoliceAuthorityScreen()
+            PoliceAuthoritiesScreen("Полициски овластувања", policeAuthorities)
+        }
+
+        composable<GoldenCrimeQuestions> {
+            GoldenCrimeQuestionsScreen("7 златни прашања", goldenQuestions)
         }
 
         composable<Laws> {

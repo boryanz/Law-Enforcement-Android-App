@@ -54,6 +54,7 @@ dependencies {
 //    implementation(libs.koin.bom)
 //    implementation(libs.koin.android)
     implementation(libs.android.pdf.viewer)
+    implementation(libs.androidx.custom.tabs)
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.material.iconsExtended)
     implementation(libs.gson)

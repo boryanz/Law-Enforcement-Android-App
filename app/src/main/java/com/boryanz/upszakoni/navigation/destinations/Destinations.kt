@@ -16,3 +16,6 @@ data object Offenses
 
 @Serializable
 data object PoliceAuthorities
+
+@Serializable
+data object GoldenCrimeQuestions

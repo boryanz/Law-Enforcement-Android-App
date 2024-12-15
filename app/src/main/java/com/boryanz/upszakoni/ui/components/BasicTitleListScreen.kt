@@ -1,4 +1,4 @@
-package com.boryanz.upszakoni.ui.screens
+package com.boryanz.upszakoni.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,16 +13,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.boryanz.upszakoni.data.policeAuthorities
-import com.boryanz.upszakoni.ui.components.TitleItem
-import com.boryanz.upszakoni.ui.components.Spacer
-import com.boryanz.upszakoni.ui.components.UpsScaffold
+import com.boryanz.upszakoni.data.model.TitleItem
 import com.boryanz.upszakoni.ui.theme.KataSampleAppTheme
 
 @Composable
-fun PoliceAuthorityScreen() {
+fun BasicTitleListScreen(
+    topBarTitle: String,
+    items: List<TitleItem>,
+) {
     UpsScaffold(
-        topBarTitle = { Text(text = "Oвластувања", fontWeight = FontWeight.Bold) },
+        topBarTitle = { Text(text = topBarTitle, fontWeight = FontWeight.Bold) },
     ) { contentPadding ->
         Column(
             modifier = Modifier
@@ -33,8 +33,8 @@ fun PoliceAuthorityScreen() {
             verticalArrangement = Arrangement.Top
         ) {
             LazyColumn {
-                items(policeAuthorities) {
-                    TitleItem(it.title, onClick = { /* Do nothing currently */})
+                items(items) {
+                    TitleItem(it.title, onClick = { /* Do nothing currently */ })
                     Spacer.Vertical(4.dp)
                 }
             }
@@ -47,6 +47,6 @@ fun PoliceAuthorityScreen() {
 @Composable
 private fun PoliceAuthorityScreenPreview() {
     KataSampleAppTheme {
-        PoliceAuthorityScreen()
+        BasicTitleListScreen("Овластувања", listOf(TitleItem("Basic title")))
     }
 }

@@ -1,37 +1,59 @@
 package com.boryanz.upszakoni.data
 
 import com.boryanz.upszakoni.R
-import com.boryanz.upszakoni.data.model.Law
+import com.boryanz.upszakoni.data.model.DashboardItem
 import com.boryanz.upszakoni.data.model.Offense
-import com.boryanz.upszakoni.data.model.PoliceAuthority
+import com.boryanz.upszakoni.data.model.TitleItem
 
 enum class DashboardItemDestination {
     laws,
     offenses,
     crimes,
-    authorities
+    authorities,
+    wanted_criminals,
+    writing_guide
 }
 
+val goldenQuestions = listOf(
+    TitleItem("Што се случило на настанот?"),
+    TitleItem("Каде се случил настанот (адреса)?"),
+    TitleItem("Кога се случил настанот (датум и време)?"),
+    TitleItem("Како се случил настанот?"),
+    TitleItem("Зошто се случил настанот?"),
+    TitleItem("Со кого се случил настанот (учесници)?"),
+    TitleItem("Кој е сторител?"),
+)
+
 val dashboardItems = listOf(
-    Law(
+    DashboardItem(
         id = DashboardItemDestination.laws,
         title = "Сите закони",
         drawableRes = R.drawable.zakonishta
     ),
-    Law(
+    DashboardItem(
         id = DashboardItemDestination.offenses,
         title = "Најчести прекршоци",
-        drawableRes = R.drawable.prekrsok
+        drawableRes = R.drawable.offenses
     ),
-    Law(
+    DashboardItem(
         id = DashboardItemDestination.crimes,
         title = "Најчести кривични дела",
         drawableRes = R.drawable.kriminal
     ),
-    Law(
+    DashboardItem(
+        id = DashboardItemDestination.writing_guide,
+        title = "Водич за службени белешки",
+        drawableRes = R.drawable.question_solid
+    ),
+    DashboardItem(
         id = DashboardItemDestination.authorities,
         title = "Полицски овластувања",
         drawableRes = R.drawable.police
+    ),
+    DashboardItem(
+        id = DashboardItemDestination.wanted_criminals,
+        title = "Лица по кои се трага",
+        drawableRes = R.drawable.prekrsok
     ),
 )
 
@@ -75,11 +97,11 @@ val crimesItems = listOf(
 )
 
 val policeAuthorities = listOf(
-    PoliceAuthority(title = "Проверка и утврдување на идентитет"),
-    PoliceAuthority(title = "Собирање на информации"),
-    PoliceAuthority(title = "Повикување"),
-    PoliceAuthority(title = "Лишување од слобода"),
-    PoliceAuthority(title = "Приведување"),
-    PoliceAuthority(title = "Задржување"),
-    PoliceAuthority(title = "Потрага по лица и предмети"),
+    TitleItem(title = "Проверка и утврдување на идентитет"),
+    TitleItem(title = "Собирање на информации"),
+    TitleItem(title = "Повикување"),
+    TitleItem(title = "Лишување од слобода"),
+    TitleItem(title = "Приведување"),
+    TitleItem(title = "Задржување"),
+    TitleItem(title = "Потрага по лица и предмети"),
 )

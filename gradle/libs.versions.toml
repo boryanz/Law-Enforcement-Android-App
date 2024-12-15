@@ -21,6 +21,7 @@ appcompat = "1.7.0"
 material = "1.12.0"
 activity = "1.9.3"
 constraintlayout = "2.2.0"
+browser = "1.5.0"
 
 
 [libraries]
@@ -35,6 +36,7 @@ androidx-activity-compose = { group = "androidx.activity", name = "activity-comp
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 androidx-compose-material = { group = "androidx.compose.material", name = "material" }
 androidx-compose-material-iconsExtended = { group = "androidx.compose.material", name = "material-icons-extended" }
+androidx-custom-tabs = { group = "androidx.browser", name = "browser", version.ref = "browser" }
 androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version.ref = "kotlin" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
