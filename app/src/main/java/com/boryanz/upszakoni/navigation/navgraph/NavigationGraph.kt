@@ -98,7 +98,7 @@ fun NavigationGraph(
         }
 
         composable<GoldenCrimeQuestions> {
-            GoldenCrimeQuestionsScreen("9 златни прашања", goldenQuestions)
+            GoldenCrimeQuestionsScreen("Водич за службена белешка", goldenQuestions)
         }
 
         composable<Laws> {

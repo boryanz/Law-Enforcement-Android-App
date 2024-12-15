@@ -1,5 +1,6 @@
 package com.boryanz.upszakoni.ui.screens
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -13,16 +14,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.boryanz.upszakoni.data.model.Category
 import com.boryanz.upszakoni.data.model.Offense
+import com.boryanz.upszakoni.ui.components.CategoryHeader
 import com.boryanz.upszakoni.ui.components.ItemWithDescription
 import com.boryanz.upszakoni.ui.components.UpsScaffold
 
 typealias PdfData = (String, List<Int>) -> Unit
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun CommonCrimes(
     title: String,
-    commonCrimesItems: List<Offense>,
+    commonCrimesItems: List<Category>,
     onClick: PdfData,
 ) {
     UpsScaffold(
@@ -37,14 +41,19 @@ fun CommonCrimes(
             verticalArrangement = Arrangement.Top
         ) {
             LazyColumn {
-                items(commonCrimesItems) {
-                    ItemWithDescription(
-                        isEnabled = true,
-                        title = it.title,
-                        description = it.description,
-                        onClick = { onClick(it.lawName, it.pagesToLoad) }
-                    )
-                    Spacer(modifier = Modifier.padding(vertical = 4.dp))
+                commonCrimesItems.forEach {
+                    stickyHeader {
+                        CategoryHeader(it.name)
+                    }
+                    items(it.items) { item ->
+                        ItemWithDescription(
+                            isEnabled = true,
+                            title = item.title,
+                            description = item.description,
+                            onClick = { onClick(item.lawName, item.pagesToLoad) }
+                        )
+                        Spacer(modifier = Modifier.padding(vertical = 4.dp))
+                    }
                 }
             }
         }
