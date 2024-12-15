@@ -58,8 +58,16 @@ val dashboardItems = listOf(
 )
 
 val offensesItems = listOf(
+    Offense(lawName = "ЗП.pdf", title = "Лице кое со своето однесување предизвикува сомнение дека е сторител на прекршок или К.Д", description = "чл. 38 ст. 1 т.7 од Закон за полиција", pagesToLoad = listOf(10)),
+    Offense(lawName = "Закон за лична карта.pdf", title = "Не носи лична карта или одбива да покаже", description = "чл. 15 ст. 2 Закон за лична карта", pagesToLoad = listOf(2)),
     Offense(lawName = "ЗППЈРМ.pdf", title = "Тепачка", description = "чл. 13 од ЗППЈРМ", pagesToLoad = listOf(2)),
-    Offense(lawName = "ЗППЈРМ.pdf", title = "Физички напад", description = "чл. 14 од ЗППЈРМ", pagesToLoad = listOf(2)),
+    Offense(lawName = "ЗППЈРМ.pdf", title = "Учество и потикнување на тепачка", description = "чл. 11 од ЗППЈРМ", pagesToLoad = listOf(2)),
+    Offense(lawName = "ЗППЈРМ.pdf", title = "Физички напад", description = "чл. 12 ст. 1 од ЗППЈРМ", pagesToLoad = listOf(2)),
+    Offense(lawName = "ЗППЈРМ.pdf", title = "Непочитување наредба на УПС", description = "чл. 5 од ЗППЈРМ", pagesToLoad = listOf(2)),
+    Offense(lawName = "ЗППЈРМ.pdf", title = "Фрлање или кршење шишиња, чаши и други предмети", description = "чл. 5 од ЗППЈРМ", pagesToLoad = listOf(1)),
+    Offense(lawName = "ЗЈЧ.pdf", title = "Фрлање и оставање хартија, отпушоци, мастики и др.", description = "чл. 14 т. 2 од ЗЈЧ", pagesToLoad = listOf(4)),
+    Offense(lawName = "ЗЈЧ.pdf", title = "Продажба и излагање на земјоделски и индустриски производи", description = "чл. 14 т. 10 од ЗЈЧ", pagesToLoad = listOf(4)),
+    Offense(lawName = "ЗЈЧ.pdf", title = "Вршење на физиолошки потреби", description = "чл. 14 т. 19 од ЗЈЧ", pagesToLoad = listOf(4,5)),
     Offense(
         lawName = "ЗППЈРМ.pdf",
         title = "Малтретирање друг на јавно место",
