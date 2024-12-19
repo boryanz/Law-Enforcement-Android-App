@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.boryanz.upszakoni.ui.theme.Base100
 import com.boryanz.upszakoni.ui.theme.BaseContent
+import com.boryanz.upszakoni.ui.theme.BaseContent1
 import com.boryanz.upszakoni.ui.theme.KataSampleAppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -23,7 +24,7 @@ fun UpsScaffold(
         topBar = {
             TopAppBar(
                 title = topBarTitle,
-                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = BaseContent, titleContentColor = Base100),
+                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = BaseContent1, titleContentColor = Base100),
                 navigationIcon = {
                     if (navigationIcon != null) {
                         navigationIcon()

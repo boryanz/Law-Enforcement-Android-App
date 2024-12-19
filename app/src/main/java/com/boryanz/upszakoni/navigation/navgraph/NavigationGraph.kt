@@ -27,6 +27,7 @@ import com.boryanz.upszakoni.ui.screens.LawsScreen
 import com.boryanz.upszakoni.ui.screens.PdfViewerActivity
 import com.boryanz.upszakoni.ui.screens.GoldenCrimeQuestionsScreen
 import com.boryanz.upszakoni.ui.screens.PoliceAuthoritiesScreen
+import openPdfFromAssets
 
 @Composable
 fun NavigationGraph(
@@ -45,7 +46,10 @@ fun NavigationGraph(
                         DashboardItemDestination.laws -> navHostController.navigate(Laws)
                         DashboardItemDestination.offenses -> navHostController.navigate(Offenses)
                         DashboardItemDestination.crimes -> navHostController.navigate(Crimes)
-                        DashboardItemDestination.authorities -> navHostController.navigate(PoliceAuthorities)
+                        DashboardItemDestination.authorities -> navHostController.navigate(
+                            PoliceAuthorities
+                        )
+
                         DashboardItemDestination.wanted_criminals -> {
                             val customTabIntent = CustomTabsIntent.Builder().apply {
                                 setShowTitle(true)
@@ -108,7 +112,7 @@ fun NavigationGraph(
                         PdfViewerActivity.BUNDLE_LAW_TITLE to lawName,
                         PdfViewerActivity.BUNDLE_IS_DARK_MODE to isInDarkMode
                     )
-                    context.startActivity(PdfViewerActivity.createIntent(context, bundle))
+                    openPdfFromAssets(context, lawName)
                 }
             )
         }

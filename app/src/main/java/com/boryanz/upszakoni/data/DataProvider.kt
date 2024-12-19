@@ -53,7 +53,7 @@ val dashboardItems = listOf(
     ),
     DashboardItem(
         id = DashboardItemDestination.wanted_criminals,
-        title = "Лица по кои се трага",
+        title = "Потраги и исчезнати лица",
         drawableRes = R.drawable.prekrsok
     ),
 )

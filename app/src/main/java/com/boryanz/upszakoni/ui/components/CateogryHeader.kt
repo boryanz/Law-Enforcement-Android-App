@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.boryanz.upszakoni.ui.theme.BaseContent
+import com.boryanz.upszakoni.ui.theme.BaseContent1
 
 @Composable
 fun CategoryHeader(name: String) {
@@ -21,7 +21,15 @@ fun CategoryHeader(name: String) {
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .background(color = BaseContent, shape = RoundedCornerShape(4.dp))
+            .background(
+                color = BaseContent1,
+                shape = RoundedCornerShape(
+                    topStart = 4.dp,
+                    topEnd = 4.dp,
+                    bottomEnd = 1.dp,
+                    bottomStart = 1.dp
+                )
+            )
             .padding(8.dp),
     ) {
         Text(
