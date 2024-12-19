@@ -27,7 +27,7 @@ import com.boryanz.upszakoni.ui.screens.LawsScreen
 import com.boryanz.upszakoni.ui.screens.PdfViewerActivity
 import com.boryanz.upszakoni.ui.screens.GoldenCrimeQuestionsScreen
 import com.boryanz.upszakoni.ui.screens.PoliceAuthoritiesScreen
-import openPdfFromAssets
+import com.boryanz.upszakoni.utils.openPdfFromAssets
 
 @Composable
 fun NavigationGraph(

@@ -1,12 +1,10 @@
+package com.boryanz.upszakoni.utils
+
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
-import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.FileProvider
-import com.github.barteksc.pdfviewer.util.FileUtils
 import java.io.File
 import java.io.FileOutputStream
-import java.io.InputStream
 
 fun openPdfFromAssets(context: Context, assetFileName: String) {
     val assetManager = context.assets
