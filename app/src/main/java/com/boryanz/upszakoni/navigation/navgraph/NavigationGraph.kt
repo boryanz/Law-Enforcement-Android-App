@@ -27,8 +27,8 @@ import com.boryanz.upszakoni.ui.screens.LawsScreen
 import com.boryanz.upszakoni.ui.screens.PdfViewerActivity
 import com.boryanz.upszakoni.ui.screens.GoldenCrimeQuestionsScreen
 import com.boryanz.upszakoni.ui.screens.PoliceAuthoritiesScreen
-import com.boryanz.upszakoni.utils.hasPdfViewer
-import com.boryanz.upszakoni.utils.openPdfFromAssets
+import com.boryanz.upszakoni.utils.supportExternalPdfReader
+import com.boryanz.upszakoni.utils.openPdfWithExternalReader
 
 @Composable
 fun NavigationGraph(
@@ -113,8 +113,8 @@ fun NavigationGraph(
                         PdfViewerActivity.BUNDLE_LAW_TITLE to lawName,
                         PdfViewerActivity.BUNDLE_IS_DARK_MODE to isInDarkMode
                     )
-                    if (hasPdfViewer(context)) {
-                        openPdfFromAssets(context, lawName)
+                    if (supportExternalPdfReader(context)) {
+                        openPdfWithExternalReader(context, lawName)
                     } else {
                         context.startActivity(PdfViewerActivity.createIntent(context, bundle))
                     }

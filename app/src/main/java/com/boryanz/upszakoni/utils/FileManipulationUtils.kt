@@ -8,7 +8,7 @@ import androidx.core.content.FileProvider
 import java.io.File
 import java.io.FileOutputStream
 
-fun openPdfFromAssets(context: Context, assetFileName: String) {
+fun openPdfWithExternalReader(context: Context, assetFileName: String) {
     val assetManager = context.assets
     val inputStream = assetManager.open(assetFileName)
 
@@ -31,7 +31,7 @@ fun openPdfFromAssets(context: Context, assetFileName: String) {
     context.startActivity(intent)
 }
 
-fun hasPdfViewer(context: Context): Boolean {
+fun supportExternalPdfReader(context: Context): Boolean {
     val intent = Intent(Intent.ACTION_VIEW)
     intent.setDataAndType(Uri.parse("file:///sdcard/test.pdf"), "application/pdf")
     val resolveInfo = context.packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)

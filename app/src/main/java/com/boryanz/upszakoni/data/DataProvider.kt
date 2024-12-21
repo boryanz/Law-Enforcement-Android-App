@@ -193,6 +193,66 @@ val crimesItems = listOf(
         description = "чл. 22 од КЗ",
         pagesToLoad = listOf(5)
     ),
+    Offense(
+        lawName = "Кривичен законик.pdf",
+        title = "Телесна повреда",
+        description = "чл. 130 од КЗ",
+        pagesToLoad = listOf(5)
+    ),
+    Offense(
+        lawName = "Кривичен законик.pdf",
+        title = "Тешка телесна повреда",
+        description = "чл. 131 од КЗ",
+        pagesToLoad = listOf(5)
+    ),
+    Offense(
+        lawName = "Кривичен законик.pdf",
+        title = "Учество во тепачка",
+        description = "чл. 132 од КЗ",
+        pagesToLoad = listOf(5)
+    ),
+    Offense(
+        lawName = "Кривичен законик.pdf",
+        title = "Загрозување на сигурност",
+        description = "чл. 144 од КЗ",
+        pagesToLoad = listOf(5)
+    ),
+    Offense(
+        lawName = "Кривичен законик.pdf",
+        title = "Затајување",
+        description = "чл. 239 од КЗ",
+        pagesToLoad = listOf(5)
+    ),
+    Offense(
+        lawName = "Кривичен законик.pdf",
+        title = "Фалсификување исправа",
+        description = "чл. 378 од КЗ",
+        pagesToLoad = listOf(5)
+    ),
+    Offense(
+        lawName = "Кривичен законик.pdf",
+        title = "Спречување на службено лице во вршење на службено дејствие",
+        description = "чл. 382 од КЗ",
+        pagesToLoad = listOf(5)
+    ),
+    Offense(
+        lawName = "Кривичен законик.pdf",
+        title = "Напад на службено лице при вршење работи на безбедноста",
+        description = "чл. 383 од КЗ",
+        pagesToLoad = listOf(5)
+    ),
+    Offense(
+        lawName = "Кривичен законик.pdf",
+        title = "Симнување и оштетување службен печат или знак",
+        description = "чл. 389 од КЗ",
+        pagesToLoad = listOf(5)
+    ),
+    Offense(
+        lawName = "Кривичен законик.pdf",
+        title = "Измама",
+        description = "чл. 247 од КЗ",
+        pagesToLoad = listOf(5)
+    ),
 ).groupBy { it.lawName.replace(".pdf", "").trim() }.toSortedMap().map {
     Category(
         name = it.key,
@@ -201,11 +261,31 @@ val crimesItems = listOf(
 }
 
 val policeAuthorities = listOf(
-    TitleItem(title = "Проверка и утврдување на идентитет"),
+    TitleItem(title = "Проверка и утврдување на идентитет на лица и предмети"),
     TitleItem(title = "Собирање на информации"),
     TitleItem(title = "Повикување"),
     TitleItem(title = "Лишување од слобода"),
     TitleItem(title = "Приведување"),
     TitleItem(title = "Задржување"),
     TitleItem(title = "Потрага по лица и предмети"),
+    TitleItem(title = "Прикриено полициско дејствување"),
+    TitleItem(title = "Пренасочување, насочување или ограничување на движењето на лица и превозни средства на определен простор за нужно потребно време"),
+    TitleItem(title = "Предупредување и наредување"),
+    TitleItem(title = "Преглед односно претрес на определени објекти и простории на државни органи,\n" +
+            "институции што вршат јавни овластувања и други правни лица и увид во определена нивна\n" +
+            "документација"),
+    TitleItem(title = "Влегување во туѓ дом и други затворени простории"),
+    TitleItem(title = "Сопирање, преглед односно претрес на лица, багаж и превозни средства"),
+    TitleItem(title = "Обезбедување, преглед и увид на местото на настанот"),
+    TitleItem(title = "Примање на пријави и поплаки, поднесување на пријави и известувања"),
+    TitleItem(title = "Препознавање"),
+    TitleItem(title = "Јавно распишување награда"),
+    TitleItem(title = "Снимање на јавни места"),
+    TitleItem(title = "Полиграфско тестирање"),
+    TitleItem(title = "Собирање, обработка, анализирање, користење, оценување, пренесување,\n" +
+            "чување и бришење на податоци, како и обработка на лични податоци под услови и на начин\n" +
+            "утврдени со овој и посебен закон"),
+    TitleItem(title = "Примена на посебни истражни мерки"),
+    TitleItem(title = "Заштита на лица опфатени согласно со прописите за заштита на сведоци"),
+    TitleItem(title = "Употреба на средства за присилба"),
 )
