@@ -12,7 +12,8 @@ enum class NavigationDrawerDestination {
     crimes,
     authorities,
     wanted_criminals,
-    writing_guide
+    writing_guide,
+    daily_news
 }
 
 val goldenQuestions = listOf(

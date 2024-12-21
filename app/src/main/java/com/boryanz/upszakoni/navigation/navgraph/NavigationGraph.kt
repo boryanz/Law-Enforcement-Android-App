@@ -1,8 +1,6 @@
 package com.boryanz.upszakoni.navigation.navgraph
 
 import android.content.Context
-import android.net.Uri
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
@@ -11,6 +9,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.boryanz.upszakoni.customtab.CustomTabLauncher
 import com.boryanz.upszakoni.data.NavigationDrawerDestination
 import com.boryanz.upszakoni.data.crimesItems
 import com.boryanz.upszakoni.data.goldenQuestions
@@ -28,6 +27,9 @@ import com.boryanz.upszakoni.ui.screens.GoldenCrimeQuestionsScreen
 import com.boryanz.upszakoni.ui.screens.PoliceAuthoritiesScreen
 import com.boryanz.upszakoni.utils.supportExternalPdfReader
 import com.boryanz.upszakoni.utils.openPdfWithExternalReader
+
+private const val WANTED_PERSONS_URL = "https://mvr.gov.mk/potragi-ischeznati/potragi"
+private const val DAILY_NEWS_URL = "https://mvr.gov.mk/dnevni-bilteni"
 
 @Composable
 fun NavigationGraph(
@@ -104,13 +106,19 @@ fun NavHostController.navigateToDrawerDestination(navigationDrawerDestination: N
         NavigationDrawerDestination.authorities -> navigate(PoliceAuthorities)
         NavigationDrawerDestination.writing_guide -> navigate(GoldenCrimeQuestions)
         NavigationDrawerDestination.wanted_criminals -> {
-            val customTabIntent = CustomTabsIntent.Builder().apply {
-                setShowTitle(true)
-            }.build()
-            customTabIntent.launchUrl(
-                context,
-                Uri.parse("https://mvr.gov.mk/potragi-ischeznati/potragi")
+            val customTabLauncher = CustomTabLauncher(
+                showTitle = true,
+                setUrlBarHiddenEnabled = true
             )
+            customTabLauncher.launch(context, WANTED_PERSONS_URL)
+        }
+
+        NavigationDrawerDestination.daily_news -> {
+            val customTabLauncher = CustomTabLauncher(
+                showTitle = true,
+                setUrlBarHiddenEnabled = true
+            )
+            customTabLauncher.launch(context, DAILY_NEWS_URL)
         }
     }
 }
