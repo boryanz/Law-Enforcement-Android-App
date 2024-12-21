@@ -18,20 +18,21 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.boryanz.upszakoni.data.NavigationDrawerDestination
+import com.boryanz.upszakoni.ui.components.NavigationDrawer
 import com.boryanz.upszakoni.ui.components.Spacer
 import com.boryanz.upszakoni.ui.components.TitleItem
-import com.boryanz.upszakoni.ui.components.UpsScaffold
-import com.boryanz.upszakoni.ui.theme.KataSampleAppTheme
 
 @Composable
-fun LawsScreen(onClick: (String) -> Unit) {
-    UpsScaffold(
-        topBarTitle = { Text(text = "Закони", fontWeight = FontWeight.Bold) },
-    ) { contentPadding ->
-
+fun LawsScreen(
+    onLawClick: (String) -> Unit,
+    onItemClick: (NavigationDrawerDestination) -> Unit,
+) {
+    NavigationDrawer(
+        screenTitle = "Закони",
+        onItemClicked = { onItemClick(it) }
+    ) {
         val context = LocalContext.current
         val laws by remember {
             mutableStateOf(
@@ -43,7 +44,7 @@ fun LawsScreen(onClick: (String) -> Unit) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(contentPadding)
+                .padding(it)
                 .padding(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
@@ -59,19 +60,13 @@ fun LawsScreen(onClick: (String) -> Unit) {
             Spacer(modifier = Modifier.padding(vertical = 4.dp))
             LazyColumn {
                 items(laws.filter { it.contains(searchQuery) }, key = { it }) {
-                    TitleItem(isEnabled = true, title = it.replace(".pdf", "").trim(), onClick = { onClick(it) })
+                    TitleItem(
+                        isEnabled = true,
+                        title = it.replace(".pdf", "").trim(),
+                        onClick = { onLawClick(it) })
                     Spacer.Vertical(4.dp)
                 }
             }
         }
-    }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-private fun PoliceAuthorityScreenPreview() {
-    KataSampleAppTheme {
-        LawsScreen { }
     }
 }

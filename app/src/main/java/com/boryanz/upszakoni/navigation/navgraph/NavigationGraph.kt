@@ -1,5 +1,6 @@
 package com.boryanz.upszakoni.navigation.navgraph
 
+import android.content.Context
 import android.net.Uri
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -10,18 +11,16 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.boryanz.upszakoni.data.DashboardItemDestination
+import com.boryanz.upszakoni.data.NavigationDrawerDestination
 import com.boryanz.upszakoni.data.crimesItems
 import com.boryanz.upszakoni.data.goldenQuestions
 import com.boryanz.upszakoni.data.offensesItems
 import com.boryanz.upszakoni.data.policeAuthorities
 import com.boryanz.upszakoni.navigation.destinations.Crimes
-import com.boryanz.upszakoni.navigation.destinations.Dashboard
 import com.boryanz.upszakoni.navigation.destinations.GoldenCrimeQuestions
 import com.boryanz.upszakoni.navigation.destinations.Laws
 import com.boryanz.upszakoni.navigation.destinations.Offenses
 import com.boryanz.upszakoni.navigation.destinations.PoliceAuthorities
-import com.boryanz.upszakoni.ui.screens.DashboardScreen
 import com.boryanz.upszakoni.ui.screens.CommonCrimes
 import com.boryanz.upszakoni.ui.screens.LawsScreen
 import com.boryanz.upszakoni.ui.screens.PdfViewerActivity
@@ -38,48 +37,19 @@ fun NavigationGraph(
     val isInDarkMode = isSystemInDarkTheme()
     NavHost(
         navController = navHostController,
-        startDestination = Dashboard
+        startDestination = Laws
     ) {
-        composable<Dashboard> {
-            DashboardScreen(
-                onNavigateNext = { dashboardDestination ->
-                    when (dashboardDestination) {
-                        DashboardItemDestination.laws -> navHostController.navigate(Laws)
-                        DashboardItemDestination.offenses -> navHostController.navigate(Offenses)
-                        DashboardItemDestination.crimes -> navHostController.navigate(Crimes)
-                        DashboardItemDestination.authorities -> navHostController.navigate(
-                            PoliceAuthorities
-                        )
-
-                        DashboardItemDestination.wanted_criminals -> {
-                            val customTabIntent = CustomTabsIntent.Builder().apply {
-                                setShowTitle(true)
-                            }.build()
-                            customTabIntent.launchUrl(
-                                context,
-                                Uri.parse("https://mvr.gov.mk/potragi-ischeznati/potragi")
-                            )
-                        }
-
-                        DashboardItemDestination.writing_guide -> {
-                            navHostController.navigate(GoldenCrimeQuestions)
-                        }
-                    }
-                }
-            )
-        }
         composable<Offenses> {
             CommonCrimes(
                 title = "Прекршоци",
                 commonCrimesItems = offensesItems,
-                onClick = { lawName, pagesToLoad ->
-                    val bundle = bundleOf(
-                        PdfViewerActivity.BUNDLE_LAW_TITLE to lawName,
-                        PdfViewerActivity.BUNDLE_PAGES_TO_LOAD to pagesToLoad.toIntArray(),
-                        PdfViewerActivity.BUNDLE_IS_DARK_MODE to isInDarkMode
+                onCrimeClicked = { lawName, pagesToLoad ->
+                    context.navigateToInternalPdfViewer(
+                        lawName = lawName,
+                        pagesToLoad = pagesToLoad,
+                        isInDarkMode = isInDarkMode
                     )
-                    context.startActivity(PdfViewerActivity.createIntent(context, bundle))
-                }
+                },
             )
         }
 
@@ -87,13 +57,12 @@ fun NavigationGraph(
             CommonCrimes(
                 title = "Кривични дела",
                 commonCrimesItems = crimesItems,
-                onClick = { lawName, pagesToLoad ->
-                    val bundle = bundleOf(
-                        PdfViewerActivity.BUNDLE_LAW_TITLE to lawName,
-                        PdfViewerActivity.BUNDLE_PAGES_TO_LOAD to pagesToLoad.toIntArray(),
-                        PdfViewerActivity.BUNDLE_IS_DARK_MODE to isInDarkMode
+                onCrimeClicked = { lawName, pagesToLoad ->
+                    context.navigateToInternalPdfViewer(
+                        lawName = lawName,
+                        pagesToLoad = pagesToLoad,
+                        isInDarkMode = isInDarkMode
                     )
-                    context.startActivity(PdfViewerActivity.createIntent(context, bundle))
                 }
             )
         }
@@ -108,7 +77,10 @@ fun NavigationGraph(
 
         composable<Laws> {
             LawsScreen(
-                onClick = { lawName ->
+                onItemClick = { navigationDrawerDestination ->
+                    navHostController.navigateToDrawerDestination(navigationDrawerDestination)
+                },
+                onLawClick = { lawName ->
                     val bundle = bundleOf(
                         PdfViewerActivity.BUNDLE_LAW_TITLE to lawName,
                         PdfViewerActivity.BUNDLE_IS_DARK_MODE to isInDarkMode
@@ -122,4 +94,36 @@ fun NavigationGraph(
             )
         }
     }
+}
+
+fun NavHostController.navigateToDrawerDestination(navigationDrawerDestination: NavigationDrawerDestination) {
+    when (navigationDrawerDestination) {
+        NavigationDrawerDestination.laws -> navigate(Laws)
+        NavigationDrawerDestination.offenses -> navigate(Offenses)
+        NavigationDrawerDestination.crimes -> navigate(Crimes)
+        NavigationDrawerDestination.authorities -> navigate(PoliceAuthorities)
+        NavigationDrawerDestination.writing_guide -> navigate(GoldenCrimeQuestions)
+        NavigationDrawerDestination.wanted_criminals -> {
+            val customTabIntent = CustomTabsIntent.Builder().apply {
+                setShowTitle(true)
+            }.build()
+            customTabIntent.launchUrl(
+                context,
+                Uri.parse("https://mvr.gov.mk/potragi-ischeznati/potragi")
+            )
+        }
+    }
+}
+
+fun Context.navigateToInternalPdfViewer(
+    lawName: String,
+    pagesToLoad: List<Int>,
+    isInDarkMode: Boolean
+) {
+    val bundle = bundleOf(
+        PdfViewerActivity.BUNDLE_LAW_TITLE to lawName,
+        PdfViewerActivity.BUNDLE_PAGES_TO_LOAD to pagesToLoad.toIntArray(),
+        PdfViewerActivity.BUNDLE_IS_DARK_MODE to isInDarkMode
+    )
+    startActivity(PdfViewerActivity.createIntent(this, bundle))
 }

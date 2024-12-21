@@ -3,9 +3,6 @@ package com.boryanz.upszakoni.navigation.destinations
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object Dashboard
-
-@Serializable
 data object Laws
 
 @Serializable

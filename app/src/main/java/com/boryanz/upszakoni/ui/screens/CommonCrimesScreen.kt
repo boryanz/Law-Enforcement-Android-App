@@ -15,7 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.boryanz.upszakoni.data.model.Category
-import com.boryanz.upszakoni.data.model.Offense
 import com.boryanz.upszakoni.ui.components.CategoryHeader
 import com.boryanz.upszakoni.ui.components.ItemWithDescription
 import com.boryanz.upszakoni.ui.components.UpsScaffold
@@ -27,7 +26,7 @@ typealias PdfData = (String, List<Int>) -> Unit
 fun CommonCrimes(
     title: String,
     commonCrimesItems: List<Category>,
-    onClick: PdfData,
+    onCrimeClicked: PdfData,
 ) {
     UpsScaffold(
         topBarTitle = { Text(text = title, fontWeight = FontWeight.Bold) }
@@ -50,7 +49,7 @@ fun CommonCrimes(
                             isEnabled = true,
                             title = item.title,
                             description = item.description,
-                            onClick = { onClick(item.lawName, item.pagesToLoad) }
+                            onClick = { onCrimeClicked(item.lawName, item.pagesToLoad) }
                         )
                         Spacer(modifier = Modifier.padding(vertical = 4.dp))
                     }

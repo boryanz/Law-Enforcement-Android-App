@@ -6,7 +6,7 @@ import com.boryanz.upszakoni.data.model.DashboardItem
 import com.boryanz.upszakoni.data.model.Offense
 import com.boryanz.upszakoni.data.model.TitleItem
 
-enum class DashboardItemDestination {
+enum class NavigationDrawerDestination {
     laws,
     offenses,
     crimes,
@@ -27,32 +27,32 @@ val goldenQuestions = listOf(
 
 val dashboardItems = listOf(
     DashboardItem(
-        id = DashboardItemDestination.laws,
+        id = NavigationDrawerDestination.laws,
         title = "Закони",
         drawableRes = R.drawable.zakonishta
     ),
     DashboardItem(
-        id = DashboardItemDestination.offenses,
+        id = NavigationDrawerDestination.offenses,
         title = "Чести прекршоци",
         drawableRes = R.drawable.offenses
     ),
     DashboardItem(
-        id = DashboardItemDestination.crimes,
+        id = NavigationDrawerDestination.crimes,
         title = "Чести кривични дела",
         drawableRes = R.drawable.kriminal
     ),
     DashboardItem(
-        id = DashboardItemDestination.writing_guide,
+        id = NavigationDrawerDestination.writing_guide,
         title = "Водич за службени белешки",
         drawableRes = R.drawable.question_solid
     ),
     DashboardItem(
-        id = DashboardItemDestination.authorities,
+        id = NavigationDrawerDestination.authorities,
         title = "Полицски овластувања",
         drawableRes = R.drawable.police
     ),
     DashboardItem(
-        id = DashboardItemDestination.wanted_criminals,
+        id = NavigationDrawerDestination.wanted_criminals,
         title = "Потраги и исчезнати лица",
         drawableRes = R.drawable.prekrsok
     ),
