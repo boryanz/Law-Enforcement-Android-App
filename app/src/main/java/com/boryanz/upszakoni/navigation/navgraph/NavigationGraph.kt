@@ -19,12 +19,15 @@ import com.boryanz.upszakoni.navigation.destinations.Crimes
 import com.boryanz.upszakoni.navigation.destinations.GoldenCrimeQuestions
 import com.boryanz.upszakoni.navigation.destinations.Laws
 import com.boryanz.upszakoni.navigation.destinations.Offenses
+import com.boryanz.upszakoni.navigation.destinations.PhoneNumbers
 import com.boryanz.upszakoni.navigation.destinations.PoliceAuthorities
-import com.boryanz.upszakoni.ui.screens.CommonCrimes
+import com.boryanz.upszakoni.ui.screens.CommonOffensesAndCrimes
 import com.boryanz.upszakoni.ui.screens.LawsScreen
 import com.boryanz.upszakoni.ui.screens.PdfViewerActivity
 import com.boryanz.upszakoni.ui.screens.GoldenCrimeQuestionsScreen
+import com.boryanz.upszakoni.ui.screens.PhoneNumbersScreen
 import com.boryanz.upszakoni.ui.screens.PoliceAuthoritiesScreen
+import com.boryanz.upszakoni.utils.openDialer
 import com.boryanz.upszakoni.utils.supportExternalPdfReader
 import com.boryanz.upszakoni.utils.openPdfWithExternalReader
 
@@ -42,7 +45,7 @@ fun NavigationGraph(
         startDestination = Laws
     ) {
         composable<Offenses> {
-            CommonCrimes(
+            CommonOffensesAndCrimes(
                 title = "Прекршоци",
                 commonCrimesItems = offensesItems,
                 onCrimeClicked = { lawName, pagesToLoad ->
@@ -56,7 +59,7 @@ fun NavigationGraph(
         }
 
         composable<Crimes> {
-            CommonCrimes(
+            CommonOffensesAndCrimes(
                 title = "Кривични дела",
                 commonCrimesItems = crimesItems,
                 onCrimeClicked = { lawName, pagesToLoad ->
@@ -75,6 +78,14 @@ fun NavigationGraph(
 
         composable<GoldenCrimeQuestions> {
             GoldenCrimeQuestionsScreen("Водич за службена белешка", goldenQuestions)
+        }
+
+        composable<PhoneNumbers> {
+            PhoneNumbersScreen(
+                onContactClicked = { phoneNumber ->
+                    context.openDialer(phoneNumber)
+                }
+            )
         }
 
         composable<Laws> {
@@ -120,6 +131,8 @@ fun NavHostController.navigateToDrawerDestination(navigationDrawerDestination: N
             )
             customTabLauncher.launch(context, DAILY_NEWS_URL)
         }
+
+        NavigationDrawerDestination.phone_numbers -> navigate(PhoneNumbers)
     }
 }
 

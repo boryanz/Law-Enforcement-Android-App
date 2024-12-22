@@ -137,6 +137,21 @@ fun NavigationDrawer(
                         selected = false,
                         onClick = { onItemClicked(NavigationDrawerDestination.daily_news) }
                     )
+                    HorizontalDivider()
+                    NavigationDrawerItem(
+                        icon = {
+                            Icon(
+                                modifier = Modifier
+                                    .height(20.dp)
+                                    .width(20.dp),
+                                painter = painterResource(R.drawable.phone_solid),
+                                contentDescription = null
+                            )
+                        },
+                        label = { Text(text = "Броеви од ПС - СВР Скопје") },
+                        selected = false,
+                        onClick = { onItemClicked(NavigationDrawerDestination.phone_numbers) }
+                    )
                 }
             }
         },

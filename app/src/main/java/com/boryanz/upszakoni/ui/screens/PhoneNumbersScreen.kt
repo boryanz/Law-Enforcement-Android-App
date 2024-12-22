@@ -1,6 +1,5 @@
 package com.boryanz.upszakoni.ui.screens
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -14,22 +13,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.boryanz.upszakoni.data.model.Category
-import com.boryanz.upszakoni.ui.components.CategoryHeader
+import com.boryanz.upszakoni.data.phoneNumbers
 import com.boryanz.upszakoni.ui.components.ItemWithDescription
 import com.boryanz.upszakoni.ui.components.UpsScaffold
 
-typealias PdfData = (String, List<Int>) -> Unit
-
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun CommonOffensesAndCrimes(
-    title: String,
-    commonCrimesItems: List<Category>,
-    onCrimeClicked: PdfData,
+fun PhoneNumbersScreen(
+    onContactClicked: (phoneNumber: String) -> Unit,
 ) {
     UpsScaffold(
-        topBarTitle = { Text(text = title, fontWeight = FontWeight.Bold) }
+        topBarTitle = { Text(text = "Контакти од ПС", fontWeight = FontWeight.Bold) }
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -40,19 +33,14 @@ fun CommonOffensesAndCrimes(
             verticalArrangement = Arrangement.Top
         ) {
             LazyColumn {
-                commonCrimesItems.forEach {
-                    stickyHeader {
-                        CategoryHeader(it.name)
-                    }
-                    items(it.items) { item ->
-                        ItemWithDescription(
-                            isEnabled = true,
-                            title = item.title,
-                            description = item.description,
-                            onClick = { onCrimeClicked(item.lawName, item.pagesToLoad) }
-                        )
-                        Spacer(modifier = Modifier.padding(vertical = 4.dp))
-                    }
+                items(phoneNumbers) { item ->
+                    ItemWithDescription(
+                        isEnabled = true,
+                        title = item.policeStation,
+                        description = item.contactPhone,
+                        onClick = { onContactClicked(item.contactPhone) }
+                    )
+                    Spacer(modifier = Modifier.padding(vertical = 4.dp))
                 }
             }
         }

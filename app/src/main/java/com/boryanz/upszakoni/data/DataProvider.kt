@@ -4,6 +4,7 @@ import com.boryanz.upszakoni.R
 import com.boryanz.upszakoni.data.model.Category
 import com.boryanz.upszakoni.data.model.DashboardItem
 import com.boryanz.upszakoni.data.model.Offense
+import com.boryanz.upszakoni.data.model.PhoneNumber
 import com.boryanz.upszakoni.data.model.TitleItem
 
 enum class NavigationDrawerDestination {
@@ -13,8 +14,64 @@ enum class NavigationDrawerDestination {
     authorities,
     wanted_criminals,
     writing_guide,
-    daily_news
+    daily_news,
+    phone_numbers,
 }
+
+val phoneNumbers = listOf(
+    PhoneNumber(
+        policeStation = "ПС-ОН Центар",
+        contactPhone = "02/3222-013"
+    ),
+    PhoneNumber(
+        policeStation = "ПС-ОН Бит Пазар",
+        contactPhone = " 072/334-211"
+    ),
+    PhoneNumber(
+        policeStation = "ПС-ОН Кисела Вода",
+        contactPhone = "072/334-351"
+    ),
+    PhoneNumber(
+        policeStation = "ПС-ОН Карпош",
+        contactPhone = "072/334-411"
+    ),
+    PhoneNumber(
+        policeStation = "ПС-ОН Гази Баба",
+        contactPhone = " 072/334-511"
+    ),
+    PhoneNumber(
+        policeStation = "ПС-ОН Ѓорче Петров",
+        contactPhone = " 02/2031-171"
+    ),
+    PhoneNumber(
+        policeStation = "ПС-ОН Чаир",
+        contactPhone = "02/2613-042"
+    ),
+    PhoneNumber(
+        policeStation = "ПС-ОН Аеродром",
+        contactPhone = " 02/2432-362"
+    ),
+    PhoneNumber(
+        policeStation = "ПС-ОН Драчево",
+        contactPhone = " 02/2794-111"
+    ),
+    PhoneNumber(
+        policeStation = "ПО Петровец",
+        contactPhone = "02/2561-144"
+    ),
+    PhoneNumber(
+        policeStation = "ПО Арачиново",
+        contactPhone = "02/2570-333"
+    ),
+    PhoneNumber(
+        policeStation = "ПО Мирковци",
+        contactPhone = "02/2667-575"
+    ),
+    PhoneNumber(
+        policeStation = "ПО Сарај",
+        contactPhone = "02/8201-038"
+    ),
+)
 
 val goldenQuestions = listOf(
     TitleItem("Што се случило на настанот?"),
