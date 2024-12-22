@@ -19,3 +19,6 @@ data object GoldenCrimeQuestions
 
 @Serializable
 data object PhoneNumbers
+
+@Serializable
+data object PrivacyPolicy

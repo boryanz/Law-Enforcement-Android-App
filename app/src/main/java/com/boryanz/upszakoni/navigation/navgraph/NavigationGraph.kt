@@ -21,12 +21,14 @@ import com.boryanz.upszakoni.navigation.destinations.Laws
 import com.boryanz.upszakoni.navigation.destinations.Offenses
 import com.boryanz.upszakoni.navigation.destinations.PhoneNumbers
 import com.boryanz.upszakoni.navigation.destinations.PoliceAuthorities
+import com.boryanz.upszakoni.navigation.destinations.PrivacyPolicy
 import com.boryanz.upszakoni.ui.screens.CommonOffensesAndCrimes
 import com.boryanz.upszakoni.ui.screens.LawsScreen
 import com.boryanz.upszakoni.ui.screens.PdfViewerActivity
 import com.boryanz.upszakoni.ui.screens.GoldenCrimeQuestionsScreen
 import com.boryanz.upszakoni.ui.screens.PhoneNumbersScreen
 import com.boryanz.upszakoni.ui.screens.PoliceAuthoritiesScreen
+import com.boryanz.upszakoni.ui.screens.PrivacyPolicyScreen
 import com.boryanz.upszakoni.utils.openDialer
 import com.boryanz.upszakoni.utils.supportExternalPdfReader
 import com.boryanz.upszakoni.utils.openPdfWithExternalReader
@@ -88,6 +90,10 @@ fun NavigationGraph(
             )
         }
 
+        composable<PrivacyPolicy> {
+            PrivacyPolicyScreen()
+        }
+
         composable<Laws> {
             LawsScreen(
                 onItemClick = { navigationDrawerDestination ->
@@ -133,6 +139,7 @@ fun NavHostController.navigateToDrawerDestination(navigationDrawerDestination: N
         }
 
         NavigationDrawerDestination.phone_numbers -> navigate(PhoneNumbers)
+        NavigationDrawerDestination.privacy_policy -> navigate(PrivacyPolicy)
     }
 }
 

@@ -16,6 +16,7 @@ enum class NavigationDrawerDestination {
     writing_guide,
     daily_news,
     phone_numbers,
+    privacy_policy,
 }
 
 val phoneNumbers = listOf(

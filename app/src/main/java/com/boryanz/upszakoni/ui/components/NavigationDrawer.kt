@@ -170,6 +170,21 @@ fun NavigationDrawer(
                             selected = false,
                             onClick = { onItemClicked(NavigationDrawerDestination.phone_numbers) }
                         )
+                        Spacer.Vertical(24.dp)
+                        NavigationDrawerItem(
+                            icon = {
+                                Icon(
+                                    modifier = Modifier
+                                        .height(20.dp)
+                                        .width(20.dp),
+                                    painter = painterResource(R.drawable.vesti),
+                                    contentDescription = null
+                                )
+                            },
+                            label = { Text(text = "Политика за приватност") },
+                            selected = false,
+                            onClick = { onItemClicked(NavigationDrawerDestination.privacy_policy) }
+                        )
                     }
                     Text(
                         modifier = Modifier.fillMaxWidth().padding(start = 12.dp),
