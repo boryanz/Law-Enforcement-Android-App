@@ -121,25 +121,19 @@ val offensesItems = listOf(
         lawName = "Закон за полиција.pdf",
         title = "Лице кое со своето однесување предизвикува сомнение дека е сторител на прекршок или К.Д",
         description = "чл. 38 ст. 1 т.7 од Закон за полиција",
-        pagesToLoad = listOf(10)
+        pagesToLoad = listOf(12)
     ),
     Offense(
         lawName = "Закон за лична карта.pdf",
         title = "Не носи лична карта или одбива да покаже",
         description = "чл. 15 ст. 2 Закон за лична карта",
-        pagesToLoad = listOf(2)
-    ),
-    Offense(
-        lawName = "Закон за прекршоци против јрм.pdf",
-        title = "Тепачка",
-        description = "чл. 13 од ЗППЈРМ",
-        pagesToLoad = listOf(2)
+        pagesToLoad = listOf(6,7)
     ),
     Offense(
         lawName = "Закон за прекршоци против јрм.pdf",
         title = "Учество и потикнување на тепачка",
         description = "чл. 11 од ЗППЈРМ",
-        pagesToLoad = listOf(2)
+        pagesToLoad = listOf(1,2)
     ),
     Offense(
         lawName = "Закон за прекршоци против јрм.pdf",
@@ -150,7 +144,7 @@ val offensesItems = listOf(
     Offense(
         lawName = "Закон за прекршоци против јрм.pdf",
         title = "Непочитување наредба на УПС",
-        description = "чл. 5 од ЗППЈРМ",
+        description = "чл. 14 од ЗППЈРМ",
         pagesToLoad = listOf(2)
     ),
     Offense(
@@ -187,7 +181,7 @@ val offensesItems = listOf(
         lawName = "Закон за прекршоци против јрм.pdf",
         title = "Карање, викање или непристојно дрско однесување",
         description = "чл. 4 од ЗППЈРМ",
-        pagesToLoad = listOf(1)
+        pagesToLoad = listOf(0)
     ),
     Offense(
         lawName = "Закон за прекршоци против јрм.pdf",
@@ -255,63 +249,69 @@ val crimesItems = listOf(
         lawName = "Кривичен законик.pdf",
         title = "Телесна повреда",
         description = "чл. 130 од КЗ",
-        pagesToLoad = listOf(5)
+        pagesToLoad = listOf(62,63)
     ),
     Offense(
         lawName = "Кривичен законик.pdf",
         title = "Тешка телесна повреда",
         description = "чл. 131 од КЗ",
-        pagesToLoad = listOf(5)
+        pagesToLoad = listOf(63)
     ),
     Offense(
         lawName = "Кривичен законик.pdf",
         title = "Учество во тепачка",
         description = "чл. 132 од КЗ",
-        pagesToLoad = listOf(5)
+        pagesToLoad = listOf(63)
     ),
     Offense(
         lawName = "Кривичен законик.pdf",
         title = "Загрозување на сигурност",
         description = "чл. 144 од КЗ",
-        pagesToLoad = listOf(5)
+        pagesToLoad = listOf(67)
     ),
     Offense(
         lawName = "Кривичен законик.pdf",
         title = "Затајување",
         description = "чл. 239 од КЗ",
-        pagesToLoad = listOf(5)
+        pagesToLoad = listOf(107)
     ),
     Offense(
         lawName = "Кривичен законик.pdf",
         title = "Фалсификување исправа",
         description = "чл. 378 од КЗ",
-        pagesToLoad = listOf(5)
+        pagesToLoad = listOf(169)
     ),
     Offense(
         lawName = "Кривичен законик.pdf",
         title = "Спречување на службено лице во вршење на службено дејствие",
         description = "чл. 382 од КЗ",
-        pagesToLoad = listOf(5)
+        pagesToLoad = listOf(171)
     ),
     Offense(
         lawName = "Кривичен законик.pdf",
         title = "Напад на службено лице при вршење работи на безбедноста",
         description = "чл. 383 од КЗ",
-        pagesToLoad = listOf(5)
+        pagesToLoad = listOf(171)
+    ),
+    Offense(
+        lawName = "Кривичен законик.pdf",
+        title = "Насилство",
+        description = "чл. 386 од КЗ",
+        pagesToLoad = listOf(172)
     ),
     Offense(
         lawName = "Кривичен законик.pdf",
         title = "Симнување и оштетување службен печат или знак",
         description = "чл. 389 од КЗ",
-        pagesToLoad = listOf(5)
+        pagesToLoad = listOf(173)
     ),
     Offense(
         lawName = "Кривичен законик.pdf",
         title = "Измама",
         description = "чл. 247 од КЗ",
-        pagesToLoad = listOf(5)
+        pagesToLoad = listOf(109,110)
     ),
-).groupBy { it.lawName.replace(".pdf", "").trim() }.toSortedMap().map {
+).sortedBy { it.lawName }.groupBy { it.lawName.replace(".pdf", "").trim() }.toSortedMap().map {
     Category(
         name = it.key,
         items = it.value
