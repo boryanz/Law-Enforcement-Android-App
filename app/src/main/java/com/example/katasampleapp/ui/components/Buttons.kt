@@ -7,7 +7,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.IconButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccessAlarm
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -55,6 +59,16 @@ object Button {
             Texts.Title(title)
         }
     }
+
+    @Composable
+    fun Icon(
+        onClick: () -> Unit,
+        modifier: Modifier = Modifier,
+        enabled: Boolean = true,
+        content: @Composable () -> Unit,
+    ) {
+        IconButton(onClick = onClick, content = content, enabled = enabled, modifier = modifier)
+    }
 }
 
 
@@ -70,6 +84,10 @@ private fun ButtonsPreview() {
             Button.Primary("Primary button", onClick = {})
             Spacer.Vertical(6.dp)
             Button.Secondary("Secondary") { }
+            Spacer.Vertical(6.dp)
+            Button.Icon(onClick = {}) {
+                Icon(imageVector = Icons.Filled.AccessAlarm, contentDescription = null)
+            }
         }
     }
 }

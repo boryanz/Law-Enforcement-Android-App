@@ -136,15 +136,15 @@ private fun TextsPreview() {
             verticalArrangement = Arrangement.Center
         ) {
             Texts.Info("Info")
-            Spacer.Vertical(12.dp)
+            Spacer.Vertical(4.dp)
             Texts.Paragraph("Paragraph")
-            Spacer.Vertical(12.dp)
+            Spacer.Vertical(4.dp)
             Texts.Input("Input")
-            Spacer.Vertical(12.dp)
+            Spacer.Vertical(4.dp)
             Texts.SubHeadline("Subheadline")
-            Spacer.Vertical(12.dp)
+            Spacer.Vertical(4.dp)
             Texts.Headline("Headline")
-            Spacer.Vertical(12.dp)
+            Spacer.Vertical(4.dp)
             Texts.Title("Title")
         }
     }
