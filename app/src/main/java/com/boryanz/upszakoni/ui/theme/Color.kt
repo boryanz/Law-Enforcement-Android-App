@@ -14,4 +14,4 @@ val BaseContent = Color(0xFF30313D)
 val BaseContent2 = Color(0xFF06AB78)
 val Base100 = Color(0xFFFFFFFF)
 
-val BaseContent1 = Color(0xFF0084EE)
+val BaseContent1 = Color(0xFF233D66)
