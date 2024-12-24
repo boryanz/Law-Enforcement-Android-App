@@ -73,7 +73,7 @@ fun NavigationDrawer(
                                     contentDescription = null
                                 )
                             },
-                            label = { Text(text = "Чести прекршоци") },
+                            label = { Text(text = "Најчести прекршоци") },
                             selected = false,
                             onClick = { onItemClicked(NavigationDrawerDestination.offenses) }
                         )
@@ -88,7 +88,7 @@ fun NavigationDrawer(
                                     contentDescription = null
                                 )
                             },
-                            label = { Text(text = "Чести кривични дела") },
+                            label = { Text(text = "Најчести кривични дела") },
                             selected = false,
                             onClick = { onItemClicked(NavigationDrawerDestination.crimes) }
                         )
@@ -104,7 +104,7 @@ fun NavigationDrawer(
                                     contentDescription = null
                                 )
                             },
-                            label = { Text(text = "Твои овластувања") },
+                            label = { Text(text = "Полициски овластувања") },
                             selected = false,
                             onClick = { onItemClicked(NavigationDrawerDestination.authorities) }
                         )
@@ -123,54 +123,53 @@ fun NavigationDrawer(
                             selected = false,
                             onClick = { onItemClicked(NavigationDrawerDestination.writing_guide) }
                         )
-                        HorizontalDivider()
-                        Spacer.Vertical(14.dp)
-                        NavigationDrawerItem(
-                            icon = {
-                                Icon(
-                                    modifier = Modifier
-                                        .height(20.dp)
-                                        .width(20.dp),
-                                    painter = painterResource(R.drawable.prekrsok),
-                                    contentDescription = null
-                                )
-                            },
-                            label = { Text(text = "Потраги и исчезнати лица") },
-                            selected = false,
-                            onClick = { onItemClicked(NavigationDrawerDestination.wanted_criminals) }
-                        )
-                        HorizontalDivider()
-                        NavigationDrawerItem(
-                            icon = {
-                                Icon(
-                                    modifier = Modifier
-                                        .height(20.dp)
-                                        .width(20.dp),
-                                    painter = painterResource(R.drawable.vesti),
-                                    contentDescription = null
-                                )
-                            },
-                            label = { Text(text = "Дневен билтен") },
-                            selected = false,
-                            onClick = { onItemClicked(NavigationDrawerDestination.daily_news) }
-                        )
-                        HorizontalDivider()
-                        Spacer.Vertical(14.dp)
-                        NavigationDrawerItem(
-                            icon = {
-                                Icon(
-                                    modifier = Modifier
-                                        .height(20.dp)
-                                        .width(20.dp),
-                                    painter = painterResource(R.drawable.phone_solid),
-                                    contentDescription = null
-                                )
-                            },
-                            label = { Text(text = "Броеви од ПС - СВР Скопје") },
-                            selected = false,
-                            onClick = { onItemClicked(NavigationDrawerDestination.phone_numbers) }
-                        )
                         Spacer.Vertical(24.dp)
+//                        NavigationDrawerItem(
+//                            icon = {
+//                                Icon(
+//                                    modifier = Modifier
+//                                        .height(20.dp)
+//                                        .width(20.dp),
+//                                    painter = painterResource(R.drawable.prekrsok),
+//                                    contentDescription = null
+//                                )
+//                            },
+//                            label = { Text(text = "Потраги и исчезнати лица") },
+//                            selected = false,
+//                            onClick = { onItemClicked(NavigationDrawerDestination.wanted_criminals) }
+//                        )
+//                        HorizontalDivider()
+//                        NavigationDrawerItem(
+//                            icon = {
+//                                Icon(
+//                                    modifier = Modifier
+//                                        .height(20.dp)
+//                                        .width(20.dp),
+//                                    painter = painterResource(R.drawable.vesti),
+//                                    contentDescription = null
+//                                )
+//                            },
+//                            label = { Text(text = "Дневен билтен") },
+//                            selected = false,
+//                            onClick = { onItemClicked(NavigationDrawerDestination.daily_news) }
+//                        )
+//                        HorizontalDivider()
+//                        Spacer.Vertical(14.dp)
+//                        NavigationDrawerItem(
+//                            icon = {
+//                                Icon(
+//                                    modifier = Modifier
+//                                        .height(20.dp)
+//                                        .width(20.dp),
+//                                    painter = painterResource(R.drawable.phone_solid),
+//                                    contentDescription = null
+//                                )
+//                            },
+//                            label = { Text(text = "Броеви од ПС - СВР Скопје") },
+//                            selected = false,
+//                            onClick = { onItemClicked(NavigationDrawerDestination.phone_numbers) }
+//                        )
+//                        Spacer.Vertical(24.dp)
                         NavigationDrawerItem(
                             icon = {
                                 Icon(

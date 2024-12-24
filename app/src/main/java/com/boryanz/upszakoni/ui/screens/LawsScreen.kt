@@ -59,7 +59,7 @@ fun LawsScreen(
             )
             Spacer(modifier = Modifier.padding(vertical = 4.dp))
             LazyColumn {
-                items(laws.filter { it.contains(searchQuery) }, key = { it }) {
+                items(laws.filter { it.contains(searchQuery, ignoreCase = true) }, key = { it }) {
                     TitleItem(
                         isEnabled = true,
                         title = it.replace(".pdf", "").trim(),
