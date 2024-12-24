@@ -22,3 +22,6 @@ data object PhoneNumbers
 
 @Serializable
 data object PrivacyPolicy
+
+@Serializable
+data object PrivacyPolicyAcceptance

@@ -3,6 +3,7 @@ package com.boryanz.upszakoni.navigation.navgraph
 import android.content.Context
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.os.bundleOf
 import androidx.navigation.NavHostController
@@ -22,12 +23,15 @@ import com.boryanz.upszakoni.navigation.destinations.Offenses
 import com.boryanz.upszakoni.navigation.destinations.PhoneNumbers
 import com.boryanz.upszakoni.navigation.destinations.PoliceAuthorities
 import com.boryanz.upszakoni.navigation.destinations.PrivacyPolicy
+import com.boryanz.upszakoni.navigation.destinations.PrivacyPolicyAcceptance
+import com.boryanz.upszakoni.storage.sharedprefs.SharedPrefsDao
 import com.boryanz.upszakoni.ui.screens.CommonOffensesAndCrimes
 import com.boryanz.upszakoni.ui.screens.LawsScreen
 import com.boryanz.upszakoni.ui.screens.PdfViewerActivity
 import com.boryanz.upszakoni.ui.screens.GoldenCrimeQuestionsScreen
 import com.boryanz.upszakoni.ui.screens.PhoneNumbersScreen
 import com.boryanz.upszakoni.ui.screens.PoliceAuthoritiesScreen
+import com.boryanz.upszakoni.ui.screens.PrivacyPolicyAcceptanceScreen
 import com.boryanz.upszakoni.ui.screens.PrivacyPolicyScreen
 import com.boryanz.upszakoni.utils.openDialer
 import com.boryanz.upszakoni.utils.supportExternalPdfReader
@@ -41,11 +45,19 @@ fun NavigationGraph(
     navHostController: NavHostController = rememberNavController(),
 ) {
     val context = LocalContext.current
+    val sharedPrefsDao = remember { SharedPrefsDao(context) }
     val isInDarkMode = isSystemInDarkTheme()
     NavHost(
         navController = navHostController,
-        startDestination = Laws
+        startDestination = if (sharedPrefsDao.isPrivacyPolicyAccepted()) Laws else PrivacyPolicyAcceptance
     ) {
+
+        composable<PrivacyPolicyAcceptance> {
+            PrivacyPolicyAcceptanceScreen(
+                onContinueClicked = { navHostController.navigate(Laws) }
+            )
+        }
+
         composable<Offenses> {
             CommonOffensesAndCrimes(
                 title = "Прекршоци",
