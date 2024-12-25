@@ -4,6 +4,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -24,8 +25,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -61,7 +64,16 @@ fun NavigationDrawer(
                 ) {
                     Column {
                         Spacer.Vertical(12.dp)
-                        Text("УПС", modifier = Modifier.padding(16.dp))
+                        Row(horizontalArrangement = Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
+                            Icon(
+                                modifier = Modifier.padding(start = 12.dp).width(20.dp).height(20.dp),
+                                painter = painterResource(R.drawable.policeman),
+                                contentDescription = null
+                            )
+                            Spacer.Horizontal(8.dp)
+
+                            Text(text = "УПС", modifier = Modifier.padding(16.dp), fontWeight = FontWeight.Bold)
+                        }
                         HorizontalDivider()
                         NavigationDrawerItem(
                             icon = {

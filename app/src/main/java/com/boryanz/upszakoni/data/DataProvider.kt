@@ -139,25 +139,25 @@ val offensesItems = listOf(
         pagesToLoad = listOf(6,7)
     ),
     Offense(
-        lawName = "Закон за прекршоци против јрм.pdf",
+        lawName = "Закон за прекршоци против ЈРМ.pdf",
         title = "Учество и потикнување на тепачка",
         description = "чл. 11 од ЗППЈРМ",
         pagesToLoad = listOf(1,2)
     ),
     Offense(
-        lawName = "Закон за прекршоци против јрм.pdf",
+        lawName = "Закон за прекршоци против ЈРМ.pdf",
         title = "Физички напад",
         description = "чл. 12 ст. 1 од ЗППЈРМ",
         pagesToLoad = listOf(2)
     ),
     Offense(
-        lawName = "Закон за прекршоци против јрм.pdf",
+        lawName = "Закон за прекршоци против ЈРМ.pdf",
         title = "Непочитување наредба на УПС",
         description = "чл. 14 од ЗППЈРМ",
         pagesToLoad = listOf(2)
     ),
     Offense(
-        lawName = "Закон за прекршоци против јрм.pdf",
+        lawName = "Закон за прекршоци против ЈРМ.pdf",
         title = "Фрлање или кршење шишиња, чаши и други предмети",
         description = "чл. 5 од ЗППЈРМ",
         pagesToLoad = listOf(1)
@@ -181,25 +181,25 @@ val offensesItems = listOf(
         pagesToLoad = listOf(4, 5)
     ),
     Offense(
-        lawName = "Закон за прекршоци против јрм.pdf",
+        lawName = "Закон за прекршоци против ЈРМ.pdf",
         title = "Малтретирање друг на јавно место",
         description = "чл. 10 став 1 од ЗППЈРМ",
         pagesToLoad = listOf(1, 2),
     ),
     Offense(
-        lawName = "Закон за прекршоци против јрм.pdf",
+        lawName = "Закон за прекршоци против ЈРМ.pdf",
         title = "Карање, викање или непристојно дрско однесување",
         description = "чл. 4 од ЗППЈРМ",
         pagesToLoad = listOf(0)
     ),
     Offense(
-        lawName = "Закон за прекршоци против јрм.pdf",
+        lawName = "Закон за прекршоци против ЈРМ.pdf",
         title = "Омаловажување на полициски службеник",
         description = "чл. 13 став 2 од ЗППЈРМ",
         pagesToLoad = listOf(2)
     ),
     Offense(
-        lawName = "Закон за прекршоци против јрм.pdf",
+        lawName = "Закон за прекршоци против ЈРМ.pdf",
         title = "Оддвање на уживање на наркотични дроги",
         description = "чл. 20 од ЗППЈРМ",
         pagesToLoad = listOf(3)
