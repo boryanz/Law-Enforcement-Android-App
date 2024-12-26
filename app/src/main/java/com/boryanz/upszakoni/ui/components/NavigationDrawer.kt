@@ -135,7 +135,6 @@ fun NavigationDrawer(
                             selected = false,
                             onClick = { onItemClicked(NavigationDrawerDestination.writing_guide) }
                         )
-                        Spacer.Vertical(24.dp)
 //                        NavigationDrawerItem(
 //                            icon = {
 //                                Icon(
@@ -165,23 +164,22 @@ fun NavigationDrawer(
 //                            selected = false,
 //                            onClick = { onItemClicked(NavigationDrawerDestination.daily_news) }
 //                        )
-//                        HorizontalDivider()
-//                        Spacer.Vertical(14.dp)
-//                        NavigationDrawerItem(
-//                            icon = {
-//                                Icon(
-//                                    modifier = Modifier
-//                                        .height(20.dp)
-//                                        .width(20.dp),
-//                                    painter = painterResource(R.drawable.phone_solid),
-//                                    contentDescription = null
-//                                )
-//                            },
-//                            label = { Text(text = "Броеви од ПС - СВР Скопје") },
-//                            selected = false,
-//                            onClick = { onItemClicked(NavigationDrawerDestination.phone_numbers) }
-//                        )
-//                        Spacer.Vertical(24.dp)
+                        HorizontalDivider()
+                        NavigationDrawerItem(
+                            icon = {
+                                Icon(
+                                    modifier = Modifier
+                                        .height(20.dp)
+                                        .width(20.dp),
+                                    painter = painterResource(R.drawable.phone_solid),
+                                    contentDescription = null
+                                )
+                            },
+                            label = { Text(text = "Броеви од ПС - СВР Скопје") },
+                            selected = false,
+                            onClick = { onItemClicked(NavigationDrawerDestination.phone_numbers) }
+                        )
+                        Spacer.Vertical(24.dp)
                         NavigationDrawerItem(
                             icon = {
                                 Icon(
