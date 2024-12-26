@@ -11,20 +11,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.boryanz.upszakoni.data.privacyPolictyText
-import com.boryanz.upszakoni.ui.components.Icons
 import com.boryanz.upszakoni.ui.components.Spacer
 import com.boryanz.upszakoni.ui.components.UpsScaffold
 
 @Composable
 fun PrivacyPolicyScreen(
     continueButton: (@Composable () -> Unit)? = null,
-    onBackClicked: () -> Unit,
+    backButton: @Composable () -> Unit,
 ) {
     UpsScaffold(
         topBarTitle = { Text(text = "Политика за приватност") },
-        navigationIcon = {
-            Icons.Back(onClick = onBackClicked)
-        }
+        navigationIcon = { backButton() }
     ) {
         Column(
             modifier = Modifier

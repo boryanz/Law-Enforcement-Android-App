@@ -9,7 +9,7 @@ import com.boryanz.upszakoni.ui.components.Button
 @Composable
 fun PrivacyPolicyAcceptanceScreen(
     onContinueClicked: () -> Unit,
-    onBackClicked: () -> Unit,
+    backButton: @Composable () -> Unit,
 ) {
     val context = LocalContext.current
     val sharedPrefsDao = remember { SharedPrefsDao(context) }
@@ -20,6 +20,7 @@ fun PrivacyPolicyAcceptanceScreen(
                 onContinueClicked()
             })
         },
-        onBackClicked = onBackClicked
+        backButton = { backButton() }
+
     )
 }

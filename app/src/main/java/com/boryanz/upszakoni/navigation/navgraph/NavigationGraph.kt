@@ -25,6 +25,7 @@ import com.boryanz.upszakoni.navigation.destinations.PoliceAuthorities
 import com.boryanz.upszakoni.navigation.destinations.PrivacyPolicy
 import com.boryanz.upszakoni.navigation.destinations.PrivacyPolicyAcceptance
 import com.boryanz.upszakoni.storage.sharedprefs.SharedPrefsDao
+import com.boryanz.upszakoni.ui.components.Icons
 import com.boryanz.upszakoni.ui.screens.CommonOffensesAndCrimes
 import com.boryanz.upszakoni.ui.screens.LawsScreen
 import com.boryanz.upszakoni.ui.screens.PdfViewerActivity
@@ -55,7 +56,7 @@ fun NavigationGraph(
         composable<PrivacyPolicyAcceptance> {
             PrivacyPolicyAcceptanceScreen(
                 onContinueClicked = { navHostController.navigate(Laws) },
-                onBackClicked = { navHostController.navigateUp() }
+                backButton = {}
             )
         }
 
@@ -116,7 +117,9 @@ fun NavigationGraph(
 
         composable<PrivacyPolicy> {
             PrivacyPolicyScreen(
-                onBackClicked = { navHostController.navigateUp() }
+                backButton = {
+                    Icons.Back(onClick = { navHostController.navigateUp() })
+                }
             )
         }
 
