@@ -16,6 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.boryanz.upszakoni.data.model.Category
 import com.boryanz.upszakoni.ui.components.CategoryHeader
+import com.boryanz.upszakoni.ui.components.Icons
 import com.boryanz.upszakoni.ui.components.ItemWithDescription
 import com.boryanz.upszakoni.ui.components.UpsScaffold
 
@@ -27,9 +28,13 @@ fun CommonOffensesAndCrimes(
     title: String,
     commonCrimesItems: List<Category>,
     onCrimeClicked: PdfData,
+    onBackClicked: () -> Unit,
 ) {
     UpsScaffold(
-        topBarTitle = { Text(text = title, fontWeight = FontWeight.Bold) }
+        topBarTitle = { Text(text = title, fontWeight = FontWeight.Bold) },
+        navigationIcon = {
+            Icons.Back(onClick = onBackClicked)
+        }
     ) { paddingValues ->
         Column(
             modifier = Modifier

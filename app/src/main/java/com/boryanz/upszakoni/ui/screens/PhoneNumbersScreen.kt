@@ -14,15 +14,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.boryanz.upszakoni.data.phoneNumbers
+import com.boryanz.upszakoni.ui.components.Icons
 import com.boryanz.upszakoni.ui.components.ItemWithDescription
 import com.boryanz.upszakoni.ui.components.UpsScaffold
 
 @Composable
 fun PhoneNumbersScreen(
     onContactClicked: (phoneNumber: String) -> Unit,
+    onBackClicked: () -> Unit,
 ) {
     UpsScaffold(
-        topBarTitle = { Text(text = "Контакти од ПС", fontWeight = FontWeight.Bold) }
+        topBarTitle = { Text(text = "Контакти од ПС", fontWeight = FontWeight.Bold) },
+        navigationIcon = {
+            Icons.Back(onClick = onBackClicked)
+        }
     ) { paddingValues ->
         Column(
             modifier = Modifier

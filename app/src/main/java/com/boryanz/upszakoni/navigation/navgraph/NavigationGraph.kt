@@ -54,7 +54,8 @@ fun NavigationGraph(
 
         composable<PrivacyPolicyAcceptance> {
             PrivacyPolicyAcceptanceScreen(
-                onContinueClicked = { navHostController.navigate(Laws) }
+                onContinueClicked = { navHostController.navigate(Laws) },
+                onBackClicked = { navHostController.navigateUp() }
             )
         }
 
@@ -69,6 +70,7 @@ fun NavigationGraph(
                         isInDarkMode = isInDarkMode
                     )
                 },
+                onBackClicked = { navHostController.navigateUp() }
             )
         }
 
@@ -82,28 +84,40 @@ fun NavigationGraph(
                         pagesToLoad = pagesToLoad,
                         isInDarkMode = isInDarkMode
                     )
-                }
+                },
+                onBackClicked = { navHostController.navigateUp() }
             )
         }
 
         composable<PoliceAuthorities> {
-            PoliceAuthoritiesScreen("Полициски овластувања", policeAuthorities)
+            PoliceAuthoritiesScreen(
+                topBarTitle = "Полициски овластувања",
+                items = policeAuthorities,
+                onBackClicked = { navHostController.navigateUp() }
+            )
         }
 
         composable<GoldenCrimeQuestions> {
-            GoldenCrimeQuestionsScreen("Водич за службена белешка", goldenQuestions)
+            GoldenCrimeQuestionsScreen(
+                topBarTitle = "Водич за службена белешка",
+                items = goldenQuestions,
+                onBackClicked = { navHostController.navigateUp() }
+            )
         }
 
         composable<PhoneNumbers> {
             PhoneNumbersScreen(
                 onContactClicked = { phoneNumber ->
                     context.openDialer(phoneNumber)
-                }
+                },
+                onBackClicked = { navHostController.navigateUp() }
             )
         }
 
         composable<PrivacyPolicy> {
-            PrivacyPolicyScreen()
+            PrivacyPolicyScreen(
+                onBackClicked = { navHostController.navigateUp() }
+            )
         }
 
         composable<Laws> {

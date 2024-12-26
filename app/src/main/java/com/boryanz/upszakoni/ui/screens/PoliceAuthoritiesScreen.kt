@@ -7,7 +7,12 @@ import com.boryanz.upszakoni.ui.components.BasicTitleListScreen
 @Composable
 fun PoliceAuthoritiesScreen(
     topBarTitle: String,
-    items: List<TitleItem>
+    items: List<TitleItem>,
+    onBackClicked: () -> Unit,
 ) {
-    BasicTitleListScreen(topBarTitle, items)
+    BasicTitleListScreen(
+        topBarTitle = topBarTitle,
+        items = items,
+        onBackClicked = onBackClicked
+    )
 }

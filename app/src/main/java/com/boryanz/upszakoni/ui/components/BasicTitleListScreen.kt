@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.key.Key.Companion.I
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -20,9 +21,13 @@ import com.boryanz.upszakoni.ui.theme.KataSampleAppTheme
 fun BasicTitleListScreen(
     topBarTitle: String,
     items: List<TitleItem>,
+    onBackClicked: () -> Unit,
 ) {
     UpsScaffold(
         topBarTitle = { Text(text = topBarTitle, fontWeight = FontWeight.Bold) },
+        navigationIcon = {
+            Icons.Back(onClick = onBackClicked)
+        }
     ) { contentPadding ->
         Column(
             modifier = Modifier
@@ -47,6 +52,11 @@ fun BasicTitleListScreen(
 @Composable
 private fun PoliceAuthorityScreenPreview() {
     KataSampleAppTheme {
-        BasicTitleListScreen("Овластувања", listOf(TitleItem("Basic title")))
+        BasicTitleListScreen(
+            topBarTitle = "Овластувања",
+            items = listOf(TitleItem("Basic title")),
+            onBackClicked = {  }
+
+        )
     }
 }
