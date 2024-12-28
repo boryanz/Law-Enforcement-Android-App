@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.boryanz.upszakoni.data.NavigationDrawerDestination
 import com.boryanz.upszakoni.ui.components.NavigationDrawer
 import com.boryanz.upszakoni.ui.components.Spacer
+import com.boryanz.upszakoni.ui.components.SwipeToDismiss
 import com.boryanz.upszakoni.ui.components.TitleItem
 
 @Composable
@@ -60,11 +61,18 @@ fun LawsScreen(
             Spacer(modifier = Modifier.padding(vertical = 4.dp))
             LazyColumn {
                 items(laws.filter { it.contains(searchQuery, ignoreCase = true) }, key = { it }) {
-                    TitleItem(
-                        isEnabled = true,
-                        title = it.replace(".pdf", "").trim(),
-                        onClick = { onLawClick(it) })
-                    Spacer.Vertical(4.dp)
+                    SwipeToDismiss(
+                        content = {
+                            TitleItem(
+                                isEnabled = true,
+                                title = it.replace(".pdf", "").trim(),
+                                onClick = { onLawClick(it) })
+                        },
+                        onItemSwiped = {
+                            //here goes viewmodel
+                        }
+                    )
+                    Spacer.Vertical(2.dp)
                 }
             }
         }
