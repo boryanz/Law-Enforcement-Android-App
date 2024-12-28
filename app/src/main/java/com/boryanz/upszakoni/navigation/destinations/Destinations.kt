@@ -25,3 +25,6 @@ data object PrivacyPolicy
 
 @Serializable
 data object PrivacyPolicyAcceptance
+
+@Serializable
+data object ArchivedLaws

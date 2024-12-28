@@ -3,6 +3,7 @@ package com.boryanz.upszakoni.storage.sharedprefs
 import android.content.Context
 
 private const val privacy_policy_acceptance_key = "privacyPolicyAcceptance"
+private const val archive_law_key = "archive"
 
 class SharedPrefsDao(
     context: Context
@@ -16,5 +17,13 @@ class SharedPrefsDao(
 
     fun isPrivacyPolicyAccepted(): Boolean {
         return sharedPrefs.getBoolean(privacy_policy_acceptance_key, false)
+    }
+
+    fun archiveLaw(lawName: String) {
+        sharedPrefs.edit().putString("$archive_law_key/$lawName", lawName).apply()
+    }
+
+    fun contains(lawName: String): Boolean {
+        return sharedPrefs.contains("$archive_law_key/$lawName")
     }
 }

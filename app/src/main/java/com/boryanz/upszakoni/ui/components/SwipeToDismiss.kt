@@ -6,7 +6,6 @@ import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import kotlin.math.absoluteValue
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -30,7 +29,7 @@ fun SwipeToDismiss(
             return@rememberSwipeToDismissBoxState true
         },
         // positional threshold of 25%
-        positionalThreshold = { it * .80f }
+        positionalThreshold = { it * .95f }
     )
     SwipeToDismissBox(
         state = dismissState,

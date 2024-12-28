@@ -16,6 +16,7 @@ import com.boryanz.upszakoni.data.crimesItems
 import com.boryanz.upszakoni.data.goldenQuestions
 import com.boryanz.upszakoni.data.offensesItems
 import com.boryanz.upszakoni.data.policeAuthorities
+import com.boryanz.upszakoni.navigation.destinations.ArchivedLaws
 import com.boryanz.upszakoni.navigation.destinations.Crimes
 import com.boryanz.upszakoni.navigation.destinations.GoldenCrimeQuestions
 import com.boryanz.upszakoni.navigation.destinations.Laws
@@ -27,7 +28,7 @@ import com.boryanz.upszakoni.navigation.destinations.PrivacyPolicyAcceptance
 import com.boryanz.upszakoni.storage.sharedprefs.SharedPrefsDao
 import com.boryanz.upszakoni.ui.components.Icons
 import com.boryanz.upszakoni.ui.screens.CommonOffensesAndCrimes
-import com.boryanz.upszakoni.ui.screens.LawsScreen
+import com.boryanz.upszakoni.ui.screens.laws.LawsScreen
 import com.boryanz.upszakoni.ui.screens.PdfViewerActivity
 import com.boryanz.upszakoni.ui.screens.GoldenCrimeQuestionsScreen
 import com.boryanz.upszakoni.ui.screens.PhoneNumbersScreen
@@ -140,6 +141,10 @@ fun NavigationGraph(
                     }
                 }
             )
+        }
+
+        composable<ArchivedLaws> {
+
         }
     }
 }
