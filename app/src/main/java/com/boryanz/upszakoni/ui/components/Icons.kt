@@ -2,9 +2,11 @@ package com.boryanz.upszakoni.ui.components
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Archive
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.boryanz.upszakoni.ui.theme.Base100
 
@@ -16,6 +18,14 @@ object Icons {
     ) {
         Base(
             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+            onClick = onClick
+        )
+    }
+
+    @Composable
+    fun Archive(onClick: () -> Unit) {
+        Base(
+            imageVector = Icons.Default.Archive,
             onClick = onClick
         )
     }
@@ -33,4 +43,5 @@ object Icons {
             )
         })
     }
+
 }

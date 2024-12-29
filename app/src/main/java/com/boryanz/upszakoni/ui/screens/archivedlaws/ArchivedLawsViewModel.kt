@@ -1,4 +1,4 @@
-package com.boryanz.upszakoni.ui.screens.laws
+package com.boryanz.upszakoni.ui.screens.archivedlaws
 
 import androidx.lifecycle.viewModelScope
 import com.boryanz.upszakoni.storage.sharedprefs.SharedPrefsDao
@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class LawsViewModel : UpsViewModel<ScreenAction>() {
+class ArchivedLawsViewModel : UpsViewModel<ScreenAction>() {
 
     private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
     val uiState = _uiState.asStateFlow()
@@ -19,11 +19,6 @@ class LawsViewModel : UpsViewModel<ScreenAction>() {
         viewModelScope.launch {
             val sharedPrefsDao = SharedPrefsDao(event.context)
             when (event) {
-                is ScreenAction.LawSwiped -> {
-                    sharedPrefsDao.archiveLaw(event.lawName)
-                    _uiState.update { it.copy(laws = uiState.value.laws.filterAvailableLaws(sharedPrefsDao)) }
-                }
-
                 is ScreenAction.GetLaws -> {
                     val laws = event.context.assets.list("")?.mapNotNull { it }.orEmpty()
                         .filter { it.contains(".pdf") }
@@ -31,9 +26,15 @@ class LawsViewModel : UpsViewModel<ScreenAction>() {
                     val availableLaws = laws.filterAvailableLaws(sharedPrefsDao)
                     _uiState.update { UiState(availableLaws) }
                 }
+
+                is ScreenAction.LawSwiped -> {
+                    sharedPrefsDao.removeArchivedLaw(event.lawName)
+                    _uiState.update { it.copy(laws = uiState.value.laws.filterAvailableLaws(sharedPrefsDao)) }
+                }
             }
         }
     }
 
-    private fun List<String>.filterAvailableLaws(sharedPrefsDao: SharedPrefsDao) = filterNot { sharedPrefsDao.contains(it) }
+    private fun List<String>.filterAvailableLaws(sharedPrefsDao: SharedPrefsDao) =
+        filter { sharedPrefsDao.contains(it) }
 }

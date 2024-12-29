@@ -3,41 +3,34 @@ package com.boryanz.upszakoni.ui.components
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.SwipeToDismissBoxValue
-import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+
+
+import com.boryanz.upszakoni.utils.dismissState
 import kotlin.math.absoluteValue
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SwipeToDismiss(
+    enableDismissing: Boolean,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
+    dismissIcon: @Composable () -> Unit,
     onItemSwiped: () -> Unit
 ) {
-    val dismissState = rememberSwipeToDismissBoxState(
-        confirmValueChange = {
-            when (it) {
-                SwipeToDismissBoxValue.StartToEnd -> { /* do nothing */ }
-
-                SwipeToDismissBoxValue.EndToStart -> {
-                    onItemSwiped()
-                }
-
-                SwipeToDismissBoxValue.Settled -> return@rememberSwipeToDismissBoxState false
-            }
-            return@rememberSwipeToDismissBoxState true
-        },
-        // positional threshold of 25%
-        positionalThreshold = { it * .95f }
-    )
+    val dismissState = dismissState(onItemSwiped = onItemSwiped)
     SwipeToDismissBox(
-        state = dismissState,
+        state = dismissState ,
         modifier = modifier,
         enableDismissFromStartToEnd = false,
+        enableDismissFromEndToStart = enableDismissing,
         backgroundContent = {
-            if (dismissState.progress.absoluteValue > 0.2 && dismissState.dismissDirection == SwipeToDismissBoxValue.EndToStart) {
-                DismissBackground(dismissState = dismissState)
+            if (dismissState.progress.absoluteValue < 0.8 && dismissState.dismissDirection == SwipeToDismissBoxValue.EndToStart) {
+                DismissBackground(
+                    value = dismissState.dismissDirection,
+                    icon = { dismissIcon() }
+                )
             }
         },
         content = {

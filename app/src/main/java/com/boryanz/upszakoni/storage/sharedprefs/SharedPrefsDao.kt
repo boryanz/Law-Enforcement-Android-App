@@ -23,6 +23,10 @@ class SharedPrefsDao(
         sharedPrefs.edit().putString("$archive_law_key/$lawName", lawName).apply()
     }
 
+    fun removeArchivedLaw(lawName: String) {
+        sharedPrefs.edit().remove("$archive_law_key/$lawName").apply()
+    }
+
     fun contains(lawName: String): Boolean {
         return sharedPrefs.contains("$archive_law_key/$lawName")
     }

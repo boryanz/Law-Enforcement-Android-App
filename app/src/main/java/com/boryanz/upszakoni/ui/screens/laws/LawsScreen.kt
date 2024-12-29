@@ -1,5 +1,6 @@
 package com.boryanz.upszakoni.ui.screens.laws
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -8,6 +9,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Archive
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,8 +25,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.boryanz.upszakoni.data.NavigationDrawerDestination
@@ -29,11 +32,13 @@ import com.boryanz.upszakoni.ui.components.NavigationDrawer
 import com.boryanz.upszakoni.ui.components.Spacer
 import com.boryanz.upszakoni.ui.components.SwipeToDismiss
 import com.boryanz.upszakoni.ui.components.TitleItem
+import com.boryanz.upszakoni.ui.screens.common.ScreenAction
 
 @Composable
 fun LawsScreen(
     onLawClick: (String) -> Unit,
     onItemClick: (NavigationDrawerDestination) -> Unit,
+    onArchivedLawsClicked: () -> Unit,
     viewModel: LawsViewModel = viewModel()
 ) {
     val context = LocalContext.current
@@ -42,10 +47,12 @@ fun LawsScreen(
     }
     NavigationDrawer(
         screenTitle = "Закони",
-        onItemClicked = { onItemClick(it) }
+        onItemClicked = { onItemClick(it) },
+        onArchivedLawsClicked = onArchivedLawsClicked
     ) {
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
         var searchQuery by remember { mutableStateOf("") }
+        val lazyListState = rememberLazyListState()
 
         Column(
             modifier = Modifier
@@ -65,7 +72,9 @@ fun LawsScreen(
             )
             Spacer(modifier = Modifier.padding(vertical = 4.dp))
             LazyColumn {
-                items(uiState.laws.filter { it.contains(searchQuery, ignoreCase = true) }, key = { it }) {
+                items(
+                    uiState.laws.filter { it.contains(searchQuery, ignoreCase = true) },
+                    key = { it }) {
                     SwipeToDismiss(
                         content = {
                             TitleItem(
@@ -75,7 +84,17 @@ fun LawsScreen(
                         },
                         onItemSwiped = {
                             viewModel.onUiEvent(ScreenAction.LawSwiped(context = context, it))
-                        }
+                            Toast.makeText(context, "Законот ставен во архива", Toast.LENGTH_SHORT)
+                                .show()
+
+                        },
+                        dismissIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Archive,
+                                contentDescription = "Archive"
+                            )
+                        },
+                        enableDismissing = !lazyListState.isScrollInProgress
                     )
                     Spacer.Vertical(2.dp)
                 }

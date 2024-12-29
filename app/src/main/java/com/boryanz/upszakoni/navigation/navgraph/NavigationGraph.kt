@@ -35,6 +35,7 @@ import com.boryanz.upszakoni.ui.screens.PhoneNumbersScreen
 import com.boryanz.upszakoni.ui.screens.PoliceAuthoritiesScreen
 import com.boryanz.upszakoni.ui.screens.PrivacyPolicyAcceptanceScreen
 import com.boryanz.upszakoni.ui.screens.PrivacyPolicyScreen
+import com.boryanz.upszakoni.ui.screens.archivedlaws.ArchivedLawsScreen
 import com.boryanz.upszakoni.utils.openDialer
 import com.boryanz.upszakoni.utils.supportExternalPdfReader
 import com.boryanz.upszakoni.utils.openPdfWithExternalReader
@@ -130,22 +131,36 @@ fun NavigationGraph(
                     navHostController.navigateToDrawerDestination(navigationDrawerDestination)
                 },
                 onLawClick = { lawName ->
-                    val bundle = bundleOf(
-                        PdfViewerActivity.BUNDLE_LAW_TITLE to lawName,
-                        PdfViewerActivity.BUNDLE_IS_DARK_MODE to isInDarkMode
-                    )
-                    if (supportExternalPdfReader(context)) {
-                        openPdfWithExternalReader(context, lawName)
-                    } else {
-                        context.startActivity(PdfViewerActivity.createIntent(context, bundle))
-                    }
+                    openPdfLaw(lawName, isInDarkMode, context)
+                },
+                onArchivedLawsClicked = {
+                    navHostController.navigate(ArchivedLaws)
                 }
             )
         }
 
         composable<ArchivedLaws> {
-
+            ArchivedLawsScreen(
+                onItemClick = { lawName -> openPdfLaw(lawName, isInDarkMode, context) },
+                onBackClicked = { navHostController.navigateUp() }
+            )
         }
+    }
+}
+
+private fun openPdfLaw(
+    lawName: String,
+    isInDarkMode: Boolean,
+    context: Context
+) {
+    val bundle = bundleOf(
+        PdfViewerActivity.BUNDLE_LAW_TITLE to lawName,
+        PdfViewerActivity.BUNDLE_IS_DARK_MODE to isInDarkMode
+    )
+    if (supportExternalPdfReader(context)) {
+        openPdfWithExternalReader(context, lawName)
+    } else {
+        context.startActivity(PdfViewerActivity.createIntent(context, bundle))
     }
 }
 
