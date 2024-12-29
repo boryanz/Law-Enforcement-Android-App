@@ -72,7 +72,7 @@ fun ArchivedLawsScreen(
                             TitleItem(
                                 isEnabled = true,
                                 title = it,
-                                onClick = { onItemClick(it) }
+                                onClick = { onItemClick("$it.pdf") }
                             )
                         },
                         dismissIcon = {

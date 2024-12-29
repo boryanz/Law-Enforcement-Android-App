@@ -80,7 +80,7 @@ fun LawsScreen(
                             TitleItem(
                                 isEnabled = true,
                                 title = it,
-                                onClick = { onLawClick(it) })
+                                onClick = { onLawClick("$it.pdf") })
                         },
                         onItemSwiped = {
                             viewModel.onUiEvent(ScreenAction.LawSwiped(context = context, it))
