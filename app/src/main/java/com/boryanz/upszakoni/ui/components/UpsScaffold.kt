@@ -18,6 +18,7 @@ import com.boryanz.upszakoni.ui.theme.KataSampleAppTheme
 fun UpsScaffold(
     topBarTitle: @Composable () -> Unit,
     navigationIcon: @Composable (() -> Unit)? = null,
+    trailingIcon: @Composable (() -> Unit)? = null,
     content: @Composable (PaddingValues) -> Unit,
 ) {
     Scaffold(
@@ -30,6 +31,7 @@ fun UpsScaffold(
                         navigationIcon()
                     }
                 },
+                actions = { trailingIcon?.let { it() } }
             )
         },
         content = { paddingValues ->

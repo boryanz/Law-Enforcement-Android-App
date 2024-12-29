@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.boryanz.upszakoni.R
 import com.boryanz.upszakoni.data.NavigationDrawerDestination
+import com.boryanz.upszakoni.ui.components.Icons.Archive
 import com.boryanz.upszakoni.ui.theme.Base100
 import kotlinx.coroutines.launch
 
@@ -41,6 +42,7 @@ import kotlinx.coroutines.launch
 fun NavigationDrawer(
     screenTitle: String,
     onItemClicked: (NavigationDrawerDestination) -> Unit,
+    onArchivedLawsClicked: () -> Unit,
     content: @Composable (PaddingValues) -> Unit,
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -225,7 +227,8 @@ fun NavigationDrawer(
                         contentDescription = "Menu"
                     )
                 }
-            }
+            },
+            trailingIcon = { Archive(onClick = onArchivedLawsClicked)}
 
         ) { paddingValues ->
             content(paddingValues)
