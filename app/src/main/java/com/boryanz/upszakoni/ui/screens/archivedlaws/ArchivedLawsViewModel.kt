@@ -1,6 +1,7 @@
 package com.boryanz.upszakoni.ui.screens.archivedlaws
 
 import androidx.lifecycle.viewModelScope
+import com.boryanz.upszakoni.domain.GetLawsUseCase
 import com.boryanz.upszakoni.storage.sharedprefs.SharedPrefsDao
 import com.boryanz.upszakoni.ui.screens.common.ScreenAction
 import com.boryanz.upszakoni.ui.screens.common.UiState
@@ -10,7 +11,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class ArchivedLawsViewModel : UpsViewModel<ScreenAction>() {
+class ArchivedLawsViewModel(
+    private val getLawsUseCase: GetLawsUseCase = GetLawsUseCase()
+) : UpsViewModel<ScreenAction>() {
 
     private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
     val uiState = _uiState.asStateFlow()
@@ -20,9 +23,7 @@ class ArchivedLawsViewModel : UpsViewModel<ScreenAction>() {
             val sharedPrefsDao = SharedPrefsDao(event.context)
             when (event) {
                 is ScreenAction.GetLaws -> {
-                    val laws = event.context.assets.list("")?.mapNotNull { it }.orEmpty()
-                        .filter { it.contains(".pdf") }
-
+                    val laws = getLawsUseCase(event.context)
                     val availableLaws = laws.filterAvailableLaws(sharedPrefsDao)
                     _uiState.update { UiState(availableLaws) }
                 }
