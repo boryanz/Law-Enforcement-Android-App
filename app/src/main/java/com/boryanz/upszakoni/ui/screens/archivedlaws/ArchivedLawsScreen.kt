@@ -53,7 +53,7 @@ fun ArchivedLawsScreen(
                     content = {
                         TitleItem(
                             isEnabled = true,
-                            title = it.replace(".pdf", "").trim(),
+                            title = it,
                             onClick = { onItemClick(it) }
                         )
                     },

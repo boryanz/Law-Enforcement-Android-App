@@ -6,6 +6,7 @@ import com.boryanz.upszakoni.storage.sharedprefs.SharedPrefsDao
 import com.boryanz.upszakoni.ui.screens.common.ScreenAction
 import com.boryanz.upszakoni.ui.screens.common.UiState
 import com.boryanz.upszakoni.ui.viewmodel.UpsViewModel
+import com.boryanz.upszakoni.utils.removePdfExtension
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -24,11 +25,17 @@ class LawsViewModel(
             when (event) {
                 is ScreenAction.LawSwiped -> {
                     sharedPrefsDao.archiveLaw(event.lawName)
-                    _uiState.update { it.copy(laws = uiState.value.laws.filterAvailableLaws(sharedPrefsDao)) }
+                    _uiState.update {
+                        it.copy(
+                            laws = uiState.value.laws.filterAvailableLaws(
+                                sharedPrefsDao
+                            )
+                        )
+                    }
                 }
 
                 is ScreenAction.GetLaws -> {
-                    val laws = getLawsUseCase(event.context)
+                    val laws = getLawsUseCase(event.context).map { it.removePdfExtension() }
                     val availableLaws = laws.filterAvailableLaws(sharedPrefsDao)
                     _uiState.update { UiState(availableLaws) }
                 }
@@ -36,5 +43,6 @@ class LawsViewModel(
         }
     }
 
-    private fun List<String>.filterAvailableLaws(sharedPrefsDao: SharedPrefsDao) = filterNot { sharedPrefsDao.contains(it) }
+    private fun List<String>.filterAvailableLaws(sharedPrefsDao: SharedPrefsDao) =
+        filterNot { sharedPrefsDao.contains(it) }
 }
