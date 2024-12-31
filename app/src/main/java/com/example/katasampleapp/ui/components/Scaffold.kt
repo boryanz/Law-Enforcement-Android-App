@@ -13,14 +13,14 @@ import com.example.katasampleapp.ui.theme.KataSampleAppTheme
 object Scaffold {
 
     @Composable
-    fun WithAllNavigation(
+    fun WithFullNavigation(
         modifier: Modifier = Modifier,
         topBar: @Composable () -> Unit,
         bottomBar: @Composable () -> Unit,
         fab: @Composable () -> Unit,
         content: @Composable (PaddingValues) -> Unit
     ) {
-        SampleScaffold(
+        BaseScaffold(
             modifier = modifier,
             topBar = topBar,
             bottomBar = bottomBar,
@@ -36,7 +36,7 @@ object Scaffold {
         fab: @Composable () -> Unit,
         content: @Composable (PaddingValues) -> Unit
     ) {
-        SampleScaffold(
+        BaseScaffold(
             modifier = modifier,
             topBar = topBar,
             floatingActionButton = fab,
@@ -52,7 +52,7 @@ object Scaffold {
         content: @Composable (PaddingValues) -> Unit
     ) {
         NavigationDrawer.WithFooter {
-            SampleScaffold(
+            BaseScaffold(
                 modifier = modifier,
                 topBar = topBar,
                 floatingActionButton = fab,
@@ -67,7 +67,7 @@ object Scaffold {
         fab: @Composable () -> Unit,
         content: @Composable (PaddingValues) -> Unit
     ) {
-        SampleScaffold(
+        BaseScaffold(
             modifier = modifier,
             topBar = {},
             floatingActionButton = fab,
@@ -77,7 +77,7 @@ object Scaffold {
 
 
     @Composable
-    fun SampleScaffold(
+    fun BaseScaffold(
         modifier: Modifier = Modifier,
         topBar: @Composable () -> Unit = {},
         bottomBar: @Composable () -> Unit = {},
