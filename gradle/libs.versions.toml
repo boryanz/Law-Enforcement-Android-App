@@ -19,10 +19,12 @@ androidxCoreSplashscreen = "1.0.1"
 kotlinxSerializationJson = "1.7.1"
 room = "2.6.1"
 ksp = "2.0.21-1.0.26"
-
+firebaseFirestore = "25.1.1"
+googleCloudServices = "4.4.2"
 
 
 [libraries]
+firebaseFirestore = { module = "com.google.firebase:firebase-firestore", version.ref = "firebaseFirestore" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
@@ -62,6 +64,7 @@ kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-
 
 
 [plugins]
+google-cloud-services = { id = "com.google.gms.google-services", version.ref = "googleCloudServices"}
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 room = { id = "androidx.room", version.ref = "room" }
 android-application = { id = "com.android.application", version.ref = "agp" }
