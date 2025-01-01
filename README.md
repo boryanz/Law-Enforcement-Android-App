@@ -7,7 +7,7 @@
 - Koin di setup
 - Room initial setup
 - Shared preferences manager
-- Firebase cloud firestore dependecies
+- Firebase cloud firestore dependencies
 
 
 License
