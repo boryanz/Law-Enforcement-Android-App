@@ -1,8 +1,8 @@
-package com.example.katasampleapp.storage.sharedprefs
+package com.example.katasampleapp.storage.local.sharedprefs
 
 import android.content.Context
-import com.example.katasampleapp.storage.sharedprefs.contracts.SharedPrefsReader
-import com.example.katasampleapp.storage.sharedprefs.contracts.SharedPrefsWriter
+import com.example.katasampleapp.storage.local.sharedprefs.contracts.SharedPrefsReader
+import com.example.katasampleapp.storage.local.sharedprefs.contracts.SharedPrefsWriter
 
 object SharedPrefsInitializer {
 

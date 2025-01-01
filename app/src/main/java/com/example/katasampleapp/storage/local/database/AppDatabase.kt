@@ -1,11 +1,11 @@
-package com.example.katasampleapp.storage.database
+package com.example.katasampleapp.storage.local.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.example.katasampleapp.storage.database.model.SampleModel
+import com.example.katasampleapp.storage.local.database.model.SampleModel
 
 @Database(entities = [SampleModel::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
@@ -25,7 +25,7 @@ abstract class AppDatabase : RoomDatabase() {
                     name = "app_database"
                 )
                     .build()
-                this.instance = instance
+                Companion.instance = instance
                 instance
             }
         }

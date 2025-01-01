@@ -1,4 +1,4 @@
-package com.example.katasampleapp.storage.database
+package com.example.katasampleapp.storage.local.database
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson

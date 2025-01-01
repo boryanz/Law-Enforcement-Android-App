@@ -1,7 +1,7 @@
-package com.example.katasampleapp.storage.sharedprefs
+package com.example.katasampleapp.storage.local.sharedprefs
 
 import android.content.SharedPreferences
-import com.example.katasampleapp.storage.sharedprefs.contracts.SharedPrefsReader
+import com.example.katasampleapp.storage.local.sharedprefs.contracts.SharedPrefsReader
 
 class SharedPrefsReaderImpl(private val sharedPreferences: SharedPreferences) :
     SharedPrefsReader {
