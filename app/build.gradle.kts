@@ -49,7 +49,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
-//    implementation(libs.retrofit.core)
+    implementation(libs.retrofit.core)
 //    implementation(libs.retrofit.bom)
 //    implementation(libs.coil.kt)
 //    implementation(libs.coil.kt.compose)
