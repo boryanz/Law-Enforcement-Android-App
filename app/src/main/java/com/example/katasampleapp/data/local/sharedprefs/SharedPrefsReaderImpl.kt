@@ -1,7 +1,7 @@
-package com.example.katasampleapp.storage.local.sharedprefs
+package com.example.katasampleapp.data.local.sharedprefs
 
 import android.content.SharedPreferences
-import com.example.katasampleapp.storage.local.sharedprefs.contracts.SharedPrefsReader
+import com.example.katasampleapp.data.local.sharedprefs.contracts.SharedPrefsReader
 
 class SharedPrefsReaderImpl(private val sharedPreferences: SharedPreferences) : SharedPrefsReader {
     override fun getDarkModeSetting(key: String): Boolean {

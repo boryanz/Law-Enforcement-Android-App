@@ -1,12 +1,12 @@
-package com.example.katasampleapp.navigation.navgraph
+package com.example.katasampleapp.ui.navigation.navgraph
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.katasampleapp.navigation.destinations.Screen1
-import com.example.katasampleapp.navigation.destinations.Screen2
+import com.example.katasampleapp.ui.navigation.destinations.Screen1
+import com.example.katasampleapp.ui.navigation.destinations.Screen2
 import com.example.katasampleapp.ui.screens.Screen1
 import com.example.katasampleapp.ui.screens.Screen2
 

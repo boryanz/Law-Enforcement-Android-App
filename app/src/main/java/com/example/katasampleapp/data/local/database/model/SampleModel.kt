@@ -1,4 +1,4 @@
-package com.example.katasampleapp.storage.local.database.model
+package com.example.katasampleapp.data.local.database.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

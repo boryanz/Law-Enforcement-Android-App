@@ -1,4 +1,4 @@
-package com.example.katasampleapp.storage.local.sharedprefs.contracts
+package com.example.katasampleapp.data.local.sharedprefs.contracts
 
 interface SharedPrefsReader {
 

@@ -1,10 +1,10 @@
-package com.example.katasampleapp.storage.local.database
+package com.example.katasampleapp.data.local.database
 
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.example.katasampleapp.storage.local.database.model.SampleModel
+import com.example.katasampleapp.data.local.database.model.SampleModel
 
 interface SampleDao {
 

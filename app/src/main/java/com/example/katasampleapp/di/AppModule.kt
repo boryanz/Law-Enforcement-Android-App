@@ -1,7 +1,7 @@
 package com.example.katasampleapp.di
 
-import com.example.katasampleapp.remote.KataRestApi
-import com.example.katasampleapp.remote.KataRestClient
+import com.example.katasampleapp.data.remote.KataRestApi
+import com.example.katasampleapp.data.remote.KataRestClient
 import org.koin.dsl.module
 
 val appModule = module {

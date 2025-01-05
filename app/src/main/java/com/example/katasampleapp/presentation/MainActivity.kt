@@ -1,4 +1,4 @@
-package com.example.katasampleapp
+package com.example.katasampleapp.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.katasampleapp.navigation.navgraph.NavigationGraph
+import com.example.katasampleapp.ui.navigation.navgraph.NavigationGraph
 import com.example.katasampleapp.ui.theme.KataSampleAppTheme
 
 class MainActivity : ComponentActivity() {

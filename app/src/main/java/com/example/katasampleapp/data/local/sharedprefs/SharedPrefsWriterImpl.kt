@@ -1,7 +1,7 @@
-package com.example.katasampleapp.storage.local.sharedprefs
+package com.example.katasampleapp.data.local.sharedprefs
 
 import android.content.SharedPreferences
-import com.example.katasampleapp.storage.local.sharedprefs.contracts.SharedPrefsWriter
+import com.example.katasampleapp.data.local.sharedprefs.contracts.SharedPrefsWriter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

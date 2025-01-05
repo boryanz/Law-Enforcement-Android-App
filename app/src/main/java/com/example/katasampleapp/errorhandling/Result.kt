@@ -8,6 +8,11 @@ sealed class Result<out F, out S> {
     data class Failure<F>(val data: F) : Result<F, Nothing>()
 }
 
+inline fun <F, S, T> Result<F, S>.fold(onFailure: (F) -> T, onSuccess: (S) -> T): T =
+    when (this) {
+        is Result.Failure -> onFailure(data)
+        is Result.Success -> onSuccess(data)
+    }
 
 inline fun <reified S> tryCatch(
     errorHandler: ErrorHandler = GeneralErrorHandler(),
