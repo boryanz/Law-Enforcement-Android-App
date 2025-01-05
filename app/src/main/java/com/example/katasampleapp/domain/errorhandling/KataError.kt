@@ -1,4 +1,4 @@
-package com.example.katasampleapp.errorhandling
+package com.example.katasampleapp.domain.errorhandling
 
 sealed interface KataError {
     data object BadRequest : KataError

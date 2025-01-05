@@ -1,4 +1,4 @@
-package com.example.katasampleapp.data.remote
+package com.example.katasampleapp.data.remote.restapi
 
 import retrofit2.http.GET
 

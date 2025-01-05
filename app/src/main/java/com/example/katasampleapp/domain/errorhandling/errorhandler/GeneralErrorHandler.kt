@@ -1,7 +1,7 @@
-package com.example.katasampleapp.errorhandling.errorhandler
+package com.example.katasampleapp.domain.errorhandling.errorhandler
 
-import com.example.katasampleapp.errorhandling.KataError
-import com.example.katasampleapp.errorhandling.KataException
+import com.example.katasampleapp.domain.errorhandling.KataError
+import com.example.katasampleapp.domain.errorhandling.KataException
 
 
 class GeneralErrorHandler : ErrorHandler {

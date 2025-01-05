@@ -1,4 +1,4 @@
-package com.example.katasampleapp.errorhandling
+package com.example.katasampleapp.domain.errorhandling
 
 import java.io.IOException
 

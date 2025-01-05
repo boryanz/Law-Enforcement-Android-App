@@ -2,14 +2,10 @@ package com.example.katasampleapp.data.local.sharedprefs
 
 import android.content.SharedPreferences
 import com.example.katasampleapp.data.local.sharedprefs.contracts.SharedPrefsWriter
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 class SharedPrefsWriterImpl(private val sharedPrefs: SharedPreferences) : SharedPrefsWriter {
 
-    private val backgroundDispatcher = Dispatchers.IO
-
-    override suspend fun save(key: String, value: Any) = withContext(backgroundDispatcher) {
+    override fun save(key: String, value: Any) {
         with(sharedPrefs) {
             when (value) {
                 is Int -> edit().putInt(key, value).apply()

@@ -6,8 +6,8 @@ import com.example.katasampleapp.data.local.sharedprefs.contracts.SharedPrefsWri
 
 object SharedPrefsInitializer {
 
-    private lateinit var sharedPrefsReader: SharedPrefsReader
-    private lateinit var sharedPrefsWriter: SharedPrefsWriter
+    lateinit var sharedPrefsReader: SharedPrefsReader
+    lateinit var sharedPrefsWriter: SharedPrefsWriter
 
     fun init(context: Context, name: String) {
         val sharedPrefs = context.getSharedPreferences(name, Context.MODE_PRIVATE)

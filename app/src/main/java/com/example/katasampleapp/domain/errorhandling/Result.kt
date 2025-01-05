@@ -1,7 +1,7 @@
-package com.example.katasampleapp.errorhandling
+package com.example.katasampleapp.domain.errorhandling
 
-import com.example.katasampleapp.errorhandling.errorhandler.ErrorHandler
-import com.example.katasampleapp.errorhandling.errorhandler.GeneralErrorHandler
+import com.example.katasampleapp.domain.errorhandling.errorhandler.ErrorHandler
+import com.example.katasampleapp.domain.errorhandling.errorhandler.GeneralErrorHandler
 
 sealed class Result<out F, out S> {
     data class Success<S>(val data: S) : Result<Nothing, S>()
