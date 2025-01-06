@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import com.boryanz.upszakoni.navigation.navgraph.NavigationGraph
+import com.boryanz.upszakoni.ui.navigation.navgraph.NavigationGraph
 import com.boryanz.upszakoni.ui.theme.KataSampleAppTheme
 
 class MainActivity : ComponentActivity() {

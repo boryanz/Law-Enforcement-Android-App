@@ -1,4 +1,4 @@
-package com.boryanz.upszakoni.navigation.navgraph
+package com.boryanz.upszakoni.ui.navigation.navgraph
 
 import android.content.Context
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -16,15 +16,15 @@ import com.boryanz.upszakoni.data.crimesItems
 import com.boryanz.upszakoni.data.goldenQuestions
 import com.boryanz.upszakoni.data.offensesItems
 import com.boryanz.upszakoni.data.policeAuthorities
-import com.boryanz.upszakoni.navigation.destinations.ArchivedLaws
-import com.boryanz.upszakoni.navigation.destinations.Crimes
-import com.boryanz.upszakoni.navigation.destinations.GoldenCrimeQuestions
-import com.boryanz.upszakoni.navigation.destinations.Laws
-import com.boryanz.upszakoni.navigation.destinations.Offenses
-import com.boryanz.upszakoni.navigation.destinations.PhoneNumbers
-import com.boryanz.upszakoni.navigation.destinations.PoliceAuthorities
-import com.boryanz.upszakoni.navigation.destinations.PrivacyPolicy
-import com.boryanz.upszakoni.navigation.destinations.PrivacyPolicyAcceptance
+import com.boryanz.upszakoni.ui.navigation.destinations.ArchivedLaws
+import com.boryanz.upszakoni.ui.navigation.destinations.Crimes
+import com.boryanz.upszakoni.ui.navigation.destinations.GoldenCrimeQuestions
+import com.boryanz.upszakoni.ui.navigation.destinations.Laws
+import com.boryanz.upszakoni.ui.navigation.destinations.Offenses
+import com.boryanz.upszakoni.ui.navigation.destinations.PhoneNumbers
+import com.boryanz.upszakoni.ui.navigation.destinations.PoliceAuthorities
+import com.boryanz.upszakoni.ui.navigation.destinations.PrivacyPolicy
+import com.boryanz.upszakoni.ui.navigation.destinations.PrivacyPolicyAcceptance
 import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsDao
 import com.boryanz.upszakoni.ui.components.Icons
 import com.boryanz.upszakoni.ui.screens.CommonOffensesAndCrimes

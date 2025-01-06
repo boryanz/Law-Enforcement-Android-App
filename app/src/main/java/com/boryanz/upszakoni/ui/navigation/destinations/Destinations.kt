@@ -1,4 +1,4 @@
-package com.boryanz.upszakoni.navigation.destinations
+package com.boryanz.upszakoni.ui.navigation.destinations
 
 import kotlinx.serialization.Serializable
 
