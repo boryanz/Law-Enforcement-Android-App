@@ -1,4 +1,4 @@
-package com.boryanz.upszakoni.ui.screens
+package com.boryanz.upszakoni.ui.screens.crimequestions
 
 import androidx.compose.runtime.Composable
 import com.boryanz.upszakoni.data.model.TitleItem

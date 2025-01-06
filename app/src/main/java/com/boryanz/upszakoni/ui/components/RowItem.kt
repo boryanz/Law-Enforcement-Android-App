@@ -16,6 +16,7 @@ import com.boryanz.upszakoni.ui.theme.BaseContent
 
 @Composable
 fun RowItem(
+    horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
     isEnabled: Boolean = true,
     onClick: () -> Unit,
     content: @Composable () -> Unit
@@ -27,7 +28,7 @@ fun RowItem(
             .border(width = 1.dp, shape = RoundedCornerShape(4.dp), color = BaseContent)
             .padding(all = 16.dp)
             .clickable(enabled = isEnabled, onClick = onClick),
-        horizontalArrangement = Arrangement.Start,
+        horizontalArrangement = horizontalArrangement,
         verticalAlignment = Alignment.CenterVertically,
     ) {
         content()

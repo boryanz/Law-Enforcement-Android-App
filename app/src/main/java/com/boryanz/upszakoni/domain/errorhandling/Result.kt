@@ -17,7 +17,7 @@ inline fun <F, S, T> Result<F, S>.fold(onFailure: (F) -> T, onSuccess: (S) -> T)
 inline fun <reified S> tryCatch(
     errorHandler: ErrorHandler = GeneralErrorHandler(),
     block: () -> S,
-): Result<KataError, S> =
+): Result<UpsError, S> =
     try {
         Result.Success(block())
     } catch (e: Exception) {

@@ -1,4 +1,4 @@
-package com.boryanz.upszakoni.ui.screens
+package com.boryanz.upszakoni.ui.screens.pdfviewer
 
 import android.content.Context
 import android.content.Intent

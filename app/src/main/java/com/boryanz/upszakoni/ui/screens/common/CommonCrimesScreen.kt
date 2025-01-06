@@ -1,4 +1,4 @@
-package com.boryanz.upszakoni.ui.screens
+package com.boryanz.upszakoni.ui.screens.common
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement

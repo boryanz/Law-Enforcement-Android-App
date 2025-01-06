@@ -34,7 +34,7 @@
         </service>
 
         <activity
-            android:name=".ui.screens.PdfViewerActivity"
+            android:name=".ui.screens.pdfviewer.PdfViewerActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat" />
         <activity
