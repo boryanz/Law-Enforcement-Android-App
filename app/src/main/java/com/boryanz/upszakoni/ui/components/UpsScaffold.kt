@@ -25,7 +25,7 @@ fun UpsScaffold(
         topBar = {
             TopAppBar(
                 title = topBarTitle,
-                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = BaseContent1, titleContentColor = Base100),
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = BaseContent1, titleContentColor = Base100),
                 navigationIcon = {
                     if (navigationIcon != null) {
                         navigationIcon()
@@ -48,7 +48,7 @@ private fun UpsScaffoldPreview() {
     KataSampleAppTheme {
         TopAppBar(
             title = { Text("Something", color = Base100) },
-            colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = BaseContent, titleContentColor = Base100),
+            colors = TopAppBarDefaults.topAppBarColors(containerColor = BaseContent, titleContentColor = Base100),
             navigationIcon = { }
         )
     }

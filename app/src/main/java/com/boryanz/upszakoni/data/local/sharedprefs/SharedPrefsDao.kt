@@ -1,4 +1,4 @@
-package com.boryanz.upszakoni.storage.sharedprefs
+package com.boryanz.upszakoni.data.local.sharedprefs
 
 import android.content.Context
 

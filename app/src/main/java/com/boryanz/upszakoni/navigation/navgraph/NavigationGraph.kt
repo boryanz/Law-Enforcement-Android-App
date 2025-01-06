@@ -25,7 +25,7 @@ import com.boryanz.upszakoni.navigation.destinations.PhoneNumbers
 import com.boryanz.upszakoni.navigation.destinations.PoliceAuthorities
 import com.boryanz.upszakoni.navigation.destinations.PrivacyPolicy
 import com.boryanz.upszakoni.navigation.destinations.PrivacyPolicyAcceptance
-import com.boryanz.upszakoni.storage.sharedprefs.SharedPrefsDao
+import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsDao
 import com.boryanz.upszakoni.ui.components.Icons
 import com.boryanz.upszakoni.ui.screens.CommonOffensesAndCrimes
 import com.boryanz.upszakoni.ui.screens.laws.LawsScreen
