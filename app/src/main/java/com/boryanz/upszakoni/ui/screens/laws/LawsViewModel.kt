@@ -2,7 +2,7 @@ package com.boryanz.upszakoni.ui.screens.laws
 
 import androidx.lifecycle.viewModelScope
 import com.boryanz.upszakoni.domain.GetLawsUseCase
-import com.boryanz.upszakoni.storage.sharedprefs.SharedPrefsDao
+import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsDao
 import com.boryanz.upszakoni.ui.screens.common.ScreenAction
 import com.boryanz.upszakoni.ui.screens.common.UiState
 import com.boryanz.upszakoni.ui.viewmodel.UpsViewModel

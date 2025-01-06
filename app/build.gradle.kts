@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
+//  alias(libs.plugins.google.cloud.services) Add along with google-service.json file from Firebase
 }
 
 android {
@@ -41,10 +42,16 @@ android {
 }
 
 dependencies {
+    implementation(libs.accompanist.permissions)
+    implementation(libs.firebase.messaging.ktx)
+    implementation(libs.firebaseFirestore)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    implementation(libs.retrofit.core)
 //    implementation(libs.retrofit.core)
 //    implementation(libs.retrofit.bom)
 //    implementation(libs.coil.kt)
@@ -55,6 +62,7 @@ dependencies {
 //    implementation(libs.koin.android)
     implementation(libs.android.pdf.viewer)
     implementation(libs.androidx.custom.tabs)
+    implementation(libs.koin.androidx.compose)
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.material.iconsExtended)
     implementation(libs.gson)

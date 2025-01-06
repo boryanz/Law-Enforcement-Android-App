@@ -3,7 +3,7 @@ package com.boryanz.upszakoni.ui.screens
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
-import com.boryanz.upszakoni.storage.sharedprefs.SharedPrefsDao
+import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsDao
 import com.boryanz.upszakoni.ui.components.Button
 
 @Composable
