@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "bonus_salary_treshold")
 data class BonusSalaryTreshold(
-    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    @PrimaryKey val id: String,
     @ColumnInfo(name = "minimum_overtime_hours") val minimumOvertimeHours: String,
     @ColumnInfo(name = "maximum_absence_days") val maximumAbsenceDays: String,
 )

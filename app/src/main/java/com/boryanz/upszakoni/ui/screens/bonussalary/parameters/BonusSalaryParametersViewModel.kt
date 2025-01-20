@@ -35,6 +35,7 @@ class BonusSalaryParametersViewModel(
                 viewModelScope.launch {
                     bonusSalaryRepositoryImpl.insertTreshold(
                         BonusSalaryTreshold(
+                            id = "bonus_salary_treshold",
                             minimumOvertimeHours = uiState.value.overtimeLimitValue,
                             maximumAbsenceDays = uiState.value.absenceDaysLimitValue
                         )

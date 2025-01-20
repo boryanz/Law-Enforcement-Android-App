@@ -23,7 +23,7 @@ class BonusSalaryRepositoryImpl(context: Context) : BonusSalaryRepository {
             }
         }
 
-    override suspend fun getTreshold(id: Long): Result<UpsError, BonusSalaryTreshold> = tryCatch {
+    override suspend fun getTreshold(id: String): Result<UpsError, BonusSalaryTreshold?> = tryCatch {
         withContext(ioDispatcher) {
             dao.getTreshold(id)
         }

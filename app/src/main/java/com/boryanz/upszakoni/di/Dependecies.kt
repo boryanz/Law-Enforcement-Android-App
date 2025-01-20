@@ -3,6 +3,7 @@ package com.boryanz.upszakoni.di
 import com.boryanz.upszakoni.domain.BonusSalaryRepository
 import com.boryanz.upszakoni.domain.BonusSalaryRepositoryImpl
 import com.boryanz.upszakoni.ui.navigation.navigationwrapper.NavigationWrapper
+import com.boryanz.upszakoni.ui.screens.bonussalary.BonusSalaryViewModel
 import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BonusSalaryParametersViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -14,4 +15,5 @@ val appModule = module {
 
     single <BonusSalaryRepository> { BonusSalaryRepositoryImpl(androidContext()) }
     viewModel { (navigator: NavigationWrapper) -> BonusSalaryParametersViewModel(get(), navigator) }
+    viewModel { BonusSalaryViewModel(get()) }
 }

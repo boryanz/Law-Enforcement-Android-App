@@ -14,7 +14,7 @@ interface BonusSalaryDao {
     suspend fun insertTreshold(bonusSalaryTreshold: BonusSalaryTreshold): Long
 
     @Query("SELECT * FROM bonus_salary_treshold WHERE id = :id")
-    suspend fun getTreshold(id: Long): BonusSalaryTreshold
+    suspend fun getTreshold(id: String): BonusSalaryTreshold?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMonthlyStats(monthlyStats: MonthlyStats)

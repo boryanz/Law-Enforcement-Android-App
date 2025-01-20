@@ -1,12 +1,10 @@
 package com.boryanz.upszakoni.ui.screens.bonussalary.parameters
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -43,40 +41,44 @@ fun BonusSalaryParametersContent(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(12.dp)
-                .padding(it)
-                .padding(WindowInsets.systemBars.asPaddingValues()),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(it),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 8.dp),
-                text = "Минимум прекувремени работни часови за остварување право на бонус плата",
-                textAlign = TextAlign.Start
-            )
-            TextFieldInput.BaseOutline(
-                labelText = "Годишни прекувремени работни часови",
-                value = uiState.overtimeLimitValue,
-                onValueChanged = onOvertimeHoursValueChanged
-            )
-            Spacer.Vertical(16.dp)
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 8.dp),
-                text = "Максимум денови за користење од боледување(вклучувајки платено отсуство и прч)",
-                textAlign = TextAlign.Start
-            )
-            TextFieldInput.BaseOutline(
-                labelText = "Максимум денови на отсуство",
-                value = uiState.absenceDaysLimitValue,
-                onValueChanged = onAbsenceDaysLimitValueChanged
-            )
-            Spacer.Vertical(24.dp)
-            Button.Primary(
-                isEnabled = !uiState.hasError, title = "Во ред",
-                onClick = onSaveClicked
-            )
+            Column {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 8.dp),
+                    text = "Минимум прекувремени работни часови за остварување право на бонус плата",
+                    textAlign = TextAlign.Start
+                )
+                TextFieldInput.BaseOutline(
+                    labelText = "Годишни прекувремени работни часови",
+                    value = uiState.overtimeLimitValue,
+                    onValueChanged = onOvertimeHoursValueChanged
+                )
+                Spacer.Vertical(16.dp)
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 8.dp),
+                    text = "Максимум денови за користење од боледување(вклучувајки платено отсуство и прч)",
+                    textAlign = TextAlign.Start
+                )
+                TextFieldInput.BaseOutline(
+                    labelText = "Максимум денови на отсуство",
+                    value = uiState.absenceDaysLimitValue,
+                    onValueChanged = onAbsenceDaysLimitValueChanged
+                )
+            }
+
+            Column {
+                Button.Primary(
+                    isEnabled = !uiState.hasError, title = "Во ред",
+                    onClick = onSaveClicked
+                )
+            }
         }
     }
 }
