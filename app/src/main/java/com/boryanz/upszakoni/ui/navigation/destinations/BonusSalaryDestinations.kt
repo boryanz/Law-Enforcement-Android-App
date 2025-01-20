@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 data object ParametersDestination
 
 @Serializable
-data object DashboardDestination
+data object BonusSalaryDashboardDestination
 
 @Serializable
 data object OvertimeInputDestination

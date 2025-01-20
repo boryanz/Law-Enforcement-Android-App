@@ -4,11 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
 import com.boryanz.upszakoni.data.local.database.model.BonusSalaryTreshold
+import com.boryanz.upszakoni.data.local.database.model.MonthlyStats
 
-@Database(entities = [BonusSalaryTreshold::class], version = 1, exportSchema = false)
-@TypeConverters(Converters::class)
+@Database(entities = [BonusSalaryTreshold::class, MonthlyStats::class], version = 1, exportSchema = false)
+//@TypeConverters(Converters::class)
 abstract class UpsDatabase : RoomDatabase() {
 
     abstract fun bonusSalaryDao(): BonusSalaryDao
@@ -23,8 +23,7 @@ abstract class UpsDatabase : RoomDatabase() {
                     context = context.applicationContext,
                     klass = UpsDatabase::class.java,
                     name = "ups_db"
-                )
-                    .build()
+                ).build()
                 this.instance = instance
                 instance
             }

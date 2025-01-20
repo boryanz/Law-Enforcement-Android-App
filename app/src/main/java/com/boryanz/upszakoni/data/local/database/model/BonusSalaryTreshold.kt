@@ -9,5 +9,4 @@ data class BonusSalaryTreshold(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     @ColumnInfo(name = "minimum_overtime_hours") val minimumOvertimeHours: String,
     @ColumnInfo(name = "maximum_absence_days") val maximumAbsenceDays: String,
-    @ColumnInfo(name = "maximum_paid_absence_days") val maximumPaidAbsenceDays: String,
 )

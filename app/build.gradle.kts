@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.ksp)
 //  alias(libs.plugins.google.cloud.services) Add along with google-service.json file from Firebase
 }
 
@@ -60,6 +61,7 @@ dependencies {
 //    implementation(libs.okhttp.logging)
 //    implementation(libs.koin.bom)
 //    implementation(libs.koin.android)
+    ksp(libs.room.compiler)
     implementation(libs.android.pdf.viewer)
     implementation(libs.androidx.custom.tabs)
     implementation(libs.koin.androidx.compose)

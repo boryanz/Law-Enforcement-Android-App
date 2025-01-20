@@ -1,14 +1,17 @@
 package com.boryanz.upszakoni.di
 
-import com.boryanz.upszakoni.data.remote.restapi.KataRestClient
 import com.boryanz.upszakoni.domain.BonusSalaryRepository
 import com.boryanz.upszakoni.domain.BonusSalaryRepositoryImpl
+import com.boryanz.upszakoni.ui.navigation.navigationwrapper.NavigationWrapper
+import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BonusSalaryParametersViewModel
 import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
     // add your dependencies here
-    single { get<KataRestClient>().createService(com.boryanz.upszakoni.data.remote.restapi.KataRestApi::class.java) }
+  //  single { get<KataRestClient>().createService(com.boryanz.upszakoni.data.remote.restapi.KataRestApi::class.java) }
 
-    factory<BonusSalaryRepository> { BonusSalaryRepositoryImpl(androidContext()) }
+    single <BonusSalaryRepository> { BonusSalaryRepositoryImpl(androidContext()) }
+    viewModel { (navigator: NavigationWrapper) -> BonusSalaryParametersViewModel(get(), navigator) }
 }

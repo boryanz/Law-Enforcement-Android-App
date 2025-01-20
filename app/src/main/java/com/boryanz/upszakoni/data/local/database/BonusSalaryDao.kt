@@ -1,11 +1,13 @@
 package com.boryanz.upszakoni.data.local.database
 
+import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.boryanz.upszakoni.data.local.database.model.BonusSalaryTreshold
 import com.boryanz.upszakoni.data.local.database.model.MonthlyStats
 
+@Dao
 interface BonusSalaryDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

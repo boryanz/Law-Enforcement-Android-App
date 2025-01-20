@@ -28,6 +28,7 @@ import com.boryanz.upszakoni.ui.navigation.destinations.PoliceAuthorities
 import com.boryanz.upszakoni.ui.navigation.destinations.PrivacyPolicy
 import com.boryanz.upszakoni.ui.navigation.destinations.PrivacyPolicyAcceptance
 import com.boryanz.upszakoni.ui.screens.archivedlaws.ArchivedLawsScreen
+import com.boryanz.upszakoni.ui.screens.bonussalary.BonusSalaryActivity
 import com.boryanz.upszakoni.ui.screens.common.CommonOffensesAndCrimes
 import com.boryanz.upszakoni.ui.screens.crimequestions.GoldenCrimeQuestionsScreen
 import com.boryanz.upszakoni.ui.screens.laws.LawsScreen
@@ -189,6 +190,9 @@ fun NavHostController.navigateToDrawerDestination(navigationDrawerDestination: N
 
         NavigationDrawerDestination.phone_numbers -> navigate(PhoneNumbers)
         NavigationDrawerDestination.privacy_policy -> navigate(PrivacyPolicy)
+        NavigationDrawerDestination.bonus_salary_feature -> context.startActivity(
+            BonusSalaryActivity.createIntent(context)
+        )
     }
 }
 
