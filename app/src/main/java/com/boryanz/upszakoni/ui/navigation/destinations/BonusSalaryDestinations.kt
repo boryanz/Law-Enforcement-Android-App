@@ -9,4 +9,4 @@ data object ParametersDestination
 data object BonusSalaryDashboardDestination
 
 @Serializable
-data object OvertimeInputDestination
+data class OvertimeInputDestination(val month: String)

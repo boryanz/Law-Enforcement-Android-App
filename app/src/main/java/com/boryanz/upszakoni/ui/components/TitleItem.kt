@@ -14,7 +14,7 @@ fun TitleItem(
     onClick: () -> Unit
 ) {
     RowItem(isEnabled = isEnabled, onClick = onClick) {
-        Text(text = title, textAlign = TextAlign.Start, style = Typography.titleMedium)
+        Text(text = title, textAlign = TextAlign.Start, style = Typography.bodyLarge)
     }
 }
 
