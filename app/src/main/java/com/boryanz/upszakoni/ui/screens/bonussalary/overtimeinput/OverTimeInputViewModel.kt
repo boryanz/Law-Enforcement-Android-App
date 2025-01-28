@@ -17,8 +17,11 @@ import kotlinx.coroutines.launch
 
 data class OverTimeInputUiState(
     val overtimeHours: String = "",
+    val hasOvertimeHoursError: Boolean = false,
     val paidAbsenceDays: String = "",
+    val hasPaidAbsenceDaysError: Boolean = false,
     val sickDays: String = "",
+    val hasSickDaysError: Boolean = false,
 )
 
 class OverTimeInputViewModel(
@@ -34,15 +37,18 @@ class OverTimeInputViewModel(
     fun onUiEvent(event: OverTimeInputUiEvent) = viewModelScope.launch {
         when (event) {
             is AbsenceDaysValueChanged -> {
-                _uiState.update { it.copy(paidAbsenceDays = event.value) }
+                val hasError = runCatching { event.value.toInt() >= 31 }.getOrNull() ?: true
+                _uiState.update { it.copy(paidAbsenceDays = event.value, hasPaidAbsenceDaysError = hasError) }
             }
 
             is OvertimeHoursValueChanged -> {
-                _uiState.update { it.copy(overtimeHours = event.value) }
+                val hasError = runCatching { event.value.toInt() >= 100 }.getOrNull() ?: true
+                _uiState.update { it.copy(overtimeHours = event.value, hasOvertimeHoursError = hasError) }
             }
 
             is SickDaysValueChanged -> {
-                _uiState.update { it.copy(sickDays = event.value) }
+                val hasError = runCatching { event.value.toInt() >= 31 }.getOrNull() ?: true
+                _uiState.update { it.copy(sickDays = event.value, hasSickDaysError = hasError) }
             }
 
             is SaveClicked -> {

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,6 +25,7 @@ object TextFieldInput {
         labelText: String,
         value: String,
         textStyle: TextStyle = LocalTextStyle.current,
+        labelTextStyle: TextStyle = MaterialTheme.typography.bodySmall,
         trailingIcon: (@Composable () -> Unit)? = null,
         isError: Boolean = false,
         hint: String = "",
@@ -40,7 +42,7 @@ object TextFieldInput {
             isError = isError,
             keyboardOptions = keyboardOptions,
             interactionSource = interactionSource,
-            label = { Text(labelText) },
+            label = { Text(text = labelText, style = labelTextStyle) },
             placeholder = { Text(hint) },
             onValueChange = onValueChanged,
             trailingIcon = trailingIcon,

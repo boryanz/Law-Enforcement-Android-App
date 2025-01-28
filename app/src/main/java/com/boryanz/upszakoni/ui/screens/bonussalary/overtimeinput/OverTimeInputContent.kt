@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.filled.AccessTime
 import androidx.compose.material.icons.filled.ArrowOutward
 import androidx.compose.material.icons.filled.Sick
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -46,8 +47,11 @@ fun OverTimeInputContent(
         ) {
             Column(verticalArrangement = Arrangement.Top) {
                 TextFieldInput.BaseOutline(
-                    labelText = "Вкупно прекувремени часови за месец $month",
+                    labelText = "Вкупно прекувремени за месец $month",
                     value = uiState.overtimeHours,
+                    isError = uiState.hasOvertimeHoursError,
+                    textStyle = MaterialTheme.typography.titleLarge,
+                    labelTextStyle = MaterialTheme.typography.bodyMedium,
                     onValueChanged = onOvertimeHoursValueChanged,
                     trailingIcon = {
                         Icons.Base(imageVector = androidx.compose.material.icons.Icons.Filled.AccessTime) { }
@@ -57,6 +61,9 @@ fun OverTimeInputContent(
                 TextFieldInput.BaseOutline(
                     labelText = "Бкупно денови боледување",
                     value = uiState.sickDays,
+                    isError = uiState.hasSickDaysError,
+                    textStyle = MaterialTheme.typography.titleLarge,
+                    labelTextStyle = MaterialTheme.typography.bodyMedium,
                     onValueChanged = onSickDaysValueChanged,
                     trailingIcon = {
                         Icons.Base(imageVector = androidx.compose.material.icons.Icons.Filled.Sick) { }
@@ -66,6 +73,9 @@ fun OverTimeInputContent(
                 TextFieldInput.BaseOutline(
                     labelText = "Вкупно денови платено отсуство - ПРЧ",
                     value = uiState.paidAbsenceDays,
+                    isError = uiState.hasPaidAbsenceDaysError,
+                    textStyle = MaterialTheme.typography.titleLarge,
+                    labelTextStyle = MaterialTheme.typography.bodyMedium,
                     onValueChanged = onAbsenceDaysValueChanged,
                     trailingIcon = {
                         Icons.Base(imageVector = androidx.compose.material.icons.Icons.Filled.ArrowOutward) { }
@@ -75,7 +85,8 @@ fun OverTimeInputContent(
 
             Column {
                 Button.Primary(
-                    isEnabled = true, title = "Во ред",
+                    isEnabled = !uiState.hasPaidAbsenceDaysError && !uiState.hasSickDaysError && !uiState.hasOvertimeHoursError,
+                    title = "Во ред",
                     onClick = onSaveClicked
                 )
             }
