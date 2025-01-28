@@ -23,5 +23,5 @@ interface BonusSalaryDao {
     suspend fun getYearlyStats(): List<MonthlyStats>
 
     @Query("SELECT * FROM monthly_stats WHERE month = :month")
-    suspend fun getMonthlyStatsByMonth(month: String): MonthlyStats
+    suspend fun getMonthlyStatsByMonth(month: String): MonthlyStats?
 }

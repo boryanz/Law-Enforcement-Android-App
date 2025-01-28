@@ -41,7 +41,7 @@ class BonusSalaryRepositoryImpl(context: Context) : BonusSalaryRepository {
         }
     }
 
-    override suspend fun getMonthlyStats(month: String): Result<UpsError, MonthlyStats> = tryCatch {
+    override suspend fun getMonthlyStats(month: String): Result<UpsError, MonthlyStats?> = tryCatch {
         withContext(ioDispatcher) {
             dao.getMonthlyStatsByMonth(month)
         }
