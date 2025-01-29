@@ -9,7 +9,10 @@ import com.boryanz.upszakoni.ui.navigation.destinations.OvertimeInputDestination
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun BonusSalaryDashboardScreen(navHostController: NavHostController) {
+fun BonusSalaryDashboardScreen(
+    navHostController: NavHostController,
+    onBackClicked: () -> Unit,
+) {
 
     val viewModel = koinViewModel<BonusSalaryDashboardViewModel>()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -22,5 +25,7 @@ fun BonusSalaryDashboardScreen(navHostController: NavHostController) {
         uiState = uiState,
         onMonthClicked = {
             navHostController.navigate(OvertimeInputDestination(it))
-        })
+        },
+        onBackClicked = onBackClicked
+    )
 }

@@ -2,27 +2,40 @@ package com.boryanz.upszakoni.ui.screens.bonussalary.dashboard
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.boryanz.upszakoni.data.local.database.model.MonthlyStats
 import com.boryanz.upszakoni.domain.BonusSalaryRepository
 import com.boryanz.upszakoni.domain.errorhandling.fold
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardUiState.MonthlyOvertime
+import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardUiState.SliderState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlin.math.ceil
 
 
 data class BonusSalaryDashboardUiState(
-    val monthlyOvertime: List<MonthlyOvertime> = emptyList()
+    val monthlyOvertime: List<MonthlyOvertime> = emptyList(),
+    val sliderState: List<SliderState?>? = null,
+    val averageHoursPerMonth: Int = 0
 ) {
     data class MonthlyOvertime(
         val month: String = "",
         val overtimeHours: String = "",
         val hasMinimumRequiredHours: Boolean = false,
     )
+
+    data class SliderState(
+        val value: String,
+        val progress: Float?,
+    )
 }
 
 sealed interface BonusSalaryDashboardUiEvent {
     data object FetchMonthlyStats : BonusSalaryDashboardUiEvent
 }
+
+private const val MAX_PAID_OVERTIME_HOURS = 32
+private const val PRC_OVERTIME_MULTIPLIER = 1.4
 
 class BonusSalaryDashboardViewModel(
     private val bonusSalaryRepository: BonusSalaryRepository
@@ -37,19 +50,63 @@ class BonusSalaryDashboardViewModel(
         when (event) {
             BonusSalaryDashboardUiEvent.FetchMonthlyStats -> {
                 bonusSalaryRepository.getYearlyStatistics().fold(
-                    onSuccess = { monthlyStats ->
-                        val monthlyOvertime = monthlyStats.map {
+                    onSuccess = { yearlyStatistics ->
+                        val averageOvertimePerMonth =
+                            bonusSalaryRepository.getAverageHoursPerMonth()
+                        val usedUp = getUsedUpState(yearlyStatistics)
+                        val remainingUntil = getRemainingUntilState(yearlyStatistics)
+                        val overtimeAvailable = getOvertimeAvailableState(yearlyStatistics)
+                        val monthlyOvertime = yearlyStatistics.map {
                             MonthlyOvertime(
                                 month = it.month,
                                 overtimeHours = it.currentOvertimeHours,
-                                hasMinimumRequiredHours = runCatching { it.currentOvertimeHours.toInt() >= 13 }.getOrElse { false }
+                                hasMinimumRequiredHours = runCatching { it.currentOvertimeHours.toInt() >= averageOvertimePerMonth }.getOrElse { false }
                             )
                         }
-                        _uiState.emit(BonusSalaryDashboardUiState(monthlyOvertime))
+                        _uiState.emit(
+                            BonusSalaryDashboardUiState(
+                                monthlyOvertime = monthlyOvertime,
+                                averageHoursPerMonth = averageOvertimePerMonth,
+                                sliderState = listOf(usedUp, remainingUntil, overtimeAvailable)
+                            )
+                        )
                     },
                     onFailure = { }
                 )
             }
         }
+    }
+
+    private fun getOvertimeAvailableState(yearlyStats: List<MonthlyStats>): SliderState? {
+        val availableOvertime = runCatching {
+            yearlyStats
+                .map { it.currentOvertimeHours.toInt() }
+                .filter { it > MAX_PAID_OVERTIME_HOURS }
+                .sumOf { ceil((it - MAX_PAID_OVERTIME_HOURS) * PRC_OVERTIME_MULTIPLIER).toInt() }
+        }.getOrNull() ?: return null
+
+        return SliderState(value = "$availableOvertime ПРЧ часови достапни" , progress = null)
+    }
+
+    private fun getRemainingUntilState(yearlyStats: List<MonthlyStats>): SliderState? {
+        val minimumRequiredHours = bonusSalaryRepository.getMinimumRequiredHours()
+        val totalOverTimeHours = runCatching {
+            yearlyStats.sumOf { it.currentOvertimeHours.toInt() }
+        }.getOrNull() ?: return null
+        val remainingUntilHours = minimumRequiredHours - totalOverTimeHours
+        if (remainingUntilHours <= 0) return SliderState(value = "Остварено право на бонус плата!",  progress = null)
+
+        val progressIndicatorValue = ((totalOverTimeHours.toFloat() / bonusSalaryRepository.getMinimumRequiredHours().toFloat()))
+        return SliderState(value = "$remainingUntilHours часови до бонус плата", progress = progressIndicatorValue)
+    }
+
+    private fun getUsedUpState(yearlyStats: List<MonthlyStats>): SliderState? {
+        val usedUpDays = runCatching {
+            yearlyStats.sumOf { it.currentAbsenceDays.toInt() + it.currentPaidAbsenceDays.toInt() }
+        }.getOrNull() ?: return null
+
+        val progressIndicatorValue =
+            ((usedUpDays.toFloat() / bonusSalaryRepository.getMaximumPaidAbsenceDays().toFloat()))
+        return SliderState(value = "Искористени $usedUpDays денови до сега", progress = progressIndicatorValue)
     }
 }

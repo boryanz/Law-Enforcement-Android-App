@@ -31,29 +31,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardUiState
 import com.boryanz.upszakoni.ui.theme.BaseContent
 import com.boryanz.upszakoni.ui.theme.BaseContent1
 import kotlinx.coroutines.delay
 
-data class BonusSalaryDashboardUiState(
-    val sliderParametersState: SliderParametersState
-
-) {
-    data class SliderParametersState(
-        val title: String,
-        val progress: Float,
-    )
-}
-
 @Composable
-fun AutoAdvancePager(pageItems: List<Color>, modifier: Modifier = Modifier) {
+fun AutoAdvancePager(uiState: BonusSalaryDashboardUiState) {
     Column(
         modifier = Modifier
             .wrapContentSize(),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val pagerState = rememberPagerState(pageCount = { pageItems.size })
+        val pagerState = rememberPagerState(pageCount = { uiState.sliderState?.size ?: 0 })
         val pagerIsDragged by pagerState.interactionSource.collectIsDraggedAsState()
 
         val pageInteractionSource = remember { MutableInteractionSource() }
@@ -65,7 +56,7 @@ fun AutoAdvancePager(pageItems: List<Color>, modifier: Modifier = Modifier) {
             LaunchedEffect(pagerState, pageInteractionSource) {
                 while (true) {
                     delay(3000)
-                    val nextPage = (pagerState.currentPage + 1) % pageItems.size
+                    val nextPage = (pagerState.currentPage + 1) % uiState.sliderState?.size!!
                     pagerState.animateScrollToPage(nextPage)
                 }
             }
@@ -74,32 +65,46 @@ fun AutoAdvancePager(pageItems: List<Color>, modifier: Modifier = Modifier) {
         HorizontalPager(
             state = pagerState,
         ) { page ->
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight(align = Alignment.CenterVertically)
-                    .border(width = 1.dp, shape = RoundedCornerShape(4.dp), color = BaseContent)
-                    .padding(20.dp),
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    if (page == 0) "Преостануваат 75 прекувремени" else "Искористени 10 слободни денови",
-                    textAlign = TextAlign.Start
-                )
-                Spacer.Vertical(4.dp)
-                LinearProgressIndicator(
-                    progress = { if (page == 0) 0.5f else 0.3f },
-                    color = BaseContent1,
-                    trackColor = Color.LightGray,
-                    strokeCap = StrokeCap.Square,
-                    gapSize = 0.dp,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
+            PagerContent(
+                uiState.sliderState?.get(page)?.value,
+                uiState.sliderState?.get(page)?.progress
+            )
         }
 
         Spacer.Vertical(8.dp)
-        PagerIndicator(pageItems.size, pagerState.currentPage)
+        PagerIndicator(uiState.sliderState?.size!!, pagerState.currentPage)
+    }
+}
+
+
+@Composable
+fun PagerContent(description: String?, progress: Float?) {
+    if (description == null) return
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight(align = Alignment.CenterVertically)
+            .border(width = 1.dp, shape = RoundedCornerShape(4.dp), color = BaseContent)
+            .padding(20.dp),
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = description,
+            textAlign = TextAlign.Start
+        )
+
+        progress?.let {
+            Spacer.Vertical(4.dp)
+            LinearProgressIndicator(
+                progress = { it },
+                color = BaseContent1,
+                trackColor = Color.LightGray,
+                strokeCap = StrokeCap.Square,
+                gapSize = 0.dp,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
     }
 }
 

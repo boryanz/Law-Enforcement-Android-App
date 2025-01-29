@@ -43,7 +43,10 @@ fun BonusSalaryNavigationGraph(
         }
 
         composable<BonusSalaryDashboardDestination> {
-            BonusSalaryDashboardScreen(navHostController)
+            BonusSalaryDashboardScreen(
+                navHostController = navHostController,
+                onBackClicked = onFinishActivity
+            )
         }
 
         composable<OvertimeInputDestination> {

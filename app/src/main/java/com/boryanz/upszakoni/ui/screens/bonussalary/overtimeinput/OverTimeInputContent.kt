@@ -59,7 +59,7 @@ fun OverTimeInputContent(
                 )
                 Vertical(8.dp)
                 TextFieldInput.BaseOutline(
-                    labelText = "Бкупно денови боледување",
+                    labelText = "Вкупно искористени денови боледување",
                     value = uiState.sickDays,
                     isError = uiState.hasSickDaysError,
                     textStyle = MaterialTheme.typography.titleLarge,
@@ -71,7 +71,7 @@ fun OverTimeInputContent(
                 )
                 Vertical(8.dp)
                 TextFieldInput.BaseOutline(
-                    labelText = "Вкупно денови платено отсуство - ПРЧ",
+                    labelText = "Вкупно искористени денови од ПРЧ",
                     value = uiState.paidAbsenceDays,
                     isError = uiState.hasPaidAbsenceDaysError,
                     textStyle = MaterialTheme.typography.titleLarge,

@@ -9,6 +9,9 @@ import com.boryanz.upszakoni.domain.errorhandling.UpsError
 import com.boryanz.upszakoni.domain.errorhandling.tryCatch
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kotlin.math.ceil
+
+const val NUMBER_OF_MONTHS = 12
 
 class BonusSalaryRepositoryImpl(context: Context) : BonusSalaryRepository {
 
@@ -16,24 +19,45 @@ class BonusSalaryRepositoryImpl(context: Context) : BonusSalaryRepository {
     private val dao = db.bonusSalaryDao()
     private val ioDispatcher = Dispatchers.IO
 
+    /**
+     * Calculated value after setting the treshold hours.
+     */
+    private var averageOvertimeHours: Int = -1
+
+    /**
+     * Cached value on insert
+     */
+    private var minimumOvertimeHours: Int = -1
+
+    /**
+     * Cached value on insert
+     */
+    private var maximumAvailablePaidDays: Int = -1
+
     override suspend fun insertTreshold(bonusSalaryTreshold: BonusSalaryTreshold): Result<UpsError, Unit> =
         tryCatch {
             withContext(ioDispatcher) {
                 dao.insertTreshold(bonusSalaryTreshold)
+            }.also { cacheTresholdValues(bonusSalaryTreshold) }
+        }
+
+    override suspend fun getTreshold(id: String): Result<UpsError, BonusSalaryTreshold?> =
+        tryCatch {
+            withContext(ioDispatcher) {
+                dao.getTreshold(id).also { treshold ->
+                    treshold?.let {
+                        cacheTresholdValues(it)
+                    }
+                }
             }
         }
 
-    override suspend fun getTreshold(id: String): Result<UpsError, BonusSalaryTreshold?> = tryCatch {
-        withContext(ioDispatcher) {
-            dao.getTreshold(id)
+    override suspend fun insertMonthlyStats(monthlyStats: MonthlyStats): Result<UpsError, Unit> =
+        tryCatch {
+            withContext(ioDispatcher) {
+                dao.insertMonthlyStats(monthlyStats)
+            }
         }
-    }
-
-    override suspend fun insertMonthlyStats(monthlyStats: MonthlyStats): Result<UpsError, Unit> = tryCatch {
-        withContext(ioDispatcher) {
-            dao.insertMonthlyStats(monthlyStats)
-        }
-    }
 
     override suspend fun getYearlyStatistics(): Result<UpsError, List<MonthlyStats>> = tryCatch {
         withContext(ioDispatcher) {
@@ -41,10 +65,31 @@ class BonusSalaryRepositoryImpl(context: Context) : BonusSalaryRepository {
         }
     }
 
-    override suspend fun getMonthlyStats(month: String): Result<UpsError, MonthlyStats?> = tryCatch {
-        withContext(ioDispatcher) {
-            dao.getMonthlyStatsByMonth(month)
+    override suspend fun getMonthlyStats(month: String): Result<UpsError, MonthlyStats?> =
+        tryCatch {
+            withContext(ioDispatcher) {
+                dao.getMonthlyStatsByMonth(month)
+            }
+        }
+
+    override fun getAverageHoursPerMonth() = averageOvertimeHours
+
+    override fun getMinimumRequiredHours() = minimumOvertimeHours
+
+    override fun getMaximumPaidAbsenceDays() = maximumAvailablePaidDays
+
+    private fun cacheTresholdValues(bonusSalaryTreshold: BonusSalaryTreshold) {
+        if (averageOvertimeHours < 0) {
+            averageOvertimeHours =
+                ceil(bonusSalaryTreshold.minimumOvertimeHours.toDouble() / NUMBER_OF_MONTHS).toInt()
+        }
+        if (minimumOvertimeHours < 0) {
+            minimumOvertimeHours = bonusSalaryTreshold.minimumOvertimeHours.toInt()
+        }
+
+        if (maximumAvailablePaidDays < 0) {
+            maximumAvailablePaidDays = bonusSalaryTreshold.maximumAbsenceDays.toInt()
+
         }
     }
-
 }

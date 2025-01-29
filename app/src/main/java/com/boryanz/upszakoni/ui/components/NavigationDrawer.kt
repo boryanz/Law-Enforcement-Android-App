@@ -14,7 +14,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Payment
+import androidx.compose.material.icons.filled.Timelapse
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -124,11 +124,11 @@ fun NavigationDrawer(
                                     modifier = Modifier
                                         .height(20.dp)
                                         .width(20.dp),
-                                    imageVector = Icons.Filled.Payment,
+                                    imageVector = Icons.Filled.Timelapse,
                                     contentDescription = null
                                 )
                             },
-                            label = { Text(text = "Бонус плата") },
+                            label = { Text(text = "Прекувремени") },
                             selected = false,
                             onClick = { onItemClicked(NavigationDrawerDestination.bonus_salary_feature) }
                         )
