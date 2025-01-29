@@ -7,7 +7,9 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -24,6 +26,7 @@ object TextFieldInput {
         modifier: Modifier = Modifier,
         labelText: String,
         value: String,
+        textFieldColors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
         textStyle: TextStyle = LocalTextStyle.current,
         labelTextStyle: TextStyle = MaterialTheme.typography.bodySmall,
         trailingIcon: (@Composable () -> Unit)? = null,
@@ -46,6 +49,7 @@ object TextFieldInput {
             placeholder = { Text(hint) },
             onValueChange = onValueChanged,
             trailingIcon = trailingIcon,
+            colors = textFieldColors,
             textStyle = textStyle,
             readOnly = isReadOnly
         )

@@ -38,12 +38,22 @@ class OverTimeInputViewModel(
         when (event) {
             is AbsenceDaysValueChanged -> {
                 val hasError = runCatching { event.value.toInt() >= 31 }.getOrNull() ?: true
-                _uiState.update { it.copy(paidAbsenceDays = event.value, hasPaidAbsenceDaysError = hasError) }
+                _uiState.update {
+                    it.copy(
+                        paidAbsenceDays = event.value,
+                        hasPaidAbsenceDaysError = hasError
+                    )
+                }
             }
 
             is OvertimeHoursValueChanged -> {
                 val hasError = runCatching { event.value.toInt() >= 100 }.getOrNull() ?: true
-                _uiState.update { it.copy(overtimeHours = event.value, hasOvertimeHoursError = hasError) }
+                _uiState.update {
+                    it.copy(
+                        overtimeHours = event.value,
+                        hasOvertimeHoursError = hasError
+                    )
+                }
             }
 
             is SickDaysValueChanged -> {
@@ -55,6 +65,7 @@ class OverTimeInputViewModel(
                 bonusSalaryRepositoryImpl.insertMonthlyStats(
                     monthlyStats = MonthlyStats(
                         month = event.month,
+                        monthOrder = event.month.mapToOrder(),
                         currentOvertimeHours = uiState.value.overtimeHours,
                         currentAbsenceDays = uiState.value.sickDays,
                         currentPaidAbsenceDays = uiState.value.paidAbsenceDays
@@ -74,7 +85,7 @@ class OverTimeInputViewModel(
                                     sickDays = it.currentAbsenceDays
                                 )
                             )
-                        } ?: _uiState.emit(getDefaultUiState())
+                        }
 
                     },
                     onFailure = {
@@ -90,4 +101,21 @@ class OverTimeInputViewModel(
         paidAbsenceDays = "0",
         sickDays = "0"
     )
+
+
+    private fun String.mapToOrder() = when (this) {
+        "Јануари" -> 1
+        "Февруари" -> 2
+        "Март" -> 3
+        "Април" -> 4
+        "Мај" -> 5
+        "Јуни" -> 6
+        "Јули" -> 7
+        "Август" -> 8
+        "Септември" -> 9
+        "Октомври" -> 10
+        "Ноември" -> 11
+        "Декември" -> 12
+        else -> throw IllegalArgumentException()
+    }
 }

@@ -11,6 +11,9 @@ import com.boryanz.upszakoni.data.local.database.model.MonthlyStats
 interface BonusSalaryDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(yearlyStats: List<MonthlyStats>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTreshold(bonusSalaryTreshold: BonusSalaryTreshold): Long
 
     @Query("SELECT * FROM bonus_salary_treshold WHERE id = :id")
@@ -19,7 +22,7 @@ interface BonusSalaryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMonthlyStats(monthlyStats: MonthlyStats)
 
-    @Query("SELECT * FROM monthly_stats")
+    @Query("SELECT * FROM monthly_stats ORDER BY month_order ASC")
     suspend fun getYearlyStats(): List<MonthlyStats>
 
     @Query("SELECT * FROM monthly_stats WHERE month = :month")

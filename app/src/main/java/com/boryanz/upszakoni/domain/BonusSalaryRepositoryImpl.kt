@@ -12,7 +12,7 @@ import kotlinx.coroutines.withContext
 
 class BonusSalaryRepositoryImpl(context: Context) : BonusSalaryRepository {
 
-    private val db = UpsDatabase.getDb(context)
+    private val db = UpsDatabase.getInstance(context)
     private val dao = db.bonusSalaryDao()
     private val ioDispatcher = Dispatchers.IO
 

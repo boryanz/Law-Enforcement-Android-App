@@ -18,7 +18,10 @@ import com.boryanz.upszakoni.ui.components.UpsScaffold
 import com.boryanz.upszakoni.ui.theme.KataSampleAppTheme
 
 @Composable
-fun BonusSalaryDashboardContent(onMonthClicked: (String) -> Unit) {
+fun BonusSalaryDashboardContent(
+    uiState: BonusSalaryDashboardUiState,
+    onMonthClicked: (String) -> Unit
+) {
     UpsScaffold(
         topBarTitle = { Text("Прекувремени") }
     ) {
@@ -33,7 +36,11 @@ fun BonusSalaryDashboardContent(onMonthClicked: (String) -> Unit) {
             AutoAdvancePager(listOf(Color.LightGray, Color.Black))
             Spacer.Vertical(8.dp)
             Text("Прекувремени часови по месеци", textAlign = TextAlign.Start)
-            LazyGridLayout(PaddingValues(vertical = 8.dp), onClick = { onMonthClicked(it) })
+            LazyGridLayout(
+                uiState = uiState,
+                onClick = { onMonthClicked(it) },
+                paddingValues = PaddingValues(vertical = 8.dp)
+            )
         }
     }
 }
@@ -42,6 +49,6 @@ fun BonusSalaryDashboardContent(onMonthClicked: (String) -> Unit) {
 @Composable
 private fun BonusSalaryDashboardContentPreview() {
     KataSampleAppTheme {
-        BonusSalaryDashboardContent({})
+        BonusSalaryDashboardContent(BonusSalaryDashboardUiState(), {})
     }
 }
