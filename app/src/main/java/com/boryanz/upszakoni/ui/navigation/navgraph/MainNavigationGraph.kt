@@ -47,6 +47,7 @@ private const val DAILY_NEWS_URL = "https://mvr.gov.mk/dnevni-bilteni"
 @Composable
 fun NavigationGraph(
     navHostController: NavHostController = rememberNavController(),
+    onShareAppClicked: () -> Unit,
 ) {
     val context = LocalContext.current
     val sharedPrefsDao = remember { SharedPrefsDao(context) }
@@ -136,7 +137,8 @@ fun NavigationGraph(
                 },
                 onArchivedLawsClicked = {
                     navHostController.navigate(ArchivedLaws)
-                }
+                },
+                onShareAppClicked = onShareAppClicked
             )
         }
 

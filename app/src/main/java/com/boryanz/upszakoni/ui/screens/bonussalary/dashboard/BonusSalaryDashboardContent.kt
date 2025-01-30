@@ -32,6 +32,7 @@ fun BonusSalaryDashboardContent(
     uiState: BonusSalaryDashboardUiState,
     onMonthClicked: (String) -> Unit,
     onBackClicked: () -> Unit,
+    onEditClicked: () -> Unit,
     onDeleteAllClicked: () -> Unit,
 ) {
     var isDeleteAllClicked by remember {
@@ -41,11 +42,12 @@ fun BonusSalaryDashboardContent(
     var resetClickCounter by remember { mutableIntStateOf(3) }
 
     UpsScaffold(
-        topBarTitle = { Text("Прекувремени часови") },
+        topBarTitle = { Text("Прекувремени") },
         navigationIcon = {
             Icons.Back(onClick = onBackClicked)
         },
         trailingIcon = {
+            Icons.Edit(onClick = onEditClicked)
             if (isDeleteAllClicked) {
                 Icons.Undo(onClick = { isDeleteAllClicked = false })
             } else {
@@ -101,6 +103,6 @@ fun BonusSalaryDashboardContent(
 @Composable
 private fun BonusSalaryDashboardContentPreview() {
     KataSampleAppTheme {
-        BonusSalaryDashboardContent(BonusSalaryDashboardUiState(), {}, {}, {})
+        BonusSalaryDashboardContent(BonusSalaryDashboardUiState(), {}, {}, {}, {})
     }
 }

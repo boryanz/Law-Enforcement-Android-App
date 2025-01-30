@@ -2,11 +2,8 @@ package com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material.icons.filled.AccessTime
 import androidx.compose.material.icons.filled.ArrowOutward
 import androidx.compose.material.icons.filled.Sick
@@ -44,8 +41,7 @@ fun OverTimeInputContent(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(12.dp)
-                .padding(it)
-                .padding(WindowInsets.systemBars.asPaddingValues()),
+                .padding(it),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween
         ) {

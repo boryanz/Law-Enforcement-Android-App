@@ -17,12 +17,6 @@ import com.boryanz.upszakoni.ui.components.Spacer
 import com.boryanz.upszakoni.ui.components.UpsScaffold
 import com.boryanz.upszakoni.ui.components.input.TextFieldInput
 
-data class BonusSalaryParametersUiState(
-    val overtimeLimitValue: String = "150",
-    val absenceDaysLimitValue: String = "21",
-    val hasError: Boolean = false,
-)
-
 @Composable
 fun BonusSalaryParametersContent(
     uiState: BonusSalaryParametersUiState,
@@ -56,6 +50,7 @@ fun BonusSalaryParametersContent(
                 TextFieldInput.BaseOutline(
                     labelText = "Годишни прекувремени работни часови",
                     value = uiState.overtimeLimitValue,
+                    isError = uiState.hasOvertimeLimitError,
                     onValueChanged = onOvertimeHoursValueChanged
                 )
                 Spacer.Vertical(16.dp)
@@ -69,13 +64,14 @@ fun BonusSalaryParametersContent(
                 TextFieldInput.BaseOutline(
                     labelText = "Максимум денови на отсуство",
                     value = uiState.absenceDaysLimitValue,
+                    isError = uiState.hasAbsenceDaysLimitError,
                     onValueChanged = onAbsenceDaysLimitValueChanged
                 )
             }
 
             Column {
                 Button.Primary(
-                    isEnabled = !uiState.hasError, title = "Во ред",
+                    isEnabled = !uiState.hasOvertimeLimitError, title = "Во ред",
                     onClick = onSaveClicked
                 )
             }

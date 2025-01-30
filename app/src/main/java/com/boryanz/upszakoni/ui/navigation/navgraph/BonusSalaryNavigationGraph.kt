@@ -45,7 +45,8 @@ fun BonusSalaryNavigationGraph(
         composable<BonusSalaryDashboardDestination> {
             BonusSalaryDashboardScreen(
                 navHostController = navHostController,
-                onBackClicked = onFinishActivity
+                onBackClicked = onFinishActivity,
+                onEditClicked = { navHostController.navigate(ParametersDestination) }
             )
         }
 

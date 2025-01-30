@@ -2,9 +2,11 @@ package com.boryanz.upszakoni.ui.components
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.Undo
 import androidx.compose.material.icons.filled.Archive
 import androidx.compose.material.icons.filled.DeleteOutline
-import androidx.compose.material.icons.filled.RoundaboutLeft
+import androidx.compose.material.icons.outlined.Edit
+import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
@@ -14,6 +16,30 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.boryanz.upszakoni.ui.theme.Base100
 
 object Icons {
+
+    @Composable
+    fun Edit(
+        tint: Color = Base100,
+        onClick: () -> Unit,
+    ) {
+        Base(
+            imageVector = Icons.Outlined.Edit,
+            tint = tint,
+            onClick = onClick
+        )
+    }
+
+    @Composable
+    fun Share(
+        tint: Color = Base100,
+        onClick: () -> Unit,
+    ) {
+        Base(
+            imageVector = Icons.Outlined.Share,
+            tint = tint,
+            onClick = onClick
+        )
+    }
 
     @Composable
     fun Back(
@@ -57,7 +83,7 @@ object Icons {
         onClick: () -> Unit
     ) {
         Base(
-            imageVector = Icons.Default.RoundaboutLeft,
+            imageVector = Icons.AutoMirrored.Filled.Undo,
             tint = tint,
             onClick = onClick
         )

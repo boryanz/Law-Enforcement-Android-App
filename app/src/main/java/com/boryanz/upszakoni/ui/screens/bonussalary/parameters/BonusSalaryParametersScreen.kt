@@ -1,6 +1,7 @@
 package com.boryanz.upszakoni.ui.screens.bonussalary.parameters
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
@@ -18,6 +19,7 @@ sealed interface BonusSalaryParametersUiEvent {
     data class OvertimeLimitChanged(val value: String) : BonusSalaryParametersUiEvent
     data class AbsenceLimitChanged(val value: String) : BonusSalaryParametersUiEvent
     data object SaveParametersClicked : BonusSalaryParametersUiEvent
+    data object FetchData : BonusSalaryParametersUiEvent
 }
 
 @Composable
@@ -30,6 +32,10 @@ fun BonusSalaryParametersScreen(
     val viewmodel =
         koinViewModel<BonusSalaryParametersViewModel>(parameters = { parametersOf(navigator) })
     val uiState by viewmodel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(true) {
+        viewmodel.onUiEvent(BonusSalaryParametersUiEvent.FetchData)
+    }
 
     BonusSalaryParametersContent(
         uiState = uiState,

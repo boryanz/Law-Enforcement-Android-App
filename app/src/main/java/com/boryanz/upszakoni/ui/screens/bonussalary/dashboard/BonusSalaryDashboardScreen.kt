@@ -12,6 +12,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun BonusSalaryDashboardScreen(
     navHostController: NavHostController,
+    onEditClicked: () -> Unit,
     onBackClicked: () -> Unit,
 ) {
 
@@ -35,6 +36,7 @@ fun BonusSalaryDashboardScreen(
         onDeleteAllClicked = {
             viewModel.onUiEvent(BonusSalaryDashboardUiEvent.DeleteAll)
             onBackClicked()
-        }
+        },
+        onEditClicked = onEditClicked
     )
 }

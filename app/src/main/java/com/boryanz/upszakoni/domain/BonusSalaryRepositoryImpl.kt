@@ -92,17 +92,9 @@ class BonusSalaryRepositoryImpl(context: Context) : BonusSalaryRepository {
     override fun getMaximumPaidAbsenceDays() = maximumAvailablePaidDays
 
     private fun cacheTresholdValues(bonusSalaryTreshold: BonusSalaryTreshold) {
-        if (averageOvertimeHours < 0) {
-            averageOvertimeHours =
-                ceil(bonusSalaryTreshold.minimumOvertimeHours.toDouble() / NUMBER_OF_MONTHS).toInt()
-        }
-        if (minimumOvertimeHours < 0) {
-            minimumOvertimeHours = bonusSalaryTreshold.minimumOvertimeHours.toInt()
-        }
-
-        if (maximumAvailablePaidDays < 0) {
-            maximumAvailablePaidDays = bonusSalaryTreshold.maximumAbsenceDays.toInt()
-
-        }
+        averageOvertimeHours =
+            ceil(bonusSalaryTreshold.minimumOvertimeHours.toDouble() / NUMBER_OF_MONTHS).toInt()
+        minimumOvertimeHours = bonusSalaryTreshold.minimumOvertimeHours.toInt()
+        maximumAvailablePaidDays = bonusSalaryTreshold.maximumAbsenceDays.toInt()
     }
 }
