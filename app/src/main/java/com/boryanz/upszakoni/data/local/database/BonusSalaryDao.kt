@@ -27,4 +27,7 @@ interface BonusSalaryDao {
 
     @Query("SELECT * FROM monthly_stats WHERE month = :month")
     suspend fun getMonthlyStatsByMonth(month: String): MonthlyStats?
+
+    @Query("DELETE FROM bonus_salary_treshold")
+    fun deleteTreshold()
 }

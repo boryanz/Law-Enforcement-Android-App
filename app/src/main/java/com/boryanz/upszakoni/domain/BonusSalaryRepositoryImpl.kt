@@ -7,6 +7,7 @@ import com.boryanz.upszakoni.data.local.database.model.MonthlyStats
 import com.boryanz.upszakoni.domain.errorhandling.Result
 import com.boryanz.upszakoni.domain.errorhandling.UpsError
 import com.boryanz.upszakoni.domain.errorhandling.tryCatch
+import com.boryanz.upszakoni.ui.components.defaultMonthlyStats
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlin.math.ceil
@@ -71,6 +72,18 @@ class BonusSalaryRepositoryImpl(context: Context) : BonusSalaryRepository {
                 dao.getMonthlyStatsByMonth(month)
             }
         }
+
+    override suspend fun deleteAll() {
+        tryCatch {
+            withContext(ioDispatcher) {
+                dao.insertAll(defaultMonthlyStats)
+                dao.deleteTreshold()
+                averageOvertimeHours = -1
+                minimumOvertimeHours = -1
+                maximumAvailablePaidDays = -1
+            }
+        }
+    }
 
     override fun getAverageHoursPerMonth() = averageOvertimeHours
 

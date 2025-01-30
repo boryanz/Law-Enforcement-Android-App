@@ -37,7 +37,7 @@ class OverTimeInputViewModel(
     fun onUiEvent(event: OverTimeInputUiEvent) = viewModelScope.launch {
         when (event) {
             is AbsenceDaysValueChanged -> {
-                val hasError = runCatching { event.value.toInt() >= 31 }.getOrNull() ?: true
+                val hasError = runCatching { event.value.toInt() >= 31 || event.value.toInt() < 0 }.getOrNull() ?: true
                 _uiState.update {
                     it.copy(
                         paidAbsenceDays = event.value,
@@ -47,7 +47,7 @@ class OverTimeInputViewModel(
             }
 
             is OvertimeHoursValueChanged -> {
-                val hasError = runCatching { event.value.toInt() >= 100 }.getOrNull() ?: true
+                val hasError = runCatching { event.value.toInt() >= 100 || event.value.toInt() < 0 }.getOrNull() ?: true
                 _uiState.update {
                     it.copy(
                         overtimeHours = event.value,
@@ -57,7 +57,7 @@ class OverTimeInputViewModel(
             }
 
             is SickDaysValueChanged -> {
-                val hasError = runCatching { event.value.toInt() >= 31 }.getOrNull() ?: true
+                val hasError = runCatching { event.value.toInt() >= 31 || event.value.toInt() < 0  }.getOrNull() ?: true
                 _uiState.update { it.copy(sickDays = event.value, hasSickDaysError = hasError) }
             }
 

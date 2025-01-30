@@ -5,6 +5,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import com.boryanz.upszakoni.ui.components.Loader
 import com.boryanz.upszakoni.ui.navigation.destinations.OvertimeInputDestination
 import org.koin.androidx.compose.koinViewModel
 
@@ -21,11 +22,19 @@ fun BonusSalaryDashboardScreen(
         viewModel.onUiEvent(BonusSalaryDashboardUiEvent.FetchMonthlyStats)
     }
 
+    if (uiState.isLoading) {
+        Loader()
+    }
+
     BonusSalaryDashboardContent(
         uiState = uiState,
         onMonthClicked = {
             navHostController.navigate(OvertimeInputDestination(it))
         },
-        onBackClicked = onBackClicked
+        onBackClicked = onBackClicked,
+        onDeleteAllClicked = {
+            viewModel.onUiEvent(BonusSalaryDashboardUiEvent.DeleteAll)
+            onBackClicked()
+        }
     )
 }

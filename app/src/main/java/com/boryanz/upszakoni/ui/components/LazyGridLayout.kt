@@ -4,6 +4,7 @@ import androidx.compose.foundation.focusable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -31,11 +32,11 @@ fun LazyGridLayout(
     paddingValues: PaddingValues,
     onClick: (String) -> Unit,
 ) {
-
-
     LazyVerticalGrid(
+        modifier = Modifier.heightIn(max = 800.dp),
         columns = GridCells.Adaptive(minSize = 128.dp),
-        contentPadding = paddingValues
+        contentPadding = paddingValues,
+        userScrollEnabled = false
     ) {
         items(uiState.monthlyOvertime) { month ->
             val minimumHoursReachedColor = if (month.hasMinimumRequiredHours) Base_green else BaseContent
@@ -76,7 +77,7 @@ private fun LazyGridLayoutPreview() {
     }
 }
 
-val monthsInCalendar = listOf(
+val defaultMonthlyStats = listOf(
     getMonthlyStat("Јануари", 1),
     getMonthlyStat("Февруари", 2),
     getMonthlyStat("Март", 3),

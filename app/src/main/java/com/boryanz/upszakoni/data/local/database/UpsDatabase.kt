@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.boryanz.upszakoni.data.local.database.model.BonusSalaryTreshold
 import com.boryanz.upszakoni.data.local.database.model.MonthlyStats
-import com.boryanz.upszakoni.ui.components.monthsInCalendar
+import com.boryanz.upszakoni.ui.components.defaultMonthlyStats
 import java.util.concurrent.Executors
 
 @Database(
@@ -31,7 +31,7 @@ abstract class UpsDatabase : RoomDatabase() {
             }
 
 
-        fun getDb(context: Context): UpsDatabase = Room.databaseBuilder(
+        private fun getDb(context: Context): UpsDatabase = Room.databaseBuilder(
             context = context.applicationContext,
             klass = UpsDatabase::class.java,
             name = "ups_db"
@@ -39,7 +39,7 @@ abstract class UpsDatabase : RoomDatabase() {
             override fun onCreate(db: SupportSQLiteDatabase) {
                 super.onCreate(db)
                 ioThread {
-                    getInstance(context).bonusSalaryDao().insertAll(monthsInCalendar)
+                    getInstance(context).bonusSalaryDao().insertAll(defaultMonthlyStats)
                 }
             }
         }).build()

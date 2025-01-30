@@ -87,6 +87,20 @@ fun NavigationDrawer(
                                 fontWeight = FontWeight.Bold
                             )
                         }
+                        NavigationDrawerItem(
+                            icon = {
+                                Icon(
+                                    modifier = Modifier
+                                        .height(20.dp)
+                                        .width(20.dp),
+                                    imageVector = Icons.Filled.Timelapse,
+                                    contentDescription = null
+                                )
+                            },
+                            label = { Text(text = "Прекувремени часови") },
+                            selected = false,
+                            onClick = { onItemClicked(NavigationDrawerDestination.bonus_salary_feature) }
+                        )
                         HorizontalDivider()
                         NavigationDrawerItem(
                             icon = {
@@ -116,21 +130,6 @@ fun NavigationDrawer(
                             label = { Text(text = "Најчести кривични дела") },
                             selected = false,
                             onClick = { onItemClicked(NavigationDrawerDestination.crimes) }
-                        )
-                        HorizontalDivider()
-                        NavigationDrawerItem(
-                            icon = {
-                                Icon(
-                                    modifier = Modifier
-                                        .height(20.dp)
-                                        .width(20.dp),
-                                    imageVector = Icons.Filled.Timelapse,
-                                    contentDescription = null
-                                )
-                            },
-                            label = { Text(text = "Прекувремени") },
-                            selected = false,
-                            onClick = { onItemClicked(NavigationDrawerDestination.bonus_salary_feature) }
                         )
                         Spacer.Vertical(14.dp)
                         NavigationDrawerItem(
