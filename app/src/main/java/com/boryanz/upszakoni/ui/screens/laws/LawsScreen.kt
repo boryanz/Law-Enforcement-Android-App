@@ -39,6 +39,7 @@ fun LawsScreen(
     onLawClick: (String) -> Unit,
     onItemClick: (NavigationDrawerDestination) -> Unit,
     onArchivedLawsClicked: () -> Unit,
+    onShareAppClicked: () -> Unit,
     viewModel: LawsViewModel = viewModel()
 ) {
     val context = LocalContext.current
@@ -48,7 +49,8 @@ fun LawsScreen(
     NavigationDrawer(
         screenTitle = "Закони",
         onItemClicked = { onItemClick(it) },
-        onArchivedLawsClicked = onArchivedLawsClicked
+        onArchivedLawsClicked = onArchivedLawsClicked,
+        onShareAppClicked = onShareAppClicked
     ) {
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
         var searchQuery by remember { mutableStateOf("") }

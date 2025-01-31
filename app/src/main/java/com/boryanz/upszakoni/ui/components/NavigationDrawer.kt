@@ -14,6 +14,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Timelapse
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -35,6 +36,7 @@ import androidx.compose.ui.unit.sp
 import com.boryanz.upszakoni.R
 import com.boryanz.upszakoni.data.NavigationDrawerDestination
 import com.boryanz.upszakoni.ui.components.Icons.Archive
+import com.boryanz.upszakoni.ui.components.Icons.Share
 import com.boryanz.upszakoni.ui.theme.Base100
 import kotlinx.coroutines.launch
 
@@ -43,6 +45,7 @@ fun NavigationDrawer(
     screenTitle: String,
     onItemClicked: (NavigationDrawerDestination) -> Unit,
     onArchivedLawsClicked: () -> Unit,
+    onShareAppClicked: () -> Unit,
     content: @Composable (PaddingValues) -> Unit,
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -66,16 +69,40 @@ fun NavigationDrawer(
                 ) {
                     Column {
                         Spacer.Vertical(12.dp)
-                        Row(horizontalArrangement = Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
+                        Row(
+                            horizontalArrangement = Arrangement.Start,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
                             Icon(
-                                modifier = Modifier.padding(start = 12.dp).width(20.dp).height(20.dp),
+                                modifier = Modifier
+                                    .padding(start = 12.dp)
+                                    .width(20.dp)
+                                    .height(20.dp),
                                 painter = painterResource(R.drawable.policeman),
                                 contentDescription = null
                             )
                             Spacer.Horizontal(8.dp)
 
-                            Text(text = "УПС", modifier = Modifier.padding(16.dp), fontWeight = FontWeight.Bold)
+                            Text(
+                                text = "УПС",
+                                modifier = Modifier.padding(16.dp),
+                                fontWeight = FontWeight.Bold
+                            )
                         }
+                        NavigationDrawerItem(
+                            icon = {
+                                Icon(
+                                    modifier = Modifier
+                                        .height(20.dp)
+                                        .width(20.dp),
+                                    imageVector = Icons.Filled.Timelapse,
+                                    contentDescription = null
+                                )
+                            },
+                            label = { Text(text = "Прекувремени часови") },
+                            selected = false,
+                            onClick = { onItemClicked(NavigationDrawerDestination.bonus_salary_feature) }
+                        )
                         HorizontalDivider()
                         NavigationDrawerItem(
                             icon = {
@@ -106,7 +133,6 @@ fun NavigationDrawer(
                             selected = false,
                             onClick = { onItemClicked(NavigationDrawerDestination.crimes) }
                         )
-                        HorizontalDivider()
                         Spacer.Vertical(14.dp)
                         NavigationDrawerItem(
                             icon = {
@@ -199,7 +225,9 @@ fun NavigationDrawer(
                         )
                     }
                     Text(
-                        modifier = Modifier.fillMaxWidth().padding(start = 12.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 12.dp),
                         text = "Имаш нов пречистен текст или забелешки? Испрати на boryans.co@gmail.com",
                         textAlign = TextAlign.Start,
                         fontSize = 14.sp
@@ -228,7 +256,10 @@ fun NavigationDrawer(
                     )
                 }
             },
-            trailingIcon = { Archive(onClick = onArchivedLawsClicked)}
+            trailingIcon = {
+                Share(onClick = onShareAppClicked)
+                Archive(onClick = onArchivedLawsClicked)
+            }
 
         ) { paddingValues ->
             content(paddingValues)

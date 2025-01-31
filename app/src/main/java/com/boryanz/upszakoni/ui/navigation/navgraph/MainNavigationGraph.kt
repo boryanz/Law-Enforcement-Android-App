@@ -14,8 +14,10 @@ import com.boryanz.upszakoni.customtab.CustomTabLauncher
 import com.boryanz.upszakoni.data.NavigationDrawerDestination
 import com.boryanz.upszakoni.data.crimesItems
 import com.boryanz.upszakoni.data.goldenQuestions
+import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsDao
 import com.boryanz.upszakoni.data.offensesItems
 import com.boryanz.upszakoni.data.policeAuthorities
+import com.boryanz.upszakoni.ui.components.Icons
 import com.boryanz.upszakoni.ui.navigation.destinations.ArchivedLaws
 import com.boryanz.upszakoni.ui.navigation.destinations.Crimes
 import com.boryanz.upszakoni.ui.navigation.destinations.GoldenCrimeQuestions
@@ -25,20 +27,19 @@ import com.boryanz.upszakoni.ui.navigation.destinations.PhoneNumbers
 import com.boryanz.upszakoni.ui.navigation.destinations.PoliceAuthorities
 import com.boryanz.upszakoni.ui.navigation.destinations.PrivacyPolicy
 import com.boryanz.upszakoni.ui.navigation.destinations.PrivacyPolicyAcceptance
-import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsDao
-import com.boryanz.upszakoni.ui.components.Icons
-import com.boryanz.upszakoni.ui.screens.CommonOffensesAndCrimes
-import com.boryanz.upszakoni.ui.screens.laws.LawsScreen
-import com.boryanz.upszakoni.ui.screens.PdfViewerActivity
-import com.boryanz.upszakoni.ui.screens.GoldenCrimeQuestionsScreen
-import com.boryanz.upszakoni.ui.screens.PhoneNumbersScreen
-import com.boryanz.upszakoni.ui.screens.PoliceAuthoritiesScreen
-import com.boryanz.upszakoni.ui.screens.PrivacyPolicyAcceptanceScreen
-import com.boryanz.upszakoni.ui.screens.PrivacyPolicyScreen
 import com.boryanz.upszakoni.ui.screens.archivedlaws.ArchivedLawsScreen
+import com.boryanz.upszakoni.ui.screens.bonussalary.BonusSalaryActivity
+import com.boryanz.upszakoni.ui.screens.common.CommonOffensesAndCrimes
+import com.boryanz.upszakoni.ui.screens.crimequestions.GoldenCrimeQuestionsScreen
+import com.boryanz.upszakoni.ui.screens.laws.LawsScreen
+import com.boryanz.upszakoni.ui.screens.pdfviewer.PdfViewerActivity
+import com.boryanz.upszakoni.ui.screens.phonenumbers.PhoneNumbersScreen
+import com.boryanz.upszakoni.ui.screens.policeauthorities.PoliceAuthoritiesScreen
+import com.boryanz.upszakoni.ui.screens.privacypolicy.PrivacyPolicyAcceptanceScreen
+import com.boryanz.upszakoni.ui.screens.privacypolicy.PrivacyPolicyScreen
 import com.boryanz.upszakoni.utils.openDialer
-import com.boryanz.upszakoni.utils.supportExternalPdfReader
 import com.boryanz.upszakoni.utils.openPdfWithExternalReader
+import com.boryanz.upszakoni.utils.supportExternalPdfReader
 
 private const val WANTED_PERSONS_URL = "https://mvr.gov.mk/potragi-ischeznati/potragi"
 private const val DAILY_NEWS_URL = "https://mvr.gov.mk/dnevni-bilteni"
@@ -46,6 +47,7 @@ private const val DAILY_NEWS_URL = "https://mvr.gov.mk/dnevni-bilteni"
 @Composable
 fun NavigationGraph(
     navHostController: NavHostController = rememberNavController(),
+    onShareAppClicked: () -> Unit,
 ) {
     val context = LocalContext.current
     val sharedPrefsDao = remember { SharedPrefsDao(context) }
@@ -135,7 +137,8 @@ fun NavigationGraph(
                 },
                 onArchivedLawsClicked = {
                     navHostController.navigate(ArchivedLaws)
-                }
+                },
+                onShareAppClicked = onShareAppClicked
             )
         }
 
@@ -189,6 +192,9 @@ fun NavHostController.navigateToDrawerDestination(navigationDrawerDestination: N
 
         NavigationDrawerDestination.phone_numbers -> navigate(PhoneNumbers)
         NavigationDrawerDestination.privacy_policy -> navigate(PrivacyPolicy)
+        NavigationDrawerDestination.bonus_salary_feature -> context.startActivity(
+            BonusSalaryActivity.createIntent(context)
+        )
     }
 }
 

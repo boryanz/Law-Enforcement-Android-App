@@ -1,4 +1,4 @@
-package com.boryanz.upszakoni.ui.screens
+package com.boryanz.upszakoni.ui.screens.policeauthorities
 
 import androidx.compose.runtime.Composable
 import com.boryanz.upszakoni.data.model.TitleItem

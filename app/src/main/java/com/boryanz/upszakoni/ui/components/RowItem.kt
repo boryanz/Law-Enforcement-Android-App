@@ -16,18 +16,20 @@ import com.boryanz.upszakoni.ui.theme.BaseContent
 
 @Composable
 fun RowItem(
+    modifier: Modifier = Modifier,
+    horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
     isEnabled: Boolean = true,
     onClick: () -> Unit,
     content: @Composable () -> Unit
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .wrapContentHeight()
             .border(width = 1.dp, shape = RoundedCornerShape(4.dp), color = BaseContent)
             .padding(all = 16.dp)
             .clickable(enabled = isEnabled, onClick = onClick),
-        horizontalArrangement = Arrangement.Start,
+        horizontalArrangement = horizontalArrangement,
         verticalAlignment = Alignment.CenterVertically,
     ) {
         content()

@@ -1,4 +1,4 @@
-package com.boryanz.upszakoni.ui.screens
+package com.boryanz.upszakoni.ui.screens.privacypolicy
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
