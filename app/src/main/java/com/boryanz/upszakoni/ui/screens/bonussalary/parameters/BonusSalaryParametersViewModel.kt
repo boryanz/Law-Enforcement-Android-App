@@ -33,7 +33,7 @@ class BonusSalaryParametersViewModel(
     fun onUiEvent(event: BonusSalaryParametersUiEvent) {
         when (event) {
             is BonusSalaryParametersUiEvent.AbsenceLimitChanged -> {
-                val hasError = runCatching { event.value.toInt() >= 0}.getOrNull() ?: true
+                val hasError = runCatching { event.value.toInt() <= 0 }.getOrNull() ?: true
                 _uiState.update {
                     it.copy(
                         absenceDaysLimitValue = event.value,
