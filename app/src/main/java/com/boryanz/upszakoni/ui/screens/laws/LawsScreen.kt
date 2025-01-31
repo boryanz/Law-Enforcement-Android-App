@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Archive
+import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -52,7 +53,7 @@ fun LawsScreen(
         screenTitle = "Закони",
         onItemClicked = { onItemClick(it) },
         onArchivedLawsClicked = onArchivedLawsClicked,
-        isAppUpdateAvailable = featureFlagsState.isAppUpdateAvailable,
+        featureFlags = featureFlagsState,
         onShareAppClicked = onShareAppClicked,
     ) {
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -73,7 +74,8 @@ fun LawsScreen(
                 onValueChange = {
                     searchQuery = it
                 },
-                label = { Text("Пребарувај") }
+                label = { Text("Пребарувај") },
+                trailingIcon = { com.boryanz.upszakoni.ui.components.Icons.Base(imageVector = Icons.Outlined.Search) { } }
             )
             Spacer(modifier = Modifier.padding(vertical = 4.dp))
             LazyColumn {

@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 private const val IS_APP_UPDATE_AVAILABLE = "is_app_update_available"
+private const val GREETING_MESSAGE_STRING_KEY = "greeting_message"
 
 class RemoteConfigRepository {
 
@@ -26,7 +27,8 @@ class RemoteConfigRepository {
             remoteConfig.activate().addOnSuccessListener {
                 _remoteConfigState.update {
                     RemoteConfig(
-                        isAppUpdateAvailable = remoteConfig.getBoolean(IS_APP_UPDATE_AVAILABLE)
+                        isAppUpdateAvailable = remoteConfig.getBoolean(IS_APP_UPDATE_AVAILABLE),
+                        greetingMessage = remoteConfig.getString(GREETING_MESSAGE_STRING_KEY)
                     )
                 }
             }
@@ -35,5 +37,6 @@ class RemoteConfigRepository {
 }
 
 data class RemoteConfig(
-    val isAppUpdateAvailable: Boolean = false
+    val isAppUpdateAvailable: Boolean = false,
+    val greetingMessage: String = ""
 )
