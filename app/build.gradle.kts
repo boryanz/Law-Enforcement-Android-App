@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.google.cloud.services)
 //  alias(libs.plugins.google.cloud.services) Add along with google-service.json file from Firebase
 }
 
@@ -53,6 +54,7 @@ dependencies {
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
     implementation(libs.retrofit.core)
+    implementation(libs.firebase.config)
 //    implementation(libs.retrofit.core)
 //    implementation(libs.retrofit.bom)
 //    implementation(libs.coil.kt)

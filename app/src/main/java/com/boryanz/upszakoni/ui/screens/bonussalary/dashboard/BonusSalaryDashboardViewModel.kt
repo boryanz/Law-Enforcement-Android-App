@@ -3,7 +3,7 @@ package com.boryanz.upszakoni.ui.screens.bonussalary.dashboard
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.boryanz.upszakoni.data.local.database.model.MonthlyStats
-import com.boryanz.upszakoni.domain.BonusSalaryRepository
+import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
 import com.boryanz.upszakoni.domain.errorhandling.fold
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardUiState.MonthlyOvertime
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardUiState.SliderState

@@ -15,6 +15,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Timelapse
+import androidx.compose.material.icons.outlined.SystemUpdate
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -46,6 +47,7 @@ fun NavigationDrawer(
     onItemClicked: (NavigationDrawerDestination) -> Unit,
     onArchivedLawsClicked: () -> Unit,
     onShareAppClicked: () -> Unit,
+    isAppUpdateAvailable: Boolean = false,
     content: @Composable (PaddingValues) -> Unit,
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -223,6 +225,22 @@ fun NavigationDrawer(
                             selected = false,
                             onClick = { onItemClicked(NavigationDrawerDestination.privacy_policy) }
                         )
+                        if (isAppUpdateAvailable) {
+                            NavigationDrawerItem(
+                                icon = {
+                                    Icon(
+                                        modifier = Modifier
+                                            .height(20.dp)
+                                            .width(20.dp),
+                                        imageVector = Icons.Outlined.SystemUpdate,
+                                        contentDescription = null
+                                    )
+                                },
+                                label = { Text(text = "Достапна нова верзија") },
+                                selected = false,
+                                onClick = {  }
+                            )
+                        }
                     }
                     Text(
                         modifier = Modifier
