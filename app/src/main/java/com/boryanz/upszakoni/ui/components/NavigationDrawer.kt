@@ -46,6 +46,7 @@ fun NavigationDrawer(
     onItemClicked: (NavigationDrawerDestination) -> Unit,
     onArchivedLawsClicked: () -> Unit,
     onShareAppClicked: () -> Unit,
+    onAppUpdateClicked: () -> Unit,
     featureFlags: RemoteConfig? = null,
     content: @Composable (PaddingValues) -> Unit,
 ) {
@@ -232,7 +233,7 @@ fun NavigationDrawer(
                                 },
                                 label = { Text(text = "Достапна нова верзија") },
                                 selected = false,
-                                onClick = { }
+                                onClick = onAppUpdateClicked
                             )
                         }
                     }

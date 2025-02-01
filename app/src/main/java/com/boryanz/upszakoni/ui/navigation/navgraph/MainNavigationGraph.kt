@@ -50,6 +50,7 @@ private const val DAILY_NEWS_URL = "https://mvr.gov.mk/dnevni-bilteni"
 fun NavigationGraph(
     navHostController: NavHostController = rememberNavController(),
     onShareAppClicked: () -> Unit,
+    onAppUpdateClicked: () -> Unit,
 ) {
     val context = LocalContext.current
     val sharedPrefsDao = remember { SharedPrefsDao(context) }
@@ -144,7 +145,8 @@ fun NavigationGraph(
                 onArchivedLawsClicked = {
                     navHostController.navigate(ArchivedLawsDestination)
                 },
-                onShareAppClicked = onShareAppClicked
+                onShareAppClicked = onShareAppClicked,
+                onAppUpdateClicked = onAppUpdateClicked
             )
         }
 
