@@ -9,6 +9,8 @@ import kotlinx.coroutines.flow.update
 
 private const val IS_APP_UPDATE_AVAILABLE = "is_app_update_available"
 private const val GREETING_MESSAGE_STRING_KEY = "greeting_message"
+private const val USEFUL_INFORMATIONS = "useful_informations"
+private const val NON_WORKING_DAYS = "non_working_days"
 
 class RemoteConfigRepository {
 
@@ -28,7 +30,9 @@ class RemoteConfigRepository {
                 _remoteConfigState.update {
                     RemoteConfig(
                         isAppUpdateAvailable = remoteConfig.getBoolean(IS_APP_UPDATE_AVAILABLE),
-                        greetingMessage = remoteConfig.getString(GREETING_MESSAGE_STRING_KEY)
+                        greetingMessage = remoteConfig.getString(GREETING_MESSAGE_STRING_KEY),
+                        usefulInformations = remoteConfig.getString(USEFUL_INFORMATIONS),
+                        nonWorkingDays = remoteConfig.getString(NON_WORKING_DAYS)
                     )
                 }
             }
@@ -38,5 +42,7 @@ class RemoteConfigRepository {
 
 data class RemoteConfig(
     val isAppUpdateAvailable: Boolean = false,
-    val greetingMessage: String = ""
+    val greetingMessage: String = "",
+    val usefulInformations: String = "",
+    val nonWorkingDays: String = "",
 )

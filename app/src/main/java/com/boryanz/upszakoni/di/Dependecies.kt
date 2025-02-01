@@ -9,6 +9,7 @@ import com.boryanz.upszakoni.ui.screens.bonussalary.BonusSalaryViewModel
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardViewModel
 import com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput.OverTimeInputViewModel
 import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BonusSalaryParametersViewModel
+import com.boryanz.upszakoni.ui.screens.informations.InformationScreenViewModel
 import com.boryanz.upszakoni.ui.screens.laws.LawsViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -24,6 +25,7 @@ val appModule = module {
     viewModel { (navigator: NavigationWrapper) -> BonusSalaryParametersViewModel(get(), navigator) }
     viewModel { BonusSalaryViewModel(get()) }
     viewModel { (navigator: NavigationWrapper) -> OverTimeInputViewModel(get(), navigator) }
-    viewModel { BonusSalaryDashboardViewModel(get()) }
+    viewModel { BonusSalaryDashboardViewModel(get(), get()) }
     viewModel { LawsViewModel(get(), get()) }
+    viewModel { InformationScreenViewModel(get()) }
 }

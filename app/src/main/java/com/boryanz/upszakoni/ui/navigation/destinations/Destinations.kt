@@ -3,28 +3,31 @@ package com.boryanz.upszakoni.ui.navigation.destinations
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object Laws
+data object LawsDestination
 
 @Serializable
-data object Crimes
+data object CrimesDestination
 
 @Serializable
-data object Offenses
+data object OffensesDestination
 
 @Serializable
-data object PoliceAuthorities
+data object PoliceAuthoritiesDestination
 
 @Serializable
-data object GoldenCrimeQuestions
+data object GoldenCrimeQuestionsDestination
 
 @Serializable
-data object PhoneNumbers
+data object PhoneNumbersDestination
 
 @Serializable
-data object PrivacyPolicy
+data object PrivacyPolicyDestination
 
 @Serializable
-data object PrivacyPolicyAcceptance
+data object PrivacyPolicyAcceptanceDestination
 
 @Serializable
-data object ArchivedLaws
+data object ArchivedLawsDestination
+
+@Serializable
+data object InformationScreenDestination

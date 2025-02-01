@@ -14,6 +14,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Timelapse
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.SystemUpdate
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.HorizontalDivider
@@ -186,6 +187,23 @@ fun NavigationDrawer(
                             selected = false,
                             onClick = { onItemClicked(NavigationDrawerDestination.wanted_criminals) }
                         )
+                        if (!featureFlags?.usefulInformations.isNullOrEmpty()) {
+                            HorizontalDivider()
+                            NavigationDrawerItem(
+                                icon = {
+                                    Icon(
+                                        modifier = Modifier
+                                            .height(20.dp)
+                                            .width(20.dp),
+                                        imageVector = Icons.Outlined.Info,
+                                        contentDescription = null
+                                    )
+                                },
+                                label = { Text(text = "Известувања") },
+                                selected = false,
+                                onClick = { onItemClicked(NavigationDrawerDestination.information) }
+                            )
+                        }
                         Spacer.Vertical(24.dp)
                         NavigationDrawerItem(
                             icon = {

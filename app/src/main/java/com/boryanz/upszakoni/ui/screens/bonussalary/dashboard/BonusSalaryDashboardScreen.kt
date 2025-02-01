@@ -6,6 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.boryanz.upszakoni.ui.components.Loader
+import com.boryanz.upszakoni.ui.navigation.destinations.NonWorkingDaysInfoDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.OvertimeInputDestination
 import org.koin.androidx.compose.koinViewModel
 
@@ -37,6 +38,7 @@ fun BonusSalaryDashboardScreen(
             viewModel.onUiEvent(BonusSalaryDashboardUiEvent.DeleteAll)
             onBackClicked()
         },
-        onEditClicked = onEditClicked
+        onEditClicked = onEditClicked,
+        onNonWorkingDaysClicked = { navHostController.navigate(NonWorkingDaysInfoDestination(it)) }
     )
 }

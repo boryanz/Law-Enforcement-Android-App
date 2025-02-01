@@ -34,6 +34,7 @@ fun BonusSalaryDashboardContent(
     onBackClicked: () -> Unit,
     onEditClicked: () -> Unit,
     onDeleteAllClicked: () -> Unit,
+    onNonWorkingDaysClicked: (String) -> Unit,
 ) {
     var isDeleteAllClicked by remember {
         mutableStateOf(false)
@@ -95,6 +96,12 @@ fun BonusSalaryDashboardContent(
                 onClick = { onMonthClicked(it) },
                 paddingValues = PaddingValues(vertical = 8.dp)
             )
+            if (!uiState.nonWorkingDays.isNullOrBlank()) {
+                Spacer.Vertical(8.dp)
+                Button.Outlined(
+                    title = "Неработни денови",
+                    onClick = { onNonWorkingDaysClicked(uiState.nonWorkingDays) })
+            }
         }
     }
 }
@@ -103,6 +110,6 @@ fun BonusSalaryDashboardContent(
 @Composable
 private fun BonusSalaryDashboardContentPreview() {
     KataSampleAppTheme {
-        BonusSalaryDashboardContent(BonusSalaryDashboardUiState(), {}, {}, {}, {})
+        BonusSalaryDashboardContent(BonusSalaryDashboardUiState(), {}, {}, {}, {}, {})
     }
 }

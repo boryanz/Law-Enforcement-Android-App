@@ -10,3 +10,6 @@ data object BonusSalaryDashboardDestination
 
 @Serializable
 data class OvertimeInputDestination(val month: String)
+
+@Serializable
+data class NonWorkingDaysInfoDestination(val nonWorkingDays: String)

@@ -18,19 +18,21 @@ import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsDao
 import com.boryanz.upszakoni.data.offensesItems
 import com.boryanz.upszakoni.data.policeAuthorities
 import com.boryanz.upszakoni.ui.components.Icons
-import com.boryanz.upszakoni.ui.navigation.destinations.ArchivedLaws
-import com.boryanz.upszakoni.ui.navigation.destinations.Crimes
-import com.boryanz.upszakoni.ui.navigation.destinations.GoldenCrimeQuestions
-import com.boryanz.upszakoni.ui.navigation.destinations.Laws
-import com.boryanz.upszakoni.ui.navigation.destinations.Offenses
-import com.boryanz.upszakoni.ui.navigation.destinations.PhoneNumbers
-import com.boryanz.upszakoni.ui.navigation.destinations.PoliceAuthorities
-import com.boryanz.upszakoni.ui.navigation.destinations.PrivacyPolicy
-import com.boryanz.upszakoni.ui.navigation.destinations.PrivacyPolicyAcceptance
+import com.boryanz.upszakoni.ui.navigation.destinations.ArchivedLawsDestination
+import com.boryanz.upszakoni.ui.navigation.destinations.CrimesDestination
+import com.boryanz.upszakoni.ui.navigation.destinations.GoldenCrimeQuestionsDestination
+import com.boryanz.upszakoni.ui.navigation.destinations.InformationScreenDestination
+import com.boryanz.upszakoni.ui.navigation.destinations.LawsDestination
+import com.boryanz.upszakoni.ui.navigation.destinations.OffensesDestination
+import com.boryanz.upszakoni.ui.navigation.destinations.PhoneNumbersDestination
+import com.boryanz.upszakoni.ui.navigation.destinations.PoliceAuthoritiesDestination
+import com.boryanz.upszakoni.ui.navigation.destinations.PrivacyPolicyAcceptanceDestination
+import com.boryanz.upszakoni.ui.navigation.destinations.PrivacyPolicyDestination
 import com.boryanz.upszakoni.ui.screens.archivedlaws.ArchivedLawsScreen
 import com.boryanz.upszakoni.ui.screens.bonussalary.BonusSalaryActivity
 import com.boryanz.upszakoni.ui.screens.common.CommonOffensesAndCrimes
 import com.boryanz.upszakoni.ui.screens.crimequestions.GoldenCrimeQuestionsScreen
+import com.boryanz.upszakoni.ui.screens.informations.InformationScreen
 import com.boryanz.upszakoni.ui.screens.laws.LawsScreen
 import com.boryanz.upszakoni.ui.screens.pdfviewer.PdfViewerActivity
 import com.boryanz.upszakoni.ui.screens.phonenumbers.PhoneNumbersScreen
@@ -54,17 +56,17 @@ fun NavigationGraph(
     val isInDarkMode = isSystemInDarkTheme()
     NavHost(
         navController = navHostController,
-        startDestination = if (sharedPrefsDao.isPrivacyPolicyAccepted()) Laws else PrivacyPolicyAcceptance
+        startDestination = if (sharedPrefsDao.isPrivacyPolicyAccepted()) LawsDestination else PrivacyPolicyAcceptanceDestination
     ) {
 
-        composable<PrivacyPolicyAcceptance> {
+        composable<PrivacyPolicyAcceptanceDestination> {
             PrivacyPolicyAcceptanceScreen(
-                onContinueClicked = { navHostController.navigate(Laws) },
+                onContinueClicked = { navHostController.navigate(LawsDestination) },
                 backButton = {}
             )
         }
 
-        composable<Offenses> {
+        composable<OffensesDestination> {
             CommonOffensesAndCrimes(
                 title = "Прекршоци",
                 commonCrimesItems = offensesItems,
@@ -79,7 +81,7 @@ fun NavigationGraph(
             )
         }
 
-        composable<Crimes> {
+        composable<CrimesDestination> {
             CommonOffensesAndCrimes(
                 title = "Кривични дела",
                 commonCrimesItems = crimesItems,
@@ -94,7 +96,7 @@ fun NavigationGraph(
             )
         }
 
-        composable<PoliceAuthorities> {
+        composable<PoliceAuthoritiesDestination> {
             PoliceAuthoritiesScreen(
                 topBarTitle = "Полициски овластувања",
                 items = policeAuthorities,
@@ -102,7 +104,11 @@ fun NavigationGraph(
             )
         }
 
-        composable<GoldenCrimeQuestions> {
+        composable<InformationScreenDestination> {
+            InformationScreen(onBackClicked = { navHostController.navigateUp() })
+        }
+
+        composable<GoldenCrimeQuestionsDestination> {
             GoldenCrimeQuestionsScreen(
                 topBarTitle = "Водич за службена белешка",
                 items = goldenQuestions,
@@ -110,7 +116,7 @@ fun NavigationGraph(
             )
         }
 
-        composable<PhoneNumbers> {
+        composable<PhoneNumbersDestination> {
             PhoneNumbersScreen(
                 onContactClicked = { phoneNumber ->
                     context.openDialer(phoneNumber)
@@ -119,7 +125,7 @@ fun NavigationGraph(
             )
         }
 
-        composable<PrivacyPolicy> {
+        composable<PrivacyPolicyDestination> {
             PrivacyPolicyScreen(
                 backButton = {
                     Icons.Back(onClick = { navHostController.navigateUp() })
@@ -127,7 +133,7 @@ fun NavigationGraph(
             )
         }
 
-        composable<Laws> {
+        composable<LawsDestination> {
             LawsScreen(
                 onItemClick = { navigationDrawerDestination ->
                     navHostController.navigateToDrawerDestination(navigationDrawerDestination)
@@ -136,13 +142,13 @@ fun NavigationGraph(
                     openPdfLaw(lawName, isInDarkMode, context)
                 },
                 onArchivedLawsClicked = {
-                    navHostController.navigate(ArchivedLaws)
+                    navHostController.navigate(ArchivedLawsDestination)
                 },
                 onShareAppClicked = onShareAppClicked
             )
         }
 
-        composable<ArchivedLaws> {
+        composable<ArchivedLawsDestination> {
             ArchivedLawsScreen(
                 onItemClick = { lawName -> openPdfLaw(lawName, isInDarkMode, context) },
                 onBackClicked = { navHostController.navigateUp() }
@@ -169,11 +175,11 @@ private fun openPdfLaw(
 
 fun NavHostController.navigateToDrawerDestination(navigationDrawerDestination: NavigationDrawerDestination) {
     when (navigationDrawerDestination) {
-        NavigationDrawerDestination.laws -> navigate(Laws)
-        NavigationDrawerDestination.offenses -> navigate(Offenses)
-        NavigationDrawerDestination.crimes -> navigate(Crimes)
-        NavigationDrawerDestination.authorities -> navigate(PoliceAuthorities)
-        NavigationDrawerDestination.writing_guide -> navigate(GoldenCrimeQuestions)
+        NavigationDrawerDestination.laws -> navigate(LawsDestination)
+        NavigationDrawerDestination.offenses -> navigate(OffensesDestination)
+        NavigationDrawerDestination.crimes -> navigate(CrimesDestination)
+        NavigationDrawerDestination.authorities -> navigate(PoliceAuthoritiesDestination)
+        NavigationDrawerDestination.writing_guide -> navigate(GoldenCrimeQuestionsDestination)
         NavigationDrawerDestination.wanted_criminals -> {
             val customTabLauncher = CustomTabLauncher(
                 showTitle = true,
@@ -190,11 +196,13 @@ fun NavHostController.navigateToDrawerDestination(navigationDrawerDestination: N
             customTabLauncher.launch(context, DAILY_NEWS_URL)
         }
 
-        NavigationDrawerDestination.phone_numbers -> navigate(PhoneNumbers)
-        NavigationDrawerDestination.privacy_policy -> navigate(PrivacyPolicy)
+        NavigationDrawerDestination.phone_numbers -> navigate(PhoneNumbersDestination)
+        NavigationDrawerDestination.privacy_policy -> navigate(PrivacyPolicyDestination)
         NavigationDrawerDestination.bonus_salary_feature -> context.startActivity(
             BonusSalaryActivity.createIntent(context)
         )
+
+        NavigationDrawerDestination.information -> navigate(InformationScreenDestination)
     }
 }
 
