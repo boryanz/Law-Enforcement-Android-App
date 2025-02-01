@@ -91,10 +91,12 @@ fun NavigationDrawer(
                                     fontWeight = FontWeight.Bold
                                 )
                                 featureFlags?.greetingMessage?.let { message ->
-                                    Text(
-                                        text = message,
-                                        modifier = Modifier.padding(horizontal = 8.dp),
-                                    )
+                                    if (message.isNotBlank()) {
+                                        Text(
+                                            text = message,
+                                            modifier = Modifier.padding(horizontal = 8.dp),
+                                        )
+                                    }
                                 }
                             }
                         }
