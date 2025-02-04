@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -15,6 +14,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Timelapse
+import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.SystemUpdate
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -30,11 +31,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.boryanz.upszakoni.R
 import com.boryanz.upszakoni.data.NavigationDrawerDestination
+import com.boryanz.upszakoni.domain.remoteconfig.RemoteConfig
 import com.boryanz.upszakoni.ui.components.Icons.Archive
 import com.boryanz.upszakoni.ui.components.Icons.Share
 import com.boryanz.upszakoni.ui.theme.Base100
@@ -46,6 +46,8 @@ fun NavigationDrawer(
     onItemClicked: (NavigationDrawerDestination) -> Unit,
     onArchivedLawsClicked: () -> Unit,
     onShareAppClicked: () -> Unit,
+    onAppUpdateClicked: () -> Unit,
+    featureFlags: RemoteConfig? = null,
     content: @Composable (PaddingValues) -> Unit,
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -82,13 +84,23 @@ fun NavigationDrawer(
                                 contentDescription = null
                             )
                             Spacer.Horizontal(8.dp)
-
-                            Text(
-                                text = "УПС",
-                                modifier = Modifier.padding(16.dp),
-                                fontWeight = FontWeight.Bold
-                            )
+                            Column {
+                                Text(
+                                    text = "УПС",
+                                    modifier = Modifier.padding(horizontal = 8.dp),
+                                    fontWeight = FontWeight.Bold
+                                )
+                                featureFlags?.greetingMessage?.let { message ->
+                                    if (message.isNotBlank()) {
+                                        Text(
+                                            text = message,
+                                            modifier = Modifier.padding(horizontal = 8.dp),
+                                        )
+                                    }
+                                }
+                            }
                         }
+                        Spacer.Vertical(12.dp)
                         NavigationDrawerItem(
                             icon = {
                                 Icon(
@@ -140,21 +152,6 @@ fun NavigationDrawer(
                                     modifier = Modifier
                                         .height(20.dp)
                                         .width(20.dp),
-                                    painter = painterResource(R.drawable.police),
-                                    contentDescription = null
-                                )
-                            },
-                            label = { Text(text = "Полициски овластувања") },
-                            selected = false,
-                            onClick = { onItemClicked(NavigationDrawerDestination.authorities) }
-                        )
-                        HorizontalDivider()
-                        NavigationDrawerItem(
-                            icon = {
-                                Icon(
-                                    modifier = Modifier
-                                        .height(20.dp)
-                                        .width(20.dp),
                                     painter = painterResource(R.drawable.question_solid),
                                     contentDescription = null
                                 )
@@ -193,21 +190,23 @@ fun NavigationDrawer(
                             selected = false,
                             onClick = { onItemClicked(NavigationDrawerDestination.wanted_criminals) }
                         )
-                        HorizontalDivider()
-                        NavigationDrawerItem(
-                            icon = {
-                                Icon(
-                                    modifier = Modifier
-                                        .height(20.dp)
-                                        .width(20.dp),
-                                    painter = painterResource(R.drawable.vesti),
-                                    contentDescription = null
-                                )
-                            },
-                            label = { Text(text = "Дневен билтен") },
-                            selected = false,
-                            onClick = { onItemClicked(NavigationDrawerDestination.daily_news) }
-                        )
+                        if (!featureFlags?.usefulInformations.isNullOrEmpty()) {
+                            HorizontalDivider()
+                            NavigationDrawerItem(
+                                icon = {
+                                    Icon(
+                                        modifier = Modifier
+                                            .height(20.dp)
+                                            .width(20.dp),
+                                        imageVector = Icons.Outlined.Info,
+                                        contentDescription = null
+                                    )
+                                },
+                                label = { Text(text = "Известувања") },
+                                selected = false,
+                                onClick = { onItemClicked(NavigationDrawerDestination.information) }
+                            )
+                        }
                         Spacer.Vertical(24.dp)
                         NavigationDrawerItem(
                             icon = {
@@ -223,15 +222,23 @@ fun NavigationDrawer(
                             selected = false,
                             onClick = { onItemClicked(NavigationDrawerDestination.privacy_policy) }
                         )
+                        if (featureFlags?.isAppUpdateAvailable == true) {
+                            NavigationDrawerItem(
+                                icon = {
+                                    Icon(
+                                        modifier = Modifier
+                                            .height(20.dp)
+                                            .width(20.dp),
+                                        imageVector = Icons.Outlined.SystemUpdate,
+                                        contentDescription = null
+                                    )
+                                },
+                                label = { Text(text = "Ажурирај нова верзија") },
+                                selected = false,
+                                onClick = onAppUpdateClicked
+                            )
+                        }
                     }
-                    Text(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 12.dp),
-                        text = "Имаш нов пречистен текст или забелешки? Испрати на boryans.co@gmail.com",
-                        textAlign = TextAlign.Start,
-                        fontSize = 14.sp
-                    )
                 }
             }
         },

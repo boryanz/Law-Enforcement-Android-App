@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "926538579885",
+    "project_id": "ups-zakoni-2-2025-project-id",
+    "storage_bucket": "ups-zakoni-2-2025-project-id.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:926538579885:android:3bd6373f84bbab19ed6b24",
+        "android_client_info": {
+          "package_name": "com.boryanz.upszakoni"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnR2njKS-PB8Bzsyjm9hWyusc337kMtO8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

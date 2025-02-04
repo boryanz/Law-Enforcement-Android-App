@@ -28,6 +28,7 @@ firebaseFirestore = "25.1.1"
 googleCloudServices = "4.4.2"
 firebaseMessaging = "24.1.0"
 accompanist = "0.34.0"
+firebaseConfig = "22.1.0"
 
 
 [libraries]
@@ -75,6 +76,7 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+firebase-config = { group = "com.google.firebase", name = "firebase-config", version.ref = "firebaseConfig" }
 
 
 [plugins]

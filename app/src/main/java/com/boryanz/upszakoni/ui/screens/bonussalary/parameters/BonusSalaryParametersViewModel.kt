@@ -3,7 +3,7 @@ package com.boryanz.upszakoni.ui.screens.bonussalary.parameters
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.boryanz.upszakoni.data.local.database.model.BonusSalaryTreshold
-import com.boryanz.upszakoni.domain.BonusSalaryRepository
+import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
 import com.boryanz.upszakoni.domain.errorhandling.fold
 import com.boryanz.upszakoni.ui.navigation.destinations.BonusSalaryDashboardDestination
 import com.boryanz.upszakoni.ui.navigation.navigationwrapper.NavigationWrapper

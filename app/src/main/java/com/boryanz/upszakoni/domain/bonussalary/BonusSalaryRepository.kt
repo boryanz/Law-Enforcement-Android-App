@@ -1,4 +1,4 @@
-package com.boryanz.upszakoni.domain
+package com.boryanz.upszakoni.domain.bonussalary
 
 import com.boryanz.upszakoni.data.local.database.model.BonusSalaryTreshold
 import com.boryanz.upszakoni.data.local.database.model.MonthlyStats

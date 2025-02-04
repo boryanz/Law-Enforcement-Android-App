@@ -1,4 +1,4 @@
-package com.boryanz.upszakoni.domain
+package com.boryanz.upszakoni.domain.bonussalary
 
 import android.content.Context
 import com.boryanz.upszakoni.data.local.database.UpsDatabase

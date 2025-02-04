@@ -3,8 +3,9 @@ package com.boryanz.upszakoni.ui.screens.bonussalary.dashboard
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.boryanz.upszakoni.data.local.database.model.MonthlyStats
-import com.boryanz.upszakoni.domain.BonusSalaryRepository
+import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
 import com.boryanz.upszakoni.domain.errorhandling.fold
+import com.boryanz.upszakoni.domain.remoteconfig.RemoteConfigRepository
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardUiState.MonthlyOvertime
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardUiState.SliderState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,6 +19,7 @@ data class BonusSalaryDashboardUiState(
     val monthlyOvertime: List<MonthlyOvertime> = emptyList(),
     val sliderState: List<SliderState?>? = null,
     val averageHoursPerMonth: Int = 0,
+    val nonWorkingDays: String? = null,
     val isLoading: Boolean = false,
 ) {
     data class MonthlyOvertime(
@@ -41,13 +43,15 @@ private const val MAX_PAID_OVERTIME_HOURS = 32
 private const val PRC_OVERTIME_MULTIPLIER = 1.4
 
 class BonusSalaryDashboardViewModel(
-    private val bonusSalaryRepository: BonusSalaryRepository
+    private val bonusSalaryRepository: BonusSalaryRepository,
+    remoteConfigRepository: RemoteConfigRepository,
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<BonusSalaryDashboardUiState> =
         MutableStateFlow(BonusSalaryDashboardUiState())
     val uiState = _uiState.asStateFlow()
 
+    private val nonWorkingDaysFlag = remoteConfigRepository.remoteConfigState.value.nonWorkingDays
 
     fun onUiEvent(event: BonusSalaryDashboardUiEvent) = viewModelScope.launch {
         _uiState.update { it.copy(isLoading = true) }
@@ -71,6 +75,7 @@ class BonusSalaryDashboardViewModel(
                                 monthlyOvertime = monthlyOvertime,
                                 averageHoursPerMonth = averageOvertimePerMonth,
                                 sliderState = listOf(usedUp, remainingUntil),
+                                nonWorkingDays = nonWorkingDaysFlag,
                                 isLoading = false
                             )
                         )

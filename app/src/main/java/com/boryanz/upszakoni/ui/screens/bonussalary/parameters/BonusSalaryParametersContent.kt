@@ -71,7 +71,8 @@ fun BonusSalaryParametersContent(
 
             Column {
                 Button.Primary(
-                    isEnabled = !uiState.hasOvertimeLimitError || !uiState.hasAbsenceDaysLimitError, title = "Во ред",
+                    isEnabled = !uiState.hasOvertimeLimitError && !uiState.hasAbsenceDaysLimitError,
+                    title = "Во ред",
                     onClick = onSaveClicked
                 )
             }

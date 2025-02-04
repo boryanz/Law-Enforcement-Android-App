@@ -10,6 +10,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,6 +23,28 @@ import com.boryanz.upszakoni.ui.theme.BaseContent1
 import com.boryanz.upszakoni.ui.theme.KataSampleAppTheme
 
 object Button {
+    
+    @Composable
+    fun Outlined(
+        title: String,
+        modifier: Modifier = Modifier,
+        isEnabled: Boolean = true,
+        onClick: () -> Unit,
+    ) {
+        OutlinedButton(
+            modifier = modifier
+                .fillMaxWidth()
+                .height(52.dp),
+            onClick = onClick,
+            enabled = isEnabled,
+            shape = RoundedCornerShape(4.dp)
+        ) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleMedium
+            )
+        }
+    }
 
     @Composable
     fun Primary(
@@ -68,6 +91,7 @@ private fun ButtonsPreview() {
             Spacer.Vertical(6.dp)
             Button.Primary("Primary button", onClick = {}, isEnabled = false)
             Spacer.Vertical(6.dp)
+            Button.Outlined("Outlined button", onClick = {})
         }
     }
 }

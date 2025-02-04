@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Archive
+import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -26,13 +27,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.boryanz.upszakoni.data.NavigationDrawerDestination
 import com.boryanz.upszakoni.ui.components.NavigationDrawer
 import com.boryanz.upszakoni.ui.components.Spacer
 import com.boryanz.upszakoni.ui.components.SwipeToDismiss
 import com.boryanz.upszakoni.ui.components.TitleItem
 import com.boryanz.upszakoni.ui.screens.common.ScreenAction
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun LawsScreen(
@@ -40,8 +41,11 @@ fun LawsScreen(
     onItemClick: (NavigationDrawerDestination) -> Unit,
     onArchivedLawsClicked: () -> Unit,
     onShareAppClicked: () -> Unit,
-    viewModel: LawsViewModel = viewModel()
+    onAppUpdateClicked: () -> Unit,
 ) {
+    val viewModel = koinViewModel<LawsViewModel>()
+    val featureFlagsState by viewModel.featureFlagsState.collectAsStateWithLifecycle()
+
     val context = LocalContext.current
     LaunchedEffect(Unit) {
         viewModel.onUiEvent(ScreenAction.GetLaws(context))
@@ -50,7 +54,9 @@ fun LawsScreen(
         screenTitle = "Закони",
         onItemClicked = { onItemClick(it) },
         onArchivedLawsClicked = onArchivedLawsClicked,
-        onShareAppClicked = onShareAppClicked
+        featureFlags = featureFlagsState,
+        onShareAppClicked = onShareAppClicked,
+        onAppUpdateClicked = onAppUpdateClicked
     ) {
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
         var searchQuery by remember { mutableStateOf("") }
@@ -70,7 +76,8 @@ fun LawsScreen(
                 onValueChange = {
                     searchQuery = it
                 },
-                label = { Text("Пребарувај") }
+                label = { Text("Пребарувај") },
+                trailingIcon = { com.boryanz.upszakoni.ui.components.Icons.Base(imageVector = Icons.Outlined.Search) { } }
             )
             Spacer(modifier = Modifier.padding(vertical = 4.dp))
             LazyColumn {
