@@ -233,7 +233,7 @@ fun NavigationDrawer(
                                         contentDescription = null
                                     )
                                 },
-                                label = { Text(text = "Достапна нова верзија") },
+                                label = { Text(text = "Ажурирај нова верзија") },
                                 selected = false,
                                 onClick = onAppUpdateClicked
                             )
