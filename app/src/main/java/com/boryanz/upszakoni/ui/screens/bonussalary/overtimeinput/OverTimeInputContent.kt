@@ -71,7 +71,7 @@ fun OverTimeInputContent(
                 )
                 Vertical(8.dp)
                 TextFieldInput.BaseOutline(
-                    labelText = "Вкупно искористени денови од ПРЧ",
+                    labelText = "Платено отсуство и ПРЧ искористени денови",
                     value = uiState.paidAbsenceDays,
                     isError = uiState.hasPaidAbsenceDaysError,
                     textStyle = MaterialTheme.typography.titleLarge,
