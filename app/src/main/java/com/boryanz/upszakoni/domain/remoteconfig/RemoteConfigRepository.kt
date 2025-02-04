@@ -22,7 +22,7 @@ class RemoteConfigRepository {
 
     fun initRemoteConfigs() {
         val configSettings = remoteConfigSettings {
-            minimumFetchIntervalInSeconds = 0
+            minimumFetchIntervalInSeconds = 3600
         }
         remoteConfig.setConfigSettingsAsync(configSettings)
         remoteConfig.fetch().addOnSuccessListener {
