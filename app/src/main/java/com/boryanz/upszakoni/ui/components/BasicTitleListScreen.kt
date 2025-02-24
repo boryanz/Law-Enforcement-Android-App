@@ -10,7 +10,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.key.Key.Companion.I
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -39,7 +38,7 @@ fun BasicTitleListScreen(
         ) {
             LazyColumn {
                 items(items) {
-                    TitleItem(it.title, onClick = { /* Do nothing currently */ })
+                    ReadOnlyRowItem(it.title)
                     Spacer.Vertical(4.dp)
                 }
             }

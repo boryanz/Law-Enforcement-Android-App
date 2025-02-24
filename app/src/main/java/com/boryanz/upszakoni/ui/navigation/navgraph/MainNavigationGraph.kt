@@ -111,7 +111,7 @@ fun NavigationGraph(
 
         composable<GoldenCrimeQuestionsDestination> {
             GoldenCrimeQuestionsScreen(
-                topBarTitle = "Водич за службена белешка",
+                topBarTitle = "Службена белешка",
                 items = goldenQuestions,
                 onBackClicked = { navHostController.navigateUp() }
             )
