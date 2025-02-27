@@ -16,3 +16,6 @@ data class NonWorkingDaysInfoDestination(val nonWorkingDays: String)
 
 @Serializable
 data object MigrationProposalDestination
+
+@Serializable
+data class NewOvertimeInputDestination(val month: String)

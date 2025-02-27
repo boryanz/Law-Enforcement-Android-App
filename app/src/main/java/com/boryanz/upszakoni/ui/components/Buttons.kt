@@ -7,8 +7,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -16,14 +19,41 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.boryanz.upszakoni.ui.theme.Base100
 import com.boryanz.upszakoni.ui.theme.BaseContent1
 import com.boryanz.upszakoni.ui.theme.KataSampleAppTheme
 
 object Button {
-    
+
+    @Composable
+    fun PrimaryOutlinedWithIcon(
+        title: String,
+        imageVector: ImageVector,
+        modifier: Modifier = Modifier,
+        isEnabled: Boolean = true,
+        onClick: () -> Unit
+    ) {
+        OutlinedButton(
+            modifier = modifier
+                .fillMaxWidth()
+                .height(52.dp),
+            onClick = onClick,
+            enabled = isEnabled,
+            shape = RoundedCornerShape(4.dp)
+        ) {
+            Icon(imageVector, "")
+            Spacer.Horizontal(8.dp)
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleMedium
+            )
+        }
+    }
+
     @Composable
     fun Outlined(
         title: String,
@@ -77,6 +107,7 @@ object Button {
 
 
 @Preview(showBackground = true)
+@PreviewLightDark
 @Composable
 private fun ButtonsPreview() {
     KataSampleAppTheme {
@@ -92,6 +123,12 @@ private fun ButtonsPreview() {
             Button.Primary("Primary button", onClick = {}, isEnabled = false)
             Spacer.Vertical(6.dp)
             Button.Outlined("Outlined button", onClick = {})
+            Spacer.Vertical(6.dp)
+            Button.PrimaryOutlinedWithIcon(
+                title = "Primary with icon",
+                imageVector = Icons.Filled.Delete,
+                onClick = {}
+            )
         }
     }
 }
