@@ -13,3 +13,6 @@ data class OvertimeInputDestination(val month: String)
 
 @Serializable
 data class NonWorkingDaysInfoDestination(val nonWorkingDays: String)
+
+@Serializable
+data object MigrationProposalDestination

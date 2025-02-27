@@ -23,7 +23,10 @@ class BonusSalaryActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             KataSampleAppTheme {
-                BonusSalaryNavigationGraph(onFinishActivity = { finish() })
+                BonusSalaryNavigationGraph(
+                    onBackNavigated = { finish() },
+                    onMigrationAccepted = ::recreate
+                )
             }
         }
     }

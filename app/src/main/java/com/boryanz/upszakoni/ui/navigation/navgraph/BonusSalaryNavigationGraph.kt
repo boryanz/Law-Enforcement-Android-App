@@ -10,12 +10,14 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.boryanz.upszakoni.data.model.TitleItem
 import com.boryanz.upszakoni.ui.navigation.destinations.BonusSalaryDashboardDestination
+import com.boryanz.upszakoni.ui.navigation.destinations.MigrationProposalDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.NonWorkingDaysInfoDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.OvertimeInputDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.ParametersDestination
 import com.boryanz.upszakoni.ui.screens.bonussalary.BonusSalaryViewModel
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardScreen
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.NonWorkingDaysInfoScreen
+import com.boryanz.upszakoni.ui.screens.bonussalary.migration.MigrationProposalScreen
 import com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput.BonusSalaryOverTimeInputScreen
 import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BonusSalaryParametersScreen
 import org.koin.androidx.compose.koinViewModel
@@ -24,7 +26,8 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun BonusSalaryNavigationGraph(
     navHostController: NavHostController = rememberNavController(),
-    onFinishActivity: () -> Unit,
+    onBackNavigated: () -> Unit,
+    onMigrationAccepted: () -> Unit,
 ) {
 
     val viewModel = koinViewModel<BonusSalaryViewModel>()
@@ -36,19 +39,26 @@ fun BonusSalaryNavigationGraph(
 
     NavHost(
         navController = navHostController,
-        startDestination = startDestination,
+        startDestination = MigrationProposalDestination,
     ) {
+
+        composable<MigrationProposalDestination> {
+            MigrationProposalScreen(
+                onMigrationAccepted = onMigrationAccepted,
+                onMigrationCancelled = {}
+            )
+        }
         composable<ParametersDestination> {
             BonusSalaryParametersScreen(
                 navController = navHostController,
-                onBackClicked = onFinishActivity
+                onBackClicked = onBackNavigated
             )
         }
 
         composable<BonusSalaryDashboardDestination> {
             BonusSalaryDashboardScreen(
                 navHostController = navHostController,
-                onBackClicked = onFinishActivity,
+                onBackClicked = onBackNavigated,
                 onEditClicked = { navHostController.navigate(ParametersDestination) }
             )
         }
