@@ -30,6 +30,7 @@ object TextFieldInput {
         textStyle: TextStyle = LocalTextStyle.current,
         labelTextStyle: TextStyle = MaterialTheme.typography.bodySmall,
         trailingIcon: (@Composable () -> Unit)? = null,
+        leadingIcon: (@Composable () -> Unit)? = null,
         isError: Boolean = false,
         hint: String = "",
         isReadOnly: Boolean = false,
@@ -49,6 +50,7 @@ object TextFieldInput {
             placeholder = { Text(hint) },
             onValueChange = onValueChanged,
             trailingIcon = trailingIcon,
+            leadingIcon = leadingIcon,
             colors = textFieldColors,
             textStyle = textStyle,
             readOnly = isReadOnly

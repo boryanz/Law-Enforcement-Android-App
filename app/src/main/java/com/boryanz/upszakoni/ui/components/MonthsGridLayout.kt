@@ -27,7 +27,7 @@ import com.boryanz.upszakoni.ui.theme.Base_green
 import com.boryanz.upszakoni.ui.theme.KataSampleAppTheme
 
 @Composable
-fun LazyGridLayout(
+fun MonthsGridLayout(
     uiState: BonusSalaryDashboardUiState,
     paddingValues: PaddingValues,
     onClick: (String) -> Unit,
@@ -73,7 +73,7 @@ fun LazyGridLayout(
 @Composable
 private fun LazyGridLayoutPreview() {
     KataSampleAppTheme {
-        LazyGridLayout(BonusSalaryDashboardUiState(), PaddingValues(), {})
+        MonthsGridLayout(BonusSalaryDashboardUiState(), PaddingValues(), {})
     }
 }
 

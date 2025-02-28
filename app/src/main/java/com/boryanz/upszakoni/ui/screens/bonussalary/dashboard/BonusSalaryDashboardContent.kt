@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.boryanz.upszakoni.ui.components.AutoAdvancePager
 import com.boryanz.upszakoni.ui.components.Button
 import com.boryanz.upszakoni.ui.components.Icons
-import com.boryanz.upszakoni.ui.components.LazyGridLayout
+import com.boryanz.upszakoni.ui.components.MonthsGridLayout
 import com.boryanz.upszakoni.ui.components.Spacer
 import com.boryanz.upszakoni.ui.components.UpsScaffold
 import com.boryanz.upszakoni.ui.theme.KataSampleAppTheme
@@ -91,7 +91,7 @@ fun BonusSalaryDashboardContent(
             }
             Spacer.Vertical(8.dp)
             Text("Прекувремени часови по месеци", textAlign = TextAlign.Start)
-            LazyGridLayout(
+            MonthsGridLayout(
                 uiState = uiState,
                 onClick = { onMonthClicked(it) },
                 paddingValues = PaddingValues(vertical = 8.dp)
