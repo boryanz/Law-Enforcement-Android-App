@@ -17,7 +17,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.boryanz.upszakoni.ui.theme.KataSampleAppTheme
+import com.boryanz.upszakoni.ui.theme.UpsTheme
 
 object TextFieldInput {
 
@@ -62,7 +62,7 @@ object TextFieldInput {
 @Preview(showBackground = true)
 @Composable
 private fun TextFieldInputPreview() {
-    KataSampleAppTheme {
+    UpsTheme {
         TextFieldInput.BaseOutline(
             modifier = Modifier.padding(6.dp),
             labelText = "Label test",

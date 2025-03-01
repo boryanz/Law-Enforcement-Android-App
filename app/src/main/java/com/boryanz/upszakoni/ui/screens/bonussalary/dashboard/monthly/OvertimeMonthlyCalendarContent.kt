@@ -24,12 +24,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.boryanz.upszakoni.ui.components.Icons
 import com.boryanz.upszakoni.ui.components.ReadOnlyRowItem
 import com.boryanz.upszakoni.ui.components.Spacer
 import com.boryanz.upszakoni.ui.components.UpsScaffold
 import com.boryanz.upszakoni.ui.components.input.TextFieldInput
+import com.boryanz.upszakoni.ui.theme.UpsTheme
 
 @Composable
 fun OvertimeMonthlyCalendarContent(
@@ -111,5 +113,13 @@ fun DaysInMonthGridLayout(
                 onValueChanged = { /* Do nothing as it's read only */ },
             )
         }
+    }
+}
+
+@Preview
+@Composable
+private fun OvertimeMonthlyCalendarPreview() {
+    UpsTheme {
+        
     }
 }

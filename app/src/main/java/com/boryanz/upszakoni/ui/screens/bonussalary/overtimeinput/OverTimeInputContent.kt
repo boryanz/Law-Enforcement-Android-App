@@ -19,7 +19,7 @@ import com.boryanz.upszakoni.ui.components.Icons
 import com.boryanz.upszakoni.ui.components.Spacer.Vertical
 import com.boryanz.upszakoni.ui.components.UpsScaffold
 import com.boryanz.upszakoni.ui.components.input.TextFieldInput
-import com.boryanz.upszakoni.ui.theme.KataSampleAppTheme
+import com.boryanz.upszakoni.ui.theme.UpsTheme
 
 @Composable
 fun OverTimeInputContent(
@@ -98,7 +98,7 @@ fun OverTimeInputContent(
 @Preview
 @Composable
 private fun OverTimeInputPreview() {
-    KataSampleAppTheme {
+    UpsTheme {
         OverTimeInputContent(
             OverTimeInputUiState(),
             "Јануари",

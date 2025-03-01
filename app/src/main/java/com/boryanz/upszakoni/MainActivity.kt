@@ -8,7 +8,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.boryanz.upszakoni.ui.navigation.navgraph.main.NavigationGraph
-import com.boryanz.upszakoni.ui.theme.KataSampleAppTheme
+import com.boryanz.upszakoni.ui.theme.UpsTheme
 
 private const val GOOGLE_PLAYSTORE_APP_LINK =
     "https://play.google.com/store/apps/details?id=com.boryanz.upszakoni&hl=mk"
@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            KataSampleAppTheme {
+            UpsTheme {
                 NavigationGraph(
                     onShareAppClicked = ::shareApp,
                     onAppUpdateClicked = ::openAppInGooglePlay

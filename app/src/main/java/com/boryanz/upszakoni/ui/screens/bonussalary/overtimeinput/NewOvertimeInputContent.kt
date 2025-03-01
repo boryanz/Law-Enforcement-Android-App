@@ -20,7 +20,7 @@ import com.boryanz.upszakoni.ui.components.Icons
 import com.boryanz.upszakoni.ui.components.Spacer.Vertical
 import com.boryanz.upszakoni.ui.components.UpsScaffold
 import com.boryanz.upszakoni.ui.components.input.TextFieldInput
-import com.boryanz.upszakoni.ui.theme.KataSampleAppTheme
+import com.boryanz.upszakoni.ui.theme.UpsTheme
 
 data class UiState(
     val hasOvertimeError: Boolean = false,
@@ -96,7 +96,7 @@ fun NewOvertimeInputContent(
 @Preview
 @Composable
 private fun NewOvertimeInputScreenPreview() {
-    KataSampleAppTheme {
+    UpsTheme {
         NewOvertimeInputContent(
             uiState = UiState(),
             month = "Март",

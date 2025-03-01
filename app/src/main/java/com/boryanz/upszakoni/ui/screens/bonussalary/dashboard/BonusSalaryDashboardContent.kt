@@ -25,7 +25,7 @@ import com.boryanz.upszakoni.ui.components.Icons
 import com.boryanz.upszakoni.ui.components.MonthsGridLayout
 import com.boryanz.upszakoni.ui.components.Spacer
 import com.boryanz.upszakoni.ui.components.UpsScaffold
-import com.boryanz.upszakoni.ui.theme.KataSampleAppTheme
+import com.boryanz.upszakoni.ui.theme.UpsTheme
 
 @Composable
 fun BonusSalaryDashboardContent(
@@ -109,7 +109,7 @@ fun BonusSalaryDashboardContent(
 @Preview
 @Composable
 private fun BonusSalaryDashboardContentPreview() {
-    KataSampleAppTheme {
+    UpsTheme {
         BonusSalaryDashboardContent(BonusSalaryDashboardUiState(), {}, {}, {}, {}, {})
     }
 }

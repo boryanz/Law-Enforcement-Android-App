@@ -11,7 +11,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.boryanz.upszakoni.R
-import com.boryanz.upszakoni.ui.theme.KataSampleAppTheme
+import com.boryanz.upszakoni.ui.theme.UpsTheme
 import com.boryanz.upszakoni.ui.theme.Typography
 
 @Composable
@@ -36,7 +36,7 @@ fun IconWithTitleItem(
 @Preview(showBackground = true)
 @Composable
 private fun DashboardItemPreview() {
-    KataSampleAppTheme {
+    UpsTheme {
         IconWithTitleItem(
             title = "Law",
             drawableRes = R.drawable.zakonishta,

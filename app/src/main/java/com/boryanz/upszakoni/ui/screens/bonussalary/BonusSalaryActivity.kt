@@ -9,7 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsDao
 import com.boryanz.upszakoni.ui.navigation.navgraph.BonusSalaryNavigationGraph
 import com.boryanz.upszakoni.ui.navigation.navgraph.overtimetracking.OverTimeTrackNavigationGraph
-import com.boryanz.upszakoni.ui.theme.KataSampleAppTheme
+import com.boryanz.upszakoni.ui.theme.UpsTheme
 
 /**
  * Handling the bonus salary statistics like overtime hours, paid leave and sick days
@@ -24,7 +24,7 @@ class BonusSalaryActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            KataSampleAppTheme {
+            UpsTheme {
                 with(SharedPrefsDao) {
                     when {
                         hasUserMigratedToNewOvertimeTracking() -> {

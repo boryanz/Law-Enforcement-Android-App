@@ -30,7 +30,7 @@ import com.boryanz.upszakoni.ui.screens.bonussalary.migration.BonusSalaryUiState
 import com.boryanz.upszakoni.ui.screens.bonussalary.migration.BonusSalaryUiState.DefaultDestination
 import com.boryanz.upszakoni.ui.screens.bonussalary.migration.BonusSalaryUiState.Loading
 import com.boryanz.upszakoni.ui.screens.bonussalary.migration.BonusSalaryUiState.ScreenContent
-import com.boryanz.upszakoni.ui.theme.KataSampleAppTheme
+import com.boryanz.upszakoni.ui.theme.UpsTheme
 import org.koin.androidx.compose.koinViewModel
 
 
@@ -127,7 +127,7 @@ fun MigrationProposalContent(
 @PreviewLightDark
 @Composable
 private fun MigrationProposalPreview() {
-    KataSampleAppTheme {
+    UpsTheme {
         MigrationProposalScreen({}) { }
     }
 }

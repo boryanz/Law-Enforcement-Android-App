@@ -12,7 +12,7 @@ import com.boryanz.upszakoni.ui.navigation.navigationwrapper.NavigationWrapperIm
 import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BonusSalaryParametersUiEvent.AbsenceLimitChanged
 import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BonusSalaryParametersUiEvent.OvertimeLimitChanged
 import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BonusSalaryParametersUiEvent.SaveParametersClicked
-import com.boryanz.upszakoni.ui.theme.KataSampleAppTheme
+import com.boryanz.upszakoni.ui.theme.UpsTheme
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -52,7 +52,7 @@ fun BonusSalaryParametersScreen(
 @Preview
 @Composable
 private fun BonusSalaryParametersContentPreview() {
-    KataSampleAppTheme {
+    UpsTheme {
         BonusSalaryParametersContent(
             onAbsenceDaysLimitValueChanged = {},
             onSaveClicked = {},

@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.boryanz.upszakoni.ui.theme.KataSampleAppTheme
+import com.boryanz.upszakoni.ui.theme.UpsTheme
 import com.boryanz.upszakoni.ui.theme.Typography
 
 @Composable
@@ -32,7 +32,7 @@ fun ItemWithDescription(
 @Preview(showBackground = true)
 @Composable
 private fun ItemWithDescriptionPreview() {
-    KataSampleAppTheme {
+    UpsTheme {
         ItemWithDescription(
             isEnabled = true,
             title = "Тепачка",

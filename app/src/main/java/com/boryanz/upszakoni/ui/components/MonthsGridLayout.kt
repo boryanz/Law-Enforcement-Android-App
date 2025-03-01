@@ -24,7 +24,7 @@ import com.boryanz.upszakoni.ui.components.input.TextFieldInput
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardUiState
 import com.boryanz.upszakoni.ui.theme.BaseContent
 import com.boryanz.upszakoni.ui.theme.Base_green
-import com.boryanz.upszakoni.ui.theme.KataSampleAppTheme
+import com.boryanz.upszakoni.ui.theme.UpsTheme
 
 @Composable
 fun MonthsGridLayout(
@@ -73,7 +73,7 @@ fun MonthsGridLayout(
 @Preview(showBackground = true)
 @Composable
 private fun LazyGridLayoutPreview() {
-    KataSampleAppTheme {
+    UpsTheme {
         MonthsGridLayout(BonusSalaryDashboardUiState(), PaddingValues(), {})
     }
 }
