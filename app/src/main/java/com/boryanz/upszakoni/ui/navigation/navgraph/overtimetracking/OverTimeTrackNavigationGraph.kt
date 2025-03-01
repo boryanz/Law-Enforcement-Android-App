@@ -23,6 +23,8 @@ import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.NonWorkingDaysInfo
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.monthly.OvertimeMonthlyCalendarScreen
 import com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput.NewOvertimeInputScreen
 import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BonusSalaryParametersScreen
+import com.boryanz.upszakoni.utils.noEnterTransition
+import com.boryanz.upszakoni.utils.noExitTransition
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -66,13 +68,14 @@ fun OverTimeTrackNavigationGraph(
 
     NavHost(
         startDestination = startDestination,
-        navController = navHostController
+        navController = navHostController,
+        enterTransition = noEnterTransition,
+        exitTransition = noExitTransition
     ) {
 
         composable<ParametersDestination> {
             BonusSalaryParametersScreen(
                 navController = navHostController,
-                onBackClicked = onBackNavigated
             )
         }
 

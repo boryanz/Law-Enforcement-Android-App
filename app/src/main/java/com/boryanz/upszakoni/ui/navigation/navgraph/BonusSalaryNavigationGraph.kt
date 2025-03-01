@@ -17,6 +17,8 @@ import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.NonWorkingDaysInfo
 import com.boryanz.upszakoni.ui.screens.bonussalary.migration.MigrationProposalScreen
 import com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput.BonusSalaryOverTimeInputScreen
 import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BonusSalaryParametersScreen
+import com.boryanz.upszakoni.utils.noEnterTransition
+import com.boryanz.upszakoni.utils.noExitTransition
 
 
 @Composable
@@ -29,6 +31,8 @@ fun BonusSalaryNavigationGraph(
     NavHost(
         navController = navHostController,
         startDestination = MigrationProposalDestination,
+        enterTransition = noEnterTransition,
+        exitTransition = noExitTransition
     ) {
 
         composable<MigrationProposalDestination> {
@@ -40,7 +44,6 @@ fun BonusSalaryNavigationGraph(
         composable<ParametersDestination> {
             BonusSalaryParametersScreen(
                 navController = navHostController,
-                onBackClicked = onBackNavigated
             )
         }
 

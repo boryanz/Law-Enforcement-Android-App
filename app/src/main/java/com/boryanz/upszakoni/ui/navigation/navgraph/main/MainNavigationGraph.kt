@@ -50,6 +50,8 @@ import com.boryanz.upszakoni.ui.screens.phonenumbers.PhoneNumbersScreen
 import com.boryanz.upszakoni.ui.screens.policeauthorities.PoliceAuthoritiesScreen
 import com.boryanz.upszakoni.ui.screens.privacypolicy.PrivacyPolicyAcceptanceScreen
 import com.boryanz.upszakoni.ui.screens.privacypolicy.PrivacyPolicyScreen
+import com.boryanz.upszakoni.utils.noEnterTransition
+import com.boryanz.upszakoni.utils.noExitTransition
 import com.boryanz.upszakoni.utils.openDialer
 import com.boryanz.upszakoni.utils.openPdfWithExternalReader
 import com.boryanz.upszakoni.utils.supportExternalPdfReader
@@ -68,7 +70,9 @@ fun NavigationGraph(
     val isInDarkMode = isSystemInDarkTheme()
     NavHost(
         navController = navHostController,
-        startDestination = if (sharedPrefsDao.isPrivacyPolicyAccepted()) LawsDestination else PrivacyPolicyAcceptanceDestination
+        startDestination = if (sharedPrefsDao.isPrivacyPolicyAccepted()) LawsDestination else PrivacyPolicyAcceptanceDestination,
+        enterTransition = noEnterTransition,
+        exitTransition = noExitTransition
     ) {
 
         composable<PrivacyPolicyAcceptanceDestination> {

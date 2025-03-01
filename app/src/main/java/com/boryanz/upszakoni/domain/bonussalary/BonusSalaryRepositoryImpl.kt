@@ -3,6 +3,7 @@ package com.boryanz.upszakoni.domain.bonussalary
 import android.content.Context
 import com.boryanz.upszakoni.data.local.database.UpsDatabase
 import com.boryanz.upszakoni.data.local.database.model.BonusSalaryTreshold
+import com.boryanz.upszakoni.data.local.database.model.DayInMonth
 import com.boryanz.upszakoni.data.local.database.model.MonthlyStats
 import com.boryanz.upszakoni.domain.errorhandling.Result
 import com.boryanz.upszakoni.domain.errorhandling.UpsError
@@ -60,6 +61,14 @@ class BonusSalaryRepositoryImpl(context: Context) : BonusSalaryRepository {
             }
         }
 
+    override suspend fun insertDayInMonthStats(daysInMonths: List<DayInMonth>): Result<UpsError, Unit> =
+        tryCatch {
+            withContext(ioDispatcher) {
+                dao.insertAllDaysInMonthsStats(daysInMonths)
+            }
+        }
+
+
     override suspend fun getYearlyStatistics(): Result<UpsError, List<MonthlyStats>> = tryCatch {
         withContext(ioDispatcher) {
             dao.getYearlyStats()
@@ -76,7 +85,7 @@ class BonusSalaryRepositoryImpl(context: Context) : BonusSalaryRepository {
     override suspend fun deleteAll() {
         tryCatch {
             withContext(ioDispatcher) {
-                dao.insertAll(defaultMonthlyStats)
+                dao.insertAllMonthlyStats(defaultMonthlyStats)
                 dao.deleteTreshold()
                 averageOvertimeHours = -1
                 minimumOvertimeHours = -1

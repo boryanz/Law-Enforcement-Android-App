@@ -5,13 +5,17 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.boryanz.upszakoni.data.local.database.model.BonusSalaryTreshold
+import com.boryanz.upszakoni.data.local.database.model.DayInMonth
 import com.boryanz.upszakoni.data.local.database.model.MonthlyStats
 
 @Dao
 interface BonusSalaryDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(yearlyStats: List<MonthlyStats>)
+    fun insertAllMonthlyStats(yearlyStats: List<MonthlyStats>)
+
+    @Insert
+    fun insertAllDaysInMonthsStats(dailyStats: List<DayInMonth>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTreshold(bonusSalaryTreshold: BonusSalaryTreshold)
@@ -21,6 +25,9 @@ interface BonusSalaryDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMonthlyStats(monthlyStats: MonthlyStats)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertDayInMonthStats(dayInMonth: DayInMonth)
 
     @Query("SELECT * FROM monthly_stats ORDER BY month_order ASC")
     suspend fun getYearlyStats(): List<MonthlyStats>

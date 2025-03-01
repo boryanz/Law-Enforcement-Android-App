@@ -39,7 +39,8 @@ fun MonthsGridLayout(
         userScrollEnabled = false
     ) {
         items(uiState.monthlyOvertime) { month ->
-            val minimumHoursReachedColor = if (month.hasMinimumRequiredHours) Base_green else BaseContent
+            val minimumHoursReachedColor =
+                if (month.hasMinimumRequiredHours) Base_green else BaseContent
             TextFieldInput.BaseOutline(
                 modifier = Modifier
                     .padding(4.dp)
@@ -97,5 +98,5 @@ private fun getMonthlyStat(month: String, monthOrder: Int) = MonthlyStats(
     monthOrder = monthOrder,
     currentOvertimeHours = "0",
     currentAbsenceDays = "0",
-    currentPaidAbsenceDays = "0"
+    currentPaidAbsenceDays = "0",
 )

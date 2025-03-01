@@ -1,18 +1,20 @@
 package com.boryanz.upszakoni.data.local.database
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.boryanz.upszakoni.data.local.database.model.BonusSalaryTreshold
+import com.boryanz.upszakoni.data.local.database.model.DayInMonth
 import com.boryanz.upszakoni.data.local.database.model.MonthlyStats
 import com.boryanz.upszakoni.ui.components.defaultMonthlyStats
 import java.util.concurrent.Executors
 
 @Database(
-    entities = [BonusSalaryTreshold::class, MonthlyStats::class],
-    version = 1,
+    entities = [BonusSalaryTreshold::class, MonthlyStats::class, DayInMonth::class],
+    version = 2,
     exportSchema = false
 )
 abstract class UpsDatabase : RoomDatabase() {
@@ -35,10 +37,11 @@ abstract class UpsDatabase : RoomDatabase() {
             klass = UpsDatabase::class.java,
             name = "ups_db"
         ).addCallback(object : Callback() {
+            @SuppressLint("NewApi")
             override fun onCreate(db: SupportSQLiteDatabase) {
                 super.onCreate(db)
                 ioThread {
-                    getInstance(context).bonusSalaryDao().insertAll(defaultMonthlyStats)
+                    getInstance(context).bonusSalaryDao().insertAllMonthlyStats(defaultMonthlyStats)
                 }
             }
         }).build()

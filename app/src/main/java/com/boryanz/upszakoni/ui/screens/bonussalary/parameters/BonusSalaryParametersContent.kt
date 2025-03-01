@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.boryanz.upszakoni.ui.components.Button
-import com.boryanz.upszakoni.ui.components.Icons
 import com.boryanz.upszakoni.ui.components.Spacer
 import com.boryanz.upszakoni.ui.components.UpsScaffold
 import com.boryanz.upszakoni.ui.components.input.TextFieldInput
@@ -23,13 +22,9 @@ fun BonusSalaryParametersContent(
     onOvertimeHoursValueChanged: (String) -> Unit,
     onAbsenceDaysLimitValueChanged: (String) -> Unit,
     onSaveClicked: () -> Unit,
-    onBackClicked: () -> Unit,
 ) {
     UpsScaffold(
         topBarTitle = { Text("Параметри за бонус плата") },
-        navigationIcon = {
-            Icons.Back(onClick = onBackClicked)
-        }
     ) {
         Column(
             modifier = Modifier

@@ -19,113 +19,24 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewModelScope
 import com.boryanz.upszakoni.R
-import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsDao
-import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
-import com.boryanz.upszakoni.domain.errorhandling.fold
 import com.boryanz.upszakoni.ui.components.Button
 import com.boryanz.upszakoni.ui.components.Loader
 import com.boryanz.upszakoni.ui.components.Spacer
 import com.boryanz.upszakoni.ui.components.UpsScaffold
-import com.boryanz.upszakoni.ui.navigation.destinations.BonusSalaryDashboardDestination
-import com.boryanz.upszakoni.ui.navigation.destinations.ParametersDestination
 import com.boryanz.upszakoni.ui.screens.bonussalary.migration.BonusSalaryGraphUiAction.MigrationAccepted
 import com.boryanz.upszakoni.ui.screens.bonussalary.migration.BonusSalaryUiState.DashboardDestination
 import com.boryanz.upszakoni.ui.screens.bonussalary.migration.BonusSalaryUiState.DefaultDestination
 import com.boryanz.upszakoni.ui.screens.bonussalary.migration.BonusSalaryUiState.Loading
 import com.boryanz.upszakoni.ui.screens.bonussalary.migration.BonusSalaryUiState.ScreenContent
 import com.boryanz.upszakoni.ui.theme.KataSampleAppTheme
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
-
-sealed interface BonusSalaryUiState {
-    data object Loading : BonusSalaryUiState
-    data object ScreenContent : BonusSalaryUiState
-    data class DefaultDestination(val startDestination: Any) : BonusSalaryUiState
-    data class DashboardDestination(val startDestination: Any) : BonusSalaryUiState
-
-}
-
-
-class MigrationProposalViewModel(
-    private val bonusSalaryRepository: BonusSalaryRepository,
-) : ViewModel() {
-
-    private val _uiState: MutableStateFlow<BonusSalaryUiState> =
-        MutableStateFlow(Loading)
-    val uiState = _uiState.asStateFlow()
-
-    /**
-     * New users are automatically accepting new overtime tracking feature.
-     * Save decision to shared preferences and delete the whole DB!
-     */
-    fun onMigrationAccepted(migrationAccepted: MigrationAccepted) =
-        viewModelScope.launch(Dispatchers.IO) {
-            bonusSalaryRepository.deleteAll()
-            SharedPrefsDao.acceptOvertimeTrackingMigration()
-            migrationAccepted.navigateNext()
-        }
-
-    /**
-     * New or old user rejected usage of new tracking system.
-     * Save decision to shared preferences
-     */
-    fun onMigrationRejected() {
-        viewModelScope.launch(Dispatchers.IO) {
-            SharedPrefsDao.rejectOverTimeTrackingMigration().also {
-                checkIfUserAlreadyHaveData()
-            }
-        }
-    }
-
-    /**
-     * If parameters are already in db, proceed to BonusSalaryDashboard.
-     * Verify this only if user rejected the migration.
-     */
-    fun checkIfUserAlreadyHaveData() = viewModelScope.launch(Dispatchers.IO) {
-        if (!SharedPrefsDao.hasUserRejectedOvertimeTrackingMigration()) {
-            _uiState.emit(ScreenContent)
-            return@launch
-        }
-
-        bonusSalaryRepository.getTreshold("bonus_salary_treshold").fold(
-            onSuccess = {
-                if (it != null) {
-                    _uiState.emit(
-                        DashboardDestination(
-                            BonusSalaryDashboardDestination
-                        )
-                    )
-                } else {
-                    _uiState.emit(
-                        DefaultDestination(
-                            ParametersDestination
-                        )
-                    )
-                }
-            },
-            onFailure = {
-                _uiState.emit(
-                    DefaultDestination(
-                        ParametersDestination
-                    )
-                )
-            }
-        )
-    }
-}
 
 sealed interface BonusSalaryGraphUiAction {
     data class MigrationAccepted(val navigateNext: () -> Unit) : BonusSalaryGraphUiAction
 }
-
 
 @Composable
 fun MigrationProposalScreen(
@@ -210,6 +121,7 @@ fun MigrationProposalContent(
         }
     }
 }
+
 
 
 @PreviewLightDark

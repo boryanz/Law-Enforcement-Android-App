@@ -1,5 +1,6 @@
 package com.boryanz.upszakoni.di
 
+import com.boryanz.upszakoni.domain.GenerateDaysInMonthsUseCase
 import com.boryanz.upszakoni.domain.GetLawsUseCase
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepositoryImpl
@@ -23,8 +24,9 @@ val appModule = module {
     single<BonusSalaryRepository> { BonusSalaryRepositoryImpl(androidContext()) }
     single { RemoteConfigRepository() }
     factory { GetLawsUseCase() }
+    factory { GenerateDaysInMonthsUseCase(get()) }
     viewModel { (navigator: NavigationWrapper) -> BonusSalaryParametersViewModel(get(), navigator) }
-    viewModel { MigrationProposalViewModel(get()) }
+    viewModel { MigrationProposalViewModel(get(),get()) }
     viewModel { (navigator: NavigationWrapper) -> OverTimeInputViewModel(get(), navigator) }
     viewModel { BonusSalaryDashboardViewModel(get(), get()) }
     viewModel { LawsViewModel(get(), get()) }
