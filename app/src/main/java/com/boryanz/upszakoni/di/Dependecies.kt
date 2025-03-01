@@ -4,9 +4,10 @@ import com.boryanz.upszakoni.domain.GetLawsUseCase
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepositoryImpl
 import com.boryanz.upszakoni.domain.remoteconfig.RemoteConfigRepository
+import com.boryanz.upszakoni.ui.navigation.navgraph.overtimetracking.OverTimeTrackNavigationGraphViewModel
 import com.boryanz.upszakoni.ui.navigation.navigationwrapper.NavigationWrapper
-import com.boryanz.upszakoni.ui.screens.bonussalary.BonusSalaryViewModel
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardViewModel
+import com.boryanz.upszakoni.ui.screens.bonussalary.migration.MigrationProposalViewModel
 import com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput.OverTimeInputViewModel
 import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BonusSalaryParametersViewModel
 import com.boryanz.upszakoni.ui.screens.informations.InformationScreenViewModel
@@ -23,9 +24,10 @@ val appModule = module {
     single { RemoteConfigRepository() }
     factory { GetLawsUseCase() }
     viewModel { (navigator: NavigationWrapper) -> BonusSalaryParametersViewModel(get(), navigator) }
-    viewModel { BonusSalaryViewModel(get()) }
+    viewModel { MigrationProposalViewModel(get()) }
     viewModel { (navigator: NavigationWrapper) -> OverTimeInputViewModel(get(), navigator) }
     viewModel { BonusSalaryDashboardViewModel(get(), get()) }
     viewModel { LawsViewModel(get(), get()) }
     viewModel { InformationScreenViewModel(get()) }
+    viewModel { OverTimeTrackNavigationGraphViewModel(get()) }
 }

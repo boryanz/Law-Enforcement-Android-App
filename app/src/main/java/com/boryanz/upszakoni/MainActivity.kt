@@ -7,7 +7,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.boryanz.upszakoni.ui.navigation.navgraph.NavigationGraph
+import com.boryanz.upszakoni.ui.navigation.navgraph.main.NavigationGraph
 import com.boryanz.upszakoni.ui.theme.KataSampleAppTheme
 
 private const val GOOGLE_PLAYSTORE_APP_LINK =

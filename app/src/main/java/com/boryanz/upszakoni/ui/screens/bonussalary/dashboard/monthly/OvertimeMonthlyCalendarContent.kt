@@ -1,4 +1,4 @@
-package com.boryanz.upszakoni.ui.screens.bonussalary.dashboard
+package com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.monthly
 
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -24,20 +24,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.boryanz.upszakoni.ui.components.Icons
 import com.boryanz.upszakoni.ui.components.ReadOnlyRowItem
 import com.boryanz.upszakoni.ui.components.Spacer
 import com.boryanz.upszakoni.ui.components.UpsScaffold
 import com.boryanz.upszakoni.ui.components.input.TextFieldInput
-import com.boryanz.upszakoni.ui.theme.KataSampleAppTheme
 
 @Composable
-fun OvertimeMonthlyCalendarScreen(
+fun OvertimeMonthlyCalendarContent(
     month: String,
     onBackClicked: () -> Unit,
+    onDayInMonthClicked: () -> Unit,
 ) {
     UpsScaffold(
         topBarTitle = { Text(month) },
@@ -62,7 +60,7 @@ fun OvertimeMonthlyCalendarScreen(
                 Spacer.Vertical(8.dp)
                 HorizontalDivider()
                 Spacer.Vertical(4.dp)
-                DaysInMonthGridLayout(it, onClick = {})
+                DaysInMonthGridLayout(it, onClick = {onDayInMonthClicked()})
                 Spacer.Vertical(8.dp)
             }
             Spacer.Vertical(24.dp)
@@ -113,15 +111,5 @@ fun DaysInMonthGridLayout(
                 onValueChanged = { /* Do nothing as it's read only */ },
             )
         }
-    }
-}
-
-
-@PreviewLightDark
-@Preview
-@Composable
-private fun MonthlyDashboardScreenPreview() {
-    KataSampleAppTheme {
-        OvertimeMonthlyCalendarScreen("Март") { }
     }
 }

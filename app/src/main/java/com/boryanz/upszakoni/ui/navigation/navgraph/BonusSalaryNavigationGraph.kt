@@ -1,8 +1,6 @@
 package com.boryanz.upszakoni.ui.navigation.navgraph
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -14,13 +12,11 @@ import com.boryanz.upszakoni.ui.navigation.destinations.MigrationProposalDestina
 import com.boryanz.upszakoni.ui.navigation.destinations.NonWorkingDaysInfoDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.OvertimeInputDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.ParametersDestination
-import com.boryanz.upszakoni.ui.screens.bonussalary.BonusSalaryViewModel
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardScreen
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.NonWorkingDaysInfoScreen
 import com.boryanz.upszakoni.ui.screens.bonussalary.migration.MigrationProposalScreen
 import com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput.BonusSalaryOverTimeInputScreen
 import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BonusSalaryParametersScreen
-import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
@@ -30,13 +26,6 @@ fun BonusSalaryNavigationGraph(
     onMigrationAccepted: () -> Unit,
 ) {
 
-    val viewModel = koinViewModel<BonusSalaryViewModel>()
-    val hasParametersSet by viewModel.uiState.collectAsStateWithLifecycle()
-    if (hasParametersSet == null) return
-
-    val startDestination: Any =
-        if (hasParametersSet == true) BonusSalaryDashboardDestination else ParametersDestination
-
     NavHost(
         navController = navHostController,
         startDestination = MigrationProposalDestination,
@@ -45,7 +34,7 @@ fun BonusSalaryNavigationGraph(
         composable<MigrationProposalDestination> {
             MigrationProposalScreen(
                 onMigrationAccepted = onMigrationAccepted,
-                onMigrationCancelled = {}
+                onMigrationCancelled = { navHostController.navigate(it) }
             )
         }
         composable<ParametersDestination> {
@@ -57,9 +46,16 @@ fun BonusSalaryNavigationGraph(
 
         composable<BonusSalaryDashboardDestination> {
             BonusSalaryDashboardScreen(
-                navHostController = navHostController,
                 onBackClicked = onBackNavigated,
-                onEditClicked = { navHostController.navigate(ParametersDestination) }
+                onEditClicked = { navHostController.navigate(ParametersDestination) },
+                onMonthClicked = { navHostController.navigate(OvertimeInputDestination(it)) },
+                onNonWorkingDaysClicked = {
+                    navHostController.navigate(
+                        NonWorkingDaysInfoDestination(
+                            it
+                        )
+                    )
+                }
             )
         }
 

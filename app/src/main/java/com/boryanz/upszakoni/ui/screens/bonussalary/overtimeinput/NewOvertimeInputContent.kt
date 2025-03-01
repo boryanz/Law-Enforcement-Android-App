@@ -29,7 +29,7 @@ data class UiState(
 )
 
 @Composable
-fun NewOvertimeInputScreen(
+fun NewOvertimeInputContent(
     uiState: UiState,
     month: String,
     dayInMonth: String,
@@ -97,14 +97,14 @@ fun NewOvertimeInputScreen(
 @Composable
 private fun NewOvertimeInputScreenPreview() {
     KataSampleAppTheme {
-        NewOvertimeInputScreen(
+        NewOvertimeInputContent(
             uiState = UiState(),
             month = "Март",
             dayInMonth = "1",
-            {},
-            {},
-            {},
-            {},
-            {})
+            onOvertimeHoursChanged = {},
+            onPaidLeaveClicked = {},
+            onSickDayClicked = {},
+            onSaveClicked = {},
+            onBackClicked = {})
     }
 }

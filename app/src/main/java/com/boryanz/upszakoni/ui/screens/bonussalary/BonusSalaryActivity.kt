@@ -6,7 +6,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsDao
 import com.boryanz.upszakoni.ui.navigation.navgraph.BonusSalaryNavigationGraph
+import com.boryanz.upszakoni.ui.navigation.navgraph.overtimetracking.OverTimeTrackNavigationGraph
 import com.boryanz.upszakoni.ui.theme.KataSampleAppTheme
 
 /**
@@ -23,11 +25,33 @@ class BonusSalaryActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             KataSampleAppTheme {
-                BonusSalaryNavigationGraph(
-                    onBackNavigated = { finish() },
-                    onMigrationAccepted = ::recreate
-                )
+                with(SharedPrefsDao) {
+                    when {
+                        hasUserMigratedToNewOvertimeTracking() -> {
+                            OverTimeTrackNavigationGraph(
+                                onBackNavigated = { finish() }
+                            )
+                        }
+
+                        hasUserRejectedOvertimeTrackingMigration() -> {
+                            BonusSalaryNavigationGraph(
+                                onMigrationAccepted = { restartActivity() },
+                                onBackNavigated = { finish() })
+                        }
+
+                        else -> {
+                            BonusSalaryNavigationGraph(
+                                onMigrationAccepted = { restartActivity() },
+                                onBackNavigated = { finish() })
+                        }
+                    }
+                }
             }
         }
+    }
+
+    private fun restartActivity() {
+        finish()
+        startActivity(createIntent(this@BonusSalaryActivity))
     }
 }

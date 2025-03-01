@@ -15,7 +15,6 @@ import java.util.concurrent.Executors
     version = 1,
     exportSchema = false
 )
-//@TypeConverters(Converters::class)
 abstract class UpsDatabase : RoomDatabase() {
 
     abstract fun bonusSalaryDao(): BonusSalaryDao

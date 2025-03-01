@@ -1,4 +1,4 @@
-package com.boryanz.upszakoni.ui.navigation.navgraph
+package com.boryanz.upszakoni.ui.navigation.navgraph.main
 
 import android.content.Context
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -64,7 +64,7 @@ fun NavigationGraph(
     onAppUpdateClicked: () -> Unit,
 ) {
     val context = LocalContext.current
-    val sharedPrefsDao = remember { SharedPrefsDao(context) }
+    val sharedPrefsDao = remember { SharedPrefsDao }
     val isInDarkMode = isSystemInDarkTheme()
     NavHost(
         navController = navHostController,
