@@ -35,7 +35,7 @@ class OvertimeMonthlyCalendarViewModel(
     fun getDailyStats(month: String) = viewModelScope.launch {
 
         val dailyStatsDeferred = async {
-            bonusSalaryRepository.getDailyStatisticsByMonth(month)
+            bonusSalaryRepository.getAllDailyStatsByMonth(month)
         }
 
         val totalDataDeferred = async {

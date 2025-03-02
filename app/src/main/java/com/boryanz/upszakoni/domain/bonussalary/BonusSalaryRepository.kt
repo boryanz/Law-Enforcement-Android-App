@@ -13,7 +13,8 @@ interface BonusSalaryRepository {
     suspend fun insertAllDayInMonthStats(daysInMonths: List<DayInMonth>): Result<UpsError, Unit>
     suspend fun insertDayStats(dayInMonth: DayInMonth): Result<UpsError, Unit>
     suspend fun getYearlyStatistics(): Result<UpsError, List<MonthlyStats>>
-    suspend fun getDailyStatisticsByMonth(month: String): Result<UpsError, List<DayInMonth>>
+    suspend fun getAllDailyStatsByMonth(month: String): Result<UpsError, List<DayInMonth>>
+    suspend fun getDailyStatsById(id: Int): Result<UpsError, DayInMonth>
     suspend fun getMonthlyStats(month: String): Result<UpsError, MonthlyStats?>
     suspend fun deleteAllAndGenerateDefaultData()
     fun getAverageHoursPerMonth(): Int

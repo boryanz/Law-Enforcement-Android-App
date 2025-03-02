@@ -51,6 +51,7 @@ class NewOverTimeInputViewModel(
                                 && (uiState.value.isSickDay || uiState.value.isPaidLeave))
                                 || uiEvent.value.hasOver24OvertimeInADay()
                                 || uiEvent.value.hasLessThanZeroOvertime()
+                                || ((uiState.value.isSickDay || uiState.value.isPaidLeave) && !uiEvent.value.isEmptyOrBlank())
                     )
                 }
             }
@@ -83,18 +84,25 @@ class NewOverTimeInputViewModel(
 
             is NewOvertimeInputAction.OnCreate -> {
                 viewModelScope.launch {
-                    _uiState.update { 
-                        it.copy(
-                            monthName = uiEvent.monthName,
-                            totalOvertime = uiEvent.totalOvertime,
-                            isPaidLeave = uiEvent.isPaidLeave,
-                            isSickDay = uiEvent.isSickDay,
-                            monthId = uiEvent.monthId,
-                            dayNumber = uiEvent.dayNumber,
-                            hasOvertimeError = !uiState.value.totalOvertime.isEmptyOrBlank(),
-                            additionalNote = uiEvent.additionalNote
-                        )
-                    }
+                    bonusSalaryRepository.getDailyStatsById(uiEvent.monthId).fold(
+                        onSuccess = { day ->
+                            _uiState.update {
+                                it.copy(
+                                    monthName = day.month,
+                                    totalOvertime = day.overtimeHours,
+                                    isPaidLeave = day.isPaidAbsentDay,
+                                    isSickDay = day.isSickDay,
+                                    monthId = day.id,
+                                    dayNumber = day.dayNumber,
+                                    hasOvertimeError = !uiState.value.totalOvertime.isEmptyOrBlank(),
+                                    additionalNote = day.additionalNote
+                                )
+                            }
+                        },
+                        onFailure = {
+                            /*Do nothing for now*/
+                        }
+                    )
 
                     bonusSalaryRepository.getMonthlyStats(uiEvent.monthName).fold(
                         onSuccess = { stats ->

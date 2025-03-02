@@ -26,7 +26,6 @@ class GenerateDaysInMonthsUseCase(private val bonusSalaryRepository: BonusSalary
                 )
             }
             bonusSalaryRepository.insertAllDayInMonthStats(dailyEntries)
-
         }
     }
 

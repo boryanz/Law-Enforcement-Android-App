@@ -13,11 +13,6 @@ sealed interface NewOvertimeInputAction {
     data class OnCreate(
         val monthName: String,
         val monthId: Int,
-        val dayNumber: Int,
-        val totalOvertime: String,
-        val isSickDay: Boolean,
-        val isPaidLeave: Boolean,
-        val additionalNote: String
     ) : NewOvertimeInputAction
 
     data class OvertimeValueEntered(val value: String) : NewOvertimeInputAction
@@ -33,10 +28,6 @@ fun NewOvertimeInputScreen(
     monthId: Int,
     monthName: String,
     dayNumber: Int,
-    isSickDay: Boolean,
-    isPaidLeave: Boolean,
-    additionalNote: String,
-    totalOvertime: String,
     onBackClicked: () -> Unit,
     onSaveClicked: () -> Unit,
 ) {
@@ -47,12 +38,7 @@ fun NewOvertimeInputScreen(
         viewModel.onUiEvent(
             NewOvertimeInputAction.OnCreate(
                 monthName = monthName,
-                totalOvertime = totalOvertime,
-                isSickDay = isSickDay,
-                isPaidLeave = isPaidLeave,
                 monthId = monthId,
-                dayNumber = dayNumber,
-                additionalNote = additionalNote
             )
         )
     }

@@ -22,10 +22,6 @@ data class NewOvertimeInputDestination(
     val monthId: Int,
     val monthName: String,
     val dayNumber: Int,
-    val isSickDay: Boolean,
-    val isPaidLeave: Boolean,
-    val additionalNote: String,
-    val totalOvertimeHours: String
 )
 
 @Serializable

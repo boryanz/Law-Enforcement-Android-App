@@ -53,7 +53,7 @@ object TextFieldInput {
             leadingIcon = leadingIcon,
             colors = textFieldColors,
             textStyle = textStyle,
-            readOnly = isReadOnly
+            readOnly = isReadOnly,
         )
     }
 }

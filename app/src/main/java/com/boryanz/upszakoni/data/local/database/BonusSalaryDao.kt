@@ -32,6 +32,9 @@ interface BonusSalaryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertDayInMonthStats(dayInMonth: DayInMonth)
 
+    @Query("SELECT * FROM day_in_month WHERE id = :id ")
+    suspend fun getDailyStatsById(id: Int): DayInMonth
+
     @Query("SELECT * FROM monthly_stats ORDER BY month_order ASC")
     suspend fun getYearlyStats(): List<MonthlyStats>
 

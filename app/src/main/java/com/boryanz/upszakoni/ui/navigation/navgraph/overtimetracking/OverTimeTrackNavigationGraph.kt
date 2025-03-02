@@ -98,16 +98,12 @@ fun OverTimeTrackNavigationGraph(
             val month = backStackEntry.toRoute<OvertimeMonthlyCalendarDestination>().monthName
             OvertimeMonthlyCalendarScreen(
                 monthName = month,
-                onDayInMonthClicked = {
+                onDayInMonthClicked = { day ->
                     navHostController.navigate(
                         NewOvertimeInputDestination(
-                            monthId = it.id,
-                            isSickDay = it.isSickDay,
-                            isPaidLeave = it.isPaidAbsentDay,
-                            totalOvertimeHours = it.overtimeHours,
+                            monthId = day.id,
                             monthName = month,
-                            dayNumber = it.dayNumber,
-                            additionalNote = it.additionalNote
+                            dayNumber = day.dayNumber,
                         )
                     )
                 },
@@ -121,10 +117,6 @@ fun OverTimeTrackNavigationGraph(
                 monthId = route.monthId,
                 monthName = route.monthName,
                 dayNumber = route.dayNumber,
-                isPaidLeave = route.isPaidLeave,
-                additionalNote = route.additionalNote,
-                isSickDay = route.isSickDay,
-                totalOvertime = route.totalOvertimeHours,
                 onSaveClicked = { navHostController.navigateUp()},
                 onBackClicked = { navHostController.navigateUp() },
             )
