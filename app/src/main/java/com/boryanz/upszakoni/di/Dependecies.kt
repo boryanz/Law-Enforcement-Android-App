@@ -23,12 +23,12 @@ val appModule = module {
     // add your dependencies here
     //  single { get<KataRestClient>().createService(com.boryanz.upszakoni.data.remote.restapi.KataRestApi::class.java) }
 
+    factory { GenerateDaysInMonthsUseCase(get()) }
     single<BonusSalaryRepository> { BonusSalaryRepositoryImpl(androidContext()) }
     single { RemoteConfigRepository() }
     factory { GetLawsUseCase() }
-    factory { GenerateDaysInMonthsUseCase(get()) }
     viewModel { (navigator: NavigationWrapper) -> BonusSalaryParametersViewModel(get(), navigator) }
-    viewModel { MigrationProposalViewModel(get(),get()) }
+    viewModel { MigrationProposalViewModel(get(), get()) }
     viewModel { (navigator: NavigationWrapper) -> OverTimeInputViewModel(get(), navigator) }
     viewModel { BonusSalaryDashboardViewModel(get(), get()) }
     viewModel { LawsViewModel(get(), get()) }

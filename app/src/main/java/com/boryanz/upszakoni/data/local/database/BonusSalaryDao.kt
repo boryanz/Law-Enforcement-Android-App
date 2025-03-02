@@ -43,4 +43,7 @@ interface BonusSalaryDao {
 
     @Query("DELETE FROM bonus_salary_treshold")
     fun deleteTreshold()
+
+    @Query("DELETE FROM day_in_month")
+    fun deleteAllDaysInMonths()
 }

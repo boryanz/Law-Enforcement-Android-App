@@ -86,7 +86,7 @@ class BonusSalaryDashboardViewModel(
                 )
             }
 
-            BonusSalaryDashboardUiEvent.DeleteAll -> bonusSalaryRepository.deleteAll()
+            BonusSalaryDashboardUiEvent.DeleteAll -> bonusSalaryRepository.deleteAllAndGenerateDefaultData()
         }
     }
 

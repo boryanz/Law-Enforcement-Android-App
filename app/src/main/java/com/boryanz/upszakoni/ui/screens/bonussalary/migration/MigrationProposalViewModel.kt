@@ -38,8 +38,7 @@ class MigrationProposalViewModel(
     @SuppressLint("NewApi")
     fun onMigrationAccepted(migrationAccepted: MigrationAccepted) =
         viewModelScope.launch {
-            bonusSalaryRepository.deleteAll()
-            generateDaysInMonthsUseCase()
+            bonusSalaryRepository.deleteAllAndGenerateDefaultData()
             SharedPrefsDao.acceptOvertimeTrackingMigration()
             migrationAccepted.navigateNext()
         }

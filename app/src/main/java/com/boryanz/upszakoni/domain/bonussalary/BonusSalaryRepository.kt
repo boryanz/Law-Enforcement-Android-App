@@ -15,7 +15,7 @@ interface BonusSalaryRepository {
     suspend fun getYearlyStatistics(): Result<UpsError, List<MonthlyStats>>
     suspend fun getDailyStatisticsByMonth(month: String): Result<UpsError, List<DayInMonth>>
     suspend fun getMonthlyStats(month: String): Result<UpsError, MonthlyStats?>
-    suspend fun deleteAll()
+    suspend fun deleteAllAndGenerateDefaultData()
     fun getAverageHoursPerMonth(): Int
     fun getMinimumRequiredHours(): Int
     fun getMaximumPaidAbsenceDays(): Int
