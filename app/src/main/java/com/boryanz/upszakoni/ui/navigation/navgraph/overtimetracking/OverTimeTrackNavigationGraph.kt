@@ -21,7 +21,7 @@ import com.boryanz.upszakoni.ui.navigation.destinations.ParametersDestination
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardScreen
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.NonWorkingDaysInfoScreen
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.monthly.OvertimeMonthlyCalendarScreen
-import com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput.NewOvertimeInputScreen
+import com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput.daily.NewOvertimeInputScreen
 import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BonusSalaryParametersScreen
 import com.boryanz.upszakoni.utils.noEnterTransition
 import com.boryanz.upszakoni.utils.noExitTransition
@@ -94,16 +94,19 @@ fun OverTimeTrackNavigationGraph(
             )
         }
 
-        composable<OvertimeMonthlyCalendarDestination> {
-            val month = it.toRoute<OvertimeMonthlyCalendarDestination>().monthId
+        composable<OvertimeMonthlyCalendarDestination> { backStackEntry ->
+            val month = backStackEntry.toRoute<OvertimeMonthlyCalendarDestination>().monthName
             OvertimeMonthlyCalendarScreen(
-                navHostController = navHostController,
-                monthId = month,
+                monthName = month,
                 onDayInMonthClicked = {
                     navHostController.navigate(
                         NewOvertimeInputDestination(
-                            "",
-                            ""
+                            monthId = it.id,
+                            isSickDay = it.isSickDay,
+                            isPaidLeave = it.isPaidAbsentDay,
+                            totalOvertimeHours = it.overtimeHours,
+                            monthName = month,
+                            dayNumber = it.dayNumber
                         )
                     )
                 },
@@ -113,12 +116,21 @@ fun OverTimeTrackNavigationGraph(
 
         composable<NewOvertimeInputDestination> {
             val month = it.toRoute<NewOvertimeInputDestination>().monthId
-            val dayOfTheMonth = it.toRoute<NewOvertimeInputDestination>().dayOfTheMonthId
+            val monthName = it.toRoute<NewOvertimeInputDestination>().monthName
+            val isSickDay = it.toRoute<NewOvertimeInputDestination>().isSickDay
+            val isPaidLeave = it.toRoute<NewOvertimeInputDestination>().isPaidLeave
+            val totalOvertimeHours = it.toRoute<NewOvertimeInputDestination>().totalOvertimeHours
+            val dayNumber = it.toRoute<NewOvertimeInputDestination>().dayNumber
+
             NewOvertimeInputScreen(
                 monthId = month,
-                dayOfTheMonthId = dayOfTheMonth,
+                monthName = monthName,
+                dayNumber = dayNumber,
+                isPaidLeave = isPaidLeave,
+                isSickDay = isSickDay,
+                totalOvertime = totalOvertimeHours,
                 onSaveClicked = { navHostController.navigateUp() },
-                onBackClicked = { navHostController.navigateUp() }
+                onBackClicked = { navHostController.navigateUp() },
             )
         }
 

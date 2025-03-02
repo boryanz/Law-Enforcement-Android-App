@@ -61,19 +61,31 @@ class BonusSalaryRepositoryImpl(context: Context) : BonusSalaryRepository {
             }
         }
 
-    override suspend fun insertDayInMonthStats(daysInMonths: List<DayInMonth>): Result<UpsError, Unit> =
+    override suspend fun insertAllDayInMonthStats(daysInMonths: List<DayInMonth>): Result<UpsError, Unit> =
         tryCatch {
             withContext(ioDispatcher) {
                 dao.insertAllDaysInMonthsStats(daysInMonths)
             }
         }
 
+    override suspend fun insertDayStats(dayInMonth: DayInMonth): Result<UpsError, Unit> = tryCatch {
+        withContext(ioDispatcher) {
+            dao.insertDayInMonthStats(dayInMonth)
+        }
+    }
 
     override suspend fun getYearlyStatistics(): Result<UpsError, List<MonthlyStats>> = tryCatch {
         withContext(ioDispatcher) {
             dao.getYearlyStats()
         }
     }
+
+    override suspend fun getDailyStatisticsByMonth(month: String): Result<UpsError, List<DayInMonth>> =
+        tryCatch {
+            withContext(ioDispatcher) {
+                dao.getAllDailyStatsByMonth(month)
+            }
+        }
 
     override suspend fun getMonthlyStats(month: String): Result<UpsError, MonthlyStats?> =
         tryCatch {

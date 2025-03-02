@@ -96,7 +96,6 @@ fun MigrationProposalContent(
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Column(
-                modifier = Modifier.weight(1f),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
@@ -113,6 +112,7 @@ fun MigrationProposalContent(
                     text = "Со новата опција, прекувремените часови ќе се запишуваат по денови во месецот - календар.\n\nДоколку прифатите, старите прекувремени часови ке бидат избришани и ќе мора повтроно да ги внесете часовите со новата опција!\n\nПрепорачуваме да продолжите со новиот начин за подобра прегледност на прекувремените часови."
                 )
             }
+            Spacer.Vertical(24.dp)
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Button.Primary("Прифаќам", onClick = onMigrationAccepted)
                 Spacer.Vertical(4.dp)

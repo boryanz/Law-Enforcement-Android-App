@@ -1,17 +1,23 @@
 package com.boryanz.upszakoni.ui.components
 
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AirplanemodeActive
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Sick
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -28,6 +34,37 @@ import com.boryanz.upszakoni.ui.theme.BaseContent1
 import com.boryanz.upszakoni.ui.theme.UpsTheme
 
 object Button {
+
+    @Composable
+    fun SwitchWithIcon(
+        title: String,
+        imageVector: ImageVector,
+        isChecked: Boolean,
+        onClick: (Boolean) -> Unit
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(52.dp)
+                .border(width = 1.dp, color = LocalContentColor.current, RoundedCornerShape(4.dp))
+                .padding(8.dp)
+                .clickable(enabled = true, onClick = { onClick(!isChecked) }),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Icon(
+                tint = Base100,
+                imageVector = imageVector,
+                contentDescription = ""
+            )
+            Text(text = title)
+            androidx.compose.material3.Switch(
+                modifier = Modifier,
+                checked = isChecked,
+                onCheckedChange = { onClick(it) }
+            )
+        }
+    }
 
     @Composable
     fun PrimaryOutlinedWithIcon(
@@ -114,7 +151,7 @@ private fun ButtonsPreview() {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(12.dp),
+                .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -127,6 +164,20 @@ private fun ButtonsPreview() {
             Button.PrimaryOutlinedWithIcon(
                 title = "Primary with icon",
                 imageVector = Icons.Filled.Delete,
+                onClick = {}
+            )
+            Spacer.Vertical(6.dp)
+            Button.SwitchWithIcon(
+                title = "Боледување",
+                imageVector = Icons.Filled.Sick,
+                isChecked = true,
+                onClick = {}
+            )
+            Spacer.Vertical(6.dp)
+            Button.SwitchWithIcon(
+                title = "Платено отсуство",
+                imageVector = Icons.Filled.AirplanemodeActive,
+                isChecked = false,
                 onClick = {}
             )
         }

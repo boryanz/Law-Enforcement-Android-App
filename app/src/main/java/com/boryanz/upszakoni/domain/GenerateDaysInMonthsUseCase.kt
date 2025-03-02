@@ -6,23 +6,26 @@ import androidx.annotation.RequiresApi
 import com.boryanz.upszakoni.data.local.database.model.DayInMonth
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
 import com.boryanz.upszakoni.ui.components.defaultMonthlyStats
+import kotlinx.coroutines.coroutineScope
 import java.time.Year
 import java.time.YearMonth
 
 class GenerateDaysInMonthsUseCase(private val bonusSalaryRepository: BonusSalaryRepository) {
     @SuppressLint("NewApi")
-    suspend operator fun invoke() {
+    suspend operator fun invoke() = coroutineScope {
         defaultMonthlyStats.map { month ->
-            val daysInMonths: List<Int> = (0 until getDaysForMonth(month.monthOrder)).toList()
-            val dailyEntries = daysInMonths.map {
+            val daysInMonths: List<Int> = (1..getDaysForMonth(month.monthOrder)).toList()
+            val dailyEntries = daysInMonths.map { monthOrder ->
                 DayInMonth(
+                    dayNumber = monthOrder,
                     month = month.month,
                     isSickDay = false,
                     isPaidAbsentDay = false,
-                    overtimeHours = ""
+                    overtimeHours = "0"
                 )
             }
-            bonusSalaryRepository.insertDayInMonthStats(dailyEntries)
+            bonusSalaryRepository.insertAllDayInMonthStats(dailyEntries)
+
         }
     }
 

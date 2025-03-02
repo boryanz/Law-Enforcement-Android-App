@@ -10,8 +10,10 @@ interface BonusSalaryRepository {
     suspend fun insertTreshold(bonusSalaryTreshold: BonusSalaryTreshold): Result<UpsError, Unit>
     suspend fun getTreshold(id: String): Result<UpsError, BonusSalaryTreshold?>
     suspend fun insertMonthlyStats(monthlyStats: MonthlyStats): Result<UpsError, Unit>
-    suspend fun insertDayInMonthStats(daysInMonths: List<DayInMonth>): Result<UpsError, Unit>
+    suspend fun insertAllDayInMonthStats(daysInMonths: List<DayInMonth>): Result<UpsError, Unit>
+    suspend fun insertDayStats(dayInMonth: DayInMonth): Result<UpsError, Unit>
     suspend fun getYearlyStatistics(): Result<UpsError, List<MonthlyStats>>
+    suspend fun getDailyStatisticsByMonth(month: String): Result<UpsError, List<DayInMonth>>
     suspend fun getMonthlyStats(month: String): Result<UpsError, MonthlyStats?>
     suspend fun deleteAll()
     fun getAverageHoursPerMonth(): Int

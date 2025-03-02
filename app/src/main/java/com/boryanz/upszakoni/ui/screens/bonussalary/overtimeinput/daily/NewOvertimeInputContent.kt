@@ -1,9 +1,11 @@
-package com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput
+package com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput.daily
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.filled.AccessTime
 import androidx.compose.material.icons.filled.AirplanemodeActive
 import androidx.compose.material.icons.filled.Sick
@@ -22,20 +24,14 @@ import com.boryanz.upszakoni.ui.components.UpsScaffold
 import com.boryanz.upszakoni.ui.components.input.TextFieldInput
 import com.boryanz.upszakoni.ui.theme.UpsTheme
 
-data class UiState(
-    val hasOvertimeError: Boolean = false,
-    val isSickDay: Boolean = false,
-    val isPaidLeave: Boolean = false,
-)
-
 @Composable
 fun NewOvertimeInputContent(
-    uiState: UiState,
+    uiState: NewOverTimeInputUiState,
     month: String,
-    dayInMonth: String,
+    dayInMonth: Int,
     onOvertimeHoursChanged: (String) -> Unit,
-    onPaidLeaveClicked: () -> Unit,
-    onSickDayClicked: () -> Unit,
+    onPaidLeaveClicked: (Boolean) -> Unit,
+    onSickDayClicked: (Boolean) -> Unit,
     onSaveClicked: () -> Unit,
     onBackClicked: () -> Unit,
 ) {
@@ -44,19 +40,20 @@ fun NewOvertimeInputContent(
         navigationIcon = {
             Icons.Back(onClick = onBackClicked)
         },
-    ) {
+    ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(12.dp)
-                .padding(it),
+                .padding(paddingValues)
+                .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Column(verticalArrangement = Arrangement.Top) {
                 TextFieldInput.BaseOutline(
                     labelText = "Прекувремени на ден $dayInMonth $month",
-                    value = "",
+                    value = uiState.totalOvertime,
                     isError = false,
                     textStyle = MaterialTheme.typography.titleLarge,
                     labelTextStyle = MaterialTheme.typography.bodyMedium,
@@ -66,18 +63,20 @@ fun NewOvertimeInputContent(
                     }
                 )
                 Vertical(4.dp)
-                Button.PrimaryOutlinedWithIcon(
-                    title = "Платено отсуство",
-                    imageVector = androidx.compose.material.icons.Icons.Filled.AirplanemodeActive,
-                    onClick = onPaidLeaveClicked
+                Button.SwitchWithIcon(
+                    title = "Боледување",
+                    isChecked = uiState.isSickDay,
+                    imageVector = androidx.compose.material.icons.Icons.Filled.Sick,
+                    onClick = { onSickDayClicked(it) }
                 )
                 Vertical(4.dp)
-                Button.PrimaryOutlinedWithIcon(
-                    title = "Боледување",
-                    isEnabled = !uiState.isSickDay,
-                    imageVector = androidx.compose.material.icons.Icons.Filled.Sick,
-                    onClick = onSickDayClicked
+                Button.SwitchWithIcon(
+                    title = "Платено отсуство",
+                    isChecked = uiState.isPaidLeave ,
+                    imageVector = androidx.compose.material.icons.Icons.Filled.AirplanemodeActive,
+                    onClick = { onPaidLeaveClicked(it) }
                 )
+
             }
             Column {
                 Button.Primary(
@@ -98,13 +97,17 @@ fun NewOvertimeInputContent(
 private fun NewOvertimeInputScreenPreview() {
     UpsTheme {
         NewOvertimeInputContent(
-            uiState = UiState(),
+            uiState = NewOverTimeInputUiState(
+                totalOvertime = "",
+                isSickDay = true
+            ),
             month = "Март",
-            dayInMonth = "1",
+            dayInMonth = 28,
             onOvertimeHoursChanged = {},
             onPaidLeaveClicked = {},
             onSickDayClicked = {},
             onSaveClicked = {},
-            onBackClicked = {})
+            onBackClicked = {}
+        )
     }
 }
