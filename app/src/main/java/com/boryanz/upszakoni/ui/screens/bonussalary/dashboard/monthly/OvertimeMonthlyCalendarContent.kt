@@ -84,9 +84,11 @@ fun DaysInMonthGridLayout(
         columns = GridCells.Adaptive(minSize = 70.dp),
         userScrollEnabled = false
     ) {
-        items(uiState.daysInMonth) { day ->
+        items(uiState.daysInMonth, key = { it.id }) { day ->
             val minimumHoursReachedColor =
-                if ((runCatching { day.overtimeHours.toInt() }.getOrNull() ?: 0) > 0 || day.isPaidAbsentDay) {
+                if ((runCatching { day.overtimeHours.toInt() }.getOrNull()
+                        ?: 0) > 0 || day.isPaidAbsentDay
+                ) {
                     Base_green
                 } else {
                     BaseContent
@@ -124,7 +126,7 @@ fun DaysInMonthGridLayout(
 
 private fun getDayValue(day: DayInMonth): String {
     return when {
-        day.isSickDay ->  "\uD83E\uDD12"
+        day.isSickDay -> "\uD83E\uDD12"
         day.isPaidAbsentDay -> "\u2708\uFE0F"
         else -> day.overtimeHours
     }
@@ -143,7 +145,8 @@ private fun OvertimeMonthlyCalendarPreview() {
                         isPaidAbsentDay = false,
                         overtimeHours = "23",
                         month = "Јануари",
-                        dayNumber = 1
+                        dayNumber = 1,
+                        additionalNote = "",
                     ),
                     DayInMonth(
                         id = 2,
@@ -151,7 +154,8 @@ private fun OvertimeMonthlyCalendarPreview() {
                         isPaidAbsentDay = false,
                         overtimeHours = "3",
                         month = "Јануари",
-                        dayNumber = 2
+                        dayNumber = 2,
+                        additionalNote = "",
                     ),
                     DayInMonth(
                         id = 3,
@@ -159,7 +163,8 @@ private fun OvertimeMonthlyCalendarPreview() {
                         isPaidAbsentDay = false,
                         overtimeHours = "12",
                         month = "Јануари",
-                        dayNumber = 3
+                        dayNumber = 3,
+                        additionalNote = "",
                     ),
                     DayInMonth(
                         id = 4,
@@ -167,7 +172,8 @@ private fun OvertimeMonthlyCalendarPreview() {
                         isPaidAbsentDay = false,
                         overtimeHours = "0",
                         month = "Јануари",
-                        dayNumber = 4
+                        dayNumber = 4,
+                        additionalNote = "",
                     ),
                     DayInMonth(
                         id = 5,
@@ -175,7 +181,8 @@ private fun OvertimeMonthlyCalendarPreview() {
                         isPaidAbsentDay = false,
                         overtimeHours = "0",
                         month = "Јануари",
-                        dayNumber = 5
+                        dayNumber = 5,
+                        additionalNote = "",
                     )
                 ),
                 totalMonthlyOvertime = "55",

@@ -16,6 +16,8 @@ data class DayInMonth(
     val isPaidAbsentDay: Boolean,
     @ColumnInfo(name = "overtime_hours")
     val overtimeHours: String,
+    @ColumnInfo("additional_note")
+    val additionalNote: String,
     @ColumnInfo(name = "month")
     val month: String,
 )

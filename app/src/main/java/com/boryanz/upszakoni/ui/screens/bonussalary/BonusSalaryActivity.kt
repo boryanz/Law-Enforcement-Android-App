@@ -7,14 +7,20 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsDao
+import com.boryanz.upszakoni.domain.remoteconfig.RemoteConfigRepository
 import com.boryanz.upszakoni.ui.navigation.navgraph.BonusSalaryNavigationGraph
 import com.boryanz.upszakoni.ui.navigation.navgraph.overtimetracking.OverTimeTrackNavigationGraph
 import com.boryanz.upszakoni.ui.theme.UpsTheme
+import org.koin.android.ext.android.inject
 
 /**
  * Handling the bonus salary statistics like overtime hours, paid leave and sick days
  */
 class BonusSalaryActivity : ComponentActivity() {
+
+    private val remoteConfigRepository: RemoteConfigRepository by inject()
+    private val shouldBackportOvertimeFeature =
+        remoteConfigRepository.remoteConfigState.value.shouldBackportOvertimeTracking
 
     companion object {
         fun createIntent(context: Context) = Intent(context, BonusSalaryActivity::class.java)
@@ -27,6 +33,13 @@ class BonusSalaryActivity : ComponentActivity() {
             UpsTheme {
                 with(SharedPrefsDao) {
                     when {
+                        shouldBackportOvertimeFeature -> {
+                            BonusSalaryNavigationGraph(
+                                shouldBackportOvertimeTracking = true,
+                                onMigrationAccepted = { restartActivity() },
+                                onBackNavigated = { finish() })
+                        }
+
                         hasUserMigratedToNewOvertimeTracking() -> {
                             OverTimeTrackNavigationGraph(
                                 onBackNavigated = { finish() }

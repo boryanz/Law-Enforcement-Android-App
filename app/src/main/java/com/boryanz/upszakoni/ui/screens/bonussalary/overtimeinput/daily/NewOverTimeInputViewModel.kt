@@ -20,6 +20,7 @@ data class NewOverTimeInputUiState(
     val monthId: Int = 0,
     val isSickDay: Boolean = false,
     val isPaidLeave: Boolean = false,
+    val additionalNote: String = "",
 )
 
 data class Totals(
@@ -46,11 +47,17 @@ class NewOverTimeInputViewModel(
                 _uiState.update {
                     it.copy(
                         totalOvertime = uiEvent.value,
-                        hasOvertimeError = (uiEvent.value.isNotEmptyOrBlank()
+                        hasOvertimeError = (uiEvent.value.isEmptyOrBlank()
                                 && (uiState.value.isSickDay || uiState.value.isPaidLeave))
                                 || uiEvent.value.hasOver24OvertimeInADay()
                                 || uiEvent.value.hasLessThanZeroOvertime()
                     )
+                }
+            }
+
+            is NewOvertimeInputAction.AdditionalNoteEntered -> {
+                _uiState.update {
+                    it.copy(additionalNote = uiEvent.value)
                 }
             }
 
@@ -76,17 +83,18 @@ class NewOverTimeInputViewModel(
 
             is NewOvertimeInputAction.OnCreate -> {
                 viewModelScope.launch {
-                    _uiState.emit(
-                        NewOverTimeInputUiState(
+                    _uiState.update { 
+                        it.copy(
                             monthName = uiEvent.monthName,
                             totalOvertime = uiEvent.totalOvertime,
                             isPaidLeave = uiEvent.isPaidLeave,
                             isSickDay = uiEvent.isSickDay,
                             monthId = uiEvent.monthId,
                             dayNumber = uiEvent.dayNumber,
-                            hasOvertimeError = !uiState.value.totalOvertime.isNotEmptyOrBlank()
+                            hasOvertimeError = !uiState.value.totalOvertime.isEmptyOrBlank(),
+                            additionalNote = uiEvent.additionalNote
                         )
-                    )
+                    }
 
                     bonusSalaryRepository.getMonthlyStats(uiEvent.monthName).fold(
                         onSuccess = { stats ->
@@ -94,7 +102,7 @@ class NewOverTimeInputViewModel(
                                 totals = Totals(
                                     overtime = stats.currentOvertimeHours,
                                     paidLeaveDays = stats.currentPaidAbsenceDays,
-                                    sickDays = stats.currentAbsenceDays
+                                    sickDays = stats.currentAbsenceDays,
                                 )
                             }
 
@@ -111,10 +119,11 @@ class NewOverTimeInputViewModel(
                             id = uiState.value.monthId,
                             isSickDay = uiState.value.isSickDay,
                             isPaidAbsentDay = uiState.value.isPaidLeave,
-                            overtimeHours = uiState.value.totalOvertime.takeIf { it.isNotEmptyOrBlank() }
+                            overtimeHours = uiState.value.totalOvertime.takeIf { !it.isEmptyOrBlank() }
                                 ?: "0",
                             month = uiState.value.monthName,
-                            dayNumber = uiState.value.dayNumber
+                            dayNumber = uiState.value.dayNumber,
+                            additionalNote = uiState.value.additionalNote
                         )
                     )
 
@@ -129,6 +138,7 @@ class NewOverTimeInputViewModel(
                     )
                 }
             }
+
         }
     }
 
@@ -138,7 +148,7 @@ class NewOverTimeInputViewModel(
     private fun String.hasOver24OvertimeInADay() =
         runCatching { this.toInt() > 24 }.getOrNull() ?: true
 
-    private fun String.isNotEmptyOrBlank() = this.isBlank() || this.isEmpty()
+    private fun String.isEmptyOrBlank() = this.isBlank() || this.isEmpty()
 
     private fun calculateTotalOvertime(): String {
         val oldData = runCatching { totals?.overtime?.toInt() }.getOrNull()
@@ -163,16 +173,5 @@ class NewOverTimeInputViewModel(
             (oldData + newData).toString()
         } else ""
     }
-
-
-//    (uiState.value.isPaidLeave && uiState.value.isSickDay)
-//    || (uiState.value.isPaidLeave && uiState.value.totalOvertime.isNotBlankOrZero()
-//    || (uiState.value.isSickDay && uiState.value.totalOvertime.isNotBlankOrZero()) || (runCatching { uiState.value.totalOvertime.toInt() }.getOrNull()
-//    ?: 0) > 24) || !uiState.value.totalOvertime.isNotBlankOrZero())
-
-//    (uiState.value.isPaidLeave && uiState.value.isSickDay)
-//    || (uiState.value.isPaidLeave && uiState.value.totalOvertime.isNotBlankOrZero()
-//    || (uiState.value.isSickDay && uiState.value.totalOvertime.isNotBlankOrZero()) || (runCatching { uiState.value.totalOvertime.toInt() }.getOrNull()
-//    ?: 1) > 24) || !uiState.value.totalOvertime.isNotBlankOrZero())
 
 }

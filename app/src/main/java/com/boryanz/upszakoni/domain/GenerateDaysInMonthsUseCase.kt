@@ -21,7 +21,8 @@ class GenerateDaysInMonthsUseCase(private val bonusSalaryRepository: BonusSalary
                     month = month.month,
                     isSickDay = false,
                     isPaidAbsentDay = false,
-                    overtimeHours = "0"
+                    overtimeHours = "0",
+                    additionalNote = ""
                 )
             }
             bonusSalaryRepository.insertAllDayInMonthStats(dailyEntries)

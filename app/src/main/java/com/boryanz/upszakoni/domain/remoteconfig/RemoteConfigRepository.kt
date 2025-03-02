@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
+private const val SHOULD_BACKPORT_OVERTIME_TRACKING = "should_backport_overtime_tracking"
 private const val IS_APP_UPDATE_AVAILABLE = "is_app_update_available"
 private const val GREETING_MESSAGE_STRING_KEY = "greeting_message"
 private const val USEFUL_INFORMATIONS = "useful_informations"
@@ -29,6 +30,7 @@ class RemoteConfigRepository {
             remoteConfig.activate().addOnSuccessListener {
                 _remoteConfigState.update {
                     RemoteConfig(
+                        shouldBackportOvertimeTracking = remoteConfig.getBoolean(SHOULD_BACKPORT_OVERTIME_TRACKING),
                         isAppUpdateAvailable = remoteConfig.getBoolean(IS_APP_UPDATE_AVAILABLE),
                         greetingMessage = remoteConfig.getString(GREETING_MESSAGE_STRING_KEY),
                         usefulInformations = remoteConfig.getString(USEFUL_INFORMATIONS),
@@ -42,6 +44,7 @@ class RemoteConfigRepository {
 
 data class RemoteConfig(
     val isAppUpdateAvailable: Boolean = false,
+    val shouldBackportOvertimeTracking: Boolean = false,
     val greetingMessage: String = "",
     val usefulInformations: String = "",
     val nonWorkingDays: String = "",

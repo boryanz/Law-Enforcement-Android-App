@@ -106,7 +106,8 @@ fun OverTimeTrackNavigationGraph(
                             isPaidLeave = it.isPaidAbsentDay,
                             totalOvertimeHours = it.overtimeHours,
                             monthName = month,
-                            dayNumber = it.dayNumber
+                            dayNumber = it.dayNumber,
+                            additionalNote = it.additionalNote
                         )
                     )
                 },
@@ -115,21 +116,16 @@ fun OverTimeTrackNavigationGraph(
         }
 
         composable<NewOvertimeInputDestination> {
-            val month = it.toRoute<NewOvertimeInputDestination>().monthId
-            val monthName = it.toRoute<NewOvertimeInputDestination>().monthName
-            val isSickDay = it.toRoute<NewOvertimeInputDestination>().isSickDay
-            val isPaidLeave = it.toRoute<NewOvertimeInputDestination>().isPaidLeave
-            val totalOvertimeHours = it.toRoute<NewOvertimeInputDestination>().totalOvertimeHours
-            val dayNumber = it.toRoute<NewOvertimeInputDestination>().dayNumber
-
+            val route = it.toRoute<NewOvertimeInputDestination>()
             NewOvertimeInputScreen(
-                monthId = month,
-                monthName = monthName,
-                dayNumber = dayNumber,
-                isPaidLeave = isPaidLeave,
-                isSickDay = isSickDay,
-                totalOvertime = totalOvertimeHours,
-                onSaveClicked = { navHostController.navigateUp() },
+                monthId = route.monthId,
+                monthName = route.monthName,
+                dayNumber = route.dayNumber,
+                isPaidLeave = route.isPaidLeave,
+                additionalNote = route.additionalNote,
+                isSickDay = route.isSickDay,
+                totalOvertime = route.totalOvertimeHours,
+                onSaveClicked = { navHostController.navigateUp()},
                 onBackClicked = { navHostController.navigateUp() },
             )
         }

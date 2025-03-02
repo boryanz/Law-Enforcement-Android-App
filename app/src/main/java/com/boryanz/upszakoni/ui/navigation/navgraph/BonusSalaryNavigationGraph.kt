@@ -23,6 +23,7 @@ import com.boryanz.upszakoni.utils.noExitTransition
 
 @Composable
 fun BonusSalaryNavigationGraph(
+    shouldBackportOvertimeTracking: Boolean = false,
     navHostController: NavHostController = rememberNavController(),
     onBackNavigated: () -> Unit,
     onMigrationAccepted: () -> Unit,
@@ -30,7 +31,7 @@ fun BonusSalaryNavigationGraph(
 
     NavHost(
         navController = navHostController,
-        startDestination = MigrationProposalDestination,
+        startDestination = if (shouldBackportOvertimeTracking) BonusSalaryDashboardDestination else MigrationProposalDestination,
         enterTransition = noEnterTransition,
         exitTransition = noExitTransition
     ) {

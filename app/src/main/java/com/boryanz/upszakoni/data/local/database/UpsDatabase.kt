@@ -14,7 +14,7 @@ import java.util.concurrent.Executors
 
 @Database(
     entities = [BonusSalaryTreshold::class, MonthlyStats::class, DayInMonth::class],
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 abstract class UpsDatabase : RoomDatabase() {

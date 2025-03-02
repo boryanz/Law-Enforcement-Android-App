@@ -39,8 +39,14 @@ fun MonthsGridLayout(
         userScrollEnabled = false
     ) {
         items(uiState.monthlyOvertime) { month ->
-            val minimumHoursReachedColor =
-                if (month.hasMinimumRequiredHours) Base_green else BaseContent
+            val minimumHoursReachedColor = if (
+                (runCatching { month.overtimeHours.toInt() }.getOrNull() ?: 0) > 0
+            ) {
+                Base_green
+            } else {
+                BaseContent
+            }
+
             TextFieldInput.BaseOutline(
                 modifier = Modifier
                     .padding(4.dp)
