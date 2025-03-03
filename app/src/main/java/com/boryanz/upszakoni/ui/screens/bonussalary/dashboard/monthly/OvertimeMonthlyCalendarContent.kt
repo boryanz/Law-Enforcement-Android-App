@@ -74,7 +74,7 @@ fun OvertimeMonthlyCalendarContent(
         Text(
           modifier = Modifier.fillMaxWidth(),
           textAlign = TextAlign.Center,
-          text = "Вкупна статистика за ${month.lowercase()}"
+          text = "Статистика за ${month.lowercase()}"
         )
         Spacer.Vertical(8.dp)
         Row(
