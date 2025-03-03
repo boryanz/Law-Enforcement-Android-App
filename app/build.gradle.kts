@@ -16,7 +16,7 @@ android {
         applicationId = "com.boryanz.upszakoni"
         minSdk = 24
         targetSdk = 34
-        versionCode = 7
+        versionCode = 8
         versionName = "1.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
