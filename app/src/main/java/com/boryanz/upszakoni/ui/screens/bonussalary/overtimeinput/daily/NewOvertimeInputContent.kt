@@ -27,6 +27,8 @@ import com.boryanz.upszakoni.ui.components.Icons
 import com.boryanz.upszakoni.ui.components.Spacer.Vertical
 import com.boryanz.upszakoni.ui.components.UpsScaffold
 import com.boryanz.upszakoni.ui.components.input.TextFieldInput
+import com.boryanz.upszakoni.ui.theme.Base100
+import com.boryanz.upszakoni.ui.theme.BaseContent1
 import com.boryanz.upszakoni.ui.theme.UpsTheme
 
 @Composable
@@ -47,7 +49,10 @@ fun NewOvertimeInputContent(
             Icons.Back(onClick = onBackClicked)
         },
         trailingIcon = {
-            Icons.Save(onClick = onSaveClicked)
+            Icons.Save(onClick = onSaveClicked,
+                isEnabled = !uiState.hasOvertimeError,
+                tint = if (uiState.hasOvertimeError) BaseContent1 else Base100
+            )
         }
     ) { paddingValues ->
         Column(
@@ -69,7 +74,7 @@ fun NewOvertimeInputContent(
                     labelTextStyle = MaterialTheme.typography.bodyMedium,
                     onValueChanged = onOvertimeHoursChanged,
                     trailingIcon = {
-                        Icons.Base(imageVector = androidx.compose.material.icons.Icons.Filled.AccessTime) { }
+                        Icons.Base(imageVector = androidx.compose.material.icons.Icons.Filled.AccessTime, onClick = {})
                     }
                 )
                 TextFieldInput.BaseOutline(

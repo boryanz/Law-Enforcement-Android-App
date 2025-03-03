@@ -77,7 +77,7 @@ fun LawsScreen(
                     searchQuery = it
                 },
                 label = { Text("Пребарувај") },
-                trailingIcon = { com.boryanz.upszakoni.ui.components.Icons.Base(imageVector = Icons.Outlined.Search) { } }
+                trailingIcon = { com.boryanz.upszakoni.ui.components.Icons.Base(imageVector = Icons.Outlined.Search, onClick = {})}
             )
             Spacer(modifier = Modifier.padding(vertical = 4.dp))
             LazyColumn {

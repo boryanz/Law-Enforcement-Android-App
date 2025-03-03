@@ -22,11 +22,13 @@ object Icons {
     fun Save(
         tint: Color = Base100,
         onClick: () -> Unit,
+        isEnabled: Boolean = true,
     ) {
         Base(
             imageVector = Icons.Outlined.Check,
             tint = tint,
-            onClick = onClick
+            onClick = onClick,
+            isEnabled = isEnabled
         )
     }
 
@@ -107,12 +109,17 @@ object Icons {
         imageVector: ImageVector,
         tint: Color = LocalContentColor.current,
         onClick: () -> Unit,
+        isEnabled: Boolean = true,
     ) {
-        IconButton(onClick = onClick, content = {
+        IconButton(
+            onClick = onClick,
+            enabled = isEnabled,
+            content = {
             Icon(
                 imageVector = imageVector,
                 tint = tint,
-                contentDescription = "base icon"
+                contentDescription = "base icon",
+
             )
         })
     }

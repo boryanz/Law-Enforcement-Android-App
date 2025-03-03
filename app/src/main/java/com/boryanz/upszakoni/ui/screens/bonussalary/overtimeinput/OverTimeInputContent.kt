@@ -54,7 +54,7 @@ fun OverTimeInputContent(
                     labelTextStyle = MaterialTheme.typography.bodyMedium,
                     onValueChanged = onOvertimeHoursValueChanged,
                     trailingIcon = {
-                        Icons.Base(imageVector = androidx.compose.material.icons.Icons.Filled.AccessTime) { }
+                        Icons.Base(imageVector = androidx.compose.material.icons.Icons.Filled.AccessTime, onClick = {})
                     }
                 )
                 Vertical(8.dp)
@@ -66,7 +66,7 @@ fun OverTimeInputContent(
                     labelTextStyle = MaterialTheme.typography.bodyMedium,
                     onValueChanged = onSickDaysValueChanged,
                     trailingIcon = {
-                        Icons.Base(imageVector = androidx.compose.material.icons.Icons.Filled.Sick) { }
+                        Icons.Base(imageVector = androidx.compose.material.icons.Icons.Filled.Sick,  onClick = {})
                     }
                 )
                 Vertical(8.dp)
@@ -78,7 +78,7 @@ fun OverTimeInputContent(
                     labelTextStyle = MaterialTheme.typography.bodyMedium,
                     onValueChanged = onAbsenceDaysValueChanged,
                     trailingIcon = {
-                        Icons.Base(imageVector = androidx.compose.material.icons.Icons.Filled.ArrowOutward) { }
+                        Icons.Base(imageVector = androidx.compose.material.icons.Icons.Filled.ArrowOutward,  onClick = {})
                     }
                 )
             }
