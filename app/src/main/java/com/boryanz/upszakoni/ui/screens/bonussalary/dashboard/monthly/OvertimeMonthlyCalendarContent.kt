@@ -47,7 +47,7 @@ fun OvertimeMonthlyCalendarContent(
   onDayInMonthClicked: (DayInMonth) -> Unit,
 ) {
   UpsScaffold(
-    topBarTitle = { Text("Календар за $month") },
+    topBarTitle = { Text("Календар за ${month.lowercase()}") },
     navigationIcon = {
       Icons.Back(onClick = onBackClicked)
     },
@@ -74,7 +74,7 @@ fun OvertimeMonthlyCalendarContent(
         Text(
           modifier = Modifier.fillMaxWidth(),
           textAlign = TextAlign.Center,
-          text = "Вкупна статистика $month"
+          text = "Вкупна статистика за ${month.lowercase()}"
         )
         Spacer.Vertical(8.dp)
         Row(
