@@ -46,6 +46,9 @@ fun NewOvertimeInputContent(
         navigationIcon = {
             Icons.Back(onClick = onBackClicked)
         },
+        trailingIcon = {
+            Icons.Save(onClick = onSaveClicked)
+        }
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -61,6 +64,7 @@ fun NewOvertimeInputContent(
                     labelText = "Прекувремени на ден $dayInMonth $month",
                     value = uiState.totalOvertime,
                     isError = false,
+                    maxLines = 1,
                     textStyle = MaterialTheme.typography.titleLarge,
                     labelTextStyle = MaterialTheme.typography.bodyMedium,
                     onValueChanged = onOvertimeHoursChanged,
@@ -101,15 +105,7 @@ fun NewOvertimeInputContent(
                     onClick = { onPaidLeaveClicked(it) }
                 )
             }
-            Column {
-                Button.Primary(
-                    isEnabled = !uiState.hasOvertimeError,
-                    title = "Во ред",
-                    onClick = { onSaveClicked() }
-                )
-            }
         }
-        Vertical(8.dp)
     }
 }
 
