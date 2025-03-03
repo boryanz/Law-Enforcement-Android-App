@@ -17,7 +17,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.boryanz.upszakoni.ui.theme.KataSampleAppTheme
+import com.boryanz.upszakoni.ui.theme.UpsTheme
 
 object TextFieldInput {
 
@@ -30,8 +30,10 @@ object TextFieldInput {
         textStyle: TextStyle = LocalTextStyle.current,
         labelTextStyle: TextStyle = MaterialTheme.typography.bodySmall,
         trailingIcon: (@Composable () -> Unit)? = null,
+        leadingIcon: (@Composable () -> Unit)? = null,
         isError: Boolean = false,
         hint: String = "",
+        maxLines: Int = Int.MAX_VALUE,
         isReadOnly: Boolean = false,
         interactionSource: MutableInteractionSource? = null,
         keyboardOptions: KeyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -49,9 +51,11 @@ object TextFieldInput {
             placeholder = { Text(hint) },
             onValueChange = onValueChanged,
             trailingIcon = trailingIcon,
+            maxLines = maxLines,
+            leadingIcon = leadingIcon,
             colors = textFieldColors,
             textStyle = textStyle,
-            readOnly = isReadOnly
+            readOnly = isReadOnly,
         )
     }
 }
@@ -60,7 +64,7 @@ object TextFieldInput {
 @Preview(showBackground = true)
 @Composable
 private fun TextFieldInputPreview() {
-    KataSampleAppTheme {
+    UpsTheme {
         TextFieldInput.BaseOutline(
             modifier = Modifier.padding(6.dp),
             labelText = "Label test",

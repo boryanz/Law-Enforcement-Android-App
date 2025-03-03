@@ -1,0 +1,133 @@
+package com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput.daily
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.filled.AccessTime
+import androidx.compose.material.icons.filled.AirplanemodeActive
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Sick
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.unit.dp
+import com.boryanz.upszakoni.ui.components.Button
+import com.boryanz.upszakoni.ui.components.Icons
+import com.boryanz.upszakoni.ui.components.Spacer.Vertical
+import com.boryanz.upszakoni.ui.components.UpsScaffold
+import com.boryanz.upszakoni.ui.components.input.TextFieldInput
+import com.boryanz.upszakoni.ui.theme.UpsTheme
+
+@Composable
+fun NewOvertimeInputContent(
+    uiState: NewOverTimeInputUiState,
+    month: String,
+    dayInMonth: Int,
+    onOvertimeHoursChanged: (String) -> Unit,
+    onAdditionalNoteChanged: (String) -> Unit,
+    onPaidLeaveClicked: (Boolean) -> Unit,
+    onSickDayClicked: (Boolean) -> Unit,
+    onSaveClicked: () -> Unit,
+    onBackClicked: () -> Unit,
+) {
+    UpsScaffold(
+        topBarTitle = { Text("$dayInMonth $month") },
+        navigationIcon = {
+            Icons.Back(onClick = onBackClicked)
+        },
+        trailingIcon = {
+            Icons.Save(onClick = onSaveClicked)
+        }
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(12.dp)
+                .padding(paddingValues)
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceBetween
+        ) {
+            Column(verticalArrangement = Arrangement.Top) {
+                TextFieldInput.BaseOutline(
+                    labelText = "Прекувремени на ден $dayInMonth $month",
+                    value = uiState.totalOvertime,
+                    isError = false,
+                    maxLines = 1,
+                    textStyle = MaterialTheme.typography.titleLarge,
+                    labelTextStyle = MaterialTheme.typography.bodyMedium,
+                    onValueChanged = onOvertimeHoursChanged,
+                    trailingIcon = {
+                        Icons.Base(imageVector = androidx.compose.material.icons.Icons.Filled.AccessTime) { }
+                    }
+                )
+                TextFieldInput.BaseOutline(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight(),
+                    labelText = "Дополнителна забелешка",
+                    isError = false,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                    textStyle = MaterialTheme.typography.bodyLarge,
+                    labelTextStyle = MaterialTheme.typography.bodyMedium,
+                    trailingIcon = {
+                        Icons.Base(
+                            imageVector = androidx.compose.material.icons.Icons.Filled.Edit,
+                            onClick = {}
+                        )
+                    },
+                    onValueChanged = { onAdditionalNoteChanged(it) },
+                    value = uiState.additionalNote
+                )
+                Vertical(4.dp)
+                Button.SwitchWithIcon(
+                    title = "Боледување",
+                    isChecked = uiState.isSickDay,
+                    imageVector = androidx.compose.material.icons.Icons.Filled.Sick,
+                    onClick = { onSickDayClicked(it) }
+                )
+                Vertical(4.dp)
+                Button.SwitchWithIcon(
+                    title = "Платено отсуство",
+                    isChecked = uiState.isPaidLeave,
+                    imageVector = androidx.compose.material.icons.Icons.Filled.AirplanemodeActive,
+                    onClick = { onPaidLeaveClicked(it) }
+                )
+            }
+        }
+    }
+}
+
+
+@PreviewLightDark
+@Preview
+@Composable
+private fun NewOvertimeInputScreenPreview() {
+    UpsTheme {
+        NewOvertimeInputContent(
+            uiState = NewOverTimeInputUiState(
+                totalOvertime = "",
+                isSickDay = true
+            ),
+            month = "Март",
+            dayInMonth = 28,
+            onOvertimeHoursChanged = {},
+            onPaidLeaveClicked = {},
+            onSickDayClicked = {},
+            onSaveClicked = {},
+            onBackClicked = {},
+            onAdditionalNoteChanged = {}
+        )
+    }
+}

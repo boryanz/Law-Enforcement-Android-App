@@ -5,6 +5,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.os.Build
 import androidx.core.app.NotificationManagerCompat
+import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsDao
 import com.boryanz.upszakoni.di.appModule
 import com.boryanz.upszakoni.domain.remoteconfig.RemoteConfigRepository
 import com.boryanz.upszakoni.ui.notifications.NOTIFICATION_CHANNEL_ID
@@ -24,6 +25,7 @@ class UpsApp : Application() {
         initNotificationChannel()
         initializeKoin()
         initializeRemoteConfig()
+        SharedPrefsDao.init(this)
     }
 
     private fun initializeRemoteConfig() {

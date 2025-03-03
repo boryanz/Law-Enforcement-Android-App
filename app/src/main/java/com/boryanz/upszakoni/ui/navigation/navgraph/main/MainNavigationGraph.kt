@@ -1,4 +1,4 @@
-package com.boryanz.upszakoni.ui.navigation.navgraph
+package com.boryanz.upszakoni.ui.navigation.navgraph.main
 
 import android.content.Context
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -12,6 +12,17 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.boryanz.upszakoni.customtab.CustomTabLauncher
 import com.boryanz.upszakoni.data.NavigationDrawerDestination
+import com.boryanz.upszakoni.data.NavigationDrawerDestination.authorities
+import com.boryanz.upszakoni.data.NavigationDrawerDestination.bonus_salary_feature
+import com.boryanz.upszakoni.data.NavigationDrawerDestination.crimes
+import com.boryanz.upszakoni.data.NavigationDrawerDestination.daily_news
+import com.boryanz.upszakoni.data.NavigationDrawerDestination.information
+import com.boryanz.upszakoni.data.NavigationDrawerDestination.laws
+import com.boryanz.upszakoni.data.NavigationDrawerDestination.offenses
+import com.boryanz.upszakoni.data.NavigationDrawerDestination.phone_numbers
+import com.boryanz.upszakoni.data.NavigationDrawerDestination.privacy_policy
+import com.boryanz.upszakoni.data.NavigationDrawerDestination.wanted_criminals
+import com.boryanz.upszakoni.data.NavigationDrawerDestination.writing_guide
 import com.boryanz.upszakoni.data.crimesItems
 import com.boryanz.upszakoni.data.goldenQuestions
 import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsDao
@@ -39,6 +50,8 @@ import com.boryanz.upszakoni.ui.screens.phonenumbers.PhoneNumbersScreen
 import com.boryanz.upszakoni.ui.screens.policeauthorities.PoliceAuthoritiesScreen
 import com.boryanz.upszakoni.ui.screens.privacypolicy.PrivacyPolicyAcceptanceScreen
 import com.boryanz.upszakoni.ui.screens.privacypolicy.PrivacyPolicyScreen
+import com.boryanz.upszakoni.utils.noEnterTransition
+import com.boryanz.upszakoni.utils.noExitTransition
 import com.boryanz.upszakoni.utils.openDialer
 import com.boryanz.upszakoni.utils.openPdfWithExternalReader
 import com.boryanz.upszakoni.utils.supportExternalPdfReader
@@ -53,11 +66,13 @@ fun NavigationGraph(
     onAppUpdateClicked: () -> Unit,
 ) {
     val context = LocalContext.current
-    val sharedPrefsDao = remember { SharedPrefsDao(context) }
+    val sharedPrefsDao = remember { SharedPrefsDao }
     val isInDarkMode = isSystemInDarkTheme()
     NavHost(
         navController = navHostController,
-        startDestination = if (sharedPrefsDao.isPrivacyPolicyAccepted()) LawsDestination else PrivacyPolicyAcceptanceDestination
+        startDestination = if (sharedPrefsDao.isPrivacyPolicyAccepted()) LawsDestination else PrivacyPolicyAcceptanceDestination,
+        enterTransition = noEnterTransition,
+        exitTransition = noExitTransition
     ) {
 
         composable<PrivacyPolicyAcceptanceDestination> {
@@ -177,12 +192,12 @@ private fun openPdfLaw(
 
 fun NavHostController.navigateToDrawerDestination(navigationDrawerDestination: NavigationDrawerDestination) {
     when (navigationDrawerDestination) {
-        NavigationDrawerDestination.laws -> navigate(LawsDestination)
-        NavigationDrawerDestination.offenses -> navigate(OffensesDestination)
-        NavigationDrawerDestination.crimes -> navigate(CrimesDestination)
-        NavigationDrawerDestination.authorities -> navigate(PoliceAuthoritiesDestination)
-        NavigationDrawerDestination.writing_guide -> navigate(GoldenCrimeQuestionsDestination)
-        NavigationDrawerDestination.wanted_criminals -> {
+        laws -> navigate(LawsDestination)
+        offenses -> navigate(OffensesDestination)
+        crimes -> navigate(CrimesDestination)
+        authorities -> navigate(PoliceAuthoritiesDestination)
+        writing_guide -> navigate(GoldenCrimeQuestionsDestination)
+        wanted_criminals -> {
             val customTabLauncher = CustomTabLauncher(
                 showTitle = true,
                 setUrlBarHiddenEnabled = true
@@ -190,7 +205,7 @@ fun NavHostController.navigateToDrawerDestination(navigationDrawerDestination: N
             customTabLauncher.launch(context, WANTED_PERSONS_URL)
         }
 
-        NavigationDrawerDestination.daily_news -> {
+        daily_news -> {
             val customTabLauncher = CustomTabLauncher(
                 showTitle = true,
                 setUrlBarHiddenEnabled = true
@@ -198,13 +213,13 @@ fun NavHostController.navigateToDrawerDestination(navigationDrawerDestination: N
             customTabLauncher.launch(context, DAILY_NEWS_URL)
         }
 
-        NavigationDrawerDestination.phone_numbers -> navigate(PhoneNumbersDestination)
-        NavigationDrawerDestination.privacy_policy -> navigate(PrivacyPolicyDestination)
-        NavigationDrawerDestination.bonus_salary_feature -> context.startActivity(
+        phone_numbers -> navigate(PhoneNumbersDestination)
+        privacy_policy -> navigate(PrivacyPolicyDestination)
+        bonus_salary_feature -> context.startActivity(
             BonusSalaryActivity.createIntent(context)
         )
 
-        NavigationDrawerDestination.information -> navigate(InformationScreenDestination)
+        information -> navigate(InformationScreenDestination)
     }
 }
 

@@ -68,7 +68,7 @@ class OverTimeInputViewModel(
                         monthOrder = event.month.mapToOrder(),
                         currentOvertimeHours = uiState.value.overtimeHours,
                         currentAbsenceDays = uiState.value.sickDays,
-                        currentPaidAbsenceDays = uiState.value.paidAbsenceDays
+                        currentPaidAbsenceDays = uiState.value.paidAbsenceDays,
                     )
                 )
                 navigator.navigateBack()

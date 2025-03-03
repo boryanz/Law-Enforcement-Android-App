@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.boryanz.upszakoni.ui.theme.BaseContent
+import com.boryanz.upszakoni.ui.theme.BaseContent1
 import com.boryanz.upszakoni.ui.theme.Typography
 
 @Composable
@@ -51,6 +52,6 @@ fun ReadOnlyRowItem(text: String, shouldHaveDivider: Boolean = true) {
         style = Typography.bodyLarge
     )
     if (shouldHaveDivider) {
-        HorizontalDivider()
+        HorizontalDivider(color = BaseContent1)
     }
 }

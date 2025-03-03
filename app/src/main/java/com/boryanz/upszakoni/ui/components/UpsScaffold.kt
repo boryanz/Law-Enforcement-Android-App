@@ -11,7 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.boryanz.upszakoni.ui.theme.Base100
 import com.boryanz.upszakoni.ui.theme.BaseContent
 import com.boryanz.upszakoni.ui.theme.BaseContent1
-import com.boryanz.upszakoni.ui.theme.KataSampleAppTheme
+import com.boryanz.upszakoni.ui.theme.UpsTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,7 +45,7 @@ fun UpsScaffold(
 @Preview(showBackground = true)
 @Composable
 private fun UpsScaffoldPreview() {
-    KataSampleAppTheme {
+    UpsTheme {
         TopAppBar(
             title = { Text("Something", color = Base100) },
             colors = TopAppBarDefaults.topAppBarColors(containerColor = BaseContent, titleContentColor = Base100),

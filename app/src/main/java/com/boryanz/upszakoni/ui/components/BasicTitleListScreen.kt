@@ -14,7 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.boryanz.upszakoni.data.model.TitleItem
-import com.boryanz.upszakoni.ui.theme.KataSampleAppTheme
+import com.boryanz.upszakoni.ui.theme.UpsTheme
 
 @Composable
 fun BasicTitleListScreen(
@@ -50,7 +50,7 @@ fun BasicTitleListScreen(
 @Preview(showBackground = true)
 @Composable
 private fun PoliceAuthorityScreenPreview() {
-    KataSampleAppTheme {
+    UpsTheme {
         BasicTitleListScreen(
             topBarTitle = "Овластувања",
             items = listOf(TitleItem("Basic title")),

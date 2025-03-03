@@ -1,8 +1,6 @@
 package com.boryanz.upszakoni.ui.navigation.navgraph
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -10,46 +8,58 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.boryanz.upszakoni.data.model.TitleItem
 import com.boryanz.upszakoni.ui.navigation.destinations.BonusSalaryDashboardDestination
+import com.boryanz.upszakoni.ui.navigation.destinations.MigrationProposalDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.NonWorkingDaysInfoDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.OvertimeInputDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.ParametersDestination
-import com.boryanz.upszakoni.ui.screens.bonussalary.BonusSalaryViewModel
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardScreen
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.NonWorkingDaysInfoScreen
+import com.boryanz.upszakoni.ui.screens.bonussalary.migration.MigrationProposalScreen
 import com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput.BonusSalaryOverTimeInputScreen
 import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BonusSalaryParametersScreen
-import org.koin.androidx.compose.koinViewModel
+import com.boryanz.upszakoni.utils.noEnterTransition
+import com.boryanz.upszakoni.utils.noExitTransition
 
 
 @Composable
 fun BonusSalaryNavigationGraph(
+    shouldBackportOvertimeTracking: Boolean = false,
     navHostController: NavHostController = rememberNavController(),
-    onFinishActivity: () -> Unit,
+    onBackNavigated: () -> Unit,
+    onMigrationAccepted: () -> Unit,
 ) {
-
-    val viewModel = koinViewModel<BonusSalaryViewModel>()
-    val hasParametersSet by viewModel.uiState.collectAsStateWithLifecycle()
-    if (hasParametersSet == null) return
-
-    val startDestination: Any =
-        if (hasParametersSet == true) BonusSalaryDashboardDestination else ParametersDestination
 
     NavHost(
         navController = navHostController,
-        startDestination = startDestination,
+        startDestination = if (shouldBackportOvertimeTracking) BonusSalaryDashboardDestination else MigrationProposalDestination,
+        enterTransition = noEnterTransition,
+        exitTransition = noExitTransition
     ) {
+
+        composable<MigrationProposalDestination> {
+            MigrationProposalScreen(
+                onMigrationAccepted = onMigrationAccepted,
+                onMigrationCancelled = { navHostController.navigate(it) }
+            )
+        }
         composable<ParametersDestination> {
             BonusSalaryParametersScreen(
                 navController = navHostController,
-                onBackClicked = onFinishActivity
             )
         }
 
         composable<BonusSalaryDashboardDestination> {
             BonusSalaryDashboardScreen(
-                navHostController = navHostController,
-                onBackClicked = onFinishActivity,
-                onEditClicked = { navHostController.navigate(ParametersDestination) }
+                onBackClicked = onBackNavigated,
+                onEditClicked = { navHostController.navigate(ParametersDestination) },
+                onMonthClicked = { navHostController.navigate(OvertimeInputDestination(it)) },
+                onNonWorkingDaysClicked = {
+                    navHostController.navigate(
+                        NonWorkingDaysInfoDestination(
+                            it
+                        )
+                    )
+                }
             )
         }
 

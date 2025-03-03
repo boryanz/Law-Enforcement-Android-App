@@ -1,5 +1,6 @@
 package com.boryanz.upszakoni.ui.screens.bonussalary.parameters
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -11,7 +12,7 @@ import com.boryanz.upszakoni.ui.navigation.navigationwrapper.NavigationWrapperIm
 import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BonusSalaryParametersUiEvent.AbsenceLimitChanged
 import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BonusSalaryParametersUiEvent.OvertimeLimitChanged
 import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BonusSalaryParametersUiEvent.SaveParametersClicked
-import com.boryanz.upszakoni.ui.theme.KataSampleAppTheme
+import com.boryanz.upszakoni.ui.theme.UpsTheme
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -25,8 +26,11 @@ sealed interface BonusSalaryParametersUiEvent {
 @Composable
 fun BonusSalaryParametersScreen(
     navController: NavHostController,
-    onBackClicked: () -> Unit,
 ) {
+
+    BackHandler {
+        /*block back button*/
+    }
 
     val navigator = remember { NavigationWrapperImpl(navController) }
     val viewmodel =
@@ -42,20 +46,18 @@ fun BonusSalaryParametersScreen(
         onSaveClicked = { viewmodel.onUiEvent(SaveParametersClicked) },
         onAbsenceDaysLimitValueChanged = { viewmodel.onUiEvent(AbsenceLimitChanged(it)) },
         onOvertimeHoursValueChanged = { viewmodel.onUiEvent(OvertimeLimitChanged(it)) },
-        onBackClicked = onBackClicked
     )
 }
 
 @Preview
 @Composable
 private fun BonusSalaryParametersContentPreview() {
-    KataSampleAppTheme {
+    UpsTheme {
         BonusSalaryParametersContent(
             onAbsenceDaysLimitValueChanged = {},
             onSaveClicked = {},
             onOvertimeHoursValueChanged = {},
             uiState = BonusSalaryParametersUiState(),
-            onBackClicked = {}
         )
     }
 }

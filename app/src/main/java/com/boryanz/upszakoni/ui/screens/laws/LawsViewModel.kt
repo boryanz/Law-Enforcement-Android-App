@@ -28,28 +28,25 @@ class LawsViewModel(
 
     override fun onUiEvent(event: ScreenAction) {
         viewModelScope.launch {
-            val sharedPrefsDao = SharedPrefsDao(event.context)
             when (event) {
                 is ScreenAction.LawSwiped -> {
-                    sharedPrefsDao.archiveLaw(event.lawName)
+                    SharedPrefsDao.archiveLaw(event.lawName)
                     _uiState.update {
                         it.copy(
-                            laws = uiState.value.laws.filterAvailableLaws(
-                                sharedPrefsDao
-                            )
+                            laws = uiState.value.laws.filterAvailableLaws()
                         )
                     }
                 }
 
                 is ScreenAction.GetLaws -> {
                     val laws = getLawsUseCase(event.context).map { it.removePdfExtension() }
-                    val availableLaws = laws.filterAvailableLaws(sharedPrefsDao)
+                    val availableLaws = laws.filterAvailableLaws()
                     _uiState.update { UiState(availableLaws) }
                 }
             }
         }
     }
 
-    private fun List<String>.filterAvailableLaws(sharedPrefsDao: SharedPrefsDao) =
-        filterNot { sharedPrefsDao.contains(it) }
+    private fun List<String>.filterAvailableLaws() =
+        filterNot { SharedPrefsDao.contains(it) }
 }

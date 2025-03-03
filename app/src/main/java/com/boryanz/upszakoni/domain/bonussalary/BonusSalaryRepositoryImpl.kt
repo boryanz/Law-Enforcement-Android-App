@@ -3,22 +3,30 @@ package com.boryanz.upszakoni.domain.bonussalary
 import android.content.Context
 import com.boryanz.upszakoni.data.local.database.UpsDatabase
 import com.boryanz.upszakoni.data.local.database.model.BonusSalaryTreshold
+import com.boryanz.upszakoni.data.local.database.model.DayInMonth
 import com.boryanz.upszakoni.data.local.database.model.MonthlyStats
+import com.boryanz.upszakoni.domain.GenerateDaysInMonthsUseCase
 import com.boryanz.upszakoni.domain.errorhandling.Result
 import com.boryanz.upszakoni.domain.errorhandling.UpsError
 import com.boryanz.upszakoni.domain.errorhandling.tryCatch
 import com.boryanz.upszakoni.ui.components.defaultMonthlyStats
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import kotlin.math.ceil
 
 const val NUMBER_OF_MONTHS = 12
 
-class BonusSalaryRepositoryImpl(context: Context) : BonusSalaryRepository {
+class BonusSalaryRepositoryImpl(
+    context: Context
+) : BonusSalaryRepository, KoinComponent {
 
     private val db = UpsDatabase.getInstance(context)
     private val dao = db.bonusSalaryDao()
     private val ioDispatcher = Dispatchers.IO
+
+    private val generateDefaultDaysInMonthsUseCase: GenerateDaysInMonthsUseCase by inject()
 
     /**
      * Calculated value after setting the treshold hours.
@@ -60,9 +68,35 @@ class BonusSalaryRepositoryImpl(context: Context) : BonusSalaryRepository {
             }
         }
 
+    override suspend fun insertAllDayInMonthStats(daysInMonths: List<DayInMonth>): Result<UpsError, Unit> =
+        tryCatch {
+            withContext(ioDispatcher) {
+                dao.insertAllDaysInMonthsStats(daysInMonths)
+            }
+        }
+
+    override suspend fun insertDayStats(dayInMonth: DayInMonth): Result<UpsError, Unit> = tryCatch {
+        withContext(ioDispatcher) {
+            dao.insertDayInMonthStats(dayInMonth)
+        }
+    }
+
     override suspend fun getYearlyStatistics(): Result<UpsError, List<MonthlyStats>> = tryCatch {
         withContext(ioDispatcher) {
             dao.getYearlyStats()
+        }
+    }
+
+    override suspend fun getAllDailyStatsByMonth(month: String): Result<UpsError, List<DayInMonth>> =
+        tryCatch {
+            withContext(ioDispatcher) {
+                dao.getAllDailyStatsByMonth(month)
+            }
+        }
+
+    override suspend fun getDailyStatsById(id: Int): Result<UpsError, DayInMonth> = tryCatch {
+        withContext(ioDispatcher) {
+            dao.getDailyStatsById(id)
         }
     }
 
@@ -73,11 +107,12 @@ class BonusSalaryRepositoryImpl(context: Context) : BonusSalaryRepository {
             }
         }
 
-    override suspend fun deleteAll() {
+    override suspend fun deleteAllAndGenerateDefaultData() {
         tryCatch {
             withContext(ioDispatcher) {
-                dao.insertAll(defaultMonthlyStats)
-                dao.deleteTreshold()
+                dao.insertAllMonthlyStats(defaultMonthlyStats)
+                dao.deleteAllDaysInMonths()
+                generateDefaultDaysInMonthsUseCase()
                 averageOvertimeHours = -1
                 minimumOvertimeHours = -1
                 maximumAvailablePaidDays = -1

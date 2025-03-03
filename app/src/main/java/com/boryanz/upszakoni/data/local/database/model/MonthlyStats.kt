@@ -12,3 +12,6 @@ data class MonthlyStats(
     @ColumnInfo(name = "current_absence_days") val currentAbsenceDays: String,
     @ColumnInfo(name = "current_paid_absence_days") val currentPaidAbsenceDays: String,
 )
+
+
+

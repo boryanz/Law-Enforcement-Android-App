@@ -2,7 +2,6 @@ package com.boryanz.upszakoni.ui.screens.privacypolicy
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.platform.LocalContext
 import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsDao
 import com.boryanz.upszakoni.ui.components.Button
 
@@ -11,8 +10,7 @@ fun PrivacyPolicyAcceptanceScreen(
     onContinueClicked: () -> Unit,
     backButton: @Composable () -> Unit,
 ) {
-    val context = LocalContext.current
-    val sharedPrefsDao = remember { SharedPrefsDao(context) }
+    val sharedPrefsDao = remember { SharedPrefsDao }
     PrivacyPolicyScreen(
         continueButton = {
             Button.Primary("Продолжи", onClick = {
