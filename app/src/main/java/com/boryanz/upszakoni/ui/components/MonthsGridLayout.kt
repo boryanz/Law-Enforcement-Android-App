@@ -16,6 +16,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -23,86 +24,86 @@ import com.boryanz.upszakoni.data.local.database.model.MonthlyStats
 import com.boryanz.upszakoni.ui.components.input.TextFieldInput
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardUiState
 import com.boryanz.upszakoni.ui.theme.BaseContent
-import com.boryanz.upszakoni.ui.theme.Base_green
+import com.boryanz.upszakoni.ui.theme.BaseContent1
 import com.boryanz.upszakoni.ui.theme.UpsTheme
 
 @Composable
 fun MonthsGridLayout(
-    uiState: BonusSalaryDashboardUiState,
-    paddingValues: PaddingValues,
-    onClick: (String) -> Unit,
+  uiState: BonusSalaryDashboardUiState,
+  paddingValues: PaddingValues,
+  onClick: (String) -> Unit,
 ) {
-    LazyVerticalGrid(
-        modifier = Modifier.heightIn(max = 800.dp),
-        columns = GridCells.Adaptive(minSize = 128.dp),
-        contentPadding = paddingValues,
-        userScrollEnabled = false
-    ) {
-        items(uiState.monthlyOvertime) { month ->
-            val minimumHoursReachedColor = if (
-                (runCatching { month.overtimeHours.toInt() }.getOrNull() ?: 0) > 0
-            ) {
-                Base_green
-            } else {
-                BaseContent
-            }
+  LazyVerticalGrid(
+    modifier = Modifier.heightIn(max = 800.dp),
+    columns = GridCells.Adaptive(minSize = 128.dp),
+    contentPadding = paddingValues,
+    userScrollEnabled = false
+  ) {
+    items(uiState.monthlyOvertime) { month ->
+      val hasHours = (runCatching { month.overtimeHours.toInt() }.getOrNull() ?: 0) > 0
+      val minimumHoursReachedColor = if (hasHours) {
+        BaseContent1
+      } else {
+        BaseContent
+      }
 
-            TextFieldInput.BaseOutline(
-                modifier = Modifier
-                    .padding(4.dp)
-                    .focusable(enabled = false),
-                textStyle = TextStyle(
-                    fontSize = MaterialTheme.typography.bodyLarge.fontSize,
-                    fontStyle = MaterialTheme.typography.titleLarge.fontStyle,
-                    textAlign = TextAlign.Center
-                ),
-                isReadOnly = true,
-                interactionSource = remember { MutableInteractionSource() }
-                    .also { interactionSource ->
-                        LaunchedEffect(interactionSource) {
-                            interactionSource.interactions.collect {
-                                if (it is PressInteraction.Release) {
-                                    onClick(month.month)
-                                }
-                            }
-                        }
-                    },
-                textFieldColors = OutlinedTextFieldDefaults.colors(unfocusedBorderColor = minimumHoursReachedColor),
-                labelText = month.month,
-                value = month.overtimeHours,
-                onValueChanged = { /* Do nothing as it's read only */ },
-            )
-        }
+      TextFieldInput.BaseOutline(
+        modifier = Modifier
+          .padding(4.dp)
+          .focusable(enabled = false),
+        textStyle = TextStyle(
+          fontSize = if (hasHours) MaterialTheme.typography.titleLarge.fontSize else MaterialTheme.typography.bodyLarge.fontSize,
+          fontStyle = MaterialTheme.typography.titleLarge.fontStyle,
+          textAlign = TextAlign.Center,
+          fontWeight = if (hasHours) FontWeight.ExtraBold else FontWeight.Thin
+        ),
+        isReadOnly = true,
+        interactionSource = remember { MutableInteractionSource() }
+          .also { interactionSource ->
+            LaunchedEffect(interactionSource) {
+              interactionSource.interactions.collect {
+                if (it is PressInteraction.Release) {
+                  onClick(month.month)
+                }
+              }
+            }
+          },
+        textFieldColors = OutlinedTextFieldDefaults.colors(unfocusedBorderColor = minimumHoursReachedColor),
+        labelText = month.month,
+        value = month.overtimeHours,
+        onValueChanged = { /* Do nothing as it's read only */ },
+      )
     }
+  }
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun LazyGridLayoutPreview() {
-    UpsTheme {
-        MonthsGridLayout(BonusSalaryDashboardUiState(), PaddingValues(), {})
-    }
+  UpsTheme {
+    MonthsGridLayout(BonusSalaryDashboardUiState(), PaddingValues(), {})
+  }
 }
 
 val defaultMonthlyStats = listOf(
-    getMonthlyStat("Јануари", 1),
-    getMonthlyStat("Февруари", 2),
-    getMonthlyStat("Март", 3),
-    getMonthlyStat("Април", 4),
-    getMonthlyStat("Мај", 5),
-    getMonthlyStat("Јуни", 6),
-    getMonthlyStat("Јули", 7),
-    getMonthlyStat("Август", 8),
-    getMonthlyStat("Септември", 9),
-    getMonthlyStat("Октомври", 10),
-    getMonthlyStat("Ноември", 11),
-    getMonthlyStat("Декември", 12),
+  getMonthlyStat("Јануари", 1),
+  getMonthlyStat("Февруари", 2),
+  getMonthlyStat("Март", 3),
+  getMonthlyStat("Април", 4),
+  getMonthlyStat("Мај", 5),
+  getMonthlyStat("Јуни", 6),
+  getMonthlyStat("Јули", 7),
+  getMonthlyStat("Август", 8),
+  getMonthlyStat("Септември", 9),
+  getMonthlyStat("Октомври", 10),
+  getMonthlyStat("Ноември", 11),
+  getMonthlyStat("Декември", 12),
 )
 
 private fun getMonthlyStat(month: String, monthOrder: Int) = MonthlyStats(
-    month = month,
-    monthOrder = monthOrder,
-    currentOvertimeHours = "0",
-    currentAbsenceDays = "0",
-    currentPaidAbsenceDays = "0",
+  month = month,
+  monthOrder = monthOrder,
+  currentOvertimeHours = "0",
+  currentAbsenceDays = "0",
+  currentPaidAbsenceDays = "0",
 )
