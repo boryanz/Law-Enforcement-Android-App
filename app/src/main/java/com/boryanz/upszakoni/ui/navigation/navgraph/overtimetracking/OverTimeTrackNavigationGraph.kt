@@ -75,7 +75,7 @@ fun OverTimeTrackNavigationGraph(
 
         composable<ParametersDestination> {
             BonusSalaryParametersScreen(
-                navController = navHostController,
+                onParametersSaved = {navHostController.navigate(BonusSalaryDashboardDestination)}
             )
         }
 

@@ -44,7 +44,7 @@ fun BonusSalaryNavigationGraph(
         }
         composable<ParametersDestination> {
             BonusSalaryParametersScreen(
-                navController = navHostController,
+                onParametersSaved = {navHostController.navigate(BonusSalaryDashboardDestination)}
             )
         }
 

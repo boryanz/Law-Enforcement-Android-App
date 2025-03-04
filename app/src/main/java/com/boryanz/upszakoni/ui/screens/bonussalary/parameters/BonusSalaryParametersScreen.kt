@@ -4,37 +4,32 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavHostController
-import com.boryanz.upszakoni.ui.navigation.navigationwrapper.NavigationWrapperImpl
 import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BonusSalaryParametersUiEvent.AbsenceLimitChanged
 import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BonusSalaryParametersUiEvent.OvertimeLimitChanged
 import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BonusSalaryParametersUiEvent.SaveParametersClicked
 import com.boryanz.upszakoni.ui.theme.UpsTheme
 import org.koin.androidx.compose.koinViewModel
-import org.koin.core.parameter.parametersOf
 
 sealed interface BonusSalaryParametersUiEvent {
     data class OvertimeLimitChanged(val value: String) : BonusSalaryParametersUiEvent
     data class AbsenceLimitChanged(val value: String) : BonusSalaryParametersUiEvent
-    data object SaveParametersClicked : BonusSalaryParametersUiEvent
+    data class SaveParametersClicked(val onParamSaved: () -> Unit) : BonusSalaryParametersUiEvent
     data object FetchData : BonusSalaryParametersUiEvent
 }
 
 @Composable
 fun BonusSalaryParametersScreen(
-    navController: NavHostController,
+    onParametersSaved: () -> Unit,
 ) {
 
     BackHandler {
         /*block back button*/
     }
 
-    val navigator = remember { NavigationWrapperImpl(navController) }
     val viewmodel =
-        koinViewModel<BonusSalaryParametersViewModel>(parameters = { parametersOf(navigator) })
+        koinViewModel<BonusSalaryParametersViewModel>()
     val uiState by viewmodel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(true) {
@@ -43,7 +38,7 @@ fun BonusSalaryParametersScreen(
 
     BonusSalaryParametersContent(
         uiState = uiState,
-        onSaveClicked = { viewmodel.onUiEvent(SaveParametersClicked) },
+        onSaveClicked = { viewmodel.onUiEvent(SaveParametersClicked(onParametersSaved)) },
         onAbsenceDaysLimitValueChanged = { viewmodel.onUiEvent(AbsenceLimitChanged(it)) },
         onOvertimeHoursValueChanged = { viewmodel.onUiEvent(OvertimeLimitChanged(it)) },
     )

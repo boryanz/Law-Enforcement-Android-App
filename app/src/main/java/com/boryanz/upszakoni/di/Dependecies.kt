@@ -27,7 +27,7 @@ val appModule = module {
     single<BonusSalaryRepository> { BonusSalaryRepositoryImpl(androidContext()) }
     single { RemoteConfigRepository() }
     factory { GetLawsUseCase() }
-    viewModel { (navigator: NavigationWrapper) -> BonusSalaryParametersViewModel(get(), navigator) }
+    viewModel { BonusSalaryParametersViewModel(get()) }
     viewModel { MigrationProposalViewModel(get()) }
     viewModel { (navigator: NavigationWrapper) -> OverTimeInputViewModel(get(), navigator) }
     viewModel { BonusSalaryDashboardViewModel(get(), get()) }

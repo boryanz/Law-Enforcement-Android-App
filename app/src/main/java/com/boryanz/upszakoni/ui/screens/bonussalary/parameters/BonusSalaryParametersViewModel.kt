@@ -5,8 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.boryanz.upszakoni.data.local.database.model.BonusSalaryTreshold
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
 import com.boryanz.upszakoni.domain.errorhandling.fold
-import com.boryanz.upszakoni.ui.navigation.destinations.BonusSalaryDashboardDestination
-import com.boryanz.upszakoni.ui.navigation.navigationwrapper.NavigationWrapper
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -23,7 +21,6 @@ const val BONUS_SALARY_TRESHOLD = "bonus_salary_treshold"
 
 class BonusSalaryParametersViewModel(
     private val bonusSalaryRepositoryImpl: BonusSalaryRepository,
-    private val navigator: NavigationWrapper,
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<BonusSalaryParametersUiState> =
@@ -52,7 +49,7 @@ class BonusSalaryParametersViewModel(
                 }
             }
 
-            BonusSalaryParametersUiEvent.SaveParametersClicked -> {
+            is BonusSalaryParametersUiEvent.SaveParametersClicked -> {
                 viewModelScope.launch {
                     bonusSalaryRepositoryImpl.insertTreshold(
                         BonusSalaryTreshold(
@@ -61,7 +58,7 @@ class BonusSalaryParametersViewModel(
                             maximumAbsenceDays = uiState.value.absenceDaysLimitValue
                         )
                     ).fold(
-                        onSuccess = { navigator.navigateNext(BonusSalaryDashboardDestination) },
+                        onSuccess = { event.onParamSaved() },
                         onFailure = { /**/ }
                     )
                 }
