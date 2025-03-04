@@ -110,8 +110,9 @@ class BonusSalaryRepositoryImpl(
     override suspend fun deleteAllAndGenerateDefaultData() {
         tryCatch {
             withContext(ioDispatcher) {
-                dao.insertAllMonthlyStats(defaultMonthlyStats)
                 dao.deleteAllDaysInMonths()
+                dao.deleteTreshold()
+                dao.insertAllMonthlyStats(defaultMonthlyStats)
                 generateDefaultDaysInMonthsUseCase()
                 averageOvertimeHours = -1
                 minimumOvertimeHours = -1
