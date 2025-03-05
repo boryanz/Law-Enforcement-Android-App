@@ -121,6 +121,16 @@ class BonusSalaryRepositoryImpl(
         }
     }
 
+    override suspend fun generateDefaultDataAfterMigration() {
+        tryCatch {
+            withContext(ioDispatcher) {
+                dao.insertAllMonthlyStats(defaultMonthlyStats)
+                generateDefaultDaysInMonthsUseCase()
+            }
+        }
+    }
+
+
     override fun getAverageHoursPerMonth() = averageOvertimeHours
 
     override fun getMinimumRequiredHours() = minimumOvertimeHours

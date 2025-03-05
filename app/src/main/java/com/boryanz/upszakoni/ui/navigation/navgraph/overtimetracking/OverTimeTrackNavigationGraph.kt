@@ -10,10 +10,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsDao
 import com.boryanz.upszakoni.data.model.TitleItem
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
 import com.boryanz.upszakoni.domain.errorhandling.fold
 import com.boryanz.upszakoni.ui.navigation.destinations.BonusSalaryDashboardDestination
+import com.boryanz.upszakoni.ui.navigation.destinations.MigrationProposalDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.NewOvertimeInputDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.NonWorkingDaysInfoDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.OvertimeMonthlyCalendarDestination
@@ -21,6 +23,7 @@ import com.boryanz.upszakoni.ui.navigation.destinations.ParametersDestination
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardScreen
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.NonWorkingDaysInfoScreen
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.monthly.OvertimeMonthlyCalendarScreen
+import com.boryanz.upszakoni.ui.screens.bonussalary.migration.MigrationProposalScreen
 import com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput.daily.NewOvertimeInputScreen
 import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BonusSalaryParametersScreen
 import com.boryanz.upszakoni.utils.noEnterTransition
@@ -55,15 +58,16 @@ class OverTimeTrackNavigationGraphViewModel(
 fun OverTimeTrackNavigationGraph(
     navHostController: NavHostController = rememberNavController(),
     onBackNavigated: () -> Unit,
+    onMigrationAccepted: () -> Unit,
 ) {
     val viewModel = koinViewModel<OverTimeTrackNavigationGraphViewModel>()
     val hasTresholdSet by viewModel.hasTresholdSet.collectAsStateWithLifecycle()
     if (hasTresholdSet == null) return
 
-    val startDestination: Any = if (hasTresholdSet == true) {
-        BonusSalaryDashboardDestination
-    } else {
-        ParametersDestination
+    val startDestination: Any = when {
+        !SharedPrefsDao.hasUserMigratedToNewOvertimeTracking() -> MigrationProposalDestination
+        hasTresholdSet == true -> BonusSalaryDashboardDestination
+        else -> ParametersDestination
     }
 
     NavHost(
@@ -73,9 +77,16 @@ fun OverTimeTrackNavigationGraph(
         exitTransition = noExitTransition
     ) {
 
+        composable<MigrationProposalDestination> {
+            MigrationProposalScreen(
+                onMigrationAccepted = onMigrationAccepted,
+                onMigrationCancelled = onBackNavigated
+            )
+        }
+
         composable<ParametersDestination> {
             BonusSalaryParametersScreen(
-                onParametersSaved = {navHostController.navigate(BonusSalaryDashboardDestination)}
+                onParametersSaved = { navHostController.navigate(BonusSalaryDashboardDestination) }
             )
         }
 
@@ -117,7 +128,7 @@ fun OverTimeTrackNavigationGraph(
                 monthId = route.monthId,
                 monthName = route.monthName,
                 dayNumber = route.dayNumber,
-                onSaveClicked = { navHostController.navigateUp()},
+                onSaveClicked = { navHostController.navigateUp() },
                 onBackClicked = { navHostController.navigateUp() },
             )
         }

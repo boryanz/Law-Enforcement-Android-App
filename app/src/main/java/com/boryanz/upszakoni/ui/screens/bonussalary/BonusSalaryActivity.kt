@@ -6,11 +6,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsDao
+import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
 import com.boryanz.upszakoni.domain.remoteconfig.RemoteConfigRepository
-import com.boryanz.upszakoni.ui.navigation.navgraph.BonusSalaryNavigationGraph
 import com.boryanz.upszakoni.ui.navigation.navgraph.overtimetracking.OverTimeTrackNavigationGraph
-import com.boryanz.upszakoni.ui.theme.UpsTheme
 import org.koin.android.ext.android.inject
 
 /**
@@ -22,6 +20,8 @@ class BonusSalaryActivity : ComponentActivity() {
     private val shouldBackportOvertimeFeature =
         remoteConfigRepository.remoteConfigState.value.shouldBackportOvertimeTracking
 
+    private val bonusSalaryRepository: BonusSalaryRepository by inject()
+
     companion object {
         fun createIntent(context: Context) = Intent(context, BonusSalaryActivity::class.java)
     }
@@ -30,36 +30,52 @@ class BonusSalaryActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            UpsTheme {
-                with(SharedPrefsDao) {
-                    when {
-                        shouldBackportOvertimeFeature -> {
-                            BonusSalaryNavigationGraph(
-                                shouldBackportOvertimeTracking = true,
-                                onMigrationAccepted = { restartActivity() },
-                                onBackNavigated = { finish() })
-                        }
+            OverTimeTrackNavigationGraph(
+                onBackNavigated = ::finish,
+                onMigrationAccepted = ::restartActivity
+            )
 
-                        hasUserMigratedToNewOvertimeTracking() -> {
-                            OverTimeTrackNavigationGraph(
-                                onBackNavigated = { finish() }
-                            )
-                        }
 
-                        hasUserRejectedOvertimeTrackingMigration() -> {
-                            BonusSalaryNavigationGraph(
-                                onMigrationAccepted = { restartActivity() },
-                                onBackNavigated = { finish() })
-                        }
-
-                        else -> {
-                            BonusSalaryNavigationGraph(
-                                onMigrationAccepted = { restartActivity() },
-                                onBackNavigated = { finish() })
-                        }
-                    }
-                }
-            }
+//            UpsTheme {
+//                with(SharedPrefsDao) {
+//                    when {
+//                        shouldBackportOvertimeFeature -> {
+//                            BonusSalaryNavigationGraph(
+//                                shouldBackportOvertimeTracking = true,
+//                                onMigrationAccepted = {
+//                                    runCatching {
+//                                        /*hard reset on the db*/
+//                                        cacheDir.deleteRecursively()
+//                                        dataDir.deleteRecursively()
+//                                    }
+//                                    lifecycleScope.launch {
+//                                        bonusSalaryRepository.generateDefaultDataAfterMigration()
+//                                    }.also {
+//                                        restartActivity()
+//                                    }
+//                                },
+//                                onBackNavigated = { finish() })
+//                        }
+//
+//                        hasUserMigratedToNewOvertimeTracking() -> {
+//                            OverTimeTrackNavigationGraph(
+//                                onBackNavigated = { finish() }
+//                            )
+//                        }
+//
+//                        hasUserRejectedOvertimeTrackingMigration() -> {
+//                            BonusSalaryNavigationGraph(
+//                                onMigrationAccepted = { restartActivity() },
+//                                onBackNavigated = { finish() })
+//                        }
+//
+//                        else -> {
+//                            BonusSalaryNavigationGraph(
+//                                onMigrationAccepted = { restartActivity() },
+//                                onBackNavigated = { finish() })
+//                        }
+//                    }
+//                }
         }
     }
 

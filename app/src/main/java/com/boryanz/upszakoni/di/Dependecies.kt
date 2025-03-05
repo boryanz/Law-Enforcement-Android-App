@@ -28,7 +28,7 @@ val appModule = module {
     single { RemoteConfigRepository() }
     factory { GetLawsUseCase() }
     viewModel { BonusSalaryParametersViewModel(get()) }
-    viewModel { MigrationProposalViewModel(get()) }
+    viewModel { MigrationProposalViewModel() }
     viewModel { (navigator: NavigationWrapper) -> OverTimeInputViewModel(get(), navigator) }
     viewModel { BonusSalaryDashboardViewModel(get(), get()) }
     viewModel { LawsViewModel(get(), get()) }

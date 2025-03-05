@@ -11,25 +11,16 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.boryanz.upszakoni.R
 import com.boryanz.upszakoni.ui.components.Button
-import com.boryanz.upszakoni.ui.components.Loader
 import com.boryanz.upszakoni.ui.components.Spacer
 import com.boryanz.upszakoni.ui.components.UpsScaffold
-import com.boryanz.upszakoni.ui.screens.bonussalary.migration.BonusSalaryGraphUiAction.MigrationAccepted
-import com.boryanz.upszakoni.ui.screens.bonussalary.migration.BonusSalaryUiState.DashboardDestination
-import com.boryanz.upszakoni.ui.screens.bonussalary.migration.BonusSalaryUiState.DefaultDestination
-import com.boryanz.upszakoni.ui.screens.bonussalary.migration.BonusSalaryUiState.Loading
-import com.boryanz.upszakoni.ui.screens.bonussalary.migration.BonusSalaryUiState.ScreenContent
 import com.boryanz.upszakoni.ui.theme.UpsTheme
 import org.koin.androidx.compose.koinViewModel
 
@@ -41,40 +32,20 @@ sealed interface BonusSalaryGraphUiAction {
 @Composable
 fun MigrationProposalScreen(
     onMigrationAccepted: () -> Unit,
-    onMigrationCancelled: (startDestination: Any) -> Unit,
+    onMigrationCancelled: () -> Unit,
 ) {
     val viewModel = koinViewModel<MigrationProposalViewModel>()
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(Unit) {
-        viewModel.checkIfUserAlreadyHaveData()
-    }
-
-    when (uiState) {
-        Loading -> Loader()
-        is DefaultDestination -> {
-            onMigrationCancelled((uiState as DefaultDestination).startDestination)
-        }
-
-        is DashboardDestination -> {
-            onMigrationCancelled((uiState as DashboardDestination).startDestination)
-        }
-
-        ScreenContent -> {
-            MigrationProposalContent(
-                onMigrationAccepted = {
-                    viewModel.onMigrationAccepted(
-                        migrationAccepted = MigrationAccepted(
-                            navigateNext = onMigrationAccepted
-                        )
-                    )
-                },
-                onMigrationCancelled = {
-                    viewModel.onMigrationRejected()
-                }
+    MigrationProposalContent(
+        onMigrationAccepted = {
+            viewModel.onMigrationAccepted(
+                migrationAccepted = BonusSalaryGraphUiAction.MigrationAccepted(
+                    navigateNext = onMigrationAccepted
+                )
             )
-        }
-    }
+        },
+        onMigrationCancelled = { onMigrationCancelled() }
+    )
 }
 
 
@@ -109,7 +80,7 @@ fun MigrationProposalContent(
                 Spacer.Vertical(20.dp)
                 Text(
                     textAlign = TextAlign.Start,
-                    text = "Со новата опција, прекувремените часови ќе се запишуваат по денови во месецот - календар.\n\nДоколку прифатите, старите прекувремени часови ќе бидат избришани.\n\nПрепорачуваме да продолжите со новиот начин за подобра прегледност на прекувремените часови."
+                    text = "Со новата опција, прекувремените часови ќе се запишуваат по денови во месецот за подобра прегледност. Стариот внес на прекувремени нема да биде сочуван."
                 )
             }
             Spacer.Vertical(24.dp)
@@ -121,7 +92,6 @@ fun MigrationProposalContent(
         }
     }
 }
-
 
 
 @PreviewLightDark

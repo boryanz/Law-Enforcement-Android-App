@@ -14,7 +14,6 @@ import com.boryanz.upszakoni.ui.navigation.destinations.OvertimeInputDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.ParametersDestination
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardScreen
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.NonWorkingDaysInfoScreen
-import com.boryanz.upszakoni.ui.screens.bonussalary.migration.MigrationProposalScreen
 import com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput.BonusSalaryOverTimeInputScreen
 import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BonusSalaryParametersScreen
 import com.boryanz.upszakoni.utils.noEnterTransition
@@ -28,7 +27,6 @@ fun BonusSalaryNavigationGraph(
     onBackNavigated: () -> Unit,
     onMigrationAccepted: () -> Unit,
 ) {
-
     NavHost(
         navController = navHostController,
         startDestination = if (shouldBackportOvertimeTracking) BonusSalaryDashboardDestination else MigrationProposalDestination,
@@ -36,15 +34,10 @@ fun BonusSalaryNavigationGraph(
         exitTransition = noExitTransition
     ) {
 
-        composable<MigrationProposalDestination> {
-            MigrationProposalScreen(
-                onMigrationAccepted = onMigrationAccepted,
-                onMigrationCancelled = { navHostController.navigate(it) }
-            )
-        }
+
         composable<ParametersDestination> {
             BonusSalaryParametersScreen(
-                onParametersSaved = {navHostController.navigate(BonusSalaryDashboardDestination)}
+                onParametersSaved = { navHostController.navigate(BonusSalaryDashboardDestination) }
             )
         }
 
