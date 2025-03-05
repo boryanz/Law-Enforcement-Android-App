@@ -13,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -83,6 +84,14 @@ fun MigrationProposalContent(
     onMigrationAccepted: () -> Unit,
     onMigrationCancelled: () -> Unit
 ) {
+    val message = remember { """
+    Со воведувањето на новата опција, прекувремените часови ќе се евидентираат по денови во месецот, во формат на календар.
+
+    Бидејќи оваа промена бара целосна миграција на постојната база на податоци, сите претходно зачувани податоци ќе бидат отстранети.
+
+    Ви благодариме на разбирањето и поддршката.""".trimIndent()
+
+    }
     UpsScaffold(
         topBarTitle = { Text(text = "Нова евиденција") },
     ) {
@@ -109,19 +118,16 @@ fun MigrationProposalContent(
                 Spacer.Vertical(20.dp)
                 Text(
                     textAlign = TextAlign.Start,
-                    text = "Со новата опција, прекувремените часови ќе се запишуваат по денови во месецот - календар.\n\nДоколку прифатите, старите прекувремени часови ќе бидат избришани.\n\nПрепорачуваме да продолжите со новиот начин за подобра прегледност на прекувремените часови."
+                    text = message
                 )
             }
             Spacer.Vertical(24.dp)
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Button.Primary("Прифаќам", onClick = onMigrationAccepted)
-                Spacer.Vertical(4.dp)
-                Button.Outlined("Не прифаќам", onClick = onMigrationCancelled)
+                Button.Primary("Во ред", onClick = onMigrationAccepted)
             }
         }
     }
 }
-
 
 
 @PreviewLightDark

@@ -44,7 +44,7 @@ abstract class UpsDatabase : RoomDatabase() {
                     getInstance(context).bonusSalaryDao().insertAllMonthlyStats(defaultMonthlyStats)
                 }
             }
-        }).build()
+        }).fallbackToDestructiveMigration().build()
     }
 }
 
