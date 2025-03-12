@@ -70,9 +70,6 @@ fun MigrationProposalScreen(
                         )
                     )
                 },
-                onMigrationCancelled = {
-                    viewModel.onMigrationRejected()
-                }
             )
         }
     }
@@ -82,7 +79,6 @@ fun MigrationProposalScreen(
 @Composable
 fun MigrationProposalContent(
     onMigrationAccepted: () -> Unit,
-    onMigrationCancelled: () -> Unit
 ) {
     val message = remember { """
     Со воведувањето на новата опција, прекувремените часови ќе се евидентираат по денови во месецот, во формат на календар.

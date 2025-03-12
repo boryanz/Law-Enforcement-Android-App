@@ -42,18 +42,6 @@ class MigrationProposalViewModel(
         }
 
     /**
-     * New or old user rejected usage of new tracking system.
-     * Save decision to shared preferences
-     */
-    fun onMigrationRejected() {
-        viewModelScope.launch(Dispatchers.IO) {
-            SharedPrefsDao.rejectOverTimeTrackingMigration().also {
-                checkIfUserAlreadyHaveData()
-            }
-        }
-    }
-
-    /**
      * If parameters are already in db, proceed to BonusSalaryDashboard.
      * Verify this only if user rejected the migration.
      */
