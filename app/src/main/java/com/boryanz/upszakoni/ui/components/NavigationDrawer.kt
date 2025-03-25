@@ -15,6 +15,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Timelapse
 import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.PeopleOutline
 import androidx.compose.material.icons.outlined.SystemUpdate
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.HorizontalDivider
@@ -207,6 +208,21 @@ fun NavigationDrawer(
                                 onClick = { onItemClicked(NavigationDrawerDestination.information) }
                             )
                         }
+                        HorizontalDivider()
+                        NavigationDrawerItem(
+                            icon = {
+                                Icon(
+                                    modifier = Modifier
+                                        .height(20.dp)
+                                        .width(20.dp),
+                                    imageVector = Icons.Outlined.PeopleOutline,
+                                    contentDescription = null
+                                )
+                            },
+                            label = { Text(text = "Наши партнери") },
+                            selected = false,
+                            onClick = { onItemClicked(NavigationDrawerDestination.partners) }
+                        )
                         Spacer.Vertical(24.dp)
                         NavigationDrawerItem(
                             icon = {

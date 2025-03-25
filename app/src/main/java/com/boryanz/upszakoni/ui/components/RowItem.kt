@@ -31,7 +31,7 @@ fun RowItem(
         modifier = modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .border(width = 1.dp, shape = RoundedCornerShape(4.dp), color = BaseContent)
+            .border(width = 0.3.dp, shape = RoundedCornerShape(8.dp), color = BaseContent)
             .padding(all = 16.dp)
             .clickable(enabled = isEnabled, onClick = onClick),
         horizontalArrangement = horizontalArrangement,

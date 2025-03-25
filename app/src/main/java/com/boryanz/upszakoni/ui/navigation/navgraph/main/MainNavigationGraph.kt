@@ -19,6 +19,7 @@ import com.boryanz.upszakoni.data.NavigationDrawerDestination.daily_news
 import com.boryanz.upszakoni.data.NavigationDrawerDestination.information
 import com.boryanz.upszakoni.data.NavigationDrawerDestination.laws
 import com.boryanz.upszakoni.data.NavigationDrawerDestination.offenses
+import com.boryanz.upszakoni.data.NavigationDrawerDestination.partners
 import com.boryanz.upszakoni.data.NavigationDrawerDestination.phone_numbers
 import com.boryanz.upszakoni.data.NavigationDrawerDestination.privacy_policy
 import com.boryanz.upszakoni.data.NavigationDrawerDestination.wanted_criminals
@@ -35,6 +36,7 @@ import com.boryanz.upszakoni.ui.navigation.destinations.GoldenCrimeQuestionsDest
 import com.boryanz.upszakoni.ui.navigation.destinations.InformationScreenDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.LawsDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.OffensesDestination
+import com.boryanz.upszakoni.ui.navigation.destinations.PartnersDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.PhoneNumbersDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.PoliceAuthoritiesDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.PrivacyPolicyAcceptanceDestination
@@ -45,6 +47,7 @@ import com.boryanz.upszakoni.ui.screens.common.CommonOffensesAndCrimes
 import com.boryanz.upszakoni.ui.screens.crimequestions.GoldenCrimeQuestionsScreen
 import com.boryanz.upszakoni.ui.screens.informations.InformationScreen
 import com.boryanz.upszakoni.ui.screens.laws.LawsScreen
+import com.boryanz.upszakoni.ui.screens.partners.PartnersScreen
 import com.boryanz.upszakoni.ui.screens.pdfviewer.PdfViewerActivity
 import com.boryanz.upszakoni.ui.screens.phonenumbers.PhoneNumbersScreen
 import com.boryanz.upszakoni.ui.screens.policeauthorities.PoliceAuthoritiesScreen
@@ -171,6 +174,14 @@ fun NavigationGraph(
                 onBackClicked = { navHostController.navigateUp() }
             )
         }
+
+        // https://spm.mk/
+        composable<PartnersDestination> {
+            PartnersScreen(
+                onBackClicked = navHostController::navigateUp,
+                onPartnerClicked = { CustomTabLauncher().launch(context, it) },
+            )
+        }
     }
 }
 
@@ -220,8 +231,10 @@ fun NavHostController.navigateToDrawerDestination(navigationDrawerDestination: N
         )
 
         information -> navigate(InformationScreenDestination)
+        partners -> navigate(PartnersDestination)
     }
 }
+
 
 fun Context.navigateToInternalPdfViewer(
     lawName: String,

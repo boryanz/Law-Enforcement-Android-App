@@ -18,7 +18,8 @@ enum class NavigationDrawerDestination {
     phone_numbers,
     privacy_policy,
     bonus_salary_feature,
-    information
+    information,
+    partners
 }
 
 val privacyPolictyText =

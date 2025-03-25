@@ -31,3 +31,6 @@ data object ArchivedLawsDestination
 
 @Serializable
 data object InformationScreenDestination
+
+@Serializable
+data object PartnersDestination
