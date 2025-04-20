@@ -1,6 +1,43 @@
+import Dependecies.ACCOMPANIST_PERMISSIONS
+import Dependecies.ANDROIDX_ACTIVITY
+import Dependecies.ANDROIDX_ACTIVITY_COMPOSE
+import Dependecies.ANDROIDX_APPCOMPAT
+import Dependecies.ANDROIDX_COMPOSE_BOM_STRING
+import Dependecies.ANDROIDX_COMPOSE_MATERIAL
+import Dependecies.ANDROIDX_COMPOSE_MATERIAL_ICONS_EXTENDED
+import Dependecies.ANDROIDX_CONSTRAINTLAYOUT_STRING
+import Dependecies.ANDROIDX_CORE_KTX
+import Dependecies.ANDROIDX_CORE_SPLASHSCREEN_STRING
+import Dependecies.ANDROIDX_CUSTOM_TABS
+import Dependecies.ANDROIDX_ESPRESSO_CORE
+import Dependecies.ANDROIDX_JUNIT
+import Dependecies.ANDROIDX_LIFECYCLE_RUNTIME_KTX
+import Dependecies.ANDROIDX_MATERIAL3
+import Dependecies.ANDROIDX_NAVIGATION_COMPOSE
+import Dependecies.ANDROIDX_UI
+import Dependecies.ANDROIDX_UI_GRAPHICS
+import Dependecies.ANDROIDX_UI_TEST_JUNIT4
+import Dependecies.ANDROIDX_UI_TEST_MANIFEST
+import Dependecies.ANDROIDX_UI_TOOLING
+import Dependecies.ANDROIDX_UI_TOOLING_PREVIEW
+import Dependecies.ANDROID_PDF_VIEWER
+import Dependecies.FIREBASE_CONFIG_STRING
+import Dependecies.FIREBASE_FIRESTORE_STRING
+import Dependecies.FIREBASE_MESSAGING_KTX
+import Dependecies.GSON_STRING
+import Dependecies.JUNIT_STRING
+import Dependecies.KOIN_ANDROIDX_COMPOSE
+import Dependecies.KOTLINX_SERIALIZATION_JSON_STRING
+import Dependecies.KOTLIN_STDLIB
+import Dependecies.MATERIAL_STRING
+import Dependecies.RETROFIT_CORE
+import Dependecies.ROOM_COMPILER
+import Dependecies.ROOM_KTX
+import Dependecies.ROOM_RUNTIME
+
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
+    id(BuildPlugins.KOTLIN_ANDROID)
+    id(BuildPlugins.ANDROID_APP)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
@@ -9,17 +46,17 @@ plugins {
 }
 
 android {
-    namespace = "com.boryanz.upszakoni"
-    compileSdk = 34
+    namespace = BuildConfig.APP_ID
+    compileSdk = BuildConfig.TARGET_SDK
 
     defaultConfig {
-        applicationId = "com.boryanz.upszakoni"
-        minSdk = 24
-        targetSdk = 34
-        versionCode = 13
-        versionName = "1.2.4"
+        applicationId = BuildConfig.APP_ID
+        minSdk = BuildConfig.MIN_SDK
+        targetSdk = BuildConfig.TARGET_SDK
+        versionCode = ReleaseConfig.VERSION_CODE
+        versionName = ReleaseConfig.VERSION_NAME
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = TestBuildConfig.TEST_INSTRUMENTATION_RUNNER
     }
 
     buildTypes {
@@ -44,49 +81,43 @@ android {
 }
 
 dependencies {
-    implementation(libs.accompanist.permissions)
-    implementation(libs.firebase.messaging.ktx)
-    implementation(libs.firebaseFirestore)
-    implementation(libs.androidx.core.splashscreen)
-    implementation(libs.androidx.navigation.compose)
-    implementation(libs.kotlin.stdlib)
-    implementation(libs.kotlinx.serialization.json)
-    implementation(libs.room.runtime)
-    implementation(libs.room.ktx)
-    implementation(libs.retrofit.core)
-    implementation(libs.firebase.config)
-//    implementation(libs.retrofit.core)
-//    implementation(libs.retrofit.bom)
-//    implementation(libs.coil.kt)
-//    implementation(libs.coil.kt.compose)
-//    implementation(libs.okhttp)
-//    implementation(libs.okhttp.logging)
-//    implementation(libs.koin.bom)
-//    implementation(libs.koin.android)
-    ksp(libs.room.compiler)
-    implementation(libs.android.pdf.viewer)
-    implementation(libs.androidx.custom.tabs)
-    implementation(libs.koin.androidx.compose)
-    implementation(libs.androidx.compose.material)
-    implementation(libs.androidx.compose.material.iconsExtended)
-    implementation(libs.gson)
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    implementation(libs.androidx.activity)
-    implementation(libs.androidx.constraintlayout)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
+    dependencies {
+        implementation(ACCOMPANIST_PERMISSIONS)
+        implementation(FIREBASE_MESSAGING_KTX)
+        implementation(FIREBASE_FIRESTORE_STRING)
+        implementation(ANDROIDX_CORE_SPLASHSCREEN_STRING)
+        implementation(ANDROIDX_NAVIGATION_COMPOSE)
+        implementation(KOTLIN_STDLIB)
+        implementation(KOTLINX_SERIALIZATION_JSON_STRING)
+        implementation(ROOM_RUNTIME)
+        implementation(ROOM_KTX)
+        implementation(RETROFIT_CORE)
+        implementation(FIREBASE_CONFIG_STRING)
+        ksp(ROOM_COMPILER)
+        implementation(ANDROID_PDF_VIEWER)
+        implementation(ANDROIDX_CUSTOM_TABS)
+        implementation(KOIN_ANDROIDX_COMPOSE)
+        implementation(ANDROIDX_COMPOSE_MATERIAL)
+        implementation(ANDROIDX_COMPOSE_MATERIAL_ICONS_EXTENDED)
+        implementation(GSON_STRING)
+        implementation(ANDROIDX_CORE_KTX)
+        implementation(ANDROIDX_LIFECYCLE_RUNTIME_KTX)
+        implementation(ANDROIDX_ACTIVITY_COMPOSE)
+        implementation(platform(ANDROIDX_COMPOSE_BOM_STRING))
+        implementation(ANDROIDX_UI)
+        implementation(ANDROIDX_UI_GRAPHICS)
+        implementation(ANDROIDX_UI_TOOLING_PREVIEW)
+        implementation(ANDROIDX_MATERIAL3)
+        implementation(ANDROIDX_APPCOMPAT)
+        implementation(MATERIAL_STRING)
+        implementation(ANDROIDX_ACTIVITY)
+        implementation(ANDROIDX_CONSTRAINTLAYOUT_STRING)
+    }
+    testImplementation(JUNIT_STRING)
+    androidTestImplementation(ANDROIDX_JUNIT)
+    androidTestImplementation(ANDROIDX_ESPRESSO_CORE)
+    androidTestImplementation(platform(ANDROIDX_COMPOSE_BOM_STRING))
+    androidTestImplementation(ANDROIDX_UI_TEST_JUNIT4)
+    debugImplementation(ANDROIDX_UI_TOOLING)
+    debugImplementation(ANDROIDX_UI_TEST_MANIFEST)
 }
