@@ -1,5 +1,6 @@
 [versions]
 agp = "8.8.1"
+gradle = "8.9.1"
 kotlin = "2.1.0"
 coreKtx = "1.10.1"
 junit = "4.13.2"
@@ -35,6 +36,7 @@ firebaseConfig = "22.1.0"
 accompanist-permissions = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "accompanist" }
 firebase-messaging-ktx = { group = "com.google.firebase", name = "firebase-messaging-ktx", version.ref = "firebaseMessaging" }
 firebaseFirestore = { module = "com.google.firebase:firebase-firestore", version.ref = "firebaseFirestore" }
+gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
