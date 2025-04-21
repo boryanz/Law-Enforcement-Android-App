@@ -72,12 +72,14 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName(SigningTypes.RELEASE)
         }
 
         getByName(BuildTypes.DEBUG) {
             isMinifyEnabled = Build.Debug.isMinifyEnabled
             isDebuggable = Build.Debug.isDebuggable
             applicationIdSuffix = Build.Debug.applicationIdSuffix
+            signingConfig = signingConfigs.getByName(SigningTypes.DEBUG)
         }
     }
     flavorDimensions.add(BuildDimensions.APP)
