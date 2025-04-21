@@ -42,7 +42,6 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.google.cloud.services)
-//  alias(libs.plugins.google.cloud.services) Add along with google-service.json file from Firebase
 }
 
 android {
@@ -59,15 +58,34 @@ android {
         testInstrumentationRunner = TestBuildConfig.TEST_INSTRUMENTATION_RUNNER
     }
 
+    signingConfigs {
+        BuildSigning.Debug.create(this)
+        BuildSigning.Release.create(this)
+    }
+
     buildTypes {
-        release {
-            isMinifyEnabled = true
+        getByName(BuildTypes.RELEASE) {
+            isMinifyEnabled = Build.Release.isMinifyEnabled
+            isDebuggable = Build.Release.isDebuggable
+            applicationIdSuffix = Build.Release.applicationIdSuffix
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
+
+        getByName(BuildTypes.DEBUG) {
+            isMinifyEnabled = Build.Debug.isMinifyEnabled
+            isDebuggable = Build.Debug.isDebuggable
+            applicationIdSuffix = Build.Debug.applicationIdSuffix
+        }
     }
+    flavorDimensions.add(BuildDimensions.APP)
+    productFlavors {
+        BuildFlavor.Free.create(this)
+        BuildFlavor.Paid.create(this)
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
