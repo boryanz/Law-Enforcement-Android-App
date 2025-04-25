@@ -59,8 +59,7 @@ android {
     }
 
     signingConfigs {
-        BuildSigning.Debug.create(this)
-        BuildSigning.Release.create(this)
+        BuildSigning.Release(project).create(this)
     }
 
     buildTypes {

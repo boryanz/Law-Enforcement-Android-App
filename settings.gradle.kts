@@ -24,4 +24,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "Ups zakoni 2"
 include(":app")
- 
