@@ -10,14 +10,14 @@ plugins {
 
 android {
     namespace = "com.boryanz.upszakoni"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.boryanz.upszakoni"
         minSdk = 24
-        targetSdk = 34
-        versionCode = 13
-        versionName = "1.2.4"
+        targetSdk = 35
+        versionCode = 14
+        versionName = "1.2.5"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
