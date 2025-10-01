@@ -64,187 +64,193 @@ private const val DAILY_NEWS_URL = "https://mvr.gov.mk/dnevni-bilteni"
 
 @Composable
 fun NavigationGraph(
-    navHostController: NavHostController = rememberNavController(),
-    onShareAppClicked: () -> Unit,
-    onAppUpdateClicked: () -> Unit,
+  navHostController: NavHostController = rememberNavController(),
+  onShareAppClicked: () -> Unit,
+  onAppUpdateClicked: () -> Unit,
 ) {
-    val context = LocalContext.current
-    val sharedPrefsDao = remember { SharedPrefsDao }
-    val isInDarkMode = isSystemInDarkTheme()
-    NavHost(
-        navController = navHostController,
-        startDestination = if (sharedPrefsDao.isPrivacyPolicyAccepted()) LawsDestination else PrivacyPolicyAcceptanceDestination,
-        enterTransition = noEnterTransition,
-        exitTransition = noExitTransition
-    ) {
+  val context = LocalContext.current
+  val sharedPrefsDao = remember { SharedPrefsDao }
+  val isInDarkMode = isSystemInDarkTheme()
+  NavHost(
+    navController = navHostController,
+    startDestination = if (sharedPrefsDao.isPrivacyPolicyAccepted()) LawsDestination else PrivacyPolicyAcceptanceDestination,
+    enterTransition = noEnterTransition,
+    exitTransition = noExitTransition
+  ) {
 
-        composable<PrivacyPolicyAcceptanceDestination> {
-            PrivacyPolicyAcceptanceScreen(
-                onContinueClicked = { navHostController.navigate(LawsDestination) },
-                backButton = {}
-            )
-        }
-
-        composable<OffensesDestination> {
-            CommonOffensesAndCrimes(
-                title = "Прекршоци",
-                commonCrimesItems = offensesItems,
-                onCrimeClicked = { lawName, pagesToLoad ->
-                    context.navigateToInternalPdfViewer(
-                        lawName = lawName,
-                        pagesToLoad = pagesToLoad,
-                        isInDarkMode = isInDarkMode
-                    )
-                },
-                onBackClicked = { navHostController.navigateUp() }
-            )
-        }
-
-        composable<CrimesDestination> {
-            CommonOffensesAndCrimes(
-                title = "Кривични дела",
-                commonCrimesItems = crimesItems,
-                onCrimeClicked = { lawName, pagesToLoad ->
-                    context.navigateToInternalPdfViewer(
-                        lawName = lawName,
-                        pagesToLoad = pagesToLoad,
-                        isInDarkMode = isInDarkMode
-                    )
-                },
-                onBackClicked = { navHostController.navigateUp() }
-            )
-        }
-
-        composable<PoliceAuthoritiesDestination> {
-            PoliceAuthoritiesScreen(
-                topBarTitle = "Полициски овластувања",
-                items = policeAuthorities,
-                onBackClicked = { navHostController.navigateUp() }
-            )
-        }
-
-        composable<InformationScreenDestination> {
-            InformationScreen(onBackClicked = { navHostController.navigateUp() })
-        }
-
-        composable<GoldenCrimeQuestionsDestination> {
-            GoldenCrimeQuestionsScreen(
-                topBarTitle = "Службена белешка",
-                items = goldenQuestions,
-                onBackClicked = { navHostController.navigateUp() }
-            )
-        }
-
-        composable<PhoneNumbersDestination> {
-            PhoneNumbersScreen(
-                onContactClicked = { phoneNumber ->
-                    context.openDialer(phoneNumber)
-                },
-                onBackClicked = { navHostController.navigateUp() }
-            )
-        }
-
-        composable<PrivacyPolicyDestination> {
-            PrivacyPolicyScreen(
-                backButton = {
-                    Icons.Back(onClick = { navHostController.navigateUp() })
-                }
-            )
-        }
-
-        composable<LawsDestination> {
-            LawsScreen(
-                onItemClick = { navigationDrawerDestination ->
-                    navHostController.navigateToDrawerDestination(navigationDrawerDestination)
-                },
-                onLawClick = { lawName ->
-                    openPdfLaw(lawName, isInDarkMode, context)
-                },
-                onArchivedLawsClicked = {
-                    navHostController.navigate(ArchivedLawsDestination)
-                },
-                onShareAppClicked = onShareAppClicked,
-                onAppUpdateClicked = onAppUpdateClicked
-            )
-        }
-
-        composable<ArchivedLawsDestination> {
-            ArchivedLawsScreen(
-                onItemClick = { lawName -> openPdfLaw(lawName, isInDarkMode, context) },
-                onBackClicked = { navHostController.navigateUp() }
-            )
-        }
-
-        // https://spm.mk/
-        composable<PartnersDestination> {
-            PartnersScreen(
-                onBackClicked = navHostController::navigateUp,
-                onPartnerClicked = { CustomTabLauncher().launch(context, it) },
-            )
-        }
+    composable<PrivacyPolicyAcceptanceDestination> {
+      PrivacyPolicyAcceptanceScreen(
+        onContinueClicked = { navHostController.navigate(LawsDestination) },
+        backButton = {}
+      )
     }
+
+    composable<OffensesDestination> {
+      CommonOffensesAndCrimes(
+        title = "Прекршоци",
+        commonCrimesItems = offensesItems,
+        onCrimeClicked = { lawName, pagesToLoad ->
+          context.navigateToInternalPdfViewer(
+            lawName = lawName,
+            pagesToLoad = pagesToLoad,
+            isInDarkMode = isInDarkMode
+          )
+        },
+        onBackClicked = { navHostController.navigateUp() }
+      )
+    }
+
+    composable<CrimesDestination> {
+      CommonOffensesAndCrimes(
+        title = "Кривични дела",
+        commonCrimesItems = crimesItems,
+        onCrimeClicked = { lawName, pagesToLoad ->
+          context.navigateToInternalPdfViewer(
+            lawName = lawName,
+            pagesToLoad = pagesToLoad,
+            isInDarkMode = isInDarkMode
+          )
+        },
+        onBackClicked = { navHostController.navigateUp() }
+      )
+    }
+
+    composable<PoliceAuthoritiesDestination> {
+      PoliceAuthoritiesScreen(
+        topBarTitle = "Полициски овластувања",
+        items = policeAuthorities,
+        onBackClicked = { navHostController.navigateUp() }
+      )
+    }
+
+    composable<InformationScreenDestination> {
+      InformationScreen(onBackClicked = { navHostController.navigateUp() })
+    }
+
+    composable<GoldenCrimeQuestionsDestination> {
+      GoldenCrimeQuestionsScreen(
+        topBarTitle = "Службена белешка",
+        items = goldenQuestions,
+        onBackClicked = { navHostController.navigateUp() }
+      )
+    }
+
+    composable<PhoneNumbersDestination> {
+      PhoneNumbersScreen(
+        onContactClicked = { phoneNumber ->
+          context.openDialer(phoneNumber)
+        },
+        onBackClicked = { navHostController.navigateUp() }
+      )
+    }
+
+    composable<PrivacyPolicyDestination> {
+      PrivacyPolicyScreen(
+        backButton = {
+          Icons.Back(onClick = { navHostController.navigateUp() })
+        }
+      )
+    }
+
+    composable<LawsDestination> {
+      LawsScreen(
+        onItemClick = { navigationDrawerDestination ->
+          navHostController.navigateToDrawerDestination(navigationDrawerDestination)
+        },
+        onLawClick = { lawName ->
+          openPdfLaw(lawName, isInDarkMode, context)
+        },
+        onArchivedLawsClicked = {
+          navHostController.navigate(ArchivedLawsDestination)
+        },
+        onShareAppClicked = onShareAppClicked,
+        onAppUpdateClicked = onAppUpdateClicked,
+        onFeedbackFormClicked = {
+          CustomTabLauncher().launch(
+            context,
+            url = "https://docs.google.com/forms/d/e/1FAIpQLSekTon0jVIWtwVZEVkBo-mcHZmb55dQumDPs-puUB1ctnackA/viewform?usp=header"
+          )
+        }
+      )
+    }
+
+    composable<ArchivedLawsDestination> {
+      ArchivedLawsScreen(
+        onItemClick = { lawName -> openPdfLaw(lawName, isInDarkMode, context) },
+        onBackClicked = { navHostController.navigateUp() }
+      )
+    }
+
+    // https://spm.mk/
+    composable<PartnersDestination> {
+      PartnersScreen(
+        onBackClicked = navHostController::navigateUp,
+        onPartnerClicked = { CustomTabLauncher().launch(context, it) },
+      )
+    }
+  }
 }
 
 private fun openPdfLaw(
-    lawName: String,
-    isInDarkMode: Boolean,
-    context: Context
+  lawName: String,
+  isInDarkMode: Boolean,
+  context: Context
 ) {
-    val bundle = bundleOf(
-        PdfViewerActivity.BUNDLE_LAW_TITLE to lawName,
-        PdfViewerActivity.BUNDLE_IS_DARK_MODE to isInDarkMode
-    )
-    if (supportExternalPdfReader(context)) {
-        openPdfWithExternalReader(context, lawName)
-    } else {
-        context.startActivity(PdfViewerActivity.createIntent(context, bundle))
-    }
+  val bundle = bundleOf(
+    PdfViewerActivity.BUNDLE_LAW_TITLE to lawName,
+    PdfViewerActivity.BUNDLE_IS_DARK_MODE to isInDarkMode
+  )
+  if (supportExternalPdfReader(context)) {
+    openPdfWithExternalReader(context, lawName)
+  } else {
+    context.startActivity(PdfViewerActivity.createIntent(context, bundle))
+  }
 }
 
 fun NavHostController.navigateToDrawerDestination(navigationDrawerDestination: NavigationDrawerDestination) {
-    when (navigationDrawerDestination) {
-        laws -> navigate(LawsDestination)
-        offenses -> navigate(OffensesDestination)
-        crimes -> navigate(CrimesDestination)
-        authorities -> navigate(PoliceAuthoritiesDestination)
-        writing_guide -> navigate(GoldenCrimeQuestionsDestination)
-        wanted_criminals -> {
-            val customTabLauncher = CustomTabLauncher(
-                showTitle = true,
-                setUrlBarHiddenEnabled = true
-            )
-            customTabLauncher.launch(context, WANTED_PERSONS_URL)
-        }
-
-        daily_news -> {
-            val customTabLauncher = CustomTabLauncher(
-                showTitle = true,
-                setUrlBarHiddenEnabled = true
-            )
-            customTabLauncher.launch(context, DAILY_NEWS_URL)
-        }
-
-        phone_numbers -> navigate(PhoneNumbersDestination)
-        privacy_policy -> navigate(PrivacyPolicyDestination)
-        bonus_salary_feature -> context.startActivity(
-            BonusSalaryActivity.createIntent(context)
-        )
-
-        information -> navigate(InformationScreenDestination)
-        partners -> navigate(PartnersDestination)
+  when (navigationDrawerDestination) {
+    laws -> navigate(LawsDestination)
+    offenses -> navigate(OffensesDestination)
+    crimes -> navigate(CrimesDestination)
+    authorities -> navigate(PoliceAuthoritiesDestination)
+    writing_guide -> navigate(GoldenCrimeQuestionsDestination)
+    wanted_criminals -> {
+      val customTabLauncher = CustomTabLauncher(
+        showTitle = true,
+        setUrlBarHiddenEnabled = true
+      )
+      customTabLauncher.launch(context, WANTED_PERSONS_URL)
     }
+
+    daily_news -> {
+      val customTabLauncher = CustomTabLauncher(
+        showTitle = true,
+        setUrlBarHiddenEnabled = true
+      )
+      customTabLauncher.launch(context, DAILY_NEWS_URL)
+    }
+
+    phone_numbers -> navigate(PhoneNumbersDestination)
+    privacy_policy -> navigate(PrivacyPolicyDestination)
+    bonus_salary_feature -> context.startActivity(
+      BonusSalaryActivity.createIntent(context)
+    )
+
+    information -> navigate(InformationScreenDestination)
+    partners -> navigate(PartnersDestination)
+  }
 }
 
 
 fun Context.navigateToInternalPdfViewer(
-    lawName: String,
-    pagesToLoad: List<Int>,
-    isInDarkMode: Boolean
+  lawName: String,
+  pagesToLoad: List<Int>,
+  isInDarkMode: Boolean
 ) {
-    val bundle = bundleOf(
-        PdfViewerActivity.BUNDLE_LAW_TITLE to lawName,
-        PdfViewerActivity.BUNDLE_PAGES_TO_LOAD to pagesToLoad.toIntArray(),
-        PdfViewerActivity.BUNDLE_IS_DARK_MODE to isInDarkMode
-    )
-    startActivity(PdfViewerActivity.createIntent(this, bundle))
+  val bundle = bundleOf(
+    PdfViewerActivity.BUNDLE_LAW_TITLE to lawName,
+    PdfViewerActivity.BUNDLE_PAGES_TO_LOAD to pagesToLoad.toIntArray(),
+    PdfViewerActivity.BUNDLE_IS_DARK_MODE to isInDarkMode
+  )
+  startActivity(PdfViewerActivity.createIntent(this, bundle))
 }
