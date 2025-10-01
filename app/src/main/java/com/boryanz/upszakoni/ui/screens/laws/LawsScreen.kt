@@ -42,6 +42,7 @@ fun LawsScreen(
     onArchivedLawsClicked: () -> Unit,
     onShareAppClicked: () -> Unit,
     onAppUpdateClicked: () -> Unit,
+    onFeedbackFormClicked: () -> Unit
 ) {
     val viewModel = koinViewModel<LawsViewModel>()
     val featureFlagsState by viewModel.featureFlagsState.collectAsStateWithLifecycle()
@@ -56,7 +57,8 @@ fun LawsScreen(
         onArchivedLawsClicked = onArchivedLawsClicked,
         featureFlags = featureFlagsState,
         onShareAppClicked = onShareAppClicked,
-        onAppUpdateClicked = onAppUpdateClicked
+        onAppUpdateClicked = onAppUpdateClicked,
+        onFeedbackFormClicked = onFeedbackFormClicked
     ) {
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
         var searchQuery by remember { mutableStateOf("") }

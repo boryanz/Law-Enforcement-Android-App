@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Timelapse
 import androidx.compose.material.icons.outlined.Info
@@ -43,249 +44,265 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun NavigationDrawer(
-    screenTitle: String,
-    onItemClicked: (NavigationDrawerDestination) -> Unit,
-    onArchivedLawsClicked: () -> Unit,
-    onShareAppClicked: () -> Unit,
-    onAppUpdateClicked: () -> Unit,
-    featureFlags: RemoteConfig? = null,
-    content: @Composable (PaddingValues) -> Unit,
+  screenTitle: String,
+  onItemClicked: (NavigationDrawerDestination) -> Unit,
+  onArchivedLawsClicked: () -> Unit,
+  onShareAppClicked: () -> Unit,
+  onAppUpdateClicked: () -> Unit,
+  onFeedbackFormClicked: () -> Unit,
+  featureFlags: RemoteConfig? = null,
+  content: @Composable (PaddingValues) -> Unit,
 ) {
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val scope = rememberCoroutineScope()
+  val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+  val scope = rememberCoroutineScope()
 
-    BackHandler(enabled = drawerState.isOpen, onBack = {
-        scope.launch {
-            drawerState.close()
-        }
-    })
-
-    ModalNavigationDrawer(
-        drawerContent = {
-            ModalDrawerSheet {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(horizontal = 16.dp)
-                        .verticalScroll(rememberScrollState()),
-                    verticalArrangement = Arrangement.SpaceBetween,
-                ) {
-                    Column {
-                        Spacer.Vertical(12.dp)
-                        Row(
-                            horizontalArrangement = Arrangement.Start,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(
-                                modifier = Modifier
-                                    .padding(start = 12.dp)
-                                    .width(20.dp)
-                                    .height(20.dp),
-                                painter = painterResource(R.drawable.policeman),
-                                contentDescription = null
-                            )
-                            Spacer.Horizontal(8.dp)
-                            Column {
-                                Text(
-                                    text = "УПС",
-                                    modifier = Modifier.padding(horizontal = 8.dp),
-                                    fontWeight = FontWeight.Bold
-                                )
-                                featureFlags?.greetingMessage?.let { message ->
-                                    if (message.isNotBlank()) {
-                                        Text(
-                                            text = message,
-                                            modifier = Modifier.padding(horizontal = 8.dp),
-                                        )
-                                    }
-                                }
-                            }
-                        }
-                        Spacer.Vertical(12.dp)
-                        NavigationDrawerItem(
-                            icon = {
-                                Icon(
-                                    modifier = Modifier
-                                        .height(20.dp)
-                                        .width(20.dp),
-                                    imageVector = Icons.Filled.Timelapse,
-                                    contentDescription = null
-                                )
-                            },
-                            label = { Text(text = "Прекувремени часови") },
-                            selected = false,
-                            onClick = { onItemClicked(NavigationDrawerDestination.bonus_salary_feature) }
-                        )
-                        HorizontalDivider()
-                        NavigationDrawerItem(
-                            icon = {
-                                Icon(
-                                    modifier = Modifier
-                                        .height(20.dp)
-                                        .width(20.dp),
-                                    painter = painterResource(R.drawable.offenses),
-                                    contentDescription = null
-                                )
-                            },
-                            label = { Text(text = "Најчести прекршоци") },
-                            selected = false,
-                            onClick = { onItemClicked(NavigationDrawerDestination.offenses) }
-                        )
-                        HorizontalDivider()
-                        NavigationDrawerItem(
-                            icon = {
-                                Icon(
-                                    modifier = Modifier
-                                        .height(20.dp)
-                                        .width(20.dp),
-                                    painter = painterResource(R.drawable.kriminal),
-                                    contentDescription = null
-                                )
-                            },
-                            label = { Text(text = "Најчести кривични дела") },
-                            selected = false,
-                            onClick = { onItemClicked(NavigationDrawerDestination.crimes) }
-                        )
-                        Spacer.Vertical(14.dp)
-                        NavigationDrawerItem(
-                            icon = {
-                                Icon(
-                                    modifier = Modifier
-                                        .height(20.dp)
-                                        .width(20.dp),
-                                    painter = painterResource(R.drawable.question_solid),
-                                    contentDescription = null
-                                )
-                            },
-                            label = { Text(text = "Прашања за службена белешка") },
-                            selected = false,
-                            onClick = { onItemClicked(NavigationDrawerDestination.writing_guide) }
-                        )
-                        HorizontalDivider()
-                        NavigationDrawerItem(
-                            icon = {
-                                Icon(
-                                    modifier = Modifier
-                                        .height(20.dp)
-                                        .width(20.dp),
-                                    painter = painterResource(R.drawable.phone_solid),
-                                    contentDescription = null
-                                )
-                            },
-                            label = { Text(text = "Броеви од ПС - СВР Скопје") },
-                            selected = false,
-                            onClick = { onItemClicked(NavigationDrawerDestination.phone_numbers) }
-                        )
-                        Spacer.Vertical(14.dp)
-                        NavigationDrawerItem(
-                            icon = {
-                                Icon(
-                                    modifier = Modifier
-                                        .height(20.dp)
-                                        .width(20.dp),
-                                    painter = painterResource(R.drawable.prekrsok),
-                                    contentDescription = null
-                                )
-                            },
-                            label = { Text(text = "Потраги и исчезнати лица") },
-                            selected = false,
-                            onClick = { onItemClicked(NavigationDrawerDestination.wanted_criminals) }
-                        )
-                        if (!featureFlags?.usefulInformations.isNullOrEmpty()) {
-                            HorizontalDivider()
-                            NavigationDrawerItem(
-                                icon = {
-                                    Icon(
-                                        modifier = Modifier
-                                            .height(20.dp)
-                                            .width(20.dp),
-                                        imageVector = Icons.Outlined.Info,
-                                        contentDescription = null
-                                    )
-                                },
-                                label = { Text(text = "Известувања") },
-                                selected = false,
-                                onClick = { onItemClicked(NavigationDrawerDestination.information) }
-                            )
-                        }
-                        HorizontalDivider()
-                        NavigationDrawerItem(
-                            icon = {
-                                Icon(
-                                    modifier = Modifier
-                                        .height(20.dp)
-                                        .width(20.dp),
-                                    imageVector = Icons.Outlined.PeopleOutline,
-                                    contentDescription = null
-                                )
-                            },
-                            label = { Text(text = "Наши партнери") },
-                            selected = false,
-                            onClick = { onItemClicked(NavigationDrawerDestination.partners) }
-                        )
-                        Spacer.Vertical(24.dp)
-                        NavigationDrawerItem(
-                            icon = {
-                                Icon(
-                                    modifier = Modifier
-                                        .height(20.dp)
-                                        .width(20.dp),
-                                    painter = painterResource(R.drawable.vesti),
-                                    contentDescription = null
-                                )
-                            },
-                            label = { Text(text = "Политика за приватност") },
-                            selected = false,
-                            onClick = { onItemClicked(NavigationDrawerDestination.privacy_policy) }
-                        )
-                        if (featureFlags?.isAppUpdateAvailable == true) {
-                            NavigationDrawerItem(
-                                icon = {
-                                    Icon(
-                                        modifier = Modifier
-                                            .height(20.dp)
-                                            .width(20.dp),
-                                        imageVector = Icons.Outlined.SystemUpdate,
-                                        contentDescription = null
-                                    )
-                                },
-                                label = { Text(text = "Ажурирај нова верзија") },
-                                selected = false,
-                                onClick = onAppUpdateClicked
-                            )
-                        }
-                    }
-                }
-            }
-        },
-        drawerState = drawerState
-    ) {
-        UpsScaffold(
-            topBarTitle = { Text(screenTitle) },
-            navigationIcon = {
-                IconButton(onClick = {
-                    scope.launch {
-                        if (drawerState.isClosed) {
-                            drawerState.open()
-                        } else {
-                            drawerState.close()
-                        }
-                    }
-                }) {
-                    Icon(
-                        imageVector = Icons.Default.Menu,
-                        tint = Base100,
-                        contentDescription = "Menu"
-                    )
-                }
-            },
-            trailingIcon = {
-                Share(onClick = onShareAppClicked)
-                Archive(onClick = onArchivedLawsClicked)
-            }
-
-        ) { paddingValues ->
-            content(paddingValues)
-        }
+  BackHandler(enabled = drawerState.isOpen, onBack = {
+    scope.launch {
+      drawerState.close()
     }
+  })
+
+  ModalNavigationDrawer(
+    drawerContent = {
+      ModalDrawerSheet {
+        Column(
+          modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp)
+            .verticalScroll(rememberScrollState()),
+          verticalArrangement = Arrangement.SpaceBetween,
+        ) {
+          Column {
+            Spacer.Vertical(12.dp)
+            Row(
+              horizontalArrangement = Arrangement.Start,
+              verticalAlignment = Alignment.CenterVertically
+            ) {
+              Icon(
+                modifier = Modifier
+                  .padding(start = 12.dp)
+                  .width(20.dp)
+                  .height(20.dp),
+                painter = painterResource(R.drawable.policeman),
+                contentDescription = null
+              )
+              Spacer.Horizontal(8.dp)
+              Column {
+                Text(
+                  text = "УПС",
+                  modifier = Modifier.padding(horizontal = 8.dp),
+                  fontWeight = FontWeight.Bold
+                )
+                featureFlags?.greetingMessage?.let { message ->
+                  if (message.isNotBlank()) {
+                    Text(
+                      text = message,
+                      modifier = Modifier.padding(horizontal = 8.dp),
+                    )
+                  }
+                }
+              }
+            }
+            Spacer.Vertical(12.dp)
+            NavigationDrawerItem(
+              icon = {
+                Icon(
+                  modifier = Modifier
+                    .height(20.dp)
+                    .width(20.dp),
+                  imageVector = Icons.Filled.Timelapse,
+                  contentDescription = null
+                )
+              },
+              label = { Text(text = "Прекувремени часови") },
+              selected = false,
+              onClick = { onItemClicked(NavigationDrawerDestination.bonus_salary_feature) }
+            )
+            HorizontalDivider()
+            NavigationDrawerItem(
+              icon = {
+                Icon(
+                  modifier = Modifier
+                    .height(20.dp)
+                    .width(20.dp),
+                  painter = painterResource(R.drawable.offenses),
+                  contentDescription = null
+                )
+              },
+              label = { Text(text = "Најчести прекршоци") },
+              selected = false,
+              onClick = { onItemClicked(NavigationDrawerDestination.offenses) }
+            )
+            HorizontalDivider()
+            NavigationDrawerItem(
+              icon = {
+                Icon(
+                  modifier = Modifier
+                    .height(20.dp)
+                    .width(20.dp),
+                  painter = painterResource(R.drawable.kriminal),
+                  contentDescription = null
+                )
+              },
+              label = { Text(text = "Најчести кривични дела") },
+              selected = false,
+              onClick = { onItemClicked(NavigationDrawerDestination.crimes) }
+            )
+            Spacer.Vertical(14.dp)
+            NavigationDrawerItem(
+              icon = {
+                Icon(
+                  modifier = Modifier
+                    .height(20.dp)
+                    .width(20.dp),
+                  painter = painterResource(R.drawable.question_solid),
+                  contentDescription = null
+                )
+              },
+              label = { Text(text = "Прашања за службена белешка") },
+              selected = false,
+              onClick = { onItemClicked(NavigationDrawerDestination.writing_guide) }
+            )
+            HorizontalDivider()
+            NavigationDrawerItem(
+              icon = {
+                Icon(
+                  modifier = Modifier
+                    .height(20.dp)
+                    .width(20.dp),
+                  painter = painterResource(R.drawable.phone_solid),
+                  contentDescription = null
+                )
+              },
+              label = { Text(text = "Броеви од ПС - СВР Скопје") },
+              selected = false,
+              onClick = { onItemClicked(NavigationDrawerDestination.phone_numbers) }
+            )
+            Spacer.Vertical(14.dp)
+            NavigationDrawerItem(
+              icon = {
+                Icon(
+                  modifier = Modifier
+                    .height(20.dp)
+                    .width(20.dp),
+                  painter = painterResource(R.drawable.prekrsok),
+                  contentDescription = null
+                )
+              },
+              label = { Text(text = "Потраги и исчезнати лица") },
+              selected = false,
+              onClick = { onItemClicked(NavigationDrawerDestination.wanted_criminals) }
+            )
+            if (!featureFlags?.usefulInformations.isNullOrEmpty()) {
+              HorizontalDivider()
+              NavigationDrawerItem(
+                icon = {
+                  Icon(
+                    modifier = Modifier
+                      .height(20.dp)
+                      .width(20.dp),
+                    imageVector = Icons.Outlined.Info,
+                    contentDescription = null
+                  )
+                },
+                label = { Text(text = "Известувања") },
+                selected = false,
+                onClick = { onItemClicked(NavigationDrawerDestination.information) }
+              )
+            }
+            HorizontalDivider()
+            NavigationDrawerItem(
+              icon = {
+                Icon(
+                  modifier = Modifier
+                    .height(20.dp)
+                    .width(20.dp),
+                  imageVector = Icons.Outlined.PeopleOutline,
+                  contentDescription = null
+                )
+              },
+              label = { Text(text = "Наши партнери") },
+              selected = false,
+              onClick = { onItemClicked(NavigationDrawerDestination.partners) }
+            )
+            Spacer.Vertical(24.dp)
+            NavigationDrawerItem(
+              icon = {
+                Icon(
+                  modifier = Modifier
+                    .height(20.dp)
+                    .width(20.dp),
+                  imageVector = Icons.Default.Edit,
+                  contentDescription = null
+                )
+              },
+              label = { Text(text = "Пријави грешка") },
+              selected = false,
+              onClick = onFeedbackFormClicked
+            )
+            Spacer.Vertical(24.dp)
+            NavigationDrawerItem(
+              icon = {
+                Icon(
+                  modifier = Modifier
+                    .height(20.dp)
+                    .width(20.dp),
+                  painter = painterResource(R.drawable.vesti),
+                  contentDescription = null
+                )
+              },
+              label = { Text(text = "Политика за приватност") },
+              selected = false,
+              onClick = { onItemClicked(NavigationDrawerDestination.privacy_policy) }
+            )
+            if (featureFlags?.isAppUpdateAvailable == true) {
+              NavigationDrawerItem(
+                icon = {
+                  Icon(
+                    modifier = Modifier
+                      .height(20.dp)
+                      .width(20.dp),
+                    imageVector = Icons.Outlined.SystemUpdate,
+                    contentDescription = null
+                  )
+                },
+                label = { Text(text = "Ажурирај нова верзија") },
+                selected = false,
+                onClick = onAppUpdateClicked
+              )
+            }
+          }
+        }
+      }
+    },
+    drawerState = drawerState
+  ) {
+    UpsScaffold(
+      topBarTitle = { Text(screenTitle) },
+      navigationIcon = {
+        IconButton(onClick = {
+          scope.launch {
+            if (drawerState.isClosed) {
+              drawerState.open()
+            } else {
+              drawerState.close()
+            }
+          }
+        }) {
+          Icon(
+            imageVector = Icons.Default.Menu,
+            tint = Base100,
+            contentDescription = "Menu"
+          )
+        }
+      },
+      trailingIcon = {
+        Share(onClick = onShareAppClicked)
+        Archive(onClick = onArchivedLawsClicked)
+      }
+
+    ) { paddingValues ->
+      content(paddingValues)
+    }
+  }
 }
