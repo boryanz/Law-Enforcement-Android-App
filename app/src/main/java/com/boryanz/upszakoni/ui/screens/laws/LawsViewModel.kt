@@ -32,9 +32,7 @@ class LawsViewModel(
                 is ScreenAction.LawSwiped -> {
                     SharedPrefsDao.archiveLaw(event.lawName)
                     _uiState.update {
-                        it.copy(
-                            laws = uiState.value.laws.filterAvailableLaws()
-                        )
+                        it.copy(laws = uiState.value.laws.filterAvailableLaws())
                     }
                 }
 
