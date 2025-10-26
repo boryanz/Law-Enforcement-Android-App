@@ -1,11 +1,9 @@
 package com.boryanz.upszakoni.ui.navigation.navgraph.main
 
 import android.content.Context
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
-import androidx.core.os.bundleOf
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -48,7 +46,6 @@ import com.boryanz.upszakoni.ui.screens.crimequestions.GoldenCrimeQuestionsScree
 import com.boryanz.upszakoni.ui.screens.informations.InformationScreen
 import com.boryanz.upszakoni.ui.screens.laws.LawsScreen
 import com.boryanz.upszakoni.ui.screens.partners.PartnersScreen
-import com.boryanz.upszakoni.ui.screens.pdfviewer.PdfViewerActivity
 import com.boryanz.upszakoni.ui.screens.phonenumbers.PhoneNumbersScreen
 import com.boryanz.upszakoni.ui.screens.policeauthorities.PoliceAuthoritiesScreen
 import com.boryanz.upszakoni.ui.screens.privacypolicy.PrivacyPolicyAcceptanceScreen
@@ -70,7 +67,6 @@ fun NavigationGraph(
 ) {
   val context = LocalContext.current
   val sharedPrefsDao = remember { SharedPrefsDao }
-  val isInDarkMode = isSystemInDarkTheme()
   NavHost(
     navController = navHostController,
     startDestination = if (sharedPrefsDao.isPrivacyPolicyAccepted()) LawsDestination else PrivacyPolicyAcceptanceDestination,
@@ -90,11 +86,7 @@ fun NavigationGraph(
         title = "Прекршоци",
         commonCrimesItems = offensesItems,
         onCrimeClicked = { lawName, pagesToLoad ->
-          context.navigateToInternalPdfViewer(
-            lawName = lawName,
-            pagesToLoad = pagesToLoad,
-            isInDarkMode = isInDarkMode
-          )
+          /* TODO */
         },
         onBackClicked = { navHostController.navigateUp() }
       )
@@ -104,13 +96,7 @@ fun NavigationGraph(
       CommonOffensesAndCrimes(
         title = "Кривични дела",
         commonCrimesItems = crimesItems,
-        onCrimeClicked = { lawName, pagesToLoad ->
-          context.navigateToInternalPdfViewer(
-            lawName = lawName,
-            pagesToLoad = pagesToLoad,
-            isInDarkMode = isInDarkMode
-          )
-        },
+        onCrimeClicked = { _, _ ->  /* TODO */ },
         onBackClicked = { navHostController.navigateUp() }
       )
     }
@@ -158,7 +144,7 @@ fun NavigationGraph(
           navHostController.navigateToDrawerDestination(navigationDrawerDestination)
         },
         onLawClick = { lawName ->
-          openPdfLaw(lawName, isInDarkMode, context)
+          openPdfLaw(lawName, context)
         },
         onArchivedLawsClicked = {
           navHostController.navigate(ArchivedLawsDestination)
@@ -176,7 +162,7 @@ fun NavigationGraph(
 
     composable<ArchivedLawsDestination> {
       ArchivedLawsScreen(
-        onItemClick = { lawName -> openPdfLaw(lawName, isInDarkMode, context) },
+        onItemClick = { lawName -> openPdfLaw(lawName, context) },
         onBackClicked = { navHostController.navigateUp() }
       )
     }
@@ -193,17 +179,10 @@ fun NavigationGraph(
 
 private fun openPdfLaw(
   lawName: String,
-  isInDarkMode: Boolean,
   context: Context
 ) {
-  val bundle = bundleOf(
-    PdfViewerActivity.BUNDLE_LAW_TITLE to lawName,
-    PdfViewerActivity.BUNDLE_IS_DARK_MODE to isInDarkMode
-  )
   if (supportExternalPdfReader(context)) {
     openPdfWithExternalReader(context, lawName)
-  } else {
-    context.startActivity(PdfViewerActivity.createIntent(context, bundle))
   }
 }
 
@@ -239,18 +218,4 @@ fun NavHostController.navigateToDrawerDestination(navigationDrawerDestination: N
     information -> navigate(InformationScreenDestination)
     partners -> navigate(PartnersDestination)
   }
-}
-
-
-fun Context.navigateToInternalPdfViewer(
-  lawName: String,
-  pagesToLoad: List<Int>,
-  isInDarkMode: Boolean
-) {
-  val bundle = bundleOf(
-    PdfViewerActivity.BUNDLE_LAW_TITLE to lawName,
-    PdfViewerActivity.BUNDLE_PAGES_TO_LOAD to pagesToLoad.toIntArray(),
-    PdfViewerActivity.BUNDLE_IS_DARK_MODE to isInDarkMode
-  )
-  startActivity(PdfViewerActivity.createIntent(this, bundle))
 }

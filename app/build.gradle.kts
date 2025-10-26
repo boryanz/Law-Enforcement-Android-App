@@ -16,8 +16,8 @@ android {
         applicationId = "com.boryanz.upszakoni"
         minSdk = 24
         targetSdk = 35
-        versionCode = 14
-        versionName = "1.2.5"
+        versionCode = 16
+        versionName = "1.2.7"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -64,7 +64,7 @@ dependencies {
 //    implementation(libs.koin.bom)
 //    implementation(libs.koin.android)
     ksp(libs.room.compiler)
-    implementation(libs.android.pdf.viewer)
+    //implementation(libs.android.pdf.viewer)
     implementation(libs.androidx.custom.tabs)
     implementation(libs.koin.androidx.compose)
     implementation(libs.androidx.compose.material)

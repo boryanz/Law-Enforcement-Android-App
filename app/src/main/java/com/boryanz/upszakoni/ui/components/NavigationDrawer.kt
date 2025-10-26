@@ -178,21 +178,7 @@ fun NavigationDrawer(
               selected = false,
               onClick = { onItemClicked(NavigationDrawerDestination.phone_numbers) }
             )
-            Spacer.Vertical(14.dp)
-            NavigationDrawerItem(
-              icon = {
-                Icon(
-                  modifier = Modifier
-                    .height(20.dp)
-                    .width(20.dp),
-                  painter = painterResource(R.drawable.prekrsok),
-                  contentDescription = null
-                )
-              },
-              label = { Text(text = "Потраги и исчезнати лица") },
-              selected = false,
-              onClick = { onItemClicked(NavigationDrawerDestination.wanted_criminals) }
-            )
+            HorizontalDivider()
             if (!featureFlags?.usefulInformations.isNullOrEmpty()) {
               HorizontalDivider()
               NavigationDrawerItem(
@@ -210,7 +196,7 @@ fun NavigationDrawer(
                 onClick = { onItemClicked(NavigationDrawerDestination.information) }
               )
             }
-            HorizontalDivider()
+            Spacer.Vertical(24.dp)
             NavigationDrawerItem(
               icon = {
                 Icon(
@@ -225,22 +211,7 @@ fun NavigationDrawer(
               selected = false,
               onClick = { onItemClicked(NavigationDrawerDestination.partners) }
             )
-            Spacer.Vertical(24.dp)
-            NavigationDrawerItem(
-              icon = {
-                Icon(
-                  modifier = Modifier
-                    .height(20.dp)
-                    .width(20.dp),
-                  imageVector = Icons.Default.Edit,
-                  contentDescription = null
-                )
-              },
-              label = { Text(text = "Пријави грешка") },
-              selected = false,
-              onClick = onFeedbackFormClicked
-            )
-            Spacer.Vertical(24.dp)
+            HorizontalDivider()
             NavigationDrawerItem(
               icon = {
                 Icon(
@@ -255,7 +226,23 @@ fun NavigationDrawer(
               selected = false,
               onClick = { onItemClicked(NavigationDrawerDestination.privacy_policy) }
             )
+            HorizontalDivider()
+            NavigationDrawerItem(
+              icon = {
+                Icon(
+                  modifier = Modifier
+                    .height(20.dp)
+                    .width(20.dp),
+                  imageVector = Icons.Default.Edit,
+                  contentDescription = null
+                )
+              },
+              label = { Text(text = "Пријави грешка") },
+              selected = false,
+              onClick = onFeedbackFormClicked
+            )
             if (featureFlags?.isAppUpdateAvailable == true) {
+              HorizontalDivider()
               NavigationDrawerItem(
                 icon = {
                   Icon(

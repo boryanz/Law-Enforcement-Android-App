@@ -54,7 +54,7 @@ fun CommonOffensesAndCrimes(
                             isEnabled = true,
                             title = item.title,
                             description = item.description,
-                            onClick = { onCrimeClicked(item.lawName, item.pagesToLoad) }
+                            onClick = { /* TODO */ }
                         )
                         Spacer(modifier = Modifier.padding(vertical = 4.dp))
                     }
