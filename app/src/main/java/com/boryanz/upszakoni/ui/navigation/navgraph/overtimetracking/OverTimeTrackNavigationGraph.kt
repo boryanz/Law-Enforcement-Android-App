@@ -12,7 +12,6 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.boryanz.upszakoni.data.model.TitleItem
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
-import com.boryanz.upszakoni.domain.errorhandling.fold
 import com.boryanz.upszakoni.ui.navigation.destinations.BonusSalaryDashboardDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.NewOvertimeInputDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.NonWorkingDaysInfoDestination
