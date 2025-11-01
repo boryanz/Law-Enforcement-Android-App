@@ -22,13 +22,10 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
-  // add your dependencies here
-  //  single { get<KataRestClient>().createService(com.boryanz.upszakoni.data.remote.restapi.KataRestApi::class.java) }
-
   factory { GenerateDaysInMonthsUseCase(get()) }
   single<BonusSalaryRepository> { BonusSalaryRepositoryImpl(androidContext()) }
   single { RemoteConfigRepository() }
-  factory <LawsUseCase>{ GetLawsUseCase(androidContext()) }
+  factory<LawsUseCase> { GetLawsUseCase(androidContext()) }
   viewModel { ArchivedLawsViewModel(get()) }
   viewModel { BonusSalaryParametersViewModel(get()) }
   viewModel { MigrationProposalViewModel(get()) }
