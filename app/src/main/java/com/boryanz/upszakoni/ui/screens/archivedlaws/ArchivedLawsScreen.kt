@@ -19,81 +19,81 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.boryanz.upszakoni.ui.components.Icons
 import com.boryanz.upszakoni.ui.components.Spacer
 import com.boryanz.upszakoni.ui.components.SwipeToDismiss
 import com.boryanz.upszakoni.ui.components.TitleItem
 import com.boryanz.upszakoni.ui.components.UpsScaffold
 import com.boryanz.upszakoni.ui.screens.common.ScreenAction
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ArchivedLawsScreen(
-    onItemClick: (String) -> Unit,
-    onBackClicked: () -> Unit,
-    viewModel: ArchivedLawsViewModel = viewModel()
+  onItemClick: (String) -> Unit,
+  onBackClicked: () -> Unit,
 ) {
-    val context = LocalContext.current
-    LaunchedEffect(Unit) {
-        viewModel.onUiEvent(ScreenAction.GetLaws(context))
-    }
-    UpsScaffold(
-        topBarTitle = { Text(text = "Архива на закони") },
-        navigationIcon = {
-            Icons.Back(onClick = onBackClicked)
-        },
-    ) { paddingValues ->
-        val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-        val lazyScrollState = rememberLazyListState()
+  val viewModel = koinViewModel<ArchivedLawsViewModel>()
+  val context = LocalContext.current
+  LaunchedEffect(Unit) {
+    viewModel.onUiEvent(ScreenAction.GetLaws)
+  }
+  UpsScaffold(
+    topBarTitle = { Text(text = "Архива на закони") },
+    navigationIcon = {
+      Icons.Back(onClick = onBackClicked)
+    },
+  ) { paddingValues ->
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val lazyScrollState = rememberLazyListState()
 
-        if (uiState.laws.isEmpty()) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-                    .padding(8.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            )
-            {
-                Text("Нема додадени закони во архивата")
-            }
-        } else {
-            LazyColumn(
-                modifier = Modifier
-                    .padding(paddingValues)
-                    .padding(8.dp)
-            ) {
-                items(
-                    items = uiState.laws,
-                    key = { it }) {
-                    SwipeToDismiss(
-                        content = {
-                            TitleItem(
-                                isEnabled = true,
-                                title = it,
-                                onClick = { onItemClick("$it.pdf") }
-                            )
-                        },
-                        dismissIcon = {
-                            Icon(
-                                imageVector = androidx.compose.material.icons.Icons.Default.AddHome,
-                                contentDescription = "Home"
-                            )
-                        },
-                        onItemSwiped = {
-                            viewModel.onUiEvent(ScreenAction.LawSwiped(context, it))
-                            Toast.makeText(
-                                /* context = */ context,
-                                /* text = */ "Законот вратен на почетна",
-                                /* duration = */ Toast.LENGTH_SHORT
-                            ).show()
-                        },
-                        enableDismissing = !lazyScrollState.isScrollInProgress
-                    )
-                    Spacer.Vertical(2.dp)
-                }
-            }
+    if (uiState.laws.isEmpty()) {
+      Column(
+        modifier = Modifier
+          .fillMaxSize()
+          .padding(paddingValues)
+          .padding(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+      )
+      {
+        Text("Нема додадени закони во архивата")
+      }
+    } else {
+      LazyColumn(
+        modifier = Modifier
+          .padding(paddingValues)
+          .padding(8.dp)
+      ) {
+        items(
+          items = uiState.laws,
+          key = { it }) {
+          SwipeToDismiss(
+            content = {
+              TitleItem(
+                isEnabled = true,
+                title = it,
+                onClick = { onItemClick("$it.pdf") }
+              )
+            },
+            dismissIcon = {
+              Icon(
+                imageVector = androidx.compose.material.icons.Icons.Default.AddHome,
+                contentDescription = "Home"
+              )
+            },
+            onItemSwiped = {
+              viewModel.onUiEvent(ScreenAction.LawSwiped(it))
+              Toast.makeText(
+                /* context = */ context,
+                /* text = */ "Законот вратен на почетна",
+                /* duration = */ Toast.LENGTH_SHORT
+              ).show()
+            },
+            enableDismissing = !lazyScrollState.isScrollInProgress
+          )
+          Spacer.Vertical(2.dp)
         }
+      }
     }
+  }
 }

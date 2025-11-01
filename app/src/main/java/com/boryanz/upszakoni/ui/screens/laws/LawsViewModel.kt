@@ -2,7 +2,7 @@ package com.boryanz.upszakoni.ui.screens.laws
 
 import androidx.lifecycle.viewModelScope
 import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsDao
-import com.boryanz.upszakoni.domain.GetLawsUseCase
+import com.boryanz.upszakoni.domain.LawsUseCase
 import com.boryanz.upszakoni.domain.remoteconfig.RemoteConfig
 import com.boryanz.upszakoni.domain.remoteconfig.RemoteConfigRepository
 import com.boryanz.upszakoni.ui.screens.common.ScreenAction
@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class LawsViewModel(
-    private val getLawsUseCase: GetLawsUseCase,
+    private val getLawsUseCase: LawsUseCase,
     private val remoteConfigRepository: RemoteConfigRepository,
 ) : UpsViewModel<ScreenAction>() {
 
@@ -37,7 +37,7 @@ class LawsViewModel(
                 }
 
                 is ScreenAction.GetLaws -> {
-                    val laws = getLawsUseCase(event.context).map { it.removePdfExtension() }
+                    val laws = getLawsUseCase().map { it.removePdfExtension() }
                     val availableLaws = laws.filterAvailableLaws()
                     _uiState.update { UiState(availableLaws) }
                 }
