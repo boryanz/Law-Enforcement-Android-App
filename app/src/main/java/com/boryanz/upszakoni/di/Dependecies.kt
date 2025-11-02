@@ -22,6 +22,10 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
+
+
+
+
   factory { GenerateDaysInMonthsUseCase(get()) }
   single<BonusSalaryRepository> { BonusSalaryRepositoryImpl(androidContext()) }
   single { RemoteConfigRepository() }
