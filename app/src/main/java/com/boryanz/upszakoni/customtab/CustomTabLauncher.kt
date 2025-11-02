@@ -1,8 +1,8 @@
 package com.boryanz.upszakoni.customtab
 
 import android.content.Context
-import android.net.Uri
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.net.toUri
 
 class CustomTabLauncher(
     private val showTitle: Boolean = false,
@@ -15,6 +15,6 @@ class CustomTabLauncher(
             setUrlBarHidingEnabled(setUrlBarHiddenEnabled)
         }.build()
 
-        customTabIntent.launchUrl(context, Uri.parse(url))
+        customTabIntent.launchUrl(context, url.toUri())
     }
 }
