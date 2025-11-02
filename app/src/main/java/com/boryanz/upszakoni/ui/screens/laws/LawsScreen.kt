@@ -37,79 +37,83 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun LawsScreen(
-    onLawClick: (String) -> Unit,
-    onItemClick: (NavigationDrawerDestination) -> Unit,
-    onArchivedLawsClicked: () -> Unit,
-    onShareAppClicked: () -> Unit,
-    onAppUpdateClicked: () -> Unit,
-    onFeedbackFormClicked: () -> Unit
+  onLawClick: (String) -> Unit,
+  onItemClick: (NavigationDrawerDestination) -> Unit,
+  onArchivedLawsClicked: () -> Unit,
+  onShareAppClicked: () -> Unit,
+  onAppUpdateClicked: () -> Unit,
+  onFeedbackFormClicked: () -> Unit
 ) {
-    val viewModel = koinViewModel<LawsViewModel>()
-    val featureFlagsState by viewModel.featureFlagsState.collectAsStateWithLifecycle()
+  val viewModel = koinViewModel<LawsViewModel>()
+  val featureFlagsState by viewModel.featureFlagsState.collectAsStateWithLifecycle()
 
-    val context = LocalContext.current
-    LaunchedEffect(Unit) {
-        viewModel.onUiEvent(ScreenAction.GetLaws(context))
-    }
-    NavigationDrawer(
-        screenTitle = "Закони",
-        onItemClicked = { onItemClick(it) },
-        onArchivedLawsClicked = onArchivedLawsClicked,
-        featureFlags = featureFlagsState,
-        onShareAppClicked = onShareAppClicked,
-        onAppUpdateClicked = onAppUpdateClicked,
-        onFeedbackFormClicked = onFeedbackFormClicked
+  val context = LocalContext.current
+  LaunchedEffect(Unit) {
+    viewModel.onUiEvent(ScreenAction.GetLaws)
+  }
+  NavigationDrawer(
+    screenTitle = "Закони",
+    onItemClicked = { onItemClick(it) },
+    onArchivedLawsClicked = onArchivedLawsClicked,
+    featureFlags = featureFlagsState,
+    onShareAppClicked = onShareAppClicked,
+    onAppUpdateClicked = onAppUpdateClicked,
+    onFeedbackFormClicked = onFeedbackFormClicked
+  ) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    var searchQuery by remember { mutableStateOf("") }
+    val lazyListState = rememberLazyListState()
+
+    Column(
+      modifier = Modifier
+        .fillMaxSize()
+        .padding(it)
+        .padding(8.dp),
+      horizontalAlignment = Alignment.CenterHorizontally,
+      verticalArrangement = Arrangement.Top
     ) {
-        val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-        var searchQuery by remember { mutableStateOf("") }
-        val lazyListState = rememberLazyListState()
-
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(it)
-                .padding(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top
-        ) {
-            OutlinedTextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = searchQuery,
-                onValueChange = {
-                    searchQuery = it
-                },
-                label = { Text("Пребарувај") },
-                trailingIcon = { com.boryanz.upszakoni.ui.components.Icons.Base(imageVector = Icons.Outlined.Search, onClick = {})}
-            )
-            Spacer(modifier = Modifier.padding(vertical = 4.dp))
-            LazyColumn {
-                items(
-                    uiState.laws.filter { it.contains(searchQuery, ignoreCase = true) },
-                    key = { it }) {
-                    SwipeToDismiss(
-                        content = {
-                            TitleItem(
-                                isEnabled = true,
-                                title = it,
-                                onClick = { onLawClick("$it.pdf") })
-                        },
-                        onItemSwiped = {
-                            viewModel.onUiEvent(ScreenAction.LawSwiped(context = context, it))
-                            Toast.makeText(context, "Законот ставен во архива", Toast.LENGTH_SHORT)
-                                .show()
-
-                        },
-                        dismissIcon = {
-                            Icon(
-                                imageVector = Icons.Default.Archive,
-                                contentDescription = "Archive"
-                            )
-                        },
-                        enableDismissing = !lazyListState.isScrollInProgress
-                    )
-                    Spacer.Vertical(2.dp)
-                }
-            }
+      OutlinedTextField(
+        modifier = Modifier.fillMaxWidth(),
+        value = searchQuery,
+        onValueChange = {
+          searchQuery = it
+        },
+        label = { Text("Пребарувај") },
+        trailingIcon = {
+          com.boryanz.upszakoni.ui.components.Icons.Base(
+            imageVector = Icons.Outlined.Search,
+            onClick = {})
         }
+      )
+      Spacer(modifier = Modifier.padding(vertical = 4.dp))
+      LazyColumn {
+        items(
+          uiState.laws.filter { it.contains(searchQuery, ignoreCase = true) },
+          key = { it }) {
+          SwipeToDismiss(
+            content = {
+              TitleItem(
+                isEnabled = true,
+                title = it,
+                onClick = { onLawClick("$it.pdf") })
+            },
+            onItemSwiped = {
+              viewModel.onUiEvent(ScreenAction.LawSwiped(it))
+              Toast.makeText(context, "Законот ставен во архива", Toast.LENGTH_SHORT)
+                .show()
+
+            },
+            dismissIcon = {
+              Icon(
+                imageVector = Icons.Default.Archive,
+                contentDescription = "Archive"
+              )
+            },
+            enableDismissing = !lazyListState.isScrollInProgress
+          )
+          Spacer.Vertical(2.dp)
+        }
+      }
     }
+  }
 }

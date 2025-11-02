@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.boryanz.upszakoni.data.local.database.model.DayInMonth
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
-import com.boryanz.upszakoni.domain.errorhandling.fold
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update

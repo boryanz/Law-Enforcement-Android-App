@@ -14,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId = "com.boryanz.upszakoni"
-        minSdk = 24
+        minSdk = 29
         targetSdk = 35
         versionCode = 16
         versionName = "1.2.7"
@@ -41,6 +41,15 @@ android {
     buildFeatures {
         compose = true
     }
+
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            merges += "META-INF/LICENSE.md"
+            merges += "META-INF/LICENSE-notice.md"
+        }
+    }
+
 }
 
 dependencies {
@@ -55,7 +64,6 @@ dependencies {
     implementation(libs.room.ktx)
     implementation(libs.retrofit.core)
     implementation(libs.firebase.config)
-    testImplementation(libs.junit.jupiter)
 //    implementation(libs.retrofit.core)
 //    implementation(libs.retrofit.bom)
 //    implementation(libs.coil.kt)

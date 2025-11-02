@@ -1,4 +1,4 @@
-package com.boryanz.upszakoni.domain.model
+package com.boryanz.upszakoni.data.model
 
 /**
  * External model mapped from database model
