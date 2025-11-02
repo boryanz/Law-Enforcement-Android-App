@@ -1,5 +1,6 @@
-package com.boryanz.upszakoni
+package com.boryanz.upszakoni.overtime
 
+import com.boryanz.upszakoni.MainDispatcherRule
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
 import com.boryanz.upszakoni.fakes.FakeBonusSalaryRepository
 import com.boryanz.upszakoni.fakes.Treshold

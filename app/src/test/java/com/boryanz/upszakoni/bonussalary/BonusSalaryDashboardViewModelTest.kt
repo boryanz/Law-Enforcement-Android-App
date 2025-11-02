@@ -1,5 +1,6 @@
-package com.boryanz.upszakoni
+package com.boryanz.upszakoni.bonussalary
 
+import com.boryanz.upszakoni.MainDispatcherRule
 import com.boryanz.upszakoni.domain.remoteconfig.RemoteConfigRepository
 import com.boryanz.upszakoni.fakes.FakeBonusSalaryRepository
 import com.boryanz.upszakoni.fakes.Treshold

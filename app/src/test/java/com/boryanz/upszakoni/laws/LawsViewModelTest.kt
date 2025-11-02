@@ -1,5 +1,6 @@
-package com.boryanz.upszakoni
+package com.boryanz.upszakoni.laws
 
+import com.boryanz.upszakoni.MainDispatcherRule
 import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsDao
 import com.boryanz.upszakoni.domain.remoteconfig.RemoteConfigRepository
 import com.boryanz.upszakoni.fakes.FakeLawsUseCase

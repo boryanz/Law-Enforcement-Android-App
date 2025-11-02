@@ -1,5 +1,6 @@
-package com.boryanz.upszakoni
+package com.boryanz.upszakoni.bonussalary
 
+import com.boryanz.upszakoni.MainDispatcherRule
 import com.boryanz.upszakoni.data.local.database.model.BonusSalaryTreshold
 import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsDao
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository

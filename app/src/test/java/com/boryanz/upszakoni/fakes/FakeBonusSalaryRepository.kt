@@ -4,6 +4,7 @@ import com.boryanz.upszakoni.data.local.database.model.BonusSalaryTreshold
 import com.boryanz.upszakoni.data.local.database.model.DayInMonth
 import com.boryanz.upszakoni.data.local.database.model.MonthlyStats
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
+import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BONUS_SALARY_TRESHOLD
 
 sealed interface Treshold {
   data object HaveTreshold : Treshold
@@ -26,7 +27,7 @@ class FakeBonusSalaryRepository(
       Treshold.HaveTreshold -> {
         Result.success(
           BonusSalaryTreshold(
-            id = "bonus_salary_treshold",
+            id = BONUS_SALARY_TRESHOLD,
             minimumOvertimeHours = "150",
             maximumAbsenceDays = "21"
           )
