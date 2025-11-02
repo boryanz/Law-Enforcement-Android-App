@@ -22,6 +22,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Ups zakoni 2"
+rootProject.name = "Law Enforcement App"
 include(":app")
  
