@@ -85,7 +85,6 @@ class OverTimeInputViewModel(
                                 )
                             )
                         }
-
                     },
                     onFailure = {
                         _uiState.emit(getDefaultUiState())

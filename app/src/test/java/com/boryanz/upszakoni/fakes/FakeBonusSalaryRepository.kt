@@ -12,7 +12,8 @@ sealed interface Treshold {
 }
 
 class FakeBonusSalaryRepository(
-  private val treshold: Treshold
+  private val treshold: Treshold = Treshold.HaveTreshold,
+  private val shouldFetchMonthlyStatsFail: Boolean = false,
 ) : BonusSalaryRepository {
 
   override suspend fun insertTreshold(bonusSalaryTreshold: BonusSalaryTreshold): Result<Unit> {
@@ -59,7 +60,9 @@ class FakeBonusSalaryRepository(
   }
 
   override suspend fun getMonthlyStats(month: String): Result<MonthlyStats?> {
-    TODO("Not yet implemented")
+    return if (shouldFetchMonthlyStatsFail.not()) {
+      Result.success(monthlyStats.find { it.month == month })
+    } else Result.failure(Exception())
   }
 
   override suspend fun deleteAllAndGenerateDefaultData() {
