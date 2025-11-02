@@ -47,7 +47,7 @@ class FakeBonusSalaryRepository(
   }
 
   override suspend fun getYearlyStatistics(): Result<List<MonthlyStats>> {
-    TODO("Not yet implemented")
+    return Result.success(monthlyStats)
   }
 
   override suspend fun getAllDailyStatsByMonth(month: String): Result<List<DayInMonth>> {
@@ -66,17 +66,96 @@ class FakeBonusSalaryRepository(
     TODO("Not yet implemented")
   }
 
-  override fun getAverageHoursPerMonth(): Int {
-    TODO("Not yet implemented")
-  }
+  override fun getAverageHoursPerMonth(): Int = 10
 
-  override fun getMinimumRequiredHours(): Int {
-    TODO("Not yet implemented")
-  }
+  override fun getMinimumRequiredHours(): Int = 151
 
-  override fun getMaximumPaidAbsenceDays(): Int {
-    TODO("Not yet implemented")
-  }
+  override fun getMaximumPaidAbsenceDays(): Int = 21
 
-
+  private val monthlyStats = listOf(
+    MonthlyStats(
+      month = "Јануари",
+      monthOrder = 1,
+      currentOvertimeHours = "10",
+      currentAbsenceDays = "0",
+      currentPaidAbsenceDays = "0"
+    ),
+    MonthlyStats(
+      month = "Февруари",
+      monthOrder = 2,
+      currentOvertimeHours = "10",
+      currentAbsenceDays = "0",
+      currentPaidAbsenceDays = "0"
+    ),
+    MonthlyStats(
+      month = "Март",
+      monthOrder = 3,
+      currentOvertimeHours = "10",
+      currentAbsenceDays = "0",
+      currentPaidAbsenceDays = "0"
+    ),
+    MonthlyStats(
+      month = "Април",
+      monthOrder = 4,
+      currentOvertimeHours = "10",
+      currentAbsenceDays = "0",
+      currentPaidAbsenceDays = "0"
+    ),
+    MonthlyStats(
+      month = "Мај",
+      monthOrder = 5,
+      currentOvertimeHours = "10",
+      currentAbsenceDays = "0",
+      currentPaidAbsenceDays = "0"
+    ),
+    MonthlyStats(
+      month = "Јуни",
+      monthOrder = 6,
+      currentOvertimeHours = "10",
+      currentAbsenceDays = "0",
+      currentPaidAbsenceDays = "0"
+    ),
+    MonthlyStats(
+      month = "Јули",
+      monthOrder = 7,
+      currentOvertimeHours = "10",
+      currentAbsenceDays = "0",
+      currentPaidAbsenceDays = "0"
+    ),
+    MonthlyStats(
+      month = "Август",
+      monthOrder = 8,
+      currentOvertimeHours = "10",
+      currentAbsenceDays = "0",
+      currentPaidAbsenceDays = "0"
+    ),
+    MonthlyStats(
+      month = "Септември",
+      monthOrder = 9,
+      currentOvertimeHours = "10",
+      currentAbsenceDays = "0",
+      currentPaidAbsenceDays = "0"
+    ),
+    MonthlyStats(
+      month = "Октомври",
+      monthOrder = 10,
+      currentOvertimeHours = "10",
+      currentAbsenceDays = "0",
+      currentPaidAbsenceDays = "0"
+    ),
+    MonthlyStats(
+      month = "Ноември",
+      monthOrder = 11,
+      currentOvertimeHours = "10",
+      currentAbsenceDays = "0",
+      currentPaidAbsenceDays = "0"
+    ),
+    MonthlyStats(
+      month = "Декември",
+      monthOrder = 12,
+      currentOvertimeHours = "10",
+      currentAbsenceDays = "0",
+      currentPaidAbsenceDays = "0"
+    )
+  )
 }

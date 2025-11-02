@@ -9,6 +9,7 @@ import io.mockk.coEvery
 import io.mockk.junit4.MockKRule
 import io.mockk.mockkObject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -41,6 +42,7 @@ class ArchivedViewModelTest {
 
     //When
     viewmodel.onUiEvent(ScreenAction.GetLaws)
+    advanceUntilIdle()
 
     //Then
     assertEquals(expectedUiState, viewmodel.uiState.value)
@@ -60,6 +62,7 @@ class ArchivedViewModelTest {
 
     //When
     viewmodel.onUiEvent(ScreenAction.GetLaws)
+    advanceUntilIdle()
 
     //Then
     assertEquals(
@@ -72,6 +75,7 @@ class ArchivedViewModelTest {
 
     //When
     viewmodel.onUiEvent(ScreenAction.LawSwiped(swipedLaw))
+    advanceUntilIdle()
 
     //Then
     assertEquals(expectedAfterSwipe, viewmodel.uiState.value)

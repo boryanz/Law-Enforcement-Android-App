@@ -11,6 +11,7 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.junit4.MockKRule
 import io.mockk.mockkObject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -49,6 +50,7 @@ class LawsViewModelTest {
 
     //When
     viewmodel.onUiEvent(ScreenAction.GetLaws)
+    advanceUntilIdle()
 
     //Then
     assertEquals(expectedUiState, viewmodel.uiState.value)
@@ -65,6 +67,7 @@ class LawsViewModelTest {
 
     //When
     viewmodel.onUiEvent(ScreenAction.GetLaws)
+    advanceUntilIdle()
 
     //Then
     assertEquals(
@@ -77,6 +80,7 @@ class LawsViewModelTest {
 
     //When
     viewmodel.onUiEvent(ScreenAction.LawSwiped(swipedLaw))
+    advanceUntilIdle()
 
     //Then
     assertEquals(expectedAfterSwipe, viewmodel.uiState.value)

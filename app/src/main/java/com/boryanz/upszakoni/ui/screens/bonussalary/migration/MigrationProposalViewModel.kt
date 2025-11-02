@@ -8,7 +8,6 @@ import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
 import com.boryanz.upszakoni.ui.navigation.destinations.BonusSalaryDashboardDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.ParametersDestination
 import com.boryanz.upszakoni.ui.screens.bonussalary.migration.BonusSalaryGraphUiAction.MigrationAccepted
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -44,7 +43,7 @@ class MigrationProposalViewModel(
      * If parameters are already in db, proceed to BonusSalaryDashboard.
      * Verify this only if user rejected the migration.
      */
-    fun checkIfUserAlreadyHaveData() = viewModelScope.launch(Dispatchers.IO) {
+    fun checkIfUserAlreadyHaveData() = viewModelScope.launch {
         if (!SharedPrefsDao.hasUserRejectedOvertimeTrackingMigration()) {
             _uiState.emit(BonusSalaryUiState.ScreenContent)
             return@launch
