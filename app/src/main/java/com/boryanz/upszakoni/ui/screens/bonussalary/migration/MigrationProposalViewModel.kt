@@ -8,6 +8,7 @@ import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
 import com.boryanz.upszakoni.ui.navigation.destinations.BonusSalaryDashboardDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.ParametersDestination
 import com.boryanz.upszakoni.ui.screens.bonussalary.migration.BonusSalaryGraphUiAction.MigrationAccepted
+import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BONUS_SALARY_TRESHOLD
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -50,7 +51,7 @@ class MigrationProposalViewModel(
       return@launch
     }
 
-    bonusSalaryRepository.getTreshold("bonus_salary_treshold").fold(
+    bonusSalaryRepository.getTreshold(BONUS_SALARY_TRESHOLD).fold(
       onSuccess = {
         if (it != null) {
           _uiState.emit(
@@ -60,8 +61,6 @@ class MigrationProposalViewModel(
           )
         } else {
           _uiState.emit(
-
-
             BonusSalaryUiState.DefaultDestination(
               ParametersDestination
             )

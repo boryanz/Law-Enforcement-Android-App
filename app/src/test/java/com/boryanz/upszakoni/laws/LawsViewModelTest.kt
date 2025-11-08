@@ -8,7 +8,7 @@ import com.boryanz.upszakoni.ui.screens.common.ScreenAction
 import com.boryanz.upszakoni.ui.screens.common.UiState
 import com.boryanz.upszakoni.ui.screens.laws.LawsViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -16,6 +16,7 @@ import org.junit.Test
 
 class LawsViewModelTest {
 
+  @OptIn(ExperimentalCoroutinesApi::class)
   @get:Rule
   val mainDispatcherRule = MainDispatcherRule()
 
@@ -36,7 +37,6 @@ class LawsViewModelTest {
 
     //When
     viewmodel.onUiEvent(ScreenAction.GetLaws)
-    advanceUntilIdle()
 
     //Then
     assertEquals(expectedUiState, viewmodel.uiState.value)
@@ -61,7 +61,6 @@ class LawsViewModelTest {
     //When
     viewmodel.onUiEvent(ScreenAction.GetLaws)
     viewmodel.onUiEvent(ScreenAction.LawSwiped(swipedLaw))
-    advanceUntilIdle()
 
     //Then
     assertEquals(expectedAfterSwipe, viewmodel.uiState.value)

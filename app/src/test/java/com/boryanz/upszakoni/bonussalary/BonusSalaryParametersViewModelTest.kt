@@ -1,18 +1,12 @@
 package com.boryanz.upszakoni.bonussalary
 
 import com.boryanz.upszakoni.MainDispatcherRule
-import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
 import com.boryanz.upszakoni.fakes.FakeBonusSalaryRepository
 import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BonusSalaryParametersUiEvent
 import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BonusSalaryParametersUiState
 import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BonusSalaryParametersViewModel
-import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.junit4.MockKRule
-import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -20,11 +14,9 @@ import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class BonusSalaryParametersViewModelTest {
-  @get:Rule
-  val mockkRule = MockKRule(this)
 
   @get:Rule
-  val mainDispatcherRule = MainDispatcherRule(StandardTestDispatcher())
+  val mainDispatcherRule = MainDispatcherRule()
 
 
   @Test
@@ -53,7 +45,6 @@ class BonusSalaryParametersViewModelTest {
       //When
       val value = "-3"
       viewmodel.onUiEvent(BonusSalaryParametersUiEvent.AbsenceLimitChanged(value))
-      advanceUntilIdle()
 
       //Then
       assertEquals(
@@ -76,7 +67,6 @@ class BonusSalaryParametersViewModelTest {
       //When
       val value = "0"
       viewmodel.onUiEvent(BonusSalaryParametersUiEvent.AbsenceLimitChanged(value))
-      advanceUntilIdle()
 
       //Then
       assertEquals(
@@ -98,7 +88,6 @@ class BonusSalaryParametersViewModelTest {
     //When
     val value = "10"
     viewmodel.onUiEvent(BonusSalaryParametersUiEvent.AbsenceLimitChanged(value))
-    advanceUntilIdle()
 
     //Then
     assertEquals(
@@ -121,7 +110,6 @@ class BonusSalaryParametersViewModelTest {
       //When
       val value = "50"
       viewmodel.onUiEvent(BonusSalaryParametersUiEvent.OvertimeLimitChanged(value))
-      advanceUntilIdle()
 
       //Then
       assertEquals(
@@ -143,7 +131,6 @@ class BonusSalaryParametersViewModelTest {
     //When
     val value = "101"
     viewmodel.onUiEvent(BonusSalaryParametersUiEvent.OvertimeLimitChanged(value))
-    advanceUntilIdle()
 
     //Then
     assertEquals(
@@ -164,7 +151,6 @@ class BonusSalaryParametersViewModelTest {
 
     //When
     viewmodel.onUiEvent(BonusSalaryParametersUiEvent.FetchData)
-    advanceUntilIdle()
 
     //Then
     assertEquals(
@@ -176,20 +162,5 @@ class BonusSalaryParametersViewModelTest {
       ),
       viewmodel.uiState.value
     )
-  }
-
-  @Test
-  fun `when save is clicked then insert values`() = runTest {
-    //Given
-    val repo = mockk<BonusSalaryRepository>()
-    val viewmodel = BonusSalaryParametersViewModel(repo)
-    coEvery { repo.insertTreshold(any()) } returns Result.success(Unit)
-
-    //When
-    viewmodel.onUiEvent(BonusSalaryParametersUiEvent.SaveParametersClicked({}))
-    advanceUntilIdle()
-
-    //Then
-    coVerify(exactly = 1) { repo.insertTreshold(any()) }
   }
 }

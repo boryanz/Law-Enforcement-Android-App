@@ -17,7 +17,7 @@ class ArchivedViewModelTest {
 
   @OptIn(ExperimentalCoroutinesApi::class)
   @get:Rule
-  val mainDispatcherRule = MainDispatcherRule(UnconfinedTestDispatcher())
+  val mainDispatcherRule = MainDispatcherRule()
 
 
   @OptIn(ExperimentalCoroutinesApi::class)

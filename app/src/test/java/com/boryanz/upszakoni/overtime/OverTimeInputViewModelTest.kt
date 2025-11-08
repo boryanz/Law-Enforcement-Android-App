@@ -7,7 +7,6 @@ import com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput.OverTimeInputU
 import com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput.OverTimeInputUiState
 import com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput.OverTimeInputViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -17,7 +16,7 @@ import org.junit.Test
 class OverTimeInputViewModelTest {
 
   @get:Rule
-  val mainDispatcherRule = MainDispatcherRule(UnconfinedTestDispatcher())
+  val mainDispatcherRule = MainDispatcherRule()
 
 
   @Test
