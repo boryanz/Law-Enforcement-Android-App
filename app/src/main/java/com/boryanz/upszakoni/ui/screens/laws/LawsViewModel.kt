@@ -2,10 +2,10 @@ package com.boryanz.upszakoni.ui.screens.laws
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsDao
+import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsManager
 import com.boryanz.upszakoni.domain.LawsUseCase
+import com.boryanz.upszakoni.domain.remoteconfig.FirebaseRemoteConfig
 import com.boryanz.upszakoni.domain.remoteconfig.RemoteConfig
-import com.boryanz.upszakoni.domain.remoteconfig.RemoteConfigRepository
 import com.boryanz.upszakoni.ui.screens.common.ScreenAction
 import com.boryanz.upszakoni.ui.screens.common.UiState
 import com.boryanz.upszakoni.utils.removePdfExtension
@@ -17,7 +17,8 @@ import kotlinx.coroutines.launch
 
 class LawsViewModel(
   private val getLawsUseCase: LawsUseCase,
-  private val remoteConfigRepository: RemoteConfigRepository,
+  private val remoteConfigRepository: FirebaseRemoteConfig,
+  private val localStorage: SharedPrefsManager,
 ) : ViewModel() {
 
   private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
@@ -30,7 +31,7 @@ class LawsViewModel(
     viewModelScope.launch {
       when (event) {
         is ScreenAction.LawSwiped -> {
-          SharedPrefsDao.archiveLaw(event.lawName)
+          localStorage.archiveLaw(event.lawName)
           _uiState.update {
             it.copy(laws = uiState.value.laws.filterAvailableLaws())
           }
@@ -46,5 +47,5 @@ class LawsViewModel(
   }
 
   private fun List<String>.filterAvailableLaws() =
-    filterNot { SharedPrefsDao.contains(it) }
+    filterNot { localStorage.contains(it) }
 }

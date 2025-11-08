@@ -2,7 +2,7 @@ package com.boryanz.upszakoni.ui.screens.archivedlaws
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsDao
+import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsManager
 import com.boryanz.upszakoni.domain.LawsUseCase
 import com.boryanz.upszakoni.ui.screens.common.ScreenAction
 import com.boryanz.upszakoni.ui.screens.common.UiState
@@ -13,7 +13,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class ArchivedLawsViewModel(
-  private val getLawsUseCase: LawsUseCase
+  private val getLawsUseCase: LawsUseCase,
+  private val localStorage: SharedPrefsManager,
 ) : ViewModel() {
 
   private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
@@ -29,7 +30,7 @@ class ArchivedLawsViewModel(
         }
 
         is ScreenAction.LawSwiped -> {
-          SharedPrefsDao.removeArchivedLaw(event.lawName)
+          localStorage.removeArchivedLaw(event.lawName)
           _uiState.update { it.copy(laws = uiState.value.laws.filterAvailableLaws()) }
         }
       }
@@ -37,5 +38,5 @@ class ArchivedLawsViewModel(
   }
 
   private fun List<String>.filterAvailableLaws() =
-    filter { SharedPrefsDao.contains(it) }
+    filter { localStorage.contains(it) }
 }

@@ -1,49 +1,45 @@
 package com.boryanz.upszakoni.laws
 
 import com.boryanz.upszakoni.MainDispatcherRule
-import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsDao
 import com.boryanz.upszakoni.fakes.FakeLawsUseCase
+import com.boryanz.upszakoni.fakes.FakePrefsLocalStorage
 import com.boryanz.upszakoni.ui.screens.archivedlaws.ArchivedLawsViewModel
 import com.boryanz.upszakoni.ui.screens.common.ScreenAction
 import com.boryanz.upszakoni.ui.screens.common.UiState
-import io.mockk.coEvery
-import io.mockk.junit4.MockKRule
-import io.mockk.mockkObject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
 class ArchivedViewModelTest {
 
+  @OptIn(ExperimentalCoroutinesApi::class)
   @get:Rule
-  val mockkRule = MockKRule(this)
+  val mainDispatcherRule = MainDispatcherRule(UnconfinedTestDispatcher())
 
-  @get:Rule
-  val mainDispatcherRule = MainDispatcherRule()
-
-  private lateinit var viewmodel: ArchivedLawsViewModel
-
-  @Before
-  fun setup() {
-    mockkObject(SharedPrefsDao)
-    viewmodel = ArchivedLawsViewModel(FakeLawsUseCase())
-  }
 
   @OptIn(ExperimentalCoroutinesApi::class)
   @Test
   fun `get laws successfully`() = runTest {
     //Given
+    val fakeLocalStorage = FakePrefsLocalStorage(
+      data = mutableMapOf(
+        "archive/закон за прекшоци" to true,
+        "archive/закон за возила" to true,
+        "archive/закон за странците" to true,
+      )
+    )
+    val viewmodel = ArchivedLawsViewModel(
+      getLawsUseCase = FakeLawsUseCase(),
+      localStorage = fakeLocalStorage
+    )
     val expectedUiState =
       UiState(listOf("закон за прекшоци", "закон за возила", "закон за странците"))
-    coEvery { SharedPrefsDao.contains(any()) } returns true
 
     //When
     viewmodel.onUiEvent(ScreenAction.GetLaws)
-    advanceUntilIdle()
 
     //Then
     assertEquals(expectedUiState, viewmodel.uiState.value)
@@ -53,30 +49,23 @@ class ArchivedViewModelTest {
   @Test
   fun `remove archived law successfully`() = runTest {
     //Given
+    val fakeLocalStorage = FakePrefsLocalStorage(
+      data = mutableMapOf(
+        "archive/закон за прекшоци" to true,
+        "archive/закон за возила" to true,
+        "archive/закон за странците" to true,
+      )
+    )
+    val viewmodel = ArchivedLawsViewModel(
+      getLawsUseCase = FakeLawsUseCase(),
+      localStorage = fakeLocalStorage
+    )
     val expectedAfterSwipe = UiState(listOf("закон за возила", "закон за странците"))
     val swipedLaw = "закон за прекшоци"
 
-    coEvery { SharedPrefsDao.contains("закон за прекшоци") } returns true
-    coEvery { SharedPrefsDao.contains("закон за возила") } returns true
-    coEvery { SharedPrefsDao.contains("закон за странците") } returns true
-    coEvery { SharedPrefsDao.removeArchivedLaw(swipedLaw) } returns Unit
-
     //When
     viewmodel.onUiEvent(ScreenAction.GetLaws)
-    advanceUntilIdle()
-
-    //Then
-    assertEquals(
-      UiState(listOf("закон за прекшоци", "закон за возила", "закон за странците")),
-      viewmodel.uiState.value
-    )
-
-    //Given
-    coEvery { SharedPrefsDao.contains(swipedLaw) } returns false
-
-    //When
     viewmodel.onUiEvent(ScreenAction.LawSwiped(swipedLaw))
-    advanceUntilIdle()
 
     //Then
     assertEquals(expectedAfterSwipe, viewmodel.uiState.value)
