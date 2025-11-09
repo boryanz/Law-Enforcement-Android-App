@@ -7,7 +7,7 @@ import com.boryanz.upszakoni.fakes.Treshold.HaveTreshold
 import com.boryanz.upszakoni.fakes.Treshold.NoTreshold
 import com.boryanz.upszakoni.ui.navigation.navgraph.overtimetracking.OvertimeTrackNavigationGraphViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -26,8 +26,6 @@ class OverTimeTrackingNavigationGraphViewModelTest {
     //Given
     viewmodel =
       OvertimeTrackNavigationGraphViewModel(FakeBonusSalaryRepository(treshold = HaveTreshold))
-    assertEquals(null, viewmodel.hasTresholdSet.value)
-    advanceUntilIdle()
     assertEquals(true, viewmodel.hasTresholdSet.value)
   }
 
@@ -37,8 +35,6 @@ class OverTimeTrackingNavigationGraphViewModelTest {
     viewmodel =
       OvertimeTrackNavigationGraphViewModel(FakeBonusSalaryRepository(treshold = NoTreshold))
     //Then
-    assertEquals(null, viewmodel.hasTresholdSet.value)
-    advanceUntilIdle()
     assertEquals(false, viewmodel.hasTresholdSet.value)
   }
 
@@ -48,8 +44,6 @@ class OverTimeTrackingNavigationGraphViewModelTest {
     viewmodel =
       OvertimeTrackNavigationGraphViewModel(FakeBonusSalaryRepository(Error))
     //Then
-    assertEquals(null, viewmodel.hasTresholdSet.value)
-    advanceUntilIdle()
     assertEquals(false, viewmodel.hasTresholdSet.value)
   }
 }

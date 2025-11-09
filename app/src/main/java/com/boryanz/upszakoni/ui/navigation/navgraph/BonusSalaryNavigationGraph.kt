@@ -23,57 +23,59 @@ import com.boryanz.upszakoni.utils.noExitTransition
 
 @Composable
 fun BonusSalaryNavigationGraph(
-    shouldBackportOvertimeTracking: Boolean = false,
-    navHostController: NavHostController = rememberNavController(),
-    onBackNavigated: () -> Unit,
-    onMigrationAccepted: () -> Unit,
+  shouldBackportOvertimeTracking: Boolean = false,
+  navHostController: NavHostController = rememberNavController(),
+  onBackNavigated: () -> Unit,
+  onMigrationAccepted: () -> Unit,
 ) {
 
-    NavHost(
-        navController = navHostController,
-        startDestination = if (shouldBackportOvertimeTracking) BonusSalaryDashboardDestination else MigrationProposalDestination,
-        enterTransition = noEnterTransition,
-        exitTransition = noExitTransition
-    ) {
+  NavHost(
+    navController = navHostController,
+    startDestination = if (shouldBackportOvertimeTracking) BonusSalaryDashboardDestination else MigrationProposalDestination,
+    enterTransition = noEnterTransition,
+    exitTransition = noExitTransition
+  ) {
 
-        composable<MigrationProposalDestination> {
-            MigrationProposalScreen(
-                onMigrationAccepted = onMigrationAccepted,
-                onMigrationCancelled = { navHostController.navigate(it) }
-            )
-        }
-        composable<ParametersDestination> {
-            BonusSalaryParametersScreen(
-                onParametersSaved = {navHostController.navigate(BonusSalaryDashboardDestination)}
-            )
-        }
-
-        composable<BonusSalaryDashboardDestination> {
-            BonusSalaryDashboardScreen(
-                onBackClicked = onBackNavigated,
-                onEditClicked = { navHostController.navigate(ParametersDestination) },
-                onMonthClicked = { navHostController.navigate(OvertimeInputDestination(it)) },
-                onNonWorkingDaysClicked = {
-                    navHostController.navigate(
-                        NonWorkingDaysInfoDestination(
-                            it
-                        )
-                    )
-                }
-            )
-        }
-
-        composable<OvertimeInputDestination> {
-            val month = it.toRoute<OvertimeInputDestination>().month
-            BonusSalaryOverTimeInputScreen(month = month, navHostController = navHostController)
-        }
-
-        composable<NonWorkingDaysInfoDestination> {
-            val nonWorkingDays = it.toRoute<NonWorkingDaysInfoDestination>().nonWorkingDays
-            NonWorkingDaysInfoScreen(
-                content = listOf(TitleItem(nonWorkingDays)),
-                onBackClicked = navHostController::navigateUp
-            )
-        }
+    composable<MigrationProposalDestination> {
+      MigrationProposalScreen(
+        onMigrationAccepted = onMigrationAccepted,
+        onMigrationCancelled = { navHostController.navigate(it) }
+      )
     }
+    composable<ParametersDestination> {
+      BonusSalaryParametersScreen(
+        onParametersSaved = { navHostController.navigate(BonusSalaryDashboardDestination) }
+      )
+    }
+
+    composable<BonusSalaryDashboardDestination> {
+      BonusSalaryDashboardScreen(
+        onBackClicked = onBackNavigated,
+        onEditClicked = { navHostController.navigate(ParametersDestination) },
+        onMonthClicked = { navHostController.navigate(OvertimeInputDestination(it)) },
+        onNonWorkingDaysClicked = {
+          navHostController.navigate(
+            NonWorkingDaysInfoDestination(
+              it
+            )
+          )
+        }
+      )
+    }
+
+    composable<OvertimeInputDestination> {
+      val month = it.toRoute<OvertimeInputDestination>().month
+      BonusSalaryOverTimeInputScreen(
+        month = month,
+        onBackClicked = { navHostController.navigateUp() })
+    }
+
+    composable<NonWorkingDaysInfoDestination> {
+      val nonWorkingDays = it.toRoute<NonWorkingDaysInfoDestination>().nonWorkingDays
+      NonWorkingDaysInfoScreen(
+        content = listOf(TitleItem(nonWorkingDays)),
+        onBackClicked = navHostController::navigateUp
+      )
+    }
+  }
 }

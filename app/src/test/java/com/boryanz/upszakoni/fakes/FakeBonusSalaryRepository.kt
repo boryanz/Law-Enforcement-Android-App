@@ -23,7 +23,8 @@ class FakeBonusSalaryRepository(
 
   override suspend fun getTreshold(id: String): Result<BonusSalaryTreshold?> {
     return when (treshold) {
-      Treshold.Error, Treshold.NoTreshold -> Result.failure(Exception())
+      Treshold.Error -> Result.failure(Exception())
+      Treshold.NoTreshold -> Result.success(null)
       Treshold.HaveTreshold -> {
         Result.success(
           BonusSalaryTreshold(

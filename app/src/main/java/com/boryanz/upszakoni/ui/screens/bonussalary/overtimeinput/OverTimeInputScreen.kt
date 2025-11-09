@@ -3,15 +3,12 @@ package com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavHostController
-import com.boryanz.upszakoni.ui.navigation.navigationwrapper.NavigationWrapperImpl
 import com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput.OverTimeInputUiEvent.AbsenceDaysValueChanged
 import com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput.OverTimeInputUiEvent.OvertimeHoursValueChanged
 import com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput.OverTimeInputUiEvent.SickDaysValueChanged
+import com.boryanz.upszakoni.utils.collectEvents
 import org.koin.androidx.compose.koinViewModel
-import org.koin.core.parameter.parametersOf
 
 sealed interface OverTimeInputUiEvent {
     data class AbsenceDaysValueChanged(val value: String) : OverTimeInputUiEvent
@@ -23,12 +20,17 @@ sealed interface OverTimeInputUiEvent {
 
 @Composable
 fun BonusSalaryOverTimeInputScreen(
-    navHostController: NavHostController,
+    onBackClicked: () -> Unit,
     month: String,
 ) {
-    val navigator = remember { NavigationWrapperImpl(navHostController) }
-    val viewModel = koinViewModel<OverTimeInputViewModel>(parameters = { parametersOf(navigator) })
+    val viewModel = koinViewModel<OverTimeInputViewModel>()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    viewModel.event.collectEvents {
+        when(it) {
+          OvertimeInputEvent.StatsSaved -> onBackClicked()
+        }
+    }
 
     LaunchedEffect(Unit) {
         viewModel.onUiEvent(OverTimeInputUiEvent.FetchMonthlyStats(month))
@@ -37,7 +39,7 @@ fun BonusSalaryOverTimeInputScreen(
     OverTimeInputContent(
         uiState = uiState,
         month = month,
-        onBackClicked = { navHostController.navigateUp() },
+        onBackClicked = onBackClicked,
         onAbsenceDaysValueChanged = { viewModel.onUiEvent(AbsenceDaysValueChanged(it)) },
         onOvertimeHoursValueChanged = { viewModel.onUiEvent(OvertimeHoursValueChanged(it)) },
         onSickDaysValueChanged = { viewModel.onUiEvent(SickDaysValueChanged(it)) },

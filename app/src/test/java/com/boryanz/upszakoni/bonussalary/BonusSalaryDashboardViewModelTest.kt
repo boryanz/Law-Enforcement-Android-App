@@ -1,22 +1,18 @@
 package com.boryanz.upszakoni.bonussalary
 
 import com.boryanz.upszakoni.MainDispatcherRule
-import com.boryanz.upszakoni.domain.remoteconfig.RemoteConfigRepository
+import com.boryanz.upszakoni.domain.remoteconfig.RemoteConfig
 import com.boryanz.upszakoni.fakes.FakeBonusSalaryRepository
+import com.boryanz.upszakoni.fakes.FakeRemoteConfigRepository
 import com.boryanz.upszakoni.fakes.Treshold
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardUiEvent
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardUiState
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardUiState.MonthlyOvertime
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardViewModel
-import io.mockk.coEvery
-import io.mockk.impl.annotations.MockK
-import io.mockk.junit4.MockKRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
@@ -24,20 +20,9 @@ import org.junit.Test
 class BonusSalaryDashboardViewModelTest {
 
   @get:Rule
-  val mockkRule = MockKRule(this)
-
-  @get:Rule
-  val mainDispatcherRule = MainDispatcherRule(StandardTestDispatcher())
-
-  @MockK
-  private lateinit var remoteConfigRepository: RemoteConfigRepository
+  val mainDispatcherRule = MainDispatcherRule()
 
   private lateinit var viewmodel: BonusSalaryDashboardViewModel
-
-  @Before
-  fun setup() {
-    coEvery { remoteConfigRepository.remoteConfigState.value.nonWorkingDays } returns "no working days"
-  }
 
   @Test
   fun `fetch monthly overtime hours successfully where all months have data`() = runTest {
@@ -52,12 +37,19 @@ class BonusSalaryDashboardViewModelTest {
     )
     viewmodel = BonusSalaryDashboardViewModel(
       bonusSalaryRepository = FakeBonusSalaryRepository(Treshold.HaveTreshold),
-      remoteConfigRepository = remoteConfigRepository
+      remoteConfigRepository = FakeRemoteConfigRepository(
+        RemoteConfig(
+          isAppUpdateAvailable = false,
+          shouldBackportOvertimeTracking = false,
+          greetingMessage = "",
+          usefulInformations = "",
+          nonWorkingDays = "no working days"
+        )
+      )
     )
 
     //When
     viewmodel.onUiEvent(event = BonusSalaryDashboardUiEvent.FetchMonthlyStats)
-    advanceUntilIdle()
 
     //Then
     assertEquals(

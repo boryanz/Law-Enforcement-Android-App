@@ -14,15 +14,15 @@ private const val GREETING_MESSAGE_STRING_KEY = "greeting_message"
 private const val USEFUL_INFORMATIONS = "useful_informations"
 private const val NON_WORKING_DAYS = "non_working_days"
 
-class RemoteConfigRepository {
+class RemoteConfigRepository : FirebaseRemoteConfig {
 
   private val remoteConfig = Firebase.remoteConfig
 
   private val _remoteConfigState: MutableStateFlow<RemoteConfig> =
     MutableStateFlow(RemoteConfig())
-  val remoteConfigState = _remoteConfigState.asStateFlow()
+  override val remoteConfigState = _remoteConfigState.asStateFlow()
 
-  fun initRemoteConfigs() {
+  override fun init() {
     val configSettings = remoteConfigSettings {
       FirebaseRemoteConfigSettings.Builder().setMinimumFetchIntervalInSeconds(3600)
     }
