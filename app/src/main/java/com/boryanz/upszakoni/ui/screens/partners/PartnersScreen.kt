@@ -8,11 +8,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.boryanz.upszakoni.R
 import com.boryanz.upszakoni.ui.components.Icons
 import com.boryanz.upszakoni.ui.components.UpsScaffold
 
+private const val FACEBOOK_GROUP_URL = "https://www.facebook.com/groups/2151680138308853/"
 
 @Composable
 fun PartnersScreen(
@@ -21,7 +23,7 @@ fun PartnersScreen(
 ) {
   UpsScaffold(
     topBarTitle = {
-      Text("Наши партнери")
+      Text(stringResource(R.string.partners_screen_title))
     },
     navigationIcon = {
       Icons.Back(onClick = onBackClicked)
@@ -29,16 +31,16 @@ fun PartnersScreen(
   ) { paddingValues ->
     Column(
       modifier = Modifier
-          .fillMaxSize()
-          .padding(paddingValues)
-          .padding(horizontal = 12.dp, vertical = 8.dp),
+        .fillMaxSize()
+        .padding(paddingValues)
+        .padding(horizontal = 12.dp, vertical = 8.dp),
       verticalArrangement = Arrangement.Top,
       horizontalAlignment = Alignment.CenterHorizontally
     ) {
       PartnerItem(
-        partnerName = "МВР-ППП (Полициски припадници и поранешни)",
+        partnerName = stringResource(R.string.partners_mvr_ppp),
         iconRes = R.drawable.fb_logo,
-        onClicked = { onPartnerClicked("https://www.facebook.com/groups/2151680138308853/") }
+        onClicked = { onPartnerClicked(FACEBOOK_GROUP_URL) }
       )
     }
   }

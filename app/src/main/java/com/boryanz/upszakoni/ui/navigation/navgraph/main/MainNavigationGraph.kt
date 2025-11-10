@@ -3,10 +3,12 @@ package com.boryanz.upszakoni.ui.navigation.navgraph.main
 import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.boryanz.upszakoni.R
 import com.boryanz.upszakoni.customtab.CustomTabLauncher
 import com.boryanz.upszakoni.data.NavigationDrawerDestination
 import com.boryanz.upszakoni.data.NavigationDrawerDestination.authorities
@@ -23,7 +25,7 @@ import com.boryanz.upszakoni.data.NavigationDrawerDestination.wanted_criminals
 import com.boryanz.upszakoni.data.NavigationDrawerDestination.writing_guide
 import com.boryanz.upszakoni.data.crimesItems
 import com.boryanz.upszakoni.data.goldenQuestions
-import com.boryanz.upszakoni.data.local.sharedprefs.PrefsLocalStorage
+import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsManager
 import com.boryanz.upszakoni.data.offensesItems
 import com.boryanz.upszakoni.data.policeAuthorities
 import com.boryanz.upszakoni.ui.components.Icons
@@ -56,8 +58,6 @@ import com.boryanz.upszakoni.utils.openPdfWithExternalReader
 import com.boryanz.upszakoni.utils.supportExternalPdfReader
 import org.koin.compose.koinInject
 
-private const val WANTED_PERSONS_URL = "https://mvr.gov.mk/potragi-ischeznati/potragi"
-private const val DAILY_NEWS_URL = "https://mvr.gov.mk/dnevni-bilteni"
 
 @Composable
 fun NavigationGraph(
@@ -66,7 +66,7 @@ fun NavigationGraph(
   onAppUpdateClicked: () -> Unit,
 ) {
   val context = LocalContext.current
-  val storage = koinInject<PrefsLocalStorage>()
+  val storage: SharedPrefsManager = koinInject()
   NavHost(
     navController = navHostController,
     startDestination = if (storage.isPrivacyPolicyAccepted()) LawsDestination else PrivacyPolicyAcceptanceDestination,
@@ -83,7 +83,7 @@ fun NavigationGraph(
 
     composable<OffensesDestination> {
       CommonOffensesAndCrimes(
-        title = "Прекршоци",
+        title = stringResource(R.string.offenses_title),
         commonCrimesItems = offensesItems,
         onCrimeClicked = { lawName, pagesToLoad ->
           /* TODO */
@@ -94,7 +94,7 @@ fun NavigationGraph(
 
     composable<CrimesDestination> {
       CommonOffensesAndCrimes(
-        title = "Кривични дела",
+        title = stringResource(R.string.crimes_title),
         commonCrimesItems = crimesItems,
         onCrimeClicked = { _, _ ->  /* TODO */ },
         onBackClicked = { navHostController.navigateUp() }
@@ -103,7 +103,7 @@ fun NavigationGraph(
 
     composable<PoliceAuthoritiesDestination> {
       PoliceAuthoritiesScreen(
-        topBarTitle = "Полициски овластувања",
+        topBarTitle = stringResource(R.string.police_authorities_title),
         items = policeAuthorities,
         onBackClicked = { navHostController.navigateUp() }
       )
@@ -115,7 +115,7 @@ fun NavigationGraph(
 
     composable<GoldenCrimeQuestionsDestination> {
       GoldenCrimeQuestionsScreen(
-        topBarTitle = "Службена белешка",
+        topBarTitle = stringResource(R.string.golden_questions_title),
         items = goldenQuestions,
         onBackClicked = { navHostController.navigateUp() }
       )
@@ -153,8 +153,8 @@ fun NavigationGraph(
         onAppUpdateClicked = onAppUpdateClicked,
         onFeedbackFormClicked = {
           CustomTabLauncher().launch(
-            context,
-            url = "https://docs.google.com/forms/d/e/1FAIpQLSekTon0jVIWtwVZEVkBo-mcHZmb55dQumDPs-puUB1ctnackA/viewform?usp=header"
+            context = context,
+            url = context.getString(R.string.feedback_form_url)
           )
         }
       )
@@ -198,7 +198,7 @@ fun NavHostController.navigateToDrawerDestination(navigationDrawerDestination: N
         showTitle = true,
         setUrlBarHiddenEnabled = true
       )
-      customTabLauncher.launch(context, WANTED_PERSONS_URL)
+      customTabLauncher.launch(context, context.getString(R.string.wanted_persons_url))
     }
 
     daily_news -> {
@@ -206,7 +206,7 @@ fun NavHostController.navigateToDrawerDestination(navigationDrawerDestination: N
         showTitle = true,
         setUrlBarHiddenEnabled = true
       )
-      customTabLauncher.launch(context, DAILY_NEWS_URL)
+      customTabLauncher.launch(context, context.getString(R.string.daily_news_url))
     }
 
     phone_numbers -> navigate(PhoneNumbersDestination)

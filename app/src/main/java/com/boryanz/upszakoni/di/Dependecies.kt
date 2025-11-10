@@ -9,6 +9,7 @@ import com.boryanz.upszakoni.domain.GetLawsUseCase
 import com.boryanz.upszakoni.domain.LawsUseCase
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepositoryImpl
+import com.boryanz.upszakoni.domain.remoteconfig.FirebaseRemoteConfig
 import com.boryanz.upszakoni.domain.remoteconfig.RemoteConfigRepository
 import com.boryanz.upszakoni.ui.navigation.navgraph.overtimetracking.OvertimeTrackNavigationGraphViewModel
 import com.boryanz.upszakoni.ui.screens.archivedlaws.ArchivedLawsViewModel
@@ -31,7 +32,7 @@ val appModule = module {
   single<SharedPrefsManager> { PrefsLocalStorage(get()) }
   factory { GenerateDaysInMonthsUseCase(get()) }
   single<BonusSalaryRepository> { BonusSalaryRepositoryImpl(androidContext()) }
-  single { RemoteConfigRepository() }
+  single<FirebaseRemoteConfig> { RemoteConfigRepository() }
   factory<LawsUseCase> { GetLawsUseCase(androidContext()) }
   viewModel { ArchivedLawsViewModel(get(), get()) }
   viewModel { BonusSalaryParametersViewModel(get()) }

@@ -16,9 +16,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.boryanz.upszakoni.R
 import com.boryanz.upszakoni.ui.components.AutoAdvancePager
 import com.boryanz.upszakoni.ui.components.Button
 import com.boryanz.upszakoni.ui.components.Icons
@@ -43,7 +45,7 @@ fun BonusSalaryDashboardContent(
     var resetClickCounter by remember { mutableIntStateOf(3) }
 
     UpsScaffold(
-        topBarTitle = { Text("Прекувремени") },
+        topBarTitle = { Text(stringResource(R.string.bonus_salary_dashboard_title)) },
         navigationIcon = {
             Icons.Back(onClick = onBackClicked)
         },
@@ -64,17 +66,17 @@ fun BonusSalaryDashboardContent(
             verticalArrangement = Arrangement.Top,
         ) {
             if (isDeleteAllClicked) {
-                Text("Ресетирај ги прекувремените часови", textAlign = TextAlign.Start)
+                Text(stringResource(R.string.bonus_salary_reset_hours_title), textAlign = TextAlign.Start)
                 Spacer.Vertical(4.dp)
                 Text(
                     modifier = Modifier.fillMaxWidth(),
-                    text = "ВНИМАТЕЛНО, оваа акција не може да се поништи!!!",
+                    text = stringResource(R.string.bonus_salary_reset_warning),
                     textAlign = TextAlign.Start,
                     style = MaterialTheme.typography.bodySmall
                 )
                 Spacer.Vertical(8.dp)
                 Button.Primary(
-                    title = "Кликни $resetClickCounter пати за ресетирање",
+                    title = stringResource(R.string.bonus_salary_reset_button_format, resetClickCounter),
                     onClick = {
                         resetClickCounter--
                         if (resetClickCounter == 0) {
@@ -84,13 +86,13 @@ fun BonusSalaryDashboardContent(
                     })
                 Spacer.Vertical(16.dp)
             }
-            Text("Годишна статистика", textAlign = TextAlign.Start)
+            Text(stringResource(R.string.bonus_salary_yearly_stats), textAlign = TextAlign.Start)
             Spacer.Vertical(8.dp)
             uiState.sliderState?.let {
                 AutoAdvancePager(uiState)
             }
             Spacer.Vertical(8.dp)
-            Text("Прекувремени часови по месеци", textAlign = TextAlign.Start)
+            Text(stringResource(R.string.bonus_salary_monthly_hours), textAlign = TextAlign.Start)
             MonthsGridLayout(
                 uiState = uiState,
                 onClick = { onMonthClicked(it) },
@@ -99,7 +101,7 @@ fun BonusSalaryDashboardContent(
             if (!uiState.nonWorkingDays.isNullOrBlank()) {
                 Spacer.Vertical(8.dp)
                 Button.Outlined(
-                    title = "Неработни денови",
+                    title = stringResource(R.string.bonus_salary_non_working_days),
                     onClick = { onNonWorkingDaysClicked(uiState.nonWorkingDays) })
             }
         }
