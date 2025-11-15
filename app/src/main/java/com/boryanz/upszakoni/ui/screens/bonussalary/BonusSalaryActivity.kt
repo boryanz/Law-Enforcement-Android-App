@@ -7,7 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsManager
-import com.boryanz.upszakoni.domain.remoteconfig.RemoteConfigRepository
+import com.boryanz.upszakoni.domain.remoteconfig.FirebaseRemoteConfig
 import com.boryanz.upszakoni.ui.navigation.navgraph.BonusSalaryNavigationGraph
 import com.boryanz.upszakoni.ui.navigation.navgraph.overtimetracking.OverTimeTrackNavigationGraph
 import com.boryanz.upszakoni.ui.theme.UpsTheme
@@ -19,7 +19,7 @@ import org.koin.android.ext.android.inject
 class BonusSalaryActivity : ComponentActivity() {
 
   private val localStorage: SharedPrefsManager by inject()
-  private val remoteConfigRepository: RemoteConfigRepository by inject()
+  private val remoteConfigRepository: FirebaseRemoteConfig by inject()
   private val shouldBackportOvertimeFeature =
     remoteConfigRepository.remoteConfigState.value.shouldBackportOvertimeTracking
 

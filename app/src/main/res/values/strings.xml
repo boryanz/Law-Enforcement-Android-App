@@ -1,3 +1,101 @@
 <resources>
     <string name="app_name">УПС</string>
+
+    <!-- Laws Screen Strings -->
+    <string name="laws_screen_title">Закони</string>
+    <string name="laws_search_label">Пребарувај</string>
+    <string name="laws_archived_message">Законот ставен во архива</string>
+    <string name="laws_archive_content_description">Archive</string>
+
+    <!-- Archived Laws Screen Strings -->
+    <string name="archived_laws_title">Архива на закони</string>
+    <string name="archived_laws_empty_state">Нема додадени закони во архивата</string>
+    <string name="archived_laws_restore_message">Законот вратен на почетна</string>
+    <string name="archived_laws_restore_icon_description">Home</string>
+
+    <!-- Partners Screen Strings -->
+    <string name="partners_screen_title">Наши партнери</string>
+    <string name="partners_mvr_ppp">МВР-ППП (Полициски припадници и поранешни)</string>
+    <string name="partners_union_police">Синдикат на полиција во Македонија</string>
+
+    <!-- Phone Numbers Screen Strings -->
+    <string name="phone_numbers_title">Контакти од ПС</string>
+
+    <!-- Informations Screen Strings -->
+    <string name="informations_screen_title">Општи известувања</string>
+
+    <!-- Privacy Policy Strings -->
+    <string name="privacy_policy_title">Политика за приватност</string>
+    <string name="privacy_policy_continue_button">Продолжи</string>
+
+    <!-- Bonus Salary Dashboard Strings -->
+    <string name="bonus_salary_dashboard_title">Прекувремени</string>
+    <string name="bonus_salary_reset_hours_title">Ресетирај ги прекувремените часови</string>
+    <string name="bonus_salary_reset_warning">ВНИМАТЕЛНО, оваа акција не може да се поништи!!!</string>
+    <string name="bonus_salary_reset_button_format">Кликни %d пати за ресетирање</string>
+    <string name="bonus_salary_yearly_stats">Годишна статистика</string>
+    <string name="bonus_salary_monthly_hours">Прекувремени часови по месеци</string>
+    <string name="bonus_salary_non_working_days">Неработни денови</string>
+
+    <!-- Bonus Salary Parameters Strings -->
+    <string name="parameters_title">Параметри за бонус плата</string>
+    <string name="parameters_overtime_description">Минимум прекувремени работни часови за остварување право на бонус плата</string>
+    <string name="parameters_overtime_label">Годишни прекувремени работни часови</string>
+    <string name="parameters_absence_description">Максимум денови за користење од боледување(вклучувајки платено отсуство и прч)</string>
+    <string name="parameters_absence_label">Максимум денови на отсуство</string>
+    <string name="parameters_ok_button">Во ред</string>
+
+    <!-- Overtime Input Strings -->
+    <string name="overtime_input_total_hours_format">Вкупно прекувремени за месец %s</string>
+    <string name="overtime_input_sick_days">Вкупно искористени денови боледување</string>
+    <string name="overtime_input_paid_absence">Платено отсуство и ПРЧ искористени денови</string>
+    <string name="overtime_input_daily_format">Прекувремени на ден %d %s</string>
+    <string name="overtime_input_note_label">Дополнителна забелешка</string>
+    <string name="overtime_input_sick_leave">Боледување</string>
+    <string name="overtime_input_paid_leave">Платено отсуство</string>
+    <string name="overtime_input_ok_button">Во ред</string>
+
+    <!-- Non-Working Days Strings -->
+    <string name="non_working_days_title">Неработни денови</string>
+
+    <!-- Monthly Calendar Strings -->
+    <string name="monthly_calendar_format">Календар за %s</string>
+    <string name="monthly_statistics_format">Статистика за %s</string>
+
+    <!-- Migration Screen Strings -->
+    <string name="migration_title">Нова евиденција</string>
+    <string name="migration_ok_button">Во ред</string>
+
+    <!-- Month Names -->
+    <string name="month_january">Януари</string>
+    <string name="month_february">Февруари</string>
+    <string name="month_march">Март</string>
+    <string name="month_april">Април</string>
+    <string name="month_may">Мај</string>
+    <string name="month_june">Јуни</string>
+    <string name="month_july">Јули</string>
+    <string name="month_august">Август</string>
+    <string name="month_september">Септември</string>
+    <string name="month_october">Октомври</string>
+    <string name="month_november">Ноември</string>
+    <string name="month_december">Декември</string>
+
+    <!-- Dashboard Status Messages -->
+    <string name="dashboard_bonus_earned">Остварено право на бонус плата!</string>
+    <string name="dashboard_hours_remaining_format">%d часови до бонус плата</string>
+    <string name="dashboard_used_days_format">Искористени %d денови до сега</string>
+
+    <!-- Navigation Graph Strings -->
+    <string name="offenses_title">Прекршоци</string>
+    <string name="crimes_title">Кривични дела</string>
+    <string name="police_authorities_title">Полициски овластувања</string>
+    <string name="golden_questions_title">Службена белешка</string>
+
+    <!-- External URLs -->
+    <string name="wanted_persons_url">https://mvr.gov.mk/potragi-ischeznati/potragi</string>
+    <string name="daily_news_url">https://mvr.gov.mk/dnevni-bilteni</string>
+    <string name="feedback_form_url">https://docs.google.com/forms/d/e/1FAIpQLSekTon0jVIWtwVZEVkBo-mcHZmb55dQumDPs-puUB1ctnackA/viewform?usp=header</string>
+
+    <!-- Database/Constants -->
+    <string name="bonus_salary_threshold_key">bonus_salary_treshold</string>
 </resources>

@@ -17,8 +17,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.boryanz.upszakoni.R
 import com.boryanz.upszakoni.ui.components.Icons
 import com.boryanz.upszakoni.ui.components.Spacer
 import com.boryanz.upszakoni.ui.components.SwipeToDismiss
@@ -38,7 +40,7 @@ fun ArchivedLawsScreen(
     viewModel.onUiEvent(ScreenAction.GetLaws)
   }
   UpsScaffold(
-    topBarTitle = { Text(text = "Архива на закони") },
+    topBarTitle = { Text(text = stringResource(R.string.archived_laws_title)) },
     navigationIcon = {
       Icons.Back(onClick = onBackClicked)
     },
@@ -56,7 +58,7 @@ fun ArchivedLawsScreen(
         verticalArrangement = Arrangement.Center
       )
       {
-        Text("Нема додадени закони во архивата")
+        Text(stringResource(R.string.archived_laws_empty_state))
       }
     } else {
       LazyColumn(
@@ -78,14 +80,14 @@ fun ArchivedLawsScreen(
             dismissIcon = {
               Icon(
                 imageVector = androidx.compose.material.icons.Icons.Default.AddHome,
-                contentDescription = "Home"
+                contentDescription = stringResource(R.string.archived_laws_restore_icon_description)
               )
             },
             onItemSwiped = {
               viewModel.onUiEvent(ScreenAction.LawSwiped(it))
               Toast.makeText(
                 /* context = */ context,
-                /* text = */ "Законот вратен на почетна",
+                /* text = */ R.string.archived_laws_restore_message,
                 /* duration = */ Toast.LENGTH_SHORT
               ).show()
             },

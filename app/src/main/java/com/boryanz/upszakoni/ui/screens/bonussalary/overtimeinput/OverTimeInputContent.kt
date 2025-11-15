@@ -12,8 +12,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.boryanz.upszakoni.R
 import com.boryanz.upszakoni.ui.components.Button
 import com.boryanz.upszakoni.ui.components.Icons
 import com.boryanz.upszakoni.ui.components.Spacer.Vertical
@@ -47,7 +49,7 @@ fun OverTimeInputContent(
         ) {
             Column(verticalArrangement = Arrangement.Top) {
                 TextFieldInput.BaseOutline(
-                    labelText = "Вкупно прекувремени за месец $month",
+                    labelText = stringResource(R.string.overtime_input_total_hours_format, month),
                     value = uiState.overtimeHours,
                     isError = uiState.hasOvertimeHoursError,
                     textStyle = MaterialTheme.typography.titleLarge,
@@ -59,7 +61,7 @@ fun OverTimeInputContent(
                 )
                 Vertical(8.dp)
                 TextFieldInput.BaseOutline(
-                    labelText = "Вкупно искористени денови боледување",
+                    labelText = stringResource(R.string.overtime_input_sick_days),
                     value = uiState.sickDays,
                     isError = uiState.hasSickDaysError,
                     textStyle = MaterialTheme.typography.titleLarge,
@@ -71,7 +73,7 @@ fun OverTimeInputContent(
                 )
                 Vertical(8.dp)
                 TextFieldInput.BaseOutline(
-                    labelText = "Платено отсуство и ПРЧ искористени денови",
+                    labelText = stringResource(R.string.overtime_input_paid_absence),
                     value = uiState.paidAbsenceDays,
                     isError = uiState.hasPaidAbsenceDaysError,
                     textStyle = MaterialTheme.typography.titleLarge,
@@ -86,7 +88,7 @@ fun OverTimeInputContent(
             Column {
                 Button.Primary(
                     isEnabled = !uiState.hasPaidAbsenceDaysError && !uiState.hasSickDaysError && !uiState.hasOvertimeHoursError,
-                    title = "Во ред",
+                    title = stringResource(R.string.overtime_input_ok_button),
                     onClick = onSaveClicked
                 )
             }

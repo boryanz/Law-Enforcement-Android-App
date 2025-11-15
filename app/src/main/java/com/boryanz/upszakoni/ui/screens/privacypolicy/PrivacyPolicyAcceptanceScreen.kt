@@ -1,6 +1,8 @@
 package com.boryanz.upszakoni.ui.screens.privacypolicy
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.boryanz.upszakoni.R
 import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsManager
 import com.boryanz.upszakoni.ui.components.Button
 import org.koin.compose.koinInject
@@ -13,7 +15,7 @@ fun PrivacyPolicyAcceptanceScreen(
   val localStorage = koinInject<SharedPrefsManager>()
   PrivacyPolicyScreen(
     continueButton = {
-      Button.Primary("Продолжи", onClick = {
+      Button.Primary(stringResource(R.string.privacy_policy_continue_button), onClick = {
         localStorage.acceptPrivacyPolicy()
         onContinueClicked()
       })

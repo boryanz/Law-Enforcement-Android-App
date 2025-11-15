@@ -17,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
@@ -89,7 +90,7 @@ fun MigrationProposalContent(
 
     }
     UpsScaffold(
-        topBarTitle = { Text(text = "Нова евиденција") },
+        topBarTitle = { Text(text = stringResource(R.string.migration_title)) },
     ) {
         Column(
             modifier = Modifier
@@ -119,7 +120,7 @@ fun MigrationProposalContent(
             }
             Spacer.Vertical(24.dp)
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Button.Primary("Во ред", onClick = onMigrationAccepted)
+                Button.Primary(stringResource(R.string.migration_ok_button), onClick = onMigrationAccepted)
             }
         }
     }

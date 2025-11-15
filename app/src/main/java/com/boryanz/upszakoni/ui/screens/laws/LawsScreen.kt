@@ -25,8 +25,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.boryanz.upszakoni.R
 import com.boryanz.upszakoni.data.NavigationDrawerDestination
 import com.boryanz.upszakoni.ui.components.NavigationDrawer
 import com.boryanz.upszakoni.ui.components.Spacer
@@ -46,13 +48,13 @@ fun LawsScreen(
 ) {
   val viewModel = koinViewModel<LawsViewModel>()
   val featureFlagsState by viewModel.featureFlagsState.collectAsStateWithLifecycle()
-
   val context = LocalContext.current
+
   LaunchedEffect(Unit) {
     viewModel.onUiEvent(ScreenAction.GetLaws)
   }
   NavigationDrawer(
-    screenTitle = "Закони",
+    screenTitle = stringResource(R.string.laws_screen_title),
     onItemClicked = { onItemClick(it) },
     onArchivedLawsClicked = onArchivedLawsClicked,
     featureFlags = featureFlagsState,
@@ -78,7 +80,7 @@ fun LawsScreen(
         onValueChange = {
           searchQuery = it
         },
-        label = { Text("Пребарувај") },
+        label = { Text(stringResource(R.string.laws_search_label)) },
         trailingIcon = {
           com.boryanz.upszakoni.ui.components.Icons.Base(
             imageVector = Icons.Outlined.Search,
@@ -99,14 +101,14 @@ fun LawsScreen(
             },
             onItemSwiped = {
               viewModel.onUiEvent(ScreenAction.LawSwiped(it))
-              Toast.makeText(context, "Законот ставен во архива", Toast.LENGTH_SHORT)
+              Toast.makeText(context, R.string.laws_archived_message, Toast.LENGTH_SHORT)
                 .show()
 
             },
             dismissIcon = {
               Icon(
                 imageVector = Icons.Default.Archive,
-                contentDescription = "Archive"
+                contentDescription = stringResource(R.string.laws_archive_content_description)
               )
             },
             enableDismissing = !lazyListState.isScrollInProgress

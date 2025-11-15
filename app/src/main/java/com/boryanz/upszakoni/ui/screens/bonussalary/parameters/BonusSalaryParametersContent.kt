@@ -9,8 +9,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.boryanz.upszakoni.R
 import com.boryanz.upszakoni.ui.components.Button
 import com.boryanz.upszakoni.ui.components.Spacer
 import com.boryanz.upszakoni.ui.components.UpsScaffold
@@ -24,7 +26,7 @@ fun BonusSalaryParametersContent(
     onSaveClicked: () -> Unit,
 ) {
     UpsScaffold(
-        topBarTitle = { Text("Параметри за бонус плата") },
+        topBarTitle = { Text(stringResource(R.string.parameters_title)) },
     ) {
         Column(
             modifier = Modifier
@@ -39,11 +41,11 @@ fun BonusSalaryParametersContent(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 8.dp),
-                    text = "Минимум прекувремени работни часови за остварување право на бонус плата",
+                    text = stringResource(R.string.parameters_overtime_description),
                     textAlign = TextAlign.Start
                 )
                 TextFieldInput.BaseOutline(
-                    labelText = "Годишни прекувремени работни часови",
+                    labelText = stringResource(R.string.parameters_overtime_label),
                     value = uiState.overtimeLimitValue,
                     isError = uiState.hasOvertimeLimitError,
                     onValueChanged = onOvertimeHoursValueChanged
@@ -53,11 +55,11 @@ fun BonusSalaryParametersContent(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 8.dp),
-                    text = "Максимум денови за користење од боледување(вклучувајки платено отсуство и прч)",
+                    text = stringResource(R.string.parameters_absence_description),
                     textAlign = TextAlign.Start
                 )
                 TextFieldInput.BaseOutline(
-                    labelText = "Максимум денови на отсуство",
+                    labelText = stringResource(R.string.parameters_absence_label),
                     value = uiState.absenceDaysLimitValue,
                     isError = uiState.hasAbsenceDaysLimitError,
                     onValueChanged = onAbsenceDaysLimitValueChanged
@@ -67,7 +69,7 @@ fun BonusSalaryParametersContent(
             Column {
                 Button.Primary(
                     isEnabled = !uiState.hasOvertimeLimitError && !uiState.hasAbsenceDaysLimitError,
-                    title = "Во ред",
+                    title = stringResource(R.string.parameters_ok_button),
                     onClick = onSaveClicked
                 )
             }
