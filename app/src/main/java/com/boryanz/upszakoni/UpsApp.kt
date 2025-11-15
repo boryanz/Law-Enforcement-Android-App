@@ -1,7 +1,6 @@
 package com.boryanz.upszakoni
 
 import android.app.Application
-import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsDao
 import com.boryanz.upszakoni.di.appModule
 import com.boryanz.upszakoni.domain.remoteconfig.RemoteConfigRepository
 import com.google.firebase.FirebaseApp
@@ -19,11 +18,10 @@ class UpsApp : Application() {
     FirebaseApp.initializeApp(this)
     initializeKoin()
     initializeRemoteConfig()
-    SharedPrefsDao.init(this)
   }
 
   private fun initializeRemoteConfig() {
-    remoteConfigRepository.initRemoteConfigs()
+    remoteConfigRepository.init()
   }
 
   private fun initializeKoin() {

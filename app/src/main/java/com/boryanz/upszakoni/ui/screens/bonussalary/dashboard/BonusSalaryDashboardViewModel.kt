@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.boryanz.upszakoni.data.local.database.model.MonthlyStats
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
-import com.boryanz.upszakoni.domain.remoteconfig.RemoteConfigRepository
+import com.boryanz.upszakoni.domain.remoteconfig.FirebaseRemoteConfig
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardUiEvent.DeleteAll
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardUiEvent.FetchMonthlyStats
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardUiState.MonthlyOvertime
@@ -39,7 +39,7 @@ sealed interface BonusSalaryDashboardUiEvent {
 
 class BonusSalaryDashboardViewModel(
   private val bonusSalaryRepository: BonusSalaryRepository,
-  remoteConfigRepository: RemoteConfigRepository,
+  remoteConfigRepository: FirebaseRemoteConfig,
 ) : ViewModel() {
 
   private val _uiState: MutableStateFlow<BonusSalaryDashboardUiState> =

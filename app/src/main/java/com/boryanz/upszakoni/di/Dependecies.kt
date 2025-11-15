@@ -1,5 +1,9 @@
 package com.boryanz.upszakoni.di
 
+import android.content.Context
+import android.content.SharedPreferences
+import com.boryanz.upszakoni.data.local.sharedprefs.PrefsLocalStorage
+import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsManager
 import com.boryanz.upszakoni.domain.GenerateDaysInMonthsUseCase
 import com.boryanz.upszakoni.domain.GetLawsUseCase
 import com.boryanz.upszakoni.domain.LawsUseCase
@@ -7,7 +11,6 @@ import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepositoryImpl
 import com.boryanz.upszakoni.domain.remoteconfig.RemoteConfigRepository
 import com.boryanz.upszakoni.ui.navigation.navgraph.overtimetracking.OvertimeTrackNavigationGraphViewModel
-import com.boryanz.upszakoni.ui.navigation.navigationwrapper.NavigationWrapper
 import com.boryanz.upszakoni.ui.screens.archivedlaws.ArchivedLawsViewModel
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardViewModel
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.monthly.OvertimeMonthlyCalendarViewModel
@@ -22,16 +25,20 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
+  single<SharedPreferences> {
+    androidContext().getSharedPreferences("Ups shared prefs", Context.MODE_PRIVATE)
+  }
+  single<SharedPrefsManager> { PrefsLocalStorage(get()) }
   factory { GenerateDaysInMonthsUseCase(get()) }
   single<BonusSalaryRepository> { BonusSalaryRepositoryImpl(androidContext()) }
   single { RemoteConfigRepository() }
   factory<LawsUseCase> { GetLawsUseCase(androidContext()) }
-  viewModel { ArchivedLawsViewModel(get()) }
+  viewModel { ArchivedLawsViewModel(get(), get()) }
   viewModel { BonusSalaryParametersViewModel(get()) }
-  viewModel { MigrationProposalViewModel(get()) }
-  viewModel { (navigator: NavigationWrapper) -> OverTimeInputViewModel(get(), navigator) }
+  viewModel { MigrationProposalViewModel(get(), get()) }
+  viewModel { OverTimeInputViewModel(get()) }
   viewModel { BonusSalaryDashboardViewModel(get(), get()) }
-  viewModel { LawsViewModel(get(), get()) }
+  viewModel { LawsViewModel(get(), get(), get()) }
   viewModel { InformationScreenViewModel(get()) }
   viewModel { OvertimeTrackNavigationGraphViewModel(get()) }
   viewModel { OvertimeMonthlyCalendarViewModel(get()) }

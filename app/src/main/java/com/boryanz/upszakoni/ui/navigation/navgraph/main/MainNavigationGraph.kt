@@ -2,7 +2,6 @@ package com.boryanz.upszakoni.ui.navigation.navgraph.main
 
 import android.content.Context
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -24,7 +23,7 @@ import com.boryanz.upszakoni.data.NavigationDrawerDestination.wanted_criminals
 import com.boryanz.upszakoni.data.NavigationDrawerDestination.writing_guide
 import com.boryanz.upszakoni.data.crimesItems
 import com.boryanz.upszakoni.data.goldenQuestions
-import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsDao
+import com.boryanz.upszakoni.data.local.sharedprefs.PrefsLocalStorage
 import com.boryanz.upszakoni.data.offensesItems
 import com.boryanz.upszakoni.data.policeAuthorities
 import com.boryanz.upszakoni.ui.components.Icons
@@ -55,6 +54,7 @@ import com.boryanz.upszakoni.utils.noExitTransition
 import com.boryanz.upszakoni.utils.openDialer
 import com.boryanz.upszakoni.utils.openPdfWithExternalReader
 import com.boryanz.upszakoni.utils.supportExternalPdfReader
+import org.koin.compose.koinInject
 
 private const val WANTED_PERSONS_URL = "https://mvr.gov.mk/potragi-ischeznati/potragi"
 private const val DAILY_NEWS_URL = "https://mvr.gov.mk/dnevni-bilteni"
@@ -66,10 +66,10 @@ fun NavigationGraph(
   onAppUpdateClicked: () -> Unit,
 ) {
   val context = LocalContext.current
-  val sharedPrefsDao = remember { SharedPrefsDao }
+  val storage = koinInject<PrefsLocalStorage>()
   NavHost(
     navController = navHostController,
-    startDestination = if (sharedPrefsDao.isPrivacyPolicyAccepted()) LawsDestination else PrivacyPolicyAcceptanceDestination,
+    startDestination = if (storage.isPrivacyPolicyAccepted()) LawsDestination else PrivacyPolicyAcceptanceDestination,
     enterTransition = noEnterTransition,
     exitTransition = noExitTransition
   ) {
