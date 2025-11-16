@@ -6,6 +6,7 @@ import com.boryanz.upszakoni.data.local.database.BonusSalaryDao
 import com.boryanz.upszakoni.data.local.database.UpsDatabase
 import com.boryanz.upszakoni.data.local.sharedprefs.PrefsLocalStorage
 import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsManager
+import com.boryanz.upszakoni.domain.DaysInMonthDataGenerator
 import com.boryanz.upszakoni.domain.GenerateDaysInMonthsUseCase
 import com.boryanz.upszakoni.domain.GetLawsUseCase
 import com.boryanz.upszakoni.domain.LawsUseCase
@@ -34,7 +35,7 @@ val appModule = module {
   single<SharedPrefsManager> { PrefsLocalStorage(get()) }
   single<UpsDatabase> { UpsDatabase.getInstance(androidContext()) }
   single<BonusSalaryDao> { get<UpsDatabase>().bonusSalaryDao() }
-  factory { GenerateDaysInMonthsUseCase() }
+  factory<DaysInMonthDataGenerator> { GenerateDaysInMonthsUseCase() }
   single<BonusSalaryRepository> { BonusSalaryRepositoryImpl(get()) }
   single<FirebaseRemoteConfig> { RemoteConfigRepository() }
   factory<LawsUseCase> { GetLawsUseCase(androidContext()) }

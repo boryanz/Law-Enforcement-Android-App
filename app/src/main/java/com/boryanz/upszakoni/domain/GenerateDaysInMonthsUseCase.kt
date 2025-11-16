@@ -6,9 +6,14 @@ import com.boryanz.upszakoni.ui.components.defaultMonthlyStats
 import java.time.Year
 import java.time.YearMonth
 
-class GenerateDaysInMonthsUseCase() {
+interface DaysInMonthDataGenerator {
+
+  operator fun invoke(): List<DayInMonth>
+}
+
+class GenerateDaysInMonthsUseCase() : DaysInMonthDataGenerator {
   @SuppressLint("NewApi")
-  operator fun invoke(): List<DayInMonth> {
+  override operator fun invoke(): List<DayInMonth> {
     return defaultMonthlyStats.map { month ->
       val daysInMonths: List<Int> = (1..getDaysForMonth(month.monthOrder)).toList()
       daysInMonths.map { monthOrder ->
@@ -36,5 +41,4 @@ class GenerateDaysInMonthsUseCase() {
     (1..12).associateWith { month ->
       YearMonth.of(value, month).lengthOfMonth()
     }
-
 }

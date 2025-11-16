@@ -3,7 +3,7 @@ package com.boryanz.upszakoni.ui.screens.bonussalary.dashboard
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.boryanz.upszakoni.data.local.database.model.MonthlyStats
-import com.boryanz.upszakoni.domain.GenerateDaysInMonthsUseCase
+import com.boryanz.upszakoni.domain.DaysInMonthDataGenerator
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
 import com.boryanz.upszakoni.domain.remoteconfig.FirebaseRemoteConfig
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardUiEvent.DeleteAll
@@ -40,7 +40,7 @@ sealed interface BonusSalaryDashboardUiEvent {
 
 class BonusSalaryDashboardViewModel(
   private val bonusSalaryRepository: BonusSalaryRepository,
-  private val generateDefaultDaysInMonthsUseCase: GenerateDaysInMonthsUseCase,
+  private val generateDefaultDaysInMonthsUseCase: DaysInMonthDataGenerator,
   remoteConfigRepository: FirebaseRemoteConfig,
 ) : ViewModel() {
 

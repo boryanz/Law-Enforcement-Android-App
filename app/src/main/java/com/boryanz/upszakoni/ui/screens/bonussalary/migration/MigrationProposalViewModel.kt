@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsManager
+import com.boryanz.upszakoni.domain.DaysInMonthDataGenerator
 import com.boryanz.upszakoni.domain.GenerateDaysInMonthsUseCase
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
 import com.boryanz.upszakoni.ui.navigation.destinations.BonusSalaryDashboardDestination
@@ -23,7 +24,7 @@ sealed interface BonusSalaryUiState {
 
 class MigrationProposalViewModel(
   private val bonusSalaryRepository: BonusSalaryRepository,
-  private val generateDefaultDaysInMonthsUseCase: GenerateDaysInMonthsUseCase,
+  private val generateDefaultDaysInMonthsUseCase: DaysInMonthDataGenerator,
   private val localStorage: SharedPrefsManager,
 ) : ViewModel() {
 

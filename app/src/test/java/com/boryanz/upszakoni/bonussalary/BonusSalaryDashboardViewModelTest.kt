@@ -3,6 +3,7 @@ package com.boryanz.upszakoni.bonussalary
 import com.boryanz.upszakoni.MainDispatcherRule
 import com.boryanz.upszakoni.domain.remoteconfig.RemoteConfig
 import com.boryanz.upszakoni.fakes.FakeBonusSalaryRepository
+import com.boryanz.upszakoni.fakes.FakeGenerateDaysInMonthsUseCase
 import com.boryanz.upszakoni.fakes.FakeRemoteConfigRepository
 import com.boryanz.upszakoni.fakes.Treshold
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardUiEvent
@@ -10,7 +11,6 @@ import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboa
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardUiState.MonthlyOvertime
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -37,6 +37,7 @@ class BonusSalaryDashboardViewModelTest {
     )
     viewmodel = BonusSalaryDashboardViewModel(
       bonusSalaryRepository = FakeBonusSalaryRepository(Treshold.HaveTreshold),
+      generateDefaultDaysInMonthsUseCase = FakeGenerateDaysInMonthsUseCase(),
       remoteConfigRepository = FakeRemoteConfigRepository(
         RemoteConfig(
           isAppUpdateAvailable = false,
