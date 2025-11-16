@@ -21,6 +21,5 @@ fun PrivacyPolicyAcceptanceScreen(
       })
     },
     backButton = { backButton() }
-
   )
 }

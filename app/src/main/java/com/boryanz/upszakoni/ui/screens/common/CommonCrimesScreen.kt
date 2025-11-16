@@ -27,7 +27,6 @@ typealias PdfData = (String, List<Int>) -> Unit
 fun CommonOffensesAndCrimes(
     title: String,
     commonCrimesItems: List<Category>,
-    onCrimeClicked: PdfData,
     onBackClicked: () -> Unit,
 ) {
     UpsScaffold(
