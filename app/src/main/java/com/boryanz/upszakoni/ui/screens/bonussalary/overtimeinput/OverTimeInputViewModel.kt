@@ -2,7 +2,7 @@ package com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.boryanz.upszakoni.analytics.FirebaseAnalyticsManager
+import com.boryanz.upszakoni.analytics.AnalyticsLogger
 import com.boryanz.upszakoni.data.local.database.model.MonthlyStats
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
 import com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput.OverTimeInputUiEvent.AbsenceDaysValueChanged
@@ -33,6 +33,7 @@ sealed interface OvertimeInputEvent {
 
 class OverTimeInputViewModel(
   private val bonusSalaryRepositoryImpl: BonusSalaryRepository,
+  private val analyticsLogger: AnalyticsLogger,
 ) : ViewModel() {
 
   private val _uiState: MutableStateFlow<OverTimeInputUiState> =
@@ -43,7 +44,7 @@ class OverTimeInputViewModel(
   val event = _event.asSharedFlow()
 
   init {
-    FirebaseAnalyticsManager.logScreenEntry("Overtime Input Screen")
+    analyticsLogger.logScreenEntry("Overtime Input Screen")
   }
 
   fun onUiEvent(event: OverTimeInputUiEvent) = viewModelScope.launch {
@@ -80,7 +81,7 @@ class OverTimeInputViewModel(
       }
 
       is SaveClicked -> {
-        FirebaseAnalyticsManager.logButtonClick(
+        analyticsLogger.logButtonClick(
           buttonName = "Save overtime hours button",
           screenName = "Overtime Input Screen"
         )

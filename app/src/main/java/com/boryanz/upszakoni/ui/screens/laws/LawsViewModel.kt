@@ -2,7 +2,7 @@ package com.boryanz.upszakoni.ui.screens.laws
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.boryanz.upszakoni.analytics.FirebaseAnalyticsManager
+import com.boryanz.upszakoni.analytics.AnalyticsLogger
 import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsManager
 import com.boryanz.upszakoni.domain.LawsUseCase
 import com.boryanz.upszakoni.domain.remoteconfig.FirebaseRemoteConfig
@@ -20,6 +20,7 @@ class LawsViewModel(
   private val getLawsUseCase: LawsUseCase,
   private val remoteConfigRepository: FirebaseRemoteConfig,
   private val localStorage: SharedPrefsManager,
+  private val analyticsLogger: AnalyticsLogger,
 ) : ViewModel() {
 
   private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
@@ -29,7 +30,7 @@ class LawsViewModel(
     get() = remoteConfigRepository.remoteConfigState
 
   init {
-    FirebaseAnalyticsManager.logScreenEntry("Laws Screen")
+    analyticsLogger.logScreenEntry("Laws Screen")
   }
 
   fun onUiEvent(event: ScreenAction) {

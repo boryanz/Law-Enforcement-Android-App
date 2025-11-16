@@ -2,6 +2,7 @@ package com.boryanz.upszakoni.bonussalary
 
 import com.boryanz.upszakoni.MainDispatcherRule
 import com.boryanz.upszakoni.domain.remoteconfig.RemoteConfig
+import com.boryanz.upszakoni.fakes.FakeAnalyticsManager
 import com.boryanz.upszakoni.fakes.FakeBonusSalaryRepository
 import com.boryanz.upszakoni.fakes.FakeGenerateDaysInMonthsUseCase
 import com.boryanz.upszakoni.fakes.FakeRemoteConfigRepository
@@ -10,7 +11,6 @@ import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboa
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardUiState
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardUiState.MonthlyOvertime
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardViewModel
-import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -24,6 +24,7 @@ class BonusSalaryDashboardViewModelTest {
   val mainDispatcherRule = MainDispatcherRule()
 
   private lateinit var viewmodel: BonusSalaryDashboardViewModel
+
 
   @Test
   fun `fetch monthly overtime hours successfully where all months have data`() = runTest {
@@ -39,6 +40,7 @@ class BonusSalaryDashboardViewModelTest {
     viewmodel = BonusSalaryDashboardViewModel(
       bonusSalaryRepository = FakeBonusSalaryRepository(Treshold.HaveTreshold),
       generateDefaultDaysInMonthsUseCase = FakeGenerateDaysInMonthsUseCase(),
+      analyticsLogger = FakeAnalyticsManager(),
       remoteConfigRepository = FakeRemoteConfigRepository(
         RemoteConfig(
           isAppUpdateAvailable = false,

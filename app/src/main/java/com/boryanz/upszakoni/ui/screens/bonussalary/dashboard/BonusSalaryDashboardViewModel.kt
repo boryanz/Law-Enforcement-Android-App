@@ -2,7 +2,7 @@ package com.boryanz.upszakoni.ui.screens.bonussalary.dashboard
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.boryanz.upszakoni.analytics.FirebaseAnalyticsManager
+import com.boryanz.upszakoni.analytics.AnalyticsLogger
 import com.boryanz.upszakoni.data.local.database.model.MonthlyStats
 import com.boryanz.upszakoni.domain.DaysInMonthDataGenerator
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
@@ -42,6 +42,7 @@ sealed interface BonusSalaryDashboardUiEvent {
 class BonusSalaryDashboardViewModel(
   private val bonusSalaryRepository: BonusSalaryRepository,
   private val generateDefaultDaysInMonthsUseCase: DaysInMonthDataGenerator,
+  private val analyticsLogger: AnalyticsLogger,
   remoteConfigRepository: FirebaseRemoteConfig,
 ) : ViewModel() {
 
@@ -53,7 +54,7 @@ class BonusSalaryDashboardViewModel(
 
 
   init {
-    FirebaseAnalyticsManager.logScreenEntry("Bonus Salary Dashboard")
+    analyticsLogger.logScreenEntry("Bonus Salary Dashboard")
   }
 
   fun onUiEvent(event: BonusSalaryDashboardUiEvent) = viewModelScope.launch {

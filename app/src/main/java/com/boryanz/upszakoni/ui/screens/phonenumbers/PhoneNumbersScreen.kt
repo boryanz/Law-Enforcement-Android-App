@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import com.boryanz.upszakoni.R
-import com.boryanz.upszakoni.analytics.FirebaseAnalyticsManager
+import com.boryanz.upszakoni.analytics.AnalyticsLogger
 import com.boryanz.upszakoni.data.phoneNumbers
 import com.boryanz.upszakoni.ui.components.Icons
 import com.boryanz.upszakoni.ui.components.ItemWithDescription
@@ -27,9 +27,10 @@ import com.boryanz.upszakoni.ui.components.UpsScaffold
 fun PhoneNumbersScreen(
   onContactClicked: (phoneNumber: String) -> Unit,
   onBackClicked: () -> Unit,
+  analyticsLogger: AnalyticsLogger,
 ) {
   LifecycleEventEffect(event = Lifecycle.Event.ON_CREATE) {
-    FirebaseAnalyticsManager.logScreenEntry("Phone numbers screen")
+    analyticsLogger.logScreenEntry("Phone numbers screen")
   }
 
   UpsScaffold(

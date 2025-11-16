@@ -1,7 +1,6 @@
 package com.boryanz.upszakoni
 
 import android.app.Application
-import com.boryanz.upszakoni.analytics.FirebaseAnalyticsManager
 import com.boryanz.upszakoni.di.appModule
 import com.boryanz.upszakoni.domain.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.FirebaseApp
@@ -18,12 +17,7 @@ class UpsApp : Application() {
     super.onCreate()
     FirebaseApp.initializeApp(this)
     initializeKoin()
-    initializeAnalytics()
     initializeRemoteConfig()
-  }
-
-  private fun initializeAnalytics() {
-    FirebaseAnalyticsManager.init(this)
   }
 
   private fun initializeRemoteConfig() {
