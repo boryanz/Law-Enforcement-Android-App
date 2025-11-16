@@ -11,7 +11,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -21,6 +20,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.boryanz.upszakoni.R
 import com.boryanz.upszakoni.ui.components.Button
@@ -37,100 +38,101 @@ import org.koin.androidx.compose.koinViewModel
 
 
 sealed interface BonusSalaryGraphUiAction {
-    data class MigrationAccepted(val navigateNext: () -> Unit) : BonusSalaryGraphUiAction
+  data class MigrationAccepted(val navigateNext: () -> Unit) : BonusSalaryGraphUiAction
 }
 
 @Composable
 fun MigrationProposalScreen(
-    onMigrationAccepted: () -> Unit,
-    onMigrationCancelled: (startDestination: Any) -> Unit,
+  onMigrationAccepted: () -> Unit,
+  onMigrationCancelled: (startDestination: Any) -> Unit,
 ) {
-    val viewModel = koinViewModel<MigrationProposalViewModel>()
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+  val viewModel = koinViewModel<MigrationProposalViewModel>()
+  val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(Unit) {
-        viewModel.checkIfUserAlreadyHaveData()
+  LifecycleEventEffect(event = Lifecycle.Event.ON_CREATE) {
+    viewModel.checkIfUserAlreadyHaveData()
+  }
+
+  when (uiState) {
+    Loading -> Loader()
+    is DefaultDestination -> {
+      onMigrationCancelled((uiState as DefaultDestination).startDestination)
     }
 
-    when (uiState) {
-        Loading -> Loader()
-        is DefaultDestination -> {
-            onMigrationCancelled((uiState as DefaultDestination).startDestination)
-        }
+    is DashboardDestination -> {
+      onMigrationCancelled((uiState as DashboardDestination).startDestination)
+    }
 
-        is DashboardDestination -> {
-            onMigrationCancelled((uiState as DashboardDestination).startDestination)
-        }
-
-        ScreenContent -> {
-            MigrationProposalContent(
-                onMigrationAccepted = {
-                    viewModel.onMigrationAccepted(
-                        migrationAccepted = MigrationAccepted(
-                            navigateNext = onMigrationAccepted
-                        )
-                    )
-                },
+    ScreenContent -> {
+      MigrationProposalContent(
+        onMigrationAccepted = {
+          viewModel.onMigrationAccepted(
+            migrationAccepted = MigrationAccepted(
+              navigateNext = onMigrationAccepted
             )
-        }
+          )
+        },
+      )
     }
+  }
 }
 
 
 @Composable
 fun MigrationProposalContent(
-    onMigrationAccepted: () -> Unit,
+  onMigrationAccepted: () -> Unit,
 ) {
-    val message = remember { """
+  val message = remember {
+    """
     Со воведувањето на новата опција, прекувремените часови ќе се евидентираат по денови во месецот, во формат на календар.
 
     Бидејќи оваа промена бара целосна миграција на постојната база на податоци, сите претходно зачувани податоци ќе бидат отстранети.
 
     Ви благодариме на разбирањето и поддршката.""".trimIndent()
 
-    }
-    UpsScaffold(
-        topBarTitle = { Text(text = stringResource(R.string.migration_title)) },
+  }
+  UpsScaffold(
+    topBarTitle = { Text(text = stringResource(R.string.migration_title)) },
+  ) {
+    Column(
+      modifier = Modifier
+        .fillMaxSize()
+        .padding(it)
+        .padding(all = 12.dp)
+        .verticalScroll(rememberScrollState()),
+      horizontalAlignment = Alignment.CenterHorizontally,
+      verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(it)
-                .padding(all = 12.dp)
-                .verticalScroll(rememberScrollState()),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceBetween
-        ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Icon(
-                    modifier = Modifier
-                        .width(100.dp)
-                        .height(100.dp),
-                    painter = painterResource(R.drawable.overtime_proposal_200),
-                    contentDescription = ""
-                )
-                Spacer.Vertical(20.dp)
-                Text(
-                    textAlign = TextAlign.Start,
-                    text = message
-                )
-            }
-            Spacer.Vertical(24.dp)
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Button.Primary(stringResource(R.string.migration_ok_button), onClick = onMigrationAccepted)
-            }
-        }
+      Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+      ) {
+        Icon(
+          modifier = Modifier
+            .width(100.dp)
+            .height(100.dp),
+          painter = painterResource(R.drawable.overtime_proposal_200),
+          contentDescription = ""
+        )
+        Spacer.Vertical(20.dp)
+        Text(
+          textAlign = TextAlign.Start,
+          text = message
+        )
+      }
+      Spacer.Vertical(24.dp)
+      Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Button.Primary(stringResource(R.string.migration_ok_button), onClick = onMigrationAccepted)
+      }
     }
+  }
 }
 
 
 @PreviewLightDark
 @Composable
 private fun MigrationProposalPreview() {
-    UpsTheme {
-        MigrationProposalScreen({}) { }
-    }
+  UpsTheme {
+    MigrationProposalScreen({}) { }
+  }
 }

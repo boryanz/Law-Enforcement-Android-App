@@ -1,8 +1,9 @@
 package com.boryanz.upszakoni.ui.screens.bonussalary.dashboard
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.boryanz.upszakoni.ui.components.Loader
 import org.koin.androidx.compose.koinViewModel
@@ -18,12 +19,11 @@ fun BonusSalaryDashboardScreen(
   val viewModel = koinViewModel<BonusSalaryDashboardViewModel>()
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-  LaunchedEffect(true) {
+  LifecycleEventEffect(event = Lifecycle.Event.ON_CREATE) {
     viewModel.onUiEvent(BonusSalaryDashboardUiEvent.FetchMonthlyStats)
   }
 
   if (uiState.isLoading) Loader()
-
 
   BonusSalaryDashboardContent(
     uiState = uiState,

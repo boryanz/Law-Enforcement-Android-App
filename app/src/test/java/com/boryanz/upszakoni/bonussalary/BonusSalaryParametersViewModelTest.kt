@@ -6,7 +6,6 @@ import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BonusSalaryParame
 import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BonusSalaryParametersUiState
 import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BonusSalaryParametersViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Rule

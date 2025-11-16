@@ -4,6 +4,9 @@ import com.boryanz.upszakoni.data.local.database.model.BonusSalaryTreshold
 import com.boryanz.upszakoni.data.local.database.model.DayInMonth
 import com.boryanz.upszakoni.data.local.database.model.MonthlyStats
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
+import com.boryanz.upszakoni.fakes.Treshold.Error
+import com.boryanz.upszakoni.fakes.Treshold.HaveTreshold
+import com.boryanz.upszakoni.fakes.Treshold.NoTreshold
 import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BONUS_SALARY_TRESHOLD
 
 sealed interface Treshold {
@@ -13,7 +16,7 @@ sealed interface Treshold {
 }
 
 class FakeBonusSalaryRepository(
-  private val treshold: Treshold = Treshold.HaveTreshold,
+  private val treshold: Treshold = HaveTreshold,
   private val shouldFetchMonthlyStatsFail: Boolean = false,
 ) : BonusSalaryRepository {
 
@@ -23,9 +26,9 @@ class FakeBonusSalaryRepository(
 
   override suspend fun getTreshold(id: String): Result<BonusSalaryTreshold?> {
     return when (treshold) {
-      Treshold.Error -> Result.failure(Exception())
-      Treshold.NoTreshold -> Result.success(null)
-      Treshold.HaveTreshold -> {
+      Error -> Result.failure(Exception())
+      NoTreshold -> Result.success(null)
+      HaveTreshold -> {
         Result.success(
           BonusSalaryTreshold(
             id = BONUS_SALARY_TRESHOLD,
