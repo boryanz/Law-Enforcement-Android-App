@@ -2,6 +2,7 @@ package com.boryanz.upszakoni.ui.screens.bonussalary.dashboard
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.boryanz.upszakoni.analytics.FirebaseAnalyticsManager
 import com.boryanz.upszakoni.data.local.database.model.MonthlyStats
 import com.boryanz.upszakoni.domain.DaysInMonthDataGenerator
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
@@ -49,6 +50,11 @@ class BonusSalaryDashboardViewModel(
   val uiState = _uiState.asStateFlow()
 
   private val nonWorkingDaysFlag = remoteConfigRepository.remoteConfigState.value.nonWorkingDays
+
+
+  init {
+    FirebaseAnalyticsManager.logScreenEntry("Bonus Salary Dashboard")
+  }
 
   fun onUiEvent(event: BonusSalaryDashboardUiEvent) = viewModelScope.launch {
     _uiState.update { it.copy(isLoading = true) }

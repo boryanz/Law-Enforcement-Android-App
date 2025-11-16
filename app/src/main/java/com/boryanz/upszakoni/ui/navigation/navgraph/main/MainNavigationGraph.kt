@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.boryanz.upszakoni.R
+import com.boryanz.upszakoni.analytics.FirebaseAnalyticsManager
 import com.boryanz.upszakoni.customtab.CustomTabLauncher
 import com.boryanz.upszakoni.data.NavigationDrawerDestination
 import com.boryanz.upszakoni.data.NavigationDrawerDestination.authorities
@@ -85,9 +86,6 @@ fun NavigationGraph(
       CommonOffensesAndCrimes(
         title = stringResource(R.string.offenses_title),
         commonCrimesItems = offensesItems,
-        onCrimeClicked = { lawName, pagesToLoad ->
-          /* TODO */
-        },
         onBackClicked = { navHostController.navigateUp() }
       )
     }
@@ -96,7 +94,6 @@ fun NavigationGraph(
       CommonOffensesAndCrimes(
         title = stringResource(R.string.crimes_title),
         commonCrimesItems = crimesItems,
-        onCrimeClicked = { _, _ ->  /* TODO */ },
         onBackClicked = { navHostController.navigateUp() }
       )
     }
@@ -144,6 +141,7 @@ fun NavigationGraph(
           navHostController.navigateToDrawerDestination(navigationDrawerDestination)
         },
         onLawClick = { lawName ->
+          FirebaseAnalyticsManager.logLawClick(lawName)
           openPdfLaw(lawName, context)
         },
         onArchivedLawsClicked = {
@@ -167,7 +165,6 @@ fun NavigationGraph(
       )
     }
 
-    // https://spm.mk/
     composable<PartnersDestination> {
       PartnersScreen(
         onBackClicked = navHostController::navigateUp,

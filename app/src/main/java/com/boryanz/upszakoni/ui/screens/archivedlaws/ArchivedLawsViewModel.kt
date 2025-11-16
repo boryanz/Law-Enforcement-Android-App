@@ -2,6 +2,7 @@ package com.boryanz.upszakoni.ui.screens.archivedlaws
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.boryanz.upszakoni.analytics.FirebaseAnalyticsManager
 import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsManager
 import com.boryanz.upszakoni.domain.LawsUseCase
 import com.boryanz.upszakoni.ui.screens.common.ScreenAction
@@ -19,6 +20,10 @@ class ArchivedLawsViewModel(
 
   private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
   val uiState = _uiState.asStateFlow()
+
+  init {
+    FirebaseAnalyticsManager.logScreenEntry("Archived Laws Screen")
+  }
 
   fun onUiEvent(event: ScreenAction) {
     viewModelScope.launch {

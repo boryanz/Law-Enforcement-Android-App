@@ -2,6 +2,7 @@ package com.boryanz.upszakoni.ui.screens.laws
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.boryanz.upszakoni.analytics.FirebaseAnalyticsManager
 import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsManager
 import com.boryanz.upszakoni.domain.LawsUseCase
 import com.boryanz.upszakoni.domain.remoteconfig.FirebaseRemoteConfig
@@ -27,6 +28,10 @@ class LawsViewModel(
   val featureFlagsState: StateFlow<RemoteConfig>
     get() = remoteConfigRepository.remoteConfigState
 
+  init {
+    FirebaseAnalyticsManager.logScreenEntry("Laws Screen")
+  }
+
   fun onUiEvent(event: ScreenAction) {
     viewModelScope.launch {
       when (event) {
@@ -40,7 +45,8 @@ class LawsViewModel(
         is ScreenAction.GetLaws -> {
           val laws = getLawsUseCase().map { it.removePdfExtension() }
           val availableLaws = laws.filterAvailableLaws()
-          _uiState.update { UiState(availableLaws) }
+          _uiState.update { UiState(availableLaws)
+          }
         }
       }
     }
