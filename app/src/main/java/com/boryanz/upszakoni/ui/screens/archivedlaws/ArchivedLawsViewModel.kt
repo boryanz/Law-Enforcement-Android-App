@@ -2,6 +2,7 @@ package com.boryanz.upszakoni.ui.screens.archivedlaws
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.boryanz.upszakoni.analytics.AnalyticsLogger
 import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsManager
 import com.boryanz.upszakoni.domain.LawsUseCase
 import com.boryanz.upszakoni.ui.screens.common.ScreenAction
@@ -15,10 +16,15 @@ import kotlinx.coroutines.launch
 class ArchivedLawsViewModel(
   private val getLawsUseCase: LawsUseCase,
   private val localStorage: SharedPrefsManager,
+  private val analyticsLogger: AnalyticsLogger,
 ) : ViewModel() {
 
   private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
   val uiState = _uiState.asStateFlow()
+
+  init {
+    analyticsLogger.logScreenEntry("Archived Laws Screen")
+  }
 
   fun onUiEvent(event: ScreenAction) {
     viewModelScope.launch {

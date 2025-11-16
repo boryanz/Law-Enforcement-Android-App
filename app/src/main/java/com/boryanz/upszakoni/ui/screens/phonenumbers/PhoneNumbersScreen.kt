@@ -14,7 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
 import com.boryanz.upszakoni.R
+import com.boryanz.upszakoni.analytics.AnalyticsLogger
 import com.boryanz.upszakoni.data.phoneNumbers
 import com.boryanz.upszakoni.ui.components.Icons
 import com.boryanz.upszakoni.ui.components.ItemWithDescription
@@ -22,34 +25,44 @@ import com.boryanz.upszakoni.ui.components.UpsScaffold
 
 @Composable
 fun PhoneNumbersScreen(
-    onContactClicked: (phoneNumber: String) -> Unit,
-    onBackClicked: () -> Unit,
+  onContactClicked: (phoneNumber: String) -> Unit,
+  onBackClicked: () -> Unit,
+  analyticsLogger: AnalyticsLogger,
 ) {
-    UpsScaffold(
-        topBarTitle = { Text(text = stringResource(R.string.phone_numbers_title), fontWeight = FontWeight.Bold) },
-        navigationIcon = {
-            Icons.Back(onClick = onBackClicked)
-        }
-    ) { paddingValues ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .padding(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top
-        ) {
-            LazyColumn {
-                items(phoneNumbers) { item ->
-                    ItemWithDescription(
-                        isEnabled = true,
-                        title = item.policeStation,
-                        description = item.contactPhone,
-                        onClick = { onContactClicked(item.contactPhone) }
-                    )
-                    Spacer(modifier = Modifier.padding(vertical = 4.dp))
-                }
-            }
-        }
+  LifecycleEventEffect(event = Lifecycle.Event.ON_CREATE) {
+    analyticsLogger.logScreenEntry("Phone numbers screen")
+  }
+
+  UpsScaffold(
+    topBarTitle = {
+      Text(
+        text = stringResource(R.string.phone_numbers_title),
+        fontWeight = FontWeight.Bold
+      )
+    },
+    navigationIcon = {
+      Icons.Back(onClick = onBackClicked)
     }
+  ) { paddingValues ->
+    Column(
+      modifier = Modifier
+        .fillMaxSize()
+        .padding(paddingValues)
+        .padding(8.dp),
+      horizontalAlignment = Alignment.CenterHorizontally,
+      verticalArrangement = Arrangement.Top
+    ) {
+      LazyColumn {
+        items(phoneNumbers) { item ->
+          ItemWithDescription(
+            isEnabled = true,
+            title = item.policeStation,
+            description = item.contactPhone,
+            onClick = { onContactClicked(item.contactPhone) }
+          )
+          Spacer(modifier = Modifier.padding(vertical = 4.dp))
+        }
+      }
+    }
+  }
 }

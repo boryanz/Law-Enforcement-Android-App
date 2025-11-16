@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.boryanz.upszakoni.R
+import com.boryanz.upszakoni.analytics.AnalyticsLogger
 import com.boryanz.upszakoni.customtab.CustomTabLauncher
 import com.boryanz.upszakoni.data.NavigationDrawerDestination
 import com.boryanz.upszakoni.data.NavigationDrawerDestination.authorities
@@ -67,6 +68,8 @@ fun NavigationGraph(
 ) {
   val context = LocalContext.current
   val storage: SharedPrefsManager = koinInject()
+  val analyticsLogger: AnalyticsLogger = koinInject()
+
   NavHost(
     navController = navHostController,
     startDestination = if (storage.isPrivacyPolicyAccepted()) LawsDestination else PrivacyPolicyAcceptanceDestination,
@@ -85,9 +88,6 @@ fun NavigationGraph(
       CommonOffensesAndCrimes(
         title = stringResource(R.string.offenses_title),
         commonCrimesItems = offensesItems,
-        onCrimeClicked = { lawName, pagesToLoad ->
-          /* TODO */
-        },
         onBackClicked = { navHostController.navigateUp() }
       )
     }
@@ -96,7 +96,6 @@ fun NavigationGraph(
       CommonOffensesAndCrimes(
         title = stringResource(R.string.crimes_title),
         commonCrimesItems = crimesItems,
-        onCrimeClicked = { _, _ ->  /* TODO */ },
         onBackClicked = { navHostController.navigateUp() }
       )
     }
@@ -117,7 +116,8 @@ fun NavigationGraph(
       GoldenCrimeQuestionsScreen(
         topBarTitle = stringResource(R.string.golden_questions_title),
         items = goldenQuestions,
-        onBackClicked = { navHostController.navigateUp() }
+        onBackClicked = { navHostController.navigateUp() },
+        analyticsLogger = analyticsLogger
       )
     }
 
@@ -126,7 +126,8 @@ fun NavigationGraph(
         onContactClicked = { phoneNumber ->
           context.openDialer(phoneNumber)
         },
-        onBackClicked = { navHostController.navigateUp() }
+        onBackClicked = { navHostController.navigateUp() },
+        analyticsLogger = analyticsLogger
       )
     }
 
@@ -167,7 +168,6 @@ fun NavigationGraph(
       )
     }
 
-    // https://spm.mk/
     composable<PartnersDestination> {
       PartnersScreen(
         onBackClicked = navHostController::navigateUp,

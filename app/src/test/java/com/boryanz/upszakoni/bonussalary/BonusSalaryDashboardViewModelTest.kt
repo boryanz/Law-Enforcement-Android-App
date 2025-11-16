@@ -2,6 +2,7 @@ package com.boryanz.upszakoni.bonussalary
 
 import com.boryanz.upszakoni.MainDispatcherRule
 import com.boryanz.upszakoni.domain.remoteconfig.RemoteConfig
+import com.boryanz.upszakoni.fakes.FakeAnalyticsManager
 import com.boryanz.upszakoni.fakes.FakeBonusSalaryRepository
 import com.boryanz.upszakoni.fakes.FakeGenerateDaysInMonthsUseCase
 import com.boryanz.upszakoni.fakes.FakeRemoteConfigRepository
@@ -24,6 +25,7 @@ class BonusSalaryDashboardViewModelTest {
 
   private lateinit var viewmodel: BonusSalaryDashboardViewModel
 
+
   @Test
   fun `fetch monthly overtime hours successfully where all months have data`() = runTest {
     //Given
@@ -38,6 +40,7 @@ class BonusSalaryDashboardViewModelTest {
     viewmodel = BonusSalaryDashboardViewModel(
       bonusSalaryRepository = FakeBonusSalaryRepository(Treshold.HaveTreshold),
       generateDefaultDaysInMonthsUseCase = FakeGenerateDaysInMonthsUseCase(),
+      analyticsLogger = FakeAnalyticsManager(),
       remoteConfigRepository = FakeRemoteConfigRepository(
         RemoteConfig(
           isAppUpdateAvailable = false,

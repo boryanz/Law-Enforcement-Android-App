@@ -2,6 +2,7 @@ package com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.boryanz.upszakoni.analytics.AnalyticsLogger
 import com.boryanz.upszakoni.data.local.database.model.MonthlyStats
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
 import com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput.OverTimeInputUiEvent.AbsenceDaysValueChanged
@@ -32,6 +33,7 @@ sealed interface OvertimeInputEvent {
 
 class OverTimeInputViewModel(
   private val bonusSalaryRepositoryImpl: BonusSalaryRepository,
+  private val analyticsLogger: AnalyticsLogger,
 ) : ViewModel() {
 
   private val _uiState: MutableStateFlow<OverTimeInputUiState> =
@@ -40,6 +42,10 @@ class OverTimeInputViewModel(
 
   private val _event: MutableSharedFlow<OvertimeInputEvent> = MutableSharedFlow()
   val event = _event.asSharedFlow()
+
+  init {
+    analyticsLogger.logScreenEntry("Overtime Input Screen")
+  }
 
   fun onUiEvent(event: OverTimeInputUiEvent) = viewModelScope.launch {
     val absenceDaysValidRange = 0..<31
@@ -58,14 +64,14 @@ class OverTimeInputViewModel(
       }
 
       is OvertimeHoursValueChanged -> {
-          _uiState.update {
-            it.copy(
-              overtimeHours = event.value,
-              hasOvertimeHoursError = runCatching {
-                event.value.toInt() !in overTimeHoursValidRange
-              }.getOrNull() ?: true
-            )
-          }
+        _uiState.update {
+          it.copy(
+            overtimeHours = event.value,
+            hasOvertimeHoursError = runCatching {
+              event.value.toInt() !in overTimeHoursValidRange
+            }.getOrNull() ?: true
+          )
+        }
       }
 
       is SickDaysValueChanged -> {
@@ -75,6 +81,12 @@ class OverTimeInputViewModel(
       }
 
       is SaveClicked -> {
+        analyticsLogger.logButtonClick(
+          buttonName = "Save overtime hours button",
+          screenName = "Overtime Input Screen"
+        )
+
+
         bonusSalaryRepositoryImpl.insertMonthlyStats(
           monthlyStats = MonthlyStats(
             month = event.month,

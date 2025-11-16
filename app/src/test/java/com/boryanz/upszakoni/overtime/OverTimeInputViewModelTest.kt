@@ -1,6 +1,7 @@
 package com.boryanz.upszakoni.overtime
 
 import com.boryanz.upszakoni.MainDispatcherRule
+import com.boryanz.upszakoni.fakes.FakeAnalyticsManager
 import com.boryanz.upszakoni.fakes.FakeBonusSalaryRepository
 import com.boryanz.upszakoni.fakes.Treshold
 import com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput.OverTimeInputUiEvent
@@ -18,12 +19,14 @@ class OverTimeInputViewModelTest {
   @get:Rule
   val mainDispatcherRule = MainDispatcherRule()
 
-
   @Test
   fun `when absence days value is changed and it's in valid range then update state`() = runTest {
     //Given
     val viewModel =
-      OverTimeInputViewModel(bonusSalaryRepositoryImpl = FakeBonusSalaryRepository(Treshold.HaveTreshold))
+      OverTimeInputViewModel(
+        bonusSalaryRepositoryImpl = FakeBonusSalaryRepository(Treshold.HaveTreshold),
+        analyticsLogger = FakeAnalyticsManager()
+      )
     //When
     val value = "12"
     viewModel.onUiEvent(OverTimeInputUiEvent.AbsenceDaysValueChanged(value))
@@ -48,6 +51,7 @@ class OverTimeInputViewModelTest {
       //Given
       val viewModel = OverTimeInputViewModel(
         bonusSalaryRepositoryImpl = FakeBonusSalaryRepository(Treshold.HaveTreshold),
+        analyticsLogger = FakeAnalyticsManager()
       )
       //When
       val value = "not a number"
@@ -73,6 +77,7 @@ class OverTimeInputViewModelTest {
       //Given
       val viewModel = OverTimeInputViewModel(
         bonusSalaryRepositoryImpl = FakeBonusSalaryRepository(Treshold.HaveTreshold),
+        analyticsLogger = FakeAnalyticsManager()
       )
       //When
       val value = "44"
@@ -98,6 +103,7 @@ class OverTimeInputViewModelTest {
       //Given
       val viewModel = OverTimeInputViewModel(
         bonusSalaryRepositoryImpl = FakeBonusSalaryRepository(Treshold.HaveTreshold),
+        analyticsLogger = FakeAnalyticsManager()
       )
       //When
       val value = "31"
@@ -123,6 +129,7 @@ class OverTimeInputViewModelTest {
       //Given
       val viewModel = OverTimeInputViewModel(
         bonusSalaryRepositoryImpl = FakeBonusSalaryRepository(Treshold.HaveTreshold),
+        analyticsLogger = FakeAnalyticsManager()
       )
       //When
       val value = "-2"
@@ -147,6 +154,7 @@ class OverTimeInputViewModelTest {
     //Given
     val viewModel = OverTimeInputViewModel(
       bonusSalaryRepositoryImpl = FakeBonusSalaryRepository(Treshold.HaveTreshold),
+      analyticsLogger = FakeAnalyticsManager()
     )
     //When
     val value = "15"
@@ -172,6 +180,7 @@ class OverTimeInputViewModelTest {
       //Given
       val viewModel = OverTimeInputViewModel(
         bonusSalaryRepositoryImpl = FakeBonusSalaryRepository(Treshold.HaveTreshold),
+        analyticsLogger = FakeAnalyticsManager()
       )
       //When
       val value = "101"
@@ -197,6 +206,7 @@ class OverTimeInputViewModelTest {
       //Given
       val viewModel = OverTimeInputViewModel(
         bonusSalaryRepositoryImpl = FakeBonusSalaryRepository(Treshold.HaveTreshold),
+        analyticsLogger = FakeAnalyticsManager()
       )
       //When
       val value = "not a number"
@@ -222,6 +232,7 @@ class OverTimeInputViewModelTest {
       //Given
       val viewModel = OverTimeInputViewModel(
         bonusSalaryRepositoryImpl = FakeBonusSalaryRepository(Treshold.HaveTreshold),
+        analyticsLogger = FakeAnalyticsManager()
       )
       //When
       val value = "100"
@@ -247,6 +258,7 @@ class OverTimeInputViewModelTest {
       //Given
       val viewModel = OverTimeInputViewModel(
         bonusSalaryRepositoryImpl = FakeBonusSalaryRepository(Treshold.HaveTreshold),
+        analyticsLogger = FakeAnalyticsManager()
       )
       //When
       val value = "-2"
@@ -271,6 +283,7 @@ class OverTimeInputViewModelTest {
     //Given
     val viewModel = OverTimeInputViewModel(
       bonusSalaryRepositoryImpl = FakeBonusSalaryRepository(Treshold.HaveTreshold),
+      analyticsLogger = FakeAnalyticsManager()
     )
     //When
     val value = "12"
@@ -296,6 +309,7 @@ class OverTimeInputViewModelTest {
     //Given
     val viewModel = OverTimeInputViewModel(
       bonusSalaryRepositoryImpl = FakeBonusSalaryRepository(Treshold.HaveTreshold),
+      analyticsLogger = FakeAnalyticsManager()
     )
     //When
     val value = "55"
@@ -320,6 +334,7 @@ class OverTimeInputViewModelTest {
     //Given
     val viewModel = OverTimeInputViewModel(
       bonusSalaryRepositoryImpl = FakeBonusSalaryRepository(Treshold.HaveTreshold),
+      analyticsLogger = FakeAnalyticsManager()
     )
     //When
     val value = "not a number"
@@ -344,6 +359,7 @@ class OverTimeInputViewModelTest {
     //Given
     val viewModel = OverTimeInputViewModel(
       bonusSalaryRepositoryImpl = FakeBonusSalaryRepository(Treshold.HaveTreshold),
+      analyticsLogger = FakeAnalyticsManager()
     )
     //When
     val value = "31"
@@ -369,6 +385,7 @@ class OverTimeInputViewModelTest {
       //Given
       val viewModel = OverTimeInputViewModel(
         bonusSalaryRepositoryImpl = FakeBonusSalaryRepository(Treshold.HaveTreshold),
+        analyticsLogger = FakeAnalyticsManager()
       )
       //When
       val value = "-2"
@@ -394,6 +411,7 @@ class OverTimeInputViewModelTest {
     val bonusSalaryRepository = FakeBonusSalaryRepository(treshold = Treshold.HaveTreshold)
     val viewModel = OverTimeInputViewModel(
       bonusSalaryRepositoryImpl = bonusSalaryRepository,
+      analyticsLogger = FakeAnalyticsManager()
     )
 
     //When
@@ -421,6 +439,7 @@ class OverTimeInputViewModelTest {
     val bonusSalaryRepository = FakeBonusSalaryRepository(shouldFetchMonthlyStatsFail = true)
     val viewModel = OverTimeInputViewModel(
       bonusSalaryRepositoryImpl = bonusSalaryRepository,
+      analyticsLogger = FakeAnalyticsManager()
     )
 
     //When

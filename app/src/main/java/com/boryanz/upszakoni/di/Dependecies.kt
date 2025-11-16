@@ -2,6 +2,8 @@ package com.boryanz.upszakoni.di
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.boryanz.upszakoni.analytics.AnalyticsLogger
+import com.boryanz.upszakoni.analytics.FirebaseAnalyticsManager
 import com.boryanz.upszakoni.data.local.database.BonusSalaryDao
 import com.boryanz.upszakoni.data.local.database.UpsDatabase
 import com.boryanz.upszakoni.data.local.sharedprefs.PrefsLocalStorage
@@ -24,6 +26,7 @@ import com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput.daily.NewOverT
 import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BonusSalaryParametersViewModel
 import com.boryanz.upszakoni.ui.screens.informations.InformationScreenViewModel
 import com.boryanz.upszakoni.ui.screens.laws.LawsViewModel
+import com.google.firebase.analytics.FirebaseAnalytics
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -38,13 +41,15 @@ val appModule = module {
   factory<DaysInMonthDataGenerator> { GenerateDaysInMonthsUseCase() }
   single<BonusSalaryRepository> { BonusSalaryRepositoryImpl(get()) }
   single<FirebaseRemoteConfig> { RemoteConfigRepository() }
+  single<FirebaseAnalytics> { FirebaseAnalytics.getInstance(androidContext()) }
+  single<AnalyticsLogger> { FirebaseAnalyticsManager(get()) }
   factory<LawsUseCase> { GetLawsUseCase(androidContext()) }
-  viewModel { ArchivedLawsViewModel(get(), get()) }
+  viewModel { ArchivedLawsViewModel(get(), get(), get<AnalyticsLogger>()) }
   viewModel { BonusSalaryParametersViewModel(get()) }
   viewModel { MigrationProposalViewModel(get(), get(), get()) }
-  viewModel { OverTimeInputViewModel(get()) }
-  viewModel { BonusSalaryDashboardViewModel(get(), get(), get()) }
-  viewModel { LawsViewModel(get(), get(), get()) }
+  viewModel { OverTimeInputViewModel(get(), get<AnalyticsLogger>()) }
+  viewModel { BonusSalaryDashboardViewModel(get(), get(), get<AnalyticsLogger>(), get()) }
+  viewModel { LawsViewModel(get(), get(), get(), get<AnalyticsLogger>()) }
   viewModel { InformationScreenViewModel(get()) }
   viewModel { OvertimeTrackNavigationGraphViewModel(get()) }
   viewModel { OvertimeMonthlyCalendarViewModel(get()) }
