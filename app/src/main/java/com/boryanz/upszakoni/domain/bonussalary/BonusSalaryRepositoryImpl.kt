@@ -1,29 +1,21 @@
 package com.boryanz.upszakoni.domain.bonussalary
 
-import android.content.Context
-import com.boryanz.upszakoni.data.local.database.UpsDatabase
+import com.boryanz.upszakoni.data.local.database.BonusSalaryDao
 import com.boryanz.upszakoni.data.local.database.model.BonusSalaryTreshold
 import com.boryanz.upszakoni.data.local.database.model.DayInMonth
 import com.boryanz.upszakoni.data.local.database.model.MonthlyStats
-import com.boryanz.upszakoni.domain.GenerateDaysInMonthsUseCase
 import com.boryanz.upszakoni.ui.components.defaultMonthlyStats
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import kotlin.math.ceil
 
 const val NUMBER_OF_MONTHS = 12
 
 class BonusSalaryRepositoryImpl(
-  context: Context
-) : BonusSalaryRepository, KoinComponent {
-
-  private val db = UpsDatabase.getInstance(context)
-  private val dao = db.bonusSalaryDao()
-  private val ioDispatcher = Dispatchers.IO
-
-  private val generateDefaultDaysInMonthsUseCase: GenerateDaysInMonthsUseCase by inject()
+  private val dao: BonusSalaryDao,
+  private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+) : BonusSalaryRepository {
 
   /**
    * Calculated value after setting the treshold hours.
@@ -104,13 +96,13 @@ class BonusSalaryRepositoryImpl(
       }
     }
 
-  override suspend fun deleteAllAndGenerateDefaultData() {
+  override suspend fun deleteAllAndGenerateDefaultData(defaultData: List<DayInMonth>) {
     runCatching {
       withContext(ioDispatcher) {
         dao.deleteAllDaysInMonths()
         dao.deleteTreshold()
         dao.insertAllMonthlyStats(defaultMonthlyStats)
-        generateDefaultDaysInMonthsUseCase()
+        dao.insertAllDaysInMonthsStats(dailyStats = defaultData)
         averageOvertimeHours = -1
         minimumOvertimeHours = -1
         maximumAvailablePaidDays = -1

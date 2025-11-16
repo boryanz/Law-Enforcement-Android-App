@@ -2,6 +2,7 @@ package com.boryanz.upszakoni.bonussalary
 
 import com.boryanz.upszakoni.MainDispatcherRule
 import com.boryanz.upszakoni.fakes.FakeBonusSalaryRepository
+import com.boryanz.upszakoni.fakes.FakeGenerateDaysInMonthsUseCase
 import com.boryanz.upszakoni.fakes.FakePrefsLocalStorage
 import com.boryanz.upszakoni.fakes.Treshold
 import com.boryanz.upszakoni.ui.navigation.destinations.BonusSalaryDashboardDestination
@@ -30,6 +31,7 @@ class MigrationProposalViewModelTest {
     //Given
     viewModel = MigrationProposalViewModel(
       bonusSalaryRepository = FakeBonusSalaryRepository(),
+      generateDefaultDaysInMonthsUseCase = FakeGenerateDaysInMonthsUseCase(),
       localStorage = FakePrefsLocalStorage(data = mutableMapOf())
     )
     //When
@@ -45,6 +47,7 @@ class MigrationProposalViewModelTest {
       //Given
       viewModel = MigrationProposalViewModel(
         bonusSalaryRepository = FakeBonusSalaryRepository(),
+        generateDefaultDaysInMonthsUseCase = FakeGenerateDaysInMonthsUseCase(),
         localStorage = FakePrefsLocalStorage(
           data = mutableMapOf(
             "overtimeMigrationReject" to true
@@ -67,6 +70,7 @@ class MigrationProposalViewModelTest {
     //Given
     viewModel = MigrationProposalViewModel(
       bonusSalaryRepository = FakeBonusSalaryRepository(treshold = Treshold.NoTreshold),
+      generateDefaultDaysInMonthsUseCase = FakeGenerateDaysInMonthsUseCase(),
       localStorage = FakePrefsLocalStorage(data = mutableMapOf("overtimeMigrationReject" to true))
     )
 
@@ -85,6 +89,7 @@ class MigrationProposalViewModelTest {
     //Given
     viewModel = MigrationProposalViewModel(
       bonusSalaryRepository = FakeBonusSalaryRepository(Treshold.Error),
+      generateDefaultDaysInMonthsUseCase = FakeGenerateDaysInMonthsUseCase(),
       localStorage = FakePrefsLocalStorage(data = mutableMapOf("overtimeMigrationReject" to true))
     )
 
