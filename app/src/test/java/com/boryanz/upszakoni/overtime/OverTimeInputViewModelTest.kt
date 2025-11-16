@@ -22,7 +22,8 @@ class OverTimeInputViewModelTest {
   @Test
   fun `when absence days value is changed and it's in valid range then update state`() = runTest {
     //Given
-    val viewModel = OverTimeInputViewModel(bonusSalaryRepositoryImpl = FakeBonusSalaryRepository(Treshold.HaveTreshold),)
+    val viewModel =
+      OverTimeInputViewModel(bonusSalaryRepositoryImpl = FakeBonusSalaryRepository(Treshold.HaveTreshold))
     //When
     val value = "12"
     viewModel.onUiEvent(OverTimeInputUiEvent.AbsenceDaysValueChanged(value))

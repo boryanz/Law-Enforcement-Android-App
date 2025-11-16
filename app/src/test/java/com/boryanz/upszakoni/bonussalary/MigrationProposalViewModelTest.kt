@@ -11,7 +11,6 @@ import com.boryanz.upszakoni.ui.screens.bonussalary.migration.BonusSalaryUiState
 import com.boryanz.upszakoni.ui.screens.bonussalary.migration.BonusSalaryUiState.ScreenContent
 import com.boryanz.upszakoni.ui.screens.bonussalary.migration.MigrationProposalViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Rule

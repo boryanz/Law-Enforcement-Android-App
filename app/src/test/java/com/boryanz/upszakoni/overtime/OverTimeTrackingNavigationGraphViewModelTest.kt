@@ -7,7 +7,6 @@ import com.boryanz.upszakoni.fakes.Treshold.HaveTreshold
 import com.boryanz.upszakoni.fakes.Treshold.NoTreshold
 import com.boryanz.upszakoni.ui.navigation.navgraph.overtimetracking.OvertimeTrackNavigationGraphViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Rule
