@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsManager
+import com.boryanz.upszakoni.domain.GenerateDaysInMonthsUseCase
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
 import com.boryanz.upszakoni.ui.navigation.destinations.BonusSalaryDashboardDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.ParametersDestination
@@ -22,6 +23,7 @@ sealed interface BonusSalaryUiState {
 
 class MigrationProposalViewModel(
   private val bonusSalaryRepository: BonusSalaryRepository,
+  private val generateDefaultDaysInMonthsUseCase: GenerateDaysInMonthsUseCase,
   private val localStorage: SharedPrefsManager,
 ) : ViewModel() {
 
@@ -36,7 +38,7 @@ class MigrationProposalViewModel(
   @SuppressLint("NewApi")
   fun onMigrationAccepted(migrationAccepted: MigrationAccepted) =
     viewModelScope.launch {
-      bonusSalaryRepository.deleteAllAndGenerateDefaultData()
+      bonusSalaryRepository.deleteAllAndGenerateDefaultData(generateDefaultDaysInMonthsUseCase())
       localStorage.acceptOvertimeTrackingMigration()
       migrationAccepted.navigateNext()
     }

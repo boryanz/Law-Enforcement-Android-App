@@ -9,32 +9,31 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun BonusSalaryDashboardScreen(
-    onEditClicked: () -> Unit,
-    onBackClicked: () -> Unit,
-    onMonthClicked: (String) -> Unit,
-    onNonWorkingDaysClicked: (String) -> Unit,
+  onEditClicked: () -> Unit,
+  onBackClicked: () -> Unit,
+  onMonthClicked: (String) -> Unit,
+  onNonWorkingDaysClicked: (String) -> Unit,
 ) {
 
-    val viewModel = koinViewModel<BonusSalaryDashboardViewModel>()
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+  val viewModel = koinViewModel<BonusSalaryDashboardViewModel>()
+  val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(true) {
-        viewModel.onUiEvent(BonusSalaryDashboardUiEvent.FetchMonthlyStats)
-    }
+  LaunchedEffect(true) {
+    viewModel.onUiEvent(BonusSalaryDashboardUiEvent.FetchMonthlyStats)
+  }
 
-    if (uiState.isLoading) {
-        Loader()
-    }
+  if (uiState.isLoading) Loader()
 
-    BonusSalaryDashboardContent(
-        uiState = uiState,
-        onMonthClicked = onMonthClicked,
-        onBackClicked = onBackClicked,
-        onDeleteAllClicked = {
-            viewModel.onUiEvent(BonusSalaryDashboardUiEvent.DeleteAll)
-            onBackClicked()
-        },
-        onEditClicked = onEditClicked,
-        onNonWorkingDaysClicked = { onNonWorkingDaysClicked(it) }
-    )
+
+  BonusSalaryDashboardContent(
+    uiState = uiState,
+    onMonthClicked = onMonthClicked,
+    onBackClicked = onBackClicked,
+    onDeleteAllClicked = {
+      viewModel.onUiEvent(BonusSalaryDashboardUiEvent.DeleteAll)
+      onBackClicked()
+    },
+    onEditClicked = onEditClicked,
+    onNonWorkingDaysClicked = { onNonWorkingDaysClicked(it) }
+  )
 }

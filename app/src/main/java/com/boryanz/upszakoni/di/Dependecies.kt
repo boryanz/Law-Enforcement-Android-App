@@ -2,6 +2,8 @@ package com.boryanz.upszakoni.di
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.boryanz.upszakoni.data.local.database.BonusSalaryDao
+import com.boryanz.upszakoni.data.local.database.UpsDatabase
 import com.boryanz.upszakoni.data.local.sharedprefs.PrefsLocalStorage
 import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsManager
 import com.boryanz.upszakoni.domain.GenerateDaysInMonthsUseCase
@@ -30,15 +32,17 @@ val appModule = module {
     androidContext().getSharedPreferences("Ups shared prefs", Context.MODE_PRIVATE)
   }
   single<SharedPrefsManager> { PrefsLocalStorage(get()) }
-  factory { GenerateDaysInMonthsUseCase(get()) }
-  single<BonusSalaryRepository> { BonusSalaryRepositoryImpl(androidContext()) }
+  single<UpsDatabase> { UpsDatabase.getInstance(androidContext()) }
+  single<BonusSalaryDao> { get<UpsDatabase>().bonusSalaryDao() }
+  factory { GenerateDaysInMonthsUseCase() }
+  single<BonusSalaryRepository> { BonusSalaryRepositoryImpl(get()) }
   single<FirebaseRemoteConfig> { RemoteConfigRepository() }
   factory<LawsUseCase> { GetLawsUseCase(androidContext()) }
   viewModel { ArchivedLawsViewModel(get(), get()) }
   viewModel { BonusSalaryParametersViewModel(get()) }
-  viewModel { MigrationProposalViewModel(get(), get()) }
+  viewModel { MigrationProposalViewModel(get(), get(), get()) }
   viewModel { OverTimeInputViewModel(get()) }
-  viewModel { BonusSalaryDashboardViewModel(get(), get()) }
+  viewModel { BonusSalaryDashboardViewModel(get(), get(), get()) }
   viewModel { LawsViewModel(get(), get(), get()) }
   viewModel { InformationScreenViewModel(get()) }
   viewModel { OvertimeTrackNavigationGraphViewModel(get()) }
