@@ -67,7 +67,7 @@ class FakeBonusSalaryRepository(
     } else Result.failure(Exception())
   }
 
-  override suspend fun deleteAllAndGenerateDefaultData() {
+  override suspend fun deleteAllAndGenerateDefaultData(defaultData: List<DayInMonth>) {
     TODO("Not yet implemented")
   }
 
