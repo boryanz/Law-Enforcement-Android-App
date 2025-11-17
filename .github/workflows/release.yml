@@ -45,7 +45,7 @@ jobs:
           cache: 'gradle'
 
       - name: Calculate Version Code
-        run: echo "VERSION_CODE=$((github.run_number + 16))" >> $GITHUB_ENV
+        run: echo "VERSION_CODE=$((${{ github.run_number }} + 16))" >> $GITHUB_ENV
 
       - name: Version Bump
         uses: chkfung/android-version-actions@v1.2.3
