@@ -19,3 +19,8 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+
+# R8 is complaining about this missing class, which is a dependency of JUnit 5
+# that is not needed in the final release APK.
+-dontwarn org.apiguardian.api.**
