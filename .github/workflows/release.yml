@@ -56,13 +56,10 @@ jobs:
       - name: Assemble Release Bundle
         run: ./gradlew bundleRelease
 
-      - name: Verify bundle location
-        run: ls -la app/release/
-
       - name: Sign Release
         uses: r0adkll/sign-android-release@v1
         with:
-          releaseDirectory: app/release
+          releaseDirectory: app/build/outputs/bundle/release
           signingKeyBase64: ${{ secrets.ANDROID_KEYSTORE }}
           keystorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
           alias: ${{ secrets.LAW_ENFORCEMENT_KEY_ALIAS }}
@@ -76,7 +73,7 @@ jobs:
         with:
           serviceAccountJson: service_account.json
           packageName: com.boryanz.upszakoni
-          releaseFiles: app/release/app-release.aab
+          releaseFiles: app/build/outputs/bundle/release/app-release.aab
           track: production
           status: completed
 
