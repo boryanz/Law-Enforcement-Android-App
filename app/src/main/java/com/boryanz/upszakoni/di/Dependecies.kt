@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import com.boryanz.upszakoni.analytics.AnalyticsLogger
 import com.boryanz.upszakoni.analytics.FirebaseAnalyticsManager
 import com.boryanz.upszakoni.data.local.database.BonusSalaryDao
+import com.boryanz.upszakoni.data.local.database.OwnedItemsDao
 import com.boryanz.upszakoni.data.local.database.UpsDatabase
 import com.boryanz.upszakoni.data.local.sharedprefs.PrefsLocalStorage
 import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsManager
@@ -14,9 +15,14 @@ import com.boryanz.upszakoni.domain.GetLawsUseCase
 import com.boryanz.upszakoni.domain.LawsUseCase
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepositoryImpl
+import com.boryanz.upszakoni.domain.owneditem.AddOwnedItemUseCase
+import com.boryanz.upszakoni.domain.owneditem.DeleteOwnedItemUseCase
+import com.boryanz.upszakoni.domain.owneditem.GetOwnedItemsUseCase
 import com.boryanz.upszakoni.domain.remoteconfig.FirebaseRemoteConfig
 import com.boryanz.upszakoni.domain.remoteconfig.RemoteConfigRepository
 import com.boryanz.upszakoni.ui.navigation.navgraph.overtimetracking.OvertimeTrackNavigationGraphViewModel
+import com.boryanz.upszakoni.ui.owneditem.addowneditem.OwnedItemViewModel
+import com.boryanz.upszakoni.ui.owneditem.overview.OwnedItemsListViewModel
 import com.boryanz.upszakoni.ui.screens.archivedlaws.ArchivedLawsViewModel
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardViewModel
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.monthly.OvertimeMonthlyCalendarViewModel
@@ -38,12 +44,16 @@ val appModule = module {
   single<SharedPrefsManager> { PrefsLocalStorage(get()) }
   single<UpsDatabase> { UpsDatabase.getInstance(androidContext()) }
   single<BonusSalaryDao> { get<UpsDatabase>().bonusSalaryDao() }
+  single<OwnedItemsDao> { get<UpsDatabase>().ownedItemsDao() }
   factory<DaysInMonthDataGenerator> { GenerateDaysInMonthsUseCase() }
   single<BonusSalaryRepository> { BonusSalaryRepositoryImpl(get()) }
   single<FirebaseRemoteConfig> { RemoteConfigRepository() }
   single<FirebaseAnalytics> { FirebaseAnalytics.getInstance(androidContext()) }
   single<AnalyticsLogger> { FirebaseAnalyticsManager(get()) }
   factory<LawsUseCase> { GetLawsUseCase(androidContext()) }
+  factory { GetOwnedItemsUseCase(get()) }
+  factory { DeleteOwnedItemUseCase(get()) }
+  factory { AddOwnedItemUseCase(get()) }
   viewModel { ArchivedLawsViewModel(get(), get(), get<AnalyticsLogger>()) }
   viewModel { BonusSalaryParametersViewModel(get()) }
   viewModel { MigrationProposalViewModel(get(), get(), get()) }
@@ -54,4 +64,6 @@ val appModule = module {
   viewModel { OvertimeTrackNavigationGraphViewModel(get()) }
   viewModel { OvertimeMonthlyCalendarViewModel(get()) }
   viewModel { NewOverTimeInputViewModel(get()) }
+  viewModel { OwnedItemViewModel(get()) }
+  viewModel { OwnedItemsListViewModel(get(), get()) }
 }

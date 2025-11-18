@@ -19,6 +19,7 @@ import com.boryanz.upszakoni.data.NavigationDrawerDestination.daily_news
 import com.boryanz.upszakoni.data.NavigationDrawerDestination.information
 import com.boryanz.upszakoni.data.NavigationDrawerDestination.laws
 import com.boryanz.upszakoni.data.NavigationDrawerDestination.offenses
+import com.boryanz.upszakoni.data.NavigationDrawerDestination.owned_items
 import com.boryanz.upszakoni.data.NavigationDrawerDestination.partners
 import com.boryanz.upszakoni.data.NavigationDrawerDestination.phone_numbers
 import com.boryanz.upszakoni.data.NavigationDrawerDestination.privacy_policy
@@ -41,6 +42,7 @@ import com.boryanz.upszakoni.ui.navigation.destinations.PhoneNumbersDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.PoliceAuthoritiesDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.PrivacyPolicyAcceptanceDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.PrivacyPolicyDestination
+import com.boryanz.upszakoni.ui.owneditem.OwnedItemsActivity
 import com.boryanz.upszakoni.ui.screens.archivedlaws.ArchivedLawsScreen
 import com.boryanz.upszakoni.ui.screens.bonussalary.BonusSalaryActivity
 import com.boryanz.upszakoni.ui.screens.common.CommonOffensesAndCrimes
@@ -215,6 +217,7 @@ fun NavHostController.navigateToDrawerDestination(navigationDrawerDestination: N
       BonusSalaryActivity.createIntent(context)
     )
 
+    owned_items -> context.startActivity(OwnedItemsActivity.createIntent(context))
     information -> navigate(InformationScreenDestination)
     partners -> navigate(PartnersDestination)
   }

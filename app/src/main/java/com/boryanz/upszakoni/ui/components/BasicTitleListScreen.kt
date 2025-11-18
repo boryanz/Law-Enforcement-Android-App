@@ -18,44 +18,52 @@ import com.boryanz.upszakoni.ui.theme.UpsTheme
 
 @Composable
 fun BasicTitleListScreen(
-    topBarTitle: String,
-    items: List<TitleItem>,
-    onBackClicked: () -> Unit,
+  topBarTitle: String,
+  items: List<TitleItem>,
+  onBackClicked: () -> Unit,
 ) {
-    UpsScaffold(
-        topBarTitle = { Text(text = topBarTitle, fontWeight = FontWeight.Bold) },
-        navigationIcon = {
-            Icons.Back(onClick = onBackClicked)
-        }
-    ) { contentPadding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(contentPadding)
-                .padding(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top
-        ) {
-            LazyColumn {
-                items(items) {
-                    ReadOnlyRowItem(it.title)
-                    Spacer.Vertical(4.dp)
-                }
-            }
-        }
+  UpsScaffold(
+    topBarTitle = { Text(text = topBarTitle, fontWeight = FontWeight.Bold) },
+    navigationIcon = {
+      Icons.Back(onClick = onBackClicked)
     }
+  ) { contentPadding ->
+    Column(
+      modifier = Modifier
+        .fillMaxSize()
+        .padding(contentPadding)
+        .padding(8.dp),
+      horizontalAlignment = Alignment.CenterHorizontally,
+      verticalArrangement = Arrangement.Top
+    ) {
+      LazyColumn {
+        items(items) {
+          ReadOnlyRowItem(it.title)
+          Spacer.Vertical(4.dp)
+        }
+      }
+    }
+  }
 }
 
 
 @Preview(showBackground = true)
 @Composable
 private fun PoliceAuthorityScreenPreview() {
-    UpsTheme {
-        BasicTitleListScreen(
-            topBarTitle = "Овластувања",
-            items = listOf(TitleItem("Basic title")),
-            onBackClicked = {  }
+  UpsTheme {
+    BasicTitleListScreen(
+      topBarTitle = "Овластувања",
+      items = listOf(TitleItem("Basic title")),
+      onBackClicked = { }
 
-        )
-    }
+    )
+  }
+}
+
+@Preview
+@Composable
+private fun NumberPickerPreview() {
+  UpsTheme {
+
+  }
 }
