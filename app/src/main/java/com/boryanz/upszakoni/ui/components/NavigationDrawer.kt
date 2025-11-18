@@ -14,6 +14,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Storage
 import androidx.compose.material.icons.filled.Timelapse
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.PeopleOutline
@@ -117,6 +118,21 @@ fun NavigationDrawer(
               label = { Text(text = "Прекувремени часови") },
               selected = false,
               onClick = { onItemClicked(NavigationDrawerDestination.bonus_salary_feature) }
+            )
+            HorizontalDivider()
+            NavigationDrawerItem(
+              icon = {
+                Icon(
+                  modifier = Modifier
+                    .height(20.dp)
+                    .width(20.dp),
+                  imageVector = Icons.Filled.Storage,
+                  contentDescription = null
+                )
+              },
+              label = { Text(text = "Задолжени предмети") },
+              selected = false,
+              onClick = { onItemClicked(NavigationDrawerDestination.owned_items) }
             )
             HorizontalDivider()
             NavigationDrawerItem(

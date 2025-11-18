@@ -16,28 +16,33 @@ import com.boryanz.upszakoni.ui.theme.UpsTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UpsScaffold(
-    topBarTitle: @Composable () -> Unit,
-    navigationIcon: @Composable (() -> Unit)? = null,
-    trailingIcon: @Composable (() -> Unit)? = null,
-    content: @Composable (PaddingValues) -> Unit,
+  topBarTitle: @Composable () -> Unit,
+  floatingActionButton: (@Composable () -> Unit)? = null,
+  navigationIcon: @Composable (() -> Unit)? = null,
+  trailingIcon: @Composable (() -> Unit)? = null,
+  content: @Composable (PaddingValues) -> Unit,
 ) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = topBarTitle,
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = BaseContent1, titleContentColor = Base100),
-                navigationIcon = {
-                    if (navigationIcon != null) {
-                        navigationIcon()
-                    }
-                },
-                actions = { trailingIcon?.let { it() } }
-            )
+  Scaffold(
+    floatingActionButton = { floatingActionButton?.let { it() } },
+    topBar = {
+      TopAppBar(
+        title = topBarTitle,
+        colors = TopAppBarDefaults.topAppBarColors(
+          containerColor = BaseContent1,
+          titleContentColor = Base100
+        ),
+        navigationIcon = {
+          if (navigationIcon != null) {
+            navigationIcon()
+          }
         },
-        content = { paddingValues ->
-            content(paddingValues)
-        }
-    )
+        actions = { trailingIcon?.let { it() } }
+      )
+    },
+    content = { paddingValues ->
+      content(paddingValues)
+    }
+  )
 }
 
 
@@ -45,11 +50,14 @@ fun UpsScaffold(
 @Preview(showBackground = true)
 @Composable
 private fun UpsScaffoldPreview() {
-    UpsTheme {
-        TopAppBar(
-            title = { Text("Something", color = Base100) },
-            colors = TopAppBarDefaults.topAppBarColors(containerColor = BaseContent, titleContentColor = Base100),
-            navigationIcon = { }
-        )
-    }
+  UpsTheme {
+    TopAppBar(
+      title = { Text("Something", color = Base100) },
+      colors = TopAppBarDefaults.topAppBarColors(
+        containerColor = BaseContent,
+        titleContentColor = Base100
+      ),
+      navigationIcon = { }
+    )
+  }
 }
