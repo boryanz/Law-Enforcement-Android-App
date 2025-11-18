@@ -6,7 +6,7 @@ import com.boryanz.upszakoni.domain.owneditem.AddOwnedItemUseCase
 class FakeAddOwnedItemUseCase : AddOwnedItemUseCase {
   val addedItems = mutableListOf<OwnedItem>()
 
-  override fun invoke(item: OwnedItem) {
+  override suspend fun invoke(item: OwnedItem) {
     addedItems.add(item)
   }
 }

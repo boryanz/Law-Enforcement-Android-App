@@ -9,15 +9,12 @@ import com.boryanz.upszakoni.ui.owneditem.addowneditem.OwnedItemUiEvent.ItemName
 import com.boryanz.upszakoni.ui.owneditem.addowneditem.OwnedItemUiEvent.OnCreate
 import com.boryanz.upszakoni.ui.owneditem.addowneditem.OwnedItemUiEvent.PiecesCountChanged
 import com.boryanz.upszakoni.ui.owneditem.addowneditem.OwnedItemUiEvent.SaveClicked
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 sealed interface OwnedItemUiEvent {
   data class OnCreate(
@@ -26,6 +23,7 @@ sealed interface OwnedItemUiEvent {
     val volume: Int,
     val category: ItemCategory
   ) : OwnedItemUiEvent
+
   data class ItemNameChanged(val value: String) : OwnedItemUiEvent
   data class PiecesCountChanged(val value: Int) : OwnedItemUiEvent
   data object SaveClicked : OwnedItemUiEvent
@@ -43,10 +41,7 @@ data class OwnedItemUiState(
   val hasItemNameError: Boolean = false,
 )
 
-class OwnedItemViewModel(
-  private val addOwnedItemUseCase: AddOwnedItemUseCase,
-  private val dispatcher: CoroutineDispatcher = Dispatchers.IO
-) : ViewModel() {
+class OwnedItemViewModel(private val addOwnedItemUseCase: AddOwnedItemUseCase) : ViewModel() {
   private val _uiState = MutableStateFlow(OwnedItemUiState())
   val uiState = _uiState.asStateFlow()
 
@@ -67,22 +62,15 @@ class OwnedItemViewModel(
       }
 
       SaveClicked -> {
-        val currentState = _uiState.value
-        if (currentState.itemName.isBlank()) {
-          _uiState.value = currentState.copy(hasItemNameError = true)
-          return
-        }
         viewModelScope.launch {
-          withContext(dispatcher) {
-            addOwnedItemUseCase(
-              OwnedItem(
-                id = uiState.value.itemId,
-                name = uiState.value.itemName,
-                volume = uiState.value.piecesCount,
-                category = uiState.value.category
-              )
+          addOwnedItemUseCase(
+            OwnedItem(
+              id = uiState.value.itemId,
+              name = uiState.value.itemName,
+              volume = uiState.value.piecesCount,
+              category = uiState.value.category
             )
-          }
+          )
           _event.emit(OwnedItemEvent.ItemSaved)
         }
       }

@@ -17,7 +17,6 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Storage
 import androidx.compose.material.icons.filled.Timelapse
 import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material.icons.outlined.PeopleOutline
 import androidx.compose.material.icons.outlined.SystemUpdate
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.HorizontalDivider
@@ -33,6 +32,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.boryanz.upszakoni.R
@@ -115,7 +115,7 @@ fun NavigationDrawer(
                   contentDescription = null
                 )
               },
-              label = { Text(text = "Прекувремени часови") },
+              label = { Text(text = stringResource(R.string.overtime_hours_title)) },
               selected = false,
               onClick = { onItemClicked(NavigationDrawerDestination.bonus_salary_feature) }
             )
@@ -130,11 +130,11 @@ fun NavigationDrawer(
                   contentDescription = null
                 )
               },
-              label = { Text(text = "Задолжени предмети") },
+              label = { Text(text = stringResource(R.string.owned_items_title)) },
               selected = false,
               onClick = { onItemClicked(NavigationDrawerDestination.owned_items) }
             )
-            HorizontalDivider()
+            Spacer.Vertical(12.dp)
             NavigationDrawerItem(
               icon = {
                 Icon(
@@ -145,7 +145,7 @@ fun NavigationDrawer(
                   contentDescription = null
                 )
               },
-              label = { Text(text = "Најчести прекршоци") },
+              label = { Text(text = stringResource(R.string.common_offenses_title)) },
               selected = false,
               onClick = { onItemClicked(NavigationDrawerDestination.offenses) }
             )
@@ -160,7 +160,7 @@ fun NavigationDrawer(
                   contentDescription = null
                 )
               },
-              label = { Text(text = "Најчести кривични дела") },
+              label = { Text(text = stringResource(R.string.common_crimes_title)) },
               selected = false,
               onClick = { onItemClicked(NavigationDrawerDestination.crimes) }
             )
@@ -175,7 +175,7 @@ fun NavigationDrawer(
                   contentDescription = null
                 )
               },
-              label = { Text(text = "Прашања за службена белешка") },
+              label = { Text(text = stringResource(R.string.crime_questions_title)) },
               selected = false,
               onClick = { onItemClicked(NavigationDrawerDestination.writing_guide) }
             )
@@ -190,7 +190,7 @@ fun NavigationDrawer(
                   contentDescription = null
                 )
               },
-              label = { Text(text = "Броеви од ПС - СВР Скопје") },
+              label = { Text(text = stringResource(R.string.numbers_ps_svr_skopje)) },
               selected = false,
               onClick = { onItemClicked(NavigationDrawerDestination.phone_numbers) }
             )
@@ -207,27 +207,12 @@ fun NavigationDrawer(
                     contentDescription = null
                   )
                 },
-                label = { Text(text = "Известувања") },
+                label = { Text(text = stringResource(R.string.informations_title)) },
                 selected = false,
                 onClick = { onItemClicked(NavigationDrawerDestination.information) }
               )
             }
             Spacer.Vertical(24.dp)
-            NavigationDrawerItem(
-              icon = {
-                Icon(
-                  modifier = Modifier
-                    .height(20.dp)
-                    .width(20.dp),
-                  imageVector = Icons.Outlined.PeopleOutline,
-                  contentDescription = null
-                )
-              },
-              label = { Text(text = "Наши партнери") },
-              selected = false,
-              onClick = { onItemClicked(NavigationDrawerDestination.partners) }
-            )
-            HorizontalDivider()
             NavigationDrawerItem(
               icon = {
                 Icon(
@@ -253,7 +238,7 @@ fun NavigationDrawer(
                   contentDescription = null
                 )
               },
-              label = { Text(text = "Пријави грешка") },
+              label = { Text(text = stringResource(R.string.report_bug_title)) },
               selected = false,
               onClick = onFeedbackFormClicked
             )
@@ -269,7 +254,7 @@ fun NavigationDrawer(
                     contentDescription = null
                   )
                 },
-                label = { Text(text = "Ажурирај нова верзија") },
+                label = { Text(text = stringResource(R.string.update_available_title)) },
                 selected = false,
                 onClick = onAppUpdateClicked
               )
