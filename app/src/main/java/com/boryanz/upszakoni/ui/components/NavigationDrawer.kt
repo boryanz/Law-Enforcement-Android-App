@@ -13,8 +13,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Inventory
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Storage
 import androidx.compose.material.icons.filled.Timelapse
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.SystemUpdate
@@ -126,7 +126,7 @@ fun NavigationDrawer(
                   modifier = Modifier
                     .height(20.dp)
                     .width(20.dp),
-                  imageVector = Icons.Filled.Storage,
+                  imageVector = Icons.Filled.Inventory,
                   contentDescription = null
                 )
               },
