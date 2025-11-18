@@ -3,7 +3,7 @@ package com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.boryanz.upszakoni.analytics.AnalyticsLogger
-import com.boryanz.upszakoni.data.local.database.model.MonthlyStats
+import com.boryanz.upszakoni.data.local.database.model.bonussalary.MonthlyStats
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
 import com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput.OverTimeInputUiEvent.AbsenceDaysValueChanged
 import com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput.OverTimeInputUiEvent.FetchMonthlyStats

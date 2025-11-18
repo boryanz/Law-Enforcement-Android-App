@@ -2,7 +2,7 @@ package com.boryanz.upszakoni.ui.screens.bonussalary.parameters
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.boryanz.upszakoni.data.local.database.model.BonusSalaryTreshold
+import com.boryanz.upszakoni.data.local.database.model.bonussalary.BonusSalaryTreshold
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

@@ -1,8 +1,8 @@
 package com.boryanz.upszakoni.fakes
 
-import com.boryanz.upszakoni.data.local.database.model.BonusSalaryTreshold
-import com.boryanz.upszakoni.data.local.database.model.DayInMonth
-import com.boryanz.upszakoni.data.local.database.model.MonthlyStats
+import com.boryanz.upszakoni.data.local.database.model.bonussalary.BonusSalaryTreshold
+import com.boryanz.upszakoni.data.local.database.model.bonussalary.DayInMonth
+import com.boryanz.upszakoni.data.local.database.model.bonussalary.MonthlyStats
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
 import com.boryanz.upszakoni.fakes.Treshold.Error
 import com.boryanz.upszakoni.fakes.Treshold.HaveTreshold

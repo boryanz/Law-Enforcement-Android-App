@@ -5,9 +5,9 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import com.boryanz.upszakoni.data.local.database.model.BonusSalaryTreshold
-import com.boryanz.upszakoni.data.local.database.model.DayInMonth
-import com.boryanz.upszakoni.data.local.database.model.MonthlyStats
+import com.boryanz.upszakoni.data.local.database.model.bonussalary.BonusSalaryTreshold
+import com.boryanz.upszakoni.data.local.database.model.bonussalary.DayInMonth
+import com.boryanz.upszakoni.data.local.database.model.bonussalary.MonthlyStats
 
 @Dao
 interface BonusSalaryDao {
