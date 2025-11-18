@@ -98,4 +98,7 @@
 
     <!-- Database/Constants -->
     <string name="bonus_salary_threshold_key">bonus_salary_treshold</string>
+    <string name="add_owned_item_screen_title">Задолжена опрема</string>
+    <string name="owned_item_label_text">Задолжен предмет</string>
+    <string name="owned_item_pieces_label">Парчиња</string>
 </resources>

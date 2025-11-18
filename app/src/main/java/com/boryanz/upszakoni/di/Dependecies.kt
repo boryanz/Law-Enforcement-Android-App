@@ -16,8 +16,11 @@ import com.boryanz.upszakoni.domain.LawsUseCase
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepositoryImpl
 import com.boryanz.upszakoni.domain.owneditem.AddOwnedItemUseCase
+import com.boryanz.upszakoni.domain.owneditem.AddOwnedItemUseCaseImpl
 import com.boryanz.upszakoni.domain.owneditem.DeleteOwnedItemUseCase
+import com.boryanz.upszakoni.domain.owneditem.DeleteOwnedItemUseCaseImpl
 import com.boryanz.upszakoni.domain.owneditem.GetOwnedItemsUseCase
+import com.boryanz.upszakoni.domain.owneditem.GetOwnedItemsUseCaseImpl
 import com.boryanz.upszakoni.domain.remoteconfig.FirebaseRemoteConfig
 import com.boryanz.upszakoni.domain.remoteconfig.RemoteConfigRepository
 import com.boryanz.upszakoni.ui.navigation.navgraph.overtimetracking.OvertimeTrackNavigationGraphViewModel
@@ -51,9 +54,9 @@ val appModule = module {
   single<FirebaseAnalytics> { FirebaseAnalytics.getInstance(androidContext()) }
   single<AnalyticsLogger> { FirebaseAnalyticsManager(get()) }
   factory<LawsUseCase> { GetLawsUseCase(androidContext()) }
-  factory { GetOwnedItemsUseCase(get()) }
-  factory { DeleteOwnedItemUseCase(get()) }
-  factory { AddOwnedItemUseCase(get()) }
+  factory<GetOwnedItemsUseCase> { GetOwnedItemsUseCaseImpl(get()) }
+  factory<DeleteOwnedItemUseCase> { DeleteOwnedItemUseCaseImpl(get()) }
+  factory<AddOwnedItemUseCase> { AddOwnedItemUseCaseImpl(get()) }
   viewModel { ArchivedLawsViewModel(get(), get(), get<AnalyticsLogger>()) }
   viewModel { BonusSalaryParametersViewModel(get()) }
   viewModel { MigrationProposalViewModel(get(), get(), get()) }
