@@ -1,7 +1,7 @@
 package com.boryanz.upszakoni.domain
 
 import android.annotation.SuppressLint
-import com.boryanz.upszakoni.data.local.database.model.DayInMonth
+import com.boryanz.upszakoni.data.local.database.model.bonussalary.DayInMonth
 import com.boryanz.upszakoni.ui.components.defaultMonthlyStats
 import java.time.Year
 import java.time.YearMonth

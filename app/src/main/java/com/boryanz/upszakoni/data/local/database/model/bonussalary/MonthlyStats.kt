@@ -1,4 +1,4 @@
-package com.boryanz.upszakoni.data.local.database.model
+package com.boryanz.upszakoni.data.local.database.model.bonussalary
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

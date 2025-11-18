@@ -5,7 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.boryanz.upszakoni.data.local.database.model.DayInMonth
+import com.boryanz.upszakoni.data.local.database.model.bonussalary.DayInMonth
 import com.boryanz.upszakoni.ui.components.Loader
 import org.koin.androidx.compose.koinViewModel
 

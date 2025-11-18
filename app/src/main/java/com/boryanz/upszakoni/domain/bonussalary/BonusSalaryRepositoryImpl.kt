@@ -1,9 +1,9 @@
 package com.boryanz.upszakoni.domain.bonussalary
 
 import com.boryanz.upszakoni.data.local.database.BonusSalaryDao
-import com.boryanz.upszakoni.data.local.database.model.BonusSalaryTreshold
-import com.boryanz.upszakoni.data.local.database.model.DayInMonth
-import com.boryanz.upszakoni.data.local.database.model.MonthlyStats
+import com.boryanz.upszakoni.data.local.database.model.bonussalary.BonusSalaryTreshold
+import com.boryanz.upszakoni.data.local.database.model.bonussalary.DayInMonth
+import com.boryanz.upszakoni.data.local.database.model.bonussalary.MonthlyStats
 import com.boryanz.upszakoni.ui.components.defaultMonthlyStats
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
