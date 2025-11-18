@@ -15,13 +15,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-
-data class OwnedItemData(
-  val id: String,
-  val name: String,
-  val pieces: Int,
-)
 
 sealed interface OwnedItemsListUiEvent {
   data object OnCreate : OwnedItemsListUiEvent
@@ -47,11 +40,9 @@ class OwnedItemsListViewModel(
   fun onUiEvent(event: OwnedItemsListUiEvent) = viewModelScope.launch {
     when (event) {
       OnCreate -> {
-        withContext(dispatcher) {
-          getOwnedItemsUseCase().collect { value ->
-            _uiState.update {
-              it.copy(items = value)
-            }
+        getOwnedItemsUseCase().collect { value ->
+          _uiState.update {
+            it.copy(items = value)
           }
         }
       }
@@ -62,10 +53,8 @@ class OwnedItemsListViewModel(
 
       AlertDialogConfirmed -> {
         viewModelScope.launch {
-          withContext(dispatcher) {
-            deleteOwnedItemUseCase(uiState.value.itemToDelete?.name.orEmpty()).also {
-              _uiState.update { it.copy(itemToDelete = null) }
-            }
+          deleteOwnedItemUseCase(uiState.value.itemToDelete?.name.orEmpty()).also {
+            _uiState.update { it.copy(itemToDelete = null) }
           }
         }
       }

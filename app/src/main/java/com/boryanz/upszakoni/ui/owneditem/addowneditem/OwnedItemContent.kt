@@ -10,11 +10,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
+import com.boryanz.upszakoni.R
 import com.boryanz.upszakoni.ui.components.Icons
 import com.boryanz.upszakoni.ui.components.NumberPicker
 import com.boryanz.upszakoni.ui.components.Spacer
@@ -31,7 +33,7 @@ fun OwnedItemContent(
   onSaveClicked: () -> Unit,
 ) {
   UpsScaffold(
-    topBarTitle = { Text("Задолжени предмети") },
+    topBarTitle = { Text(stringResource(R.string.add_owned_item_screen_title)) },
     navigationIcon = {
       Icons.Back(onClick = onBackClicked)
     },
@@ -52,7 +54,7 @@ fun OwnedItemContent(
     ) {
       Column(verticalArrangement = Arrangement.Top) {
         TextFieldInput.BaseOutline(
-          labelText = "Задолжен предмет",
+          labelText = stringResource(R.string.owned_item_label_text),
           value = uiState.itemName,
           isError = uiState.hasItemNameError,
           textStyle = MaterialTheme.typography.titleLarge,
@@ -68,7 +70,7 @@ fun OwnedItemContent(
           onValueChange = onPiecesCountChanged,
           minValue = 0,
           maxValue = 1000,
-          label = "Парчиња"
+          label = stringResource(R.string.owned_item_pieces_label)
         )
       }
     }
@@ -79,7 +81,7 @@ class OwnedItemUiStatePreviewParameterProvider : PreviewParameterProvider<OwnedI
   override val values = sequenceOf(
     OwnedItemUiState(),
     OwnedItemUiState(
-      itemName = "Мебел",
+      itemName = "Глок 17",
       piecesCount = 5,
       hasItemNameError = false
     ),
@@ -89,7 +91,7 @@ class OwnedItemUiStatePreviewParameterProvider : PreviewParameterProvider<OwnedI
       hasItemNameError = true
     ),
     OwnedItemUiState(
-      itemName = "Електрични уреди",
+      itemName = "АК-47",
       piecesCount = 150,
       hasItemNameError = false
     ),

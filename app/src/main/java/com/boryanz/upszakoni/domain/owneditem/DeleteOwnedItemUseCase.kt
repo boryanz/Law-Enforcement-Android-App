@@ -2,7 +2,10 @@ package com.boryanz.upszakoni.domain.owneditem
 
 import com.boryanz.upszakoni.data.local.database.OwnedItemsDao
 
-class DeleteOwnedItemUseCase(private val ownedItemDao: OwnedItemsDao) {
+interface DeleteOwnedItemUseCase {
+  operator fun invoke(itemName: String)
+}
 
-  operator fun invoke(itemName: String) = ownedItemDao.deleteOwnedItem(itemName)
+class DeleteOwnedItemUseCaseImpl(private val ownedItemDao: OwnedItemsDao) : DeleteOwnedItemUseCase {
+  override operator fun invoke(itemName: String) = ownedItemDao.deleteOwnedItem(itemName)
 }
