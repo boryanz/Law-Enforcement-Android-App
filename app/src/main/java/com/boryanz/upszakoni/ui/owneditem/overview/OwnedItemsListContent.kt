@@ -16,10 +16,12 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
+import com.boryanz.upszakoni.R
 import com.boryanz.upszakoni.data.local.database.model.owneditem.ItemCategory
 import com.boryanz.upszakoni.data.local.database.model.owneditem.OwnedItem
 import com.boryanz.upszakoni.ui.components.Icons
@@ -69,7 +71,7 @@ fun OwnedItemsListContent(
         )
       }
     },
-    topBarTitle = { Text("Предмети") },
+    topBarTitle = { Text(stringResource(R.string.owned_items_list_screen_title)) },
     navigationIcon = {
       Icons.Back(onClick = onBackClicked)
     }
@@ -93,7 +95,7 @@ fun OwnedItemsListContent(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
       ) {
-        Text("Нема задолжени предмети")
+        Text(stringResource(R.string.no_owned_items_info_text))
       }
     } else {
       LazyColumn(

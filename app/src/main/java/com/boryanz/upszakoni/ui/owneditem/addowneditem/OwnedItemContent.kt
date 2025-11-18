@@ -38,10 +38,9 @@ fun OwnedItemContent(
       Icons.Back(onClick = onBackClicked)
     },
     trailingIcon = {
-      Icons.Save(
-        onClick = onSaveClicked,
-        isEnabled = !uiState.hasItemNameError && uiState.itemName.isNotEmpty()
-      )
+      if (!uiState.hasItemNameError && uiState.itemName.isNotEmpty() && uiState.piecesCount > 0) {
+        Icons.Save(onClick = onSaveClicked)
+      }
     }
   ) {
     Column(

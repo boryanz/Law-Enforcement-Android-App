@@ -1,5 +1,6 @@
-package com.boryanz.upszakoni
+package com.boryanz.upszakoni.owneditem
 
+import com.boryanz.upszakoni.MainDispatcherRule
 import com.boryanz.upszakoni.data.local.database.model.owneditem.ItemCategory
 import com.boryanz.upszakoni.data.local.database.model.owneditem.OwnedItem
 import com.boryanz.upszakoni.fakes.FakeDeleteOwnedItemUseCase
@@ -8,7 +9,7 @@ import com.boryanz.upszakoni.ui.owneditem.overview.OwnedItemsListUiEvent
 import com.boryanz.upszakoni.ui.owneditem.overview.OwnedItemsListUiState
 import com.boryanz.upszakoni.ui.owneditem.overview.OwnedItemsListViewModel
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertEquals
+import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 
@@ -43,7 +44,7 @@ class OwnedItemsListViewModelTest {
     viewModel.onUiEvent(OwnedItemsListUiEvent.OnCreate)
 
     //Then
-    assertEquals(
+    Assert.assertEquals(
       OwnedItemsListUiState(
         items = expected,
         isLoading = false,
@@ -79,7 +80,7 @@ class OwnedItemsListViewModelTest {
     viewModel.onUiEvent(OwnedItemsListUiEvent.DeleteItemClicked(expected.first()))
 
     //Then
-    assertEquals(
+    Assert.assertEquals(
       expected.first(),
       viewModel.uiState.value.itemToDelete
     )
@@ -111,14 +112,14 @@ class OwnedItemsListViewModelTest {
     viewModel.onUiEvent(OwnedItemsListUiEvent.DeleteItemClicked(expected.first()))
 
     //Then
-    assertEquals(
+    Assert.assertEquals(
       expected.first(),
       viewModel.uiState.value.itemToDelete
     )
 
     viewModel.onUiEvent(OwnedItemsListUiEvent.AlertDialogDismissed)
 
-    assertEquals(
+    Assert.assertEquals(
       null,
       viewModel.uiState.value.itemToDelete
     )
@@ -152,7 +153,7 @@ class OwnedItemsListViewModelTest {
       viewModel.onUiEvent(OwnedItemsListUiEvent.OnCreate)
 
       //Then
-      assertEquals(
+      Assert.assertEquals(
         OwnedItemsListUiState(
           items = expected,
           isLoading = false,
@@ -165,7 +166,7 @@ class OwnedItemsListViewModelTest {
       viewModel.onUiEvent(OwnedItemsListUiEvent.DeleteItemClicked(expected.first()))
 
       //Then
-      assertEquals(
+      Assert.assertEquals(
         expected.first(),
         viewModel.uiState.value.itemToDelete
       )
@@ -174,7 +175,7 @@ class OwnedItemsListViewModelTest {
       viewModel.onUiEvent(OwnedItemsListUiEvent.AlertDialogConfirmed)
 
       //Then
-      assertEquals(
+      Assert.assertEquals(
         null,
         viewModel.uiState.value.itemToDelete
       )

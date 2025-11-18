@@ -9,8 +9,6 @@ import com.boryanz.upszakoni.ui.owneditem.overview.OwnedItemsListUiEvent.AlertDi
 import com.boryanz.upszakoni.ui.owneditem.overview.OwnedItemsListUiEvent.AlertDialogDismissed
 import com.boryanz.upszakoni.ui.owneditem.overview.OwnedItemsListUiEvent.DeleteItemClicked
 import com.boryanz.upszakoni.ui.owneditem.overview.OwnedItemsListUiEvent.OnCreate
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -32,7 +30,6 @@ data class OwnedItemsListUiState(
 class OwnedItemsListViewModel(
   private val getOwnedItemsUseCase: GetOwnedItemsUseCase,
   private val deleteOwnedItemUseCase: DeleteOwnedItemUseCase,
-  private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
   private val _uiState = MutableStateFlow(OwnedItemsListUiState())
   val uiState = _uiState.asStateFlow()

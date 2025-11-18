@@ -101,4 +101,16 @@
     <string name="add_owned_item_screen_title">Задолжена опрема</string>
     <string name="owned_item_label_text">Задолжен предмет</string>
     <string name="owned_item_pieces_label">Парчиња</string>
+    <string name="owned_items_list_screen_title">Задолжена опрема</string>
+    <string name="no_owned_items_info_text">Немаш задолжена опрема</string>
+    <string name="overtime_hours_title">Прекувремени часови</string>
+    <string name="owned_items_title">Задолжена опрема</string>
+    <string name="common_offenses_title">Најчести прекршоци</string>
+    <string name="common_crimes_title">Најчести кривични дела</string>
+    <string name="crime_questions_title">Прашања за службена белешка</string>
+    <string name="numbers_ps_svr_skopje">Броеви од ПС - СВР Скопје</string>
+    <string name="informations_title">Известувања</string>
+    <string name="our_partners_title">Наши партнери</string>
+    <string name="report_bug_title">Пријави грешка</string>
+    <string name="update_available_title">Ажурирај нова верзија</string>
 </resources>
