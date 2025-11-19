@@ -26,13 +26,15 @@ class OwnedItemsListViewModelTest {
         id = 1,
         name = "Glok 17",
         volume = 1,
-        category = ItemCategory.AMMUNITION
+        category = ItemCategory.AMMUNITION,
+        date = "21.12.2025"
       ),
       OwnedItem(
         id = 1,
         name = "Glok 18",
         volume = 1,
-        category = ItemCategory.AMMUNITION
+        category = ItemCategory.AMMUNITION,
+        date = "21.12.2025"
       )
     )
 
@@ -62,13 +64,15 @@ class OwnedItemsListViewModelTest {
         id = 1,
         name = "Glok 17",
         volume = 1,
-        category = ItemCategory.AMMUNITION
+        category = ItemCategory.AMMUNITION,
+        date = "21.12.2025"
       ),
       OwnedItem(
         id = 2,
         name = "Glok 18",
         volume = 1,
-        category = ItemCategory.AMMUNITION
+        category = ItemCategory.AMMUNITION,
+        date = "21.12.2025"
       )
     )
 
@@ -94,13 +98,15 @@ class OwnedItemsListViewModelTest {
         id = 1,
         name = "Glok 17",
         volume = 1,
-        category = ItemCategory.AMMUNITION
+        category = ItemCategory.AMMUNITION,
+        date = "21.12.2025"
       ),
       OwnedItem(
         id = 1,
         name = "Glok 18",
         volume = 1,
-        category = ItemCategory.AMMUNITION
+        category = ItemCategory.AMMUNITION,
+        date = "21.12.2025"
       )
     )
 
@@ -135,13 +141,15 @@ class OwnedItemsListViewModelTest {
           id = 1,
           name = "Glok 17",
           volume = 1,
-          category = ItemCategory.AMMUNITION
+          category = ItemCategory.AMMUNITION,
+          date = "21.12.2025"
         ),
         OwnedItem(
           id = 2,
           name = "Glok 18",
           volume = 1,
-          category = ItemCategory.AMMUNITION
+          category = ItemCategory.AMMUNITION,
+          date = "21.12.2025"
         )
       )
 
