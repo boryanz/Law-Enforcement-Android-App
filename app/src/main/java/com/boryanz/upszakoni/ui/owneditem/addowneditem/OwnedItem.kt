@@ -1,8 +1,10 @@
 package com.boryanz.upszakoni.ui.owneditem.addowneditem
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -15,10 +17,11 @@ import com.boryanz.upszakoni.data.local.database.model.owneditem.ItemCategory
 import com.boryanz.upszakoni.data.local.database.model.owneditem.OwnedItem
 import com.boryanz.upszakoni.ui.components.Icons
 import com.boryanz.upszakoni.ui.components.RowItem
+import com.boryanz.upszakoni.ui.components.Spacer
 import com.boryanz.upszakoni.ui.theme.UpsTheme
 
 @Composable
-fun OwnedItemListItem(
+fun OwnedItem(
   item: OwnedItem,
   onDeleteClick: (String) -> Unit,
   onClick: (String) -> Unit = {},
@@ -32,16 +35,24 @@ fun OwnedItemListItem(
       horizontalArrangement = Arrangement.spacedBy(6.dp),
       verticalAlignment = Alignment.CenterVertically
     ) {
-      Text(
-        text = item.name,
-        style = MaterialTheme.typography.titleMedium,
-        modifier = Modifier.weight(1f)
-      )
+      Column(modifier = Modifier.weight(1f)) {
+        Text(
+          text = item.name,
+          style = MaterialTheme.typography.titleMedium,
+        )
+        Spacer.Vertical(2.dp)
+        Text(
+          text = "Внесено на ${item.date}",
+          style = MaterialTheme.typography.bodyMedium,
+        )
+      }
+
       Text(
         text = "${item.volume}x",
         style = MaterialTheme.typography.titleMedium,
       )
       Icons.Base(
+        modifier = Modifier.size(20.dp),
         imageVector = androidx.compose.material.icons.Icons.Filled.Delete,
         onClick = { onDeleteClick(item.name) }
       )
@@ -51,13 +62,14 @@ fun OwnedItemListItem(
 
 @Preview(showBackground = true)
 @Composable
-private fun OwnedItemListItemPreview() {
+private fun OwnedItemPreview() {
   UpsTheme {
-    OwnedItemListItem(
+    OwnedItem(
       item = OwnedItem(
         name = "Мебел",
         volume = 5,
-        category = ItemCategory.AMMUNITION
+        category = ItemCategory.AMMUNITION,
+        date = "21.11.2025"
       ),
       onDeleteClick = {},
       onClick = {}
