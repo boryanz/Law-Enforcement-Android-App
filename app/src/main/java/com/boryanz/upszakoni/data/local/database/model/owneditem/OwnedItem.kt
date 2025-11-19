@@ -14,7 +14,7 @@ data class OwnedItem(
   @ColumnInfo("date") val date: String,
 )
 
-enum class ItemCategory() {
+enum class ItemCategory {
   FIREARM,
   AMMUNITION,
   OTHER
