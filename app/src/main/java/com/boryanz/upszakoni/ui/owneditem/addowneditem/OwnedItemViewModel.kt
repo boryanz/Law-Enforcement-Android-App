@@ -15,6 +15,8 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 sealed interface OwnedItemUiEvent {
   data class OnCreate(
@@ -68,7 +70,8 @@ class OwnedItemViewModel(private val addOwnedItemUseCase: AddOwnedItemUseCase) :
               id = uiState.value.itemId,
               name = uiState.value.itemName,
               volume = uiState.value.piecesCount,
-              category = uiState.value.category
+              category = uiState.value.category,
+              date = getCurrentDateFormatted()
             )
           )
           _event.emit(OwnedItemEvent.ItemSaved)
@@ -85,5 +88,11 @@ class OwnedItemViewModel(private val addOwnedItemUseCase: AddOwnedItemUseCase) :
         )
       }
     }
+  }
+
+  fun getCurrentDateFormatted(): String {
+    val currentDate = LocalDate.now()
+    val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+    return currentDate.format(formatter)
   }
 }

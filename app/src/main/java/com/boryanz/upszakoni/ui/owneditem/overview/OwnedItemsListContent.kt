@@ -26,7 +26,7 @@ import com.boryanz.upszakoni.data.local.database.model.owneditem.ItemCategory
 import com.boryanz.upszakoni.data.local.database.model.owneditem.OwnedItem
 import com.boryanz.upszakoni.ui.components.Icons
 import com.boryanz.upszakoni.ui.components.UpsScaffold
-import com.boryanz.upszakoni.ui.owneditem.addowneditem.OwnedItemListItem
+import com.boryanz.upszakoni.ui.owneditem.addowneditem.OwnedItem
 import com.boryanz.upszakoni.ui.theme.Base100
 import com.boryanz.upszakoni.ui.theme.BaseContent
 import com.boryanz.upszakoni.ui.theme.UpsTheme
@@ -102,14 +102,14 @@ fun OwnedItemsListContent(
         modifier = Modifier
           .fillMaxSize()
           .padding(paddingValues)
-          .padding(horizontal = 8.dp, vertical = 4.dp),
+          .padding(horizontal = 8.dp, vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(4.dp)
       ) {
         items(
           items = uiState.items,
           key = { it.name }
         ) { item ->
-          OwnedItemListItem(
+          OwnedItem(
             item = item,
             onDeleteClick = { onUiEvent(OwnedItemsListUiEvent.DeleteItemClicked(item)) },
             onClick = { onItemClick(item) }
@@ -133,17 +133,47 @@ class OwnedItemsListUiStatePreviewParameterProvider :
     ),
     OwnedItemsListUiState(
       items = listOf(
-        OwnedItem(name = "Мебел", volume = 5, category = ItemCategory.AMMUNITION),
+        OwnedItem(
+          name = "Мебел",
+          volume = 5,
+          category = ItemCategory.AMMUNITION,
+          date = "21.11.2025"
+        ),
       ),
       isLoading = false
     ),
     OwnedItemsListUiState(
       items = listOf(
-        OwnedItem(name = "Мебел", volume = 5, category = ItemCategory.AMMUNITION),
-        OwnedItem(name = "Електрични уреди", volume = 12, category = ItemCategory.AMMUNITION),
-        OwnedItem(name = "Инвентар", volume = 25, category = ItemCategory.AMMUNITION),
-        OwnedItem(name = "Софтвер", volume = 3, category = ItemCategory.AMMUNITION),
-        OwnedItem(name = "Документи", volume = 150, category = ItemCategory.AMMUNITION),
+        OwnedItem(
+          name = "Мебел",
+          volume = 5,
+          category = ItemCategory.AMMUNITION,
+          date = "21.11.2025"
+        ),
+        OwnedItem(
+          name = "Електрични уреди",
+          volume = 12,
+          category = ItemCategory.AMMUNITION,
+          date = "21.11.2025"
+        ),
+        OwnedItem(
+          name = "Инвентар",
+          volume = 25,
+          category = ItemCategory.AMMUNITION,
+          date = "21.11.2025"
+        ),
+        OwnedItem(
+          name = "Софтвер",
+          volume = 3,
+          category = ItemCategory.AMMUNITION,
+          date = "21.11.2025"
+        ),
+        OwnedItem(
+          name = "Документи",
+          volume = 150,
+          category = ItemCategory.AMMUNITION,
+          date = "21.11.2025"
+        ),
       ),
       isLoading = false
     ),
@@ -207,15 +237,30 @@ private fun OwnedItemsListContentWithDeleteDialogPreview() {
     OwnedItemsListContent(
       uiState = OwnedItemsListUiState(
         items = listOf(
-          OwnedItem(name = "Мебел", volume = 5, category = ItemCategory.AMMUNITION),
-          OwnedItem(name = "Електрични уреди", volume = 12, category = ItemCategory.AMMUNITION),
-          OwnedItem(name = "Инвентар", volume = 25, category = ItemCategory.AMMUNITION),
+          OwnedItem(
+            name = "Мебел",
+            volume = 5,
+            category = ItemCategory.AMMUNITION,
+            date = "21.11.2025"
+          ),
+          OwnedItem(
+            name = "Електрични уреди",
+            volume = 12,
+            category = ItemCategory.AMMUNITION,
+            date = "21.11.2025"
+          ),
+          OwnedItem(
+            name = "Инвентар",
+            volume = 25,
+            category = ItemCategory.AMMUNITION,
+            date = "21.11.2025"
+          ),
         ),
         isLoading = false,
         itemToDelete = OwnedItem(
           name = "Инвентар",
           volume = 25,
-          category = ItemCategory.AMMUNITION
+          category = ItemCategory.AMMUNITION, date = "21.11.2025"
         ),
       ),
       onBackClicked = {},
