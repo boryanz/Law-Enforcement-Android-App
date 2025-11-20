@@ -44,7 +44,7 @@ fun OwnedItemsNavigationGraph(
               itemId = 0,
               itemName = "",
               volume = 0,
-              category = ItemCategory.OTHER
+              category = ItemCategory.OTHER.name
             )
           )
         }

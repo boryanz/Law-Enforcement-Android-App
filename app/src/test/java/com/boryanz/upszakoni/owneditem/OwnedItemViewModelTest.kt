@@ -27,7 +27,7 @@ class OwnedItemViewModelTest {
       itemId = 1,
       itemName = "Glock 17",
       piecesCount = 1,
-      category = ItemCategory.FIREARM,
+      category = ItemCategory.FIREARM.name,
       hasItemNameError = false
     )
     val viewmodel = OwnedItemViewModel(addOwnedItemUseCase = FakeAddOwnedItemUseCase())
@@ -54,7 +54,7 @@ class OwnedItemViewModelTest {
       itemId = 1,
       itemName = "",
       piecesCount = 1,
-      category = ItemCategory.FIREARM,
+      category = ItemCategory.FIREARM.name,
       hasItemNameError = false
     )
     val viewmodel = OwnedItemViewModel(addOwnedItemUseCase = FakeAddOwnedItemUseCase())
@@ -93,7 +93,7 @@ class OwnedItemViewModelTest {
       itemId = 1,
       itemName = "",
       piecesCount = 1,
-      category = ItemCategory.FIREARM,
+      category = ItemCategory.FIREARM.name,
       hasItemNameError = false
     )
     val viewmodel = OwnedItemViewModel(addOwnedItemUseCase = FakeAddOwnedItemUseCase())
@@ -123,7 +123,7 @@ class OwnedItemViewModelTest {
       itemId = 1,
       itemName = "",
       piecesCount = 0,
-      category = ItemCategory.FIREARM,
+      category = ItemCategory.FIREARM.name,
       hasItemNameError = false
     )
     val viewmodel = OwnedItemViewModel(addOwnedItemUseCase = FakeAddOwnedItemUseCase())
@@ -162,7 +162,7 @@ class OwnedItemViewModelTest {
       itemId = 1,
       itemName = "Glock 17",
       piecesCount = 5,
-      category = ItemCategory.FIREARM,
+      category = ItemCategory.FIREARM.name,
       hasItemNameError = false
     )
     val viewmodel = OwnedItemViewModel(addOwnedItemUseCase = fakeUseCase)

@@ -23,7 +23,7 @@ sealed interface OwnedItemUiEvent {
     val itemId: Int,
     val itemName: String,
     val volume: Int,
-    val category: ItemCategory
+    val category: String
   ) : OwnedItemUiEvent
 
   data class ItemNameChanged(val value: String) : OwnedItemUiEvent
@@ -39,7 +39,7 @@ data class OwnedItemUiState(
   val itemId: Int = 0,
   val itemName: String = "",
   val piecesCount: Int = 0,
-  val category: ItemCategory = ItemCategory.OTHER,
+  val category: String = ItemCategory.OTHER.name,
   val hasItemNameError: Boolean = false,
 )
 

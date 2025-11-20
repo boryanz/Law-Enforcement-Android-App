@@ -10,7 +10,7 @@ data class OwnedItem(
   val id: Int = 0,
   @ColumnInfo("name") val name: String,
   @ColumnInfo("volume") val volume: Int,
-  @ColumnInfo("category") val category: ItemCategory,
+  @ColumnInfo("category") val category: String,
   @ColumnInfo("date") val date: String,
 )
 
