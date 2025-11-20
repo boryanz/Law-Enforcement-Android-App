@@ -68,7 +68,7 @@ private fun OwnedItemPreview() {
       item = OwnedItem(
         name = "Мебел",
         volume = 5,
-        category = ItemCategory.AMMUNITION,
+        category = ItemCategory.AMMUNITION.name,
         date = "21.11.2025"
       ),
       onDeleteClick = {},

@@ -16,7 +16,7 @@ fun OwnedItemScreen(
   itemId: Int,
   itemName: String,
   volume: Int,
-  category: ItemCategory,
+  category: String,
   onBackClicked: () -> Unit,
 ) {
   val viewModel = koinViewModel<OwnedItemViewModel>()

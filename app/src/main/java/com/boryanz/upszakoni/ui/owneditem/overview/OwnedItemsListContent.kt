@@ -136,7 +136,7 @@ class OwnedItemsListUiStatePreviewParameterProvider :
         OwnedItem(
           name = "Мебел",
           volume = 5,
-          category = ItemCategory.AMMUNITION,
+          category = ItemCategory.AMMUNITION.name,
           date = "21.11.2025"
         ),
       ),
@@ -147,31 +147,31 @@ class OwnedItemsListUiStatePreviewParameterProvider :
         OwnedItem(
           name = "Мебел",
           volume = 5,
-          category = ItemCategory.AMMUNITION,
+          category = ItemCategory.AMMUNITION.name,
           date = "21.11.2025"
         ),
         OwnedItem(
           name = "Електрични уреди",
           volume = 12,
-          category = ItemCategory.AMMUNITION,
+          category = ItemCategory.AMMUNITION.name,
           date = "21.11.2025"
         ),
         OwnedItem(
           name = "Инвентар",
           volume = 25,
-          category = ItemCategory.AMMUNITION,
+          category = ItemCategory.AMMUNITION.name,
           date = "21.11.2025"
         ),
         OwnedItem(
           name = "Софтвер",
           volume = 3,
-          category = ItemCategory.AMMUNITION,
+          category = ItemCategory.AMMUNITION.name,
           date = "21.11.2025"
         ),
         OwnedItem(
           name = "Документи",
           volume = 150,
-          category = ItemCategory.AMMUNITION,
+          category = ItemCategory.AMMUNITION.name,
           date = "21.11.2025"
         ),
       ),
@@ -240,19 +240,19 @@ private fun OwnedItemsListContentWithDeleteDialogPreview() {
           OwnedItem(
             name = "Мебел",
             volume = 5,
-            category = ItemCategory.AMMUNITION,
+            category = ItemCategory.AMMUNITION.name,
             date = "21.11.2025"
           ),
           OwnedItem(
             name = "Електрични уреди",
             volume = 12,
-            category = ItemCategory.AMMUNITION,
+            category = ItemCategory.AMMUNITION.name,
             date = "21.11.2025"
           ),
           OwnedItem(
             name = "Инвентар",
             volume = 25,
-            category = ItemCategory.AMMUNITION,
+            category = ItemCategory.AMMUNITION.name,
             date = "21.11.2025"
           ),
         ),
@@ -260,7 +260,7 @@ private fun OwnedItemsListContentWithDeleteDialogPreview() {
         itemToDelete = OwnedItem(
           name = "Инвентар",
           volume = 25,
-          category = ItemCategory.AMMUNITION, date = "21.11.2025"
+          category = ItemCategory.AMMUNITION.name, date = "21.11.2025"
         ),
       ),
       onBackClicked = {},

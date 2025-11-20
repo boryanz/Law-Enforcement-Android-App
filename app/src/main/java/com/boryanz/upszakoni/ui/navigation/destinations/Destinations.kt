@@ -1,6 +1,5 @@
 package com.boryanz.upszakoni.ui.navigation.destinations
 
-import com.boryanz.upszakoni.data.local.database.model.owneditem.ItemCategory
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -44,5 +43,5 @@ data class OwnedItemScreenDestination(
   val itemId: Int,
   val itemName: String,
   val volume: Int,
-  val category: ItemCategory
+  val category: String
 )
