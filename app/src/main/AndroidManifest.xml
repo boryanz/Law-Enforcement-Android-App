@@ -40,6 +40,10 @@
             android:exported="false"
             android:theme="@style/Theme.KataSampleApp" />
         <activity
+            android:name=".ui.screens.ai.GenerateDocumentActivity"
+            android:exported="false"
+            android:theme="@style/Theme.KataSampleApp" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.KataSampleApp">

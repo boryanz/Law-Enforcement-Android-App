@@ -195,6 +195,21 @@ fun NavigationDrawer(
               onClick = { onItemClicked(NavigationDrawerDestination.phone_numbers) }
             )
             HorizontalDivider()
+            NavigationDrawerItem(
+              icon = {
+                Icon(
+                  modifier = Modifier
+                    .height(20.dp)
+                    .width(20.dp),
+                  imageVector = Icons.Filled.Edit,
+                  contentDescription = null
+                )
+              },
+              label = { Text(text = "Generate Document") },
+              selected = false,
+              onClick = { onItemClicked(NavigationDrawerDestination.generate_document) }
+            )
+            HorizontalDivider()
             if (!featureFlags?.usefulInformations.isNullOrEmpty()) {
               HorizontalDivider()
               NavigationDrawerItem(

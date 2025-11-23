@@ -33,6 +33,7 @@ firebaseAnalytics = "22.0.0"
 junitJupiter = "5.8.1"
 kotlinxCoroutines = "1.10.1"
 mockk = "1.13.10"
+firebaseBom = "34.6.0"
 
 
 
@@ -86,6 +87,8 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 firebase-config = { group = "com.google.firebase", name = "firebase-config", version.ref = "firebaseConfig" }
 firebase-analytics-ktx = { group = "com.google.firebase", name = "firebase-analytics-ktx", version.ref = "firebaseAnalytics" }
 junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junitJupiter" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
+firebase-ai = { group = "com.google.firebase", name = "firebase-ai" }
 
 
 [plugins]

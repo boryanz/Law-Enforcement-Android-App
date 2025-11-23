@@ -1,15 +1,14 @@
 package com.boryanz.upszakoni.ui.components
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.boryanz.upszakoni.ui.theme.Base100
-import com.boryanz.upszakoni.ui.theme.BaseContent
 import com.boryanz.upszakoni.ui.theme.BaseContent1
 import com.boryanz.upszakoni.ui.theme.UpsTheme
 
@@ -25,11 +24,13 @@ fun UpsScaffold(
   Scaffold(
     floatingActionButton = { floatingActionButton?.let { it() } },
     topBar = {
-      TopAppBar(
+      CenterAlignedTopAppBar(
         title = topBarTitle,
-        colors = TopAppBarDefaults.topAppBarColors(
+        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
           containerColor = BaseContent1,
-          titleContentColor = Base100
+          titleContentColor = Base100,
+          navigationIconContentColor = Base100,
+          actionIconContentColor = Base100
         ),
         navigationIcon = {
           if (navigationIcon != null) {
@@ -51,11 +52,13 @@ fun UpsScaffold(
 @Composable
 private fun UpsScaffoldPreview() {
   UpsTheme {
-    TopAppBar(
-      title = { Text("Something", color = Base100) },
-      colors = TopAppBarDefaults.topAppBarColors(
-        containerColor = BaseContent,
-        titleContentColor = Base100
+    CenterAlignedTopAppBar(
+      title = { Text("Something") },
+      colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+        containerColor = BaseContent1,
+        titleContentColor = Base100,
+        navigationIconContentColor = Base100,
+        actionIconContentColor = Base100
       ),
       navigationIcon = { }
     )

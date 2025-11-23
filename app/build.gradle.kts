@@ -65,6 +65,8 @@ dependencies {
     implementation(libs.retrofit.core)
     implementation(libs.firebase.config)
     implementation(libs.firebase.analytics.ktx)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.ai)
 //    implementation(libs.retrofit.core)
 //    implementation(libs.retrofit.bom)
 //    implementation(libs.coil.kt)

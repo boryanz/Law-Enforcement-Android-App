@@ -26,6 +26,7 @@ import com.boryanz.upszakoni.domain.remoteconfig.RemoteConfigRepository
 import com.boryanz.upszakoni.ui.navigation.navgraph.overtimetracking.OvertimeTrackNavigationGraphViewModel
 import com.boryanz.upszakoni.ui.owneditem.addowneditem.OwnedItemViewModel
 import com.boryanz.upszakoni.ui.owneditem.overview.OwnedItemsListViewModel
+import com.boryanz.upszakoni.ui.screens.ai.AddPromptViewModel
 import com.boryanz.upszakoni.ui.screens.archivedlaws.ArchivedLawsViewModel
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardViewModel
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.monthly.OvertimeMonthlyCalendarViewModel
@@ -69,4 +70,5 @@ val appModule = module {
   viewModel { NewOverTimeInputViewModel(get()) }
   viewModel { OwnedItemViewModel(get()) }
   viewModel { OwnedItemsListViewModel(get(), get()) }
+  viewModel { AddPromptViewModel() }
 }
