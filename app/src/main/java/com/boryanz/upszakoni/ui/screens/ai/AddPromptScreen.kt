@@ -81,10 +81,10 @@ fun AddPromptScreen(
           value = uiState.prompt,
           isError = uiState.hasPromptError,
           textStyle = MaterialTheme.typography.bodyMedium,
-          labelTextStyle = MaterialTheme.typography.bodySmall,
+          labelTextStyle = MaterialTheme.typography.bodyMedium,
           onValueChanged = { viewModel.onUiEvent(PromptChanged(it)) },
           keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-          hint = "Асистентот користи вештачка интелигенција на Google Gemini моделот. Не се препорачува внесување на лични податоци.",
+          hint = "Пример: ",
           maxLines = 12
         )
 
