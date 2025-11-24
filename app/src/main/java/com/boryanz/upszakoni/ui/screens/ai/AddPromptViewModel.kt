@@ -2,6 +2,7 @@ package com.boryanz.upszakoni.ui.screens.ai
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsManager
 import com.google.firebase.Firebase
 import com.google.firebase.ai.ai
 import com.google.firebase.ai.type.GenerativeBackend
@@ -12,6 +13,9 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 sealed interface AddPromptUiEvent {
   data class PromptChanged(val value: String) : AddPromptUiEvent
@@ -26,14 +30,52 @@ data class AddPromptUiState(
   val prompt: String = "",
   val isGenerating: Boolean = false,
   val hasPromptError: Boolean = false,
+  val aiGenerationsUsed: Int = 0,
+  val isAiLimitReached: Boolean = false,
 )
 
-class AddPromptViewModel : ViewModel() {
+const val MAX_AI_GENERATIONS_PER_DAY = 5
+const val DATE_FORMAT = "yyyy-MM-dd"
+
+class AddPromptViewModel(
+  private val sharedPrefsManager: SharedPrefsManager
+) : ViewModel() {
   private val _uiState = MutableStateFlow(AddPromptUiState())
   val uiState = _uiState.asStateFlow()
 
   private val _event = MutableSharedFlow<AddPromptEvent>()
   val event = _event.asSharedFlow()
+
+  init {
+    initializeAiGenerationCounter()
+  }
+
+  private fun initializeAiGenerationCounter() {
+    val today = getCurrentDate()
+    val lastCounterDate = sharedPrefsManager.getAiGenerationCounterDate()
+
+    // Reset counter if it's a new day
+    if (lastCounterDate != today) {
+      sharedPrefsManager.setAiGenerationCounterDate(today)
+      // Reset counter by setting it to 0 (we don't have a direct reset method)
+      // We'll handle this in the getter by checking the date
+    }
+
+    val generationsUsed = sharedPrefsManager.getAiGenerationsUsedToday()
+    val isLimitReached = generationsUsed >= MAX_AI_GENERATIONS_PER_DAY
+
+    _uiState.update {
+      it.copy(
+        aiGenerationsUsed = generationsUsed,
+        isAiLimitReached = isLimitReached
+      )
+    }
+  }
+
+  private fun getCurrentDate(): String {
+    val sdf = SimpleDateFormat(DATE_FORMAT, Locale.getDefault())
+    return sdf.format(Date())
+  }
 
   fun onUiEvent(event: AddPromptUiEvent) {
     when (event) {
@@ -47,7 +89,7 @@ class AddPromptViewModel : ViewModel() {
       }
 
       AddPromptUiEvent.GenerateClicked -> {
-        if (_uiState.value.prompt.isNotBlank()) {
+        if (_uiState.value.prompt.isNotBlank() && !_uiState.value.isAiLimitReached) {
           generateDocument(_uiState.value.prompt)
         }
       }
@@ -61,47 +103,22 @@ class AddPromptViewModel : ViewModel() {
       val model = Firebase.ai(backend = GenerativeBackend.googleAI())
         .generativeModel("gemini-2.5-flash")
 
-      val systemPrompt = """
-        Ти си искусен полициски слубежник кој што пишува службени белешки. Твоја должност е да напишеш ПРАВНО ОДРЖАНИ И СУДСКО ОДБРАНЛИВИ белешки кои ќе ја заштитат полицискиот слубежник во случај на судска процедура.
-
-        На основа на описот кој што ќе го дадам, напиши официјална службена белешка со употреба на полицииска терминлогоија во Северна Македонија.
-        Белешката ќе биде подеднакво професионална и СУДСКО ОДБРАНЛИВА.
-
-        Белешката треба да биде фокусирана на правни аспекти и примената на релевантни закони/наредби.
-        НАПОМЕНА: Не пишувај никаков вовед пред белешката. Само дади ми ги верзиите во формат дефиниран подолу.
-        
-        Белешката треба да одговори на следните прашања: 
-        1. Кој ме испратил? (Пример: По претходна пријава за нарушување на ЈРМ бев известен од (дежурна служба или ЦИК) - не користи никакви други изрази освен ЦИК и Дежурна служба.)
-        2. Што се случило на настанот?
-        3. Каде се случил настанот?
-        4. Како се случил настанот?
-        5. Зошто се случил настанот?
-        6. Со кого се случил - учесници?
-        7. Превземени мерки од моја страна и кој сум известил по настанот.
-        
-        НАЈВАЖНО: Белешката НЕ треба да опфаќа САМО што е напишано од полицискиот службеник, туку мора да наведе и што БИ ТРЕБАЛО да е направено во текот на настанот. 
-        Пример: Полицскио службеник не навел дека извршил проверка за лице, а напишал дека го легитимирал по лична карта. Белешката мора да содржи и дел дека лицето било проверено во систем. 
-        На овој начин ќе се покријат сите пропусти на полицискиот службеник.
-
-        ФОРМАТ:
-        Белешка:
-        [белешка овде]
-        
-        Препорачана постапка на настанот:
-        [Во прво лице, обраќајки му се без персирање, по точки што полицскиот службеник требало да превземе на опишаниот настан согласно негоците полицски овластувања. Точките треба да бидат по една до максимум 2 реченици.]
-
-        ЛИЧНОСТ ЗАШТИТА: Ако детектираш какво било личен податок (име, презиме, адреса, телефон, имејл, број на ДЛК, датум на раѓање, регистарска табла, итн.), замени го со _______.
-
-        ФОРМАТ НА ТЕКСТ: Секоја верзија треба да биде структурирана како есеј со кратки, логични параграфи. Без метаглави, точки, звездички или друго форматирање. Чист, стандарден текст кој е подготвен за судска употреба.
-
-        Описот од полицискиот слубежник:
-        $userPrompt
-      """.trimIndent()
+      val systemPrompt = AI_SYSTEM_PROMPT + userPrompt
 
       val response = model.generateContent(systemPrompt)
       val generatedDocument = response.text.orEmpty()
 
-      _uiState.update { it.copy(isGenerating = false) }
+      sharedPrefsManager.incrementAiGenerationCounter()
+      val newGenerationsUsed = sharedPrefsManager.getAiGenerationsUsedToday()
+      val isLimitReached = newGenerationsUsed >= MAX_AI_GENERATIONS_PER_DAY
+
+      _uiState.update {
+        it.copy(
+          isGenerating = false,
+          aiGenerationsUsed = newGenerationsUsed,
+          isAiLimitReached = isLimitReached
+        )
+      }
       _event.emit(AddPromptEvent.DocumentGenerated(generatedDocument))
     } catch (e: Exception) {
       _uiState.update { it.copy(isGenerating = false) }

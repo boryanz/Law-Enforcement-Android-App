@@ -15,9 +15,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.boryanz.upszakoni.R
 import com.boryanz.upszakoni.ui.components.Button
 import com.boryanz.upszakoni.ui.components.Icons
 import com.boryanz.upszakoni.ui.components.Spacer
@@ -45,11 +48,10 @@ fun AddPromptScreen(
   }
 
   UpsScaffold(
-    topBarTitle = { Text("Креирај белешка") },
+    topBarTitle = { Text(stringResource(R.string.ai_prompt_title_text)) },
     navigationIcon = { Icons.Back(onClick = onBackClicked) }
   ) { paddingValues ->
     if (uiState.isGenerating) {
-      // Loading state
       Column(
         modifier = Modifier
           .fillMaxSize()
@@ -60,8 +62,10 @@ fun AddPromptScreen(
         CircularProgressIndicator()
         Spacer.Vertical(16.dp)
         Text(
-          text = "Службената белешка се генерира...",
-          style = MaterialTheme.typography.bodyMedium
+          modifier = Modifier.fillMaxWidth(),
+          textAlign = TextAlign.Center,
+          text = stringResource(R.string.ai_prompt_loading_text),
+          style = MaterialTheme.typography.bodyLarge
         )
       }
     } else {
@@ -77,14 +81,14 @@ fun AddPromptScreen(
 
         TextFieldInput.BaseOutline(
           modifier = Modifier.weight(1f),
-          labelText = "Опишете го настанот",
+          labelText = stringResource(R.string.ai_prompt_textfield_label_text),
           value = uiState.prompt,
           isError = uiState.hasPromptError,
           textStyle = MaterialTheme.typography.bodyMedium,
           labelTextStyle = MaterialTheme.typography.bodyMedium,
           onValueChanged = { viewModel.onUiEvent(PromptChanged(it)) },
           keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-          hint = "Пример: ",
+          hint = stringResource(R.string.ai_prompt_textfield_hint_text),
           maxLines = 12
         )
 
@@ -95,9 +99,15 @@ fun AddPromptScreen(
             .fillMaxWidth(),
           verticalArrangement = Arrangement.Bottom
         ) {
+          val buttonTitle = if (uiState.isAiLimitReached) {
+            stringResource(R.string.ai_limit_reached_button_text)
+          } else {
+            stringResource(R.string.ai_generate_button_counter_format, uiState.aiGenerationsUsed)
+          }
+
           Button.Primary(
-            title = "Креирај белешка",
-            isEnabled = uiState.prompt.isNotBlank(),
+            title = buttonTitle,
+            isEnabled = uiState.prompt.isNotBlank() && !uiState.isAiLimitReached,
             onClick = { viewModel.onUiEvent(GenerateClicked) }
           )
 

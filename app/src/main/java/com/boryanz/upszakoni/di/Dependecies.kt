@@ -70,5 +70,5 @@ val appModule = module {
   viewModel { NewOverTimeInputViewModel(get()) }
   viewModel { OwnedItemViewModel(get()) }
   viewModel { OwnedItemsListViewModel(get(), get()) }
-  viewModel { AddPromptViewModel() }
+  viewModel { AddPromptViewModel(get()) }
 }

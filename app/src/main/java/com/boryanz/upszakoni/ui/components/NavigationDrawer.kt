@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Inventory
 import androidx.compose.material.icons.filled.Menu
@@ -111,6 +112,21 @@ fun NavigationDrawer(
                   modifier = Modifier
                     .height(20.dp)
                     .width(20.dp),
+                  imageVector = Icons.Filled.AutoAwesome,
+                  contentDescription = null
+                )
+              },
+              label = { Text(text = "AI-генератор на белешки") },
+              selected = false,
+              onClick = { onItemClicked(NavigationDrawerDestination.generate_document) }
+            )
+            HorizontalDivider()
+            NavigationDrawerItem(
+              icon = {
+                Icon(
+                  modifier = Modifier
+                    .height(20.dp)
+                    .width(20.dp),
                   imageVector = Icons.Filled.Timelapse,
                   contentDescription = null
                 )
@@ -193,21 +209,6 @@ fun NavigationDrawer(
               label = { Text(text = stringResource(R.string.numbers_ps_svr_skopje)) },
               selected = false,
               onClick = { onItemClicked(NavigationDrawerDestination.phone_numbers) }
-            )
-            HorizontalDivider()
-            NavigationDrawerItem(
-              icon = {
-                Icon(
-                  modifier = Modifier
-                    .height(20.dp)
-                    .width(20.dp),
-                  imageVector = Icons.Filled.Edit,
-                  contentDescription = null
-                )
-              },
-              label = { Text(text = "Generate Document") },
-              selected = false,
-              onClick = { onItemClicked(NavigationDrawerDestination.generate_document) }
             )
             HorizontalDivider()
             if (!featureFlags?.usefulInformations.isNullOrEmpty()) {

@@ -20,12 +20,22 @@ interface SharedPrefsManager {
   fun removeArchivedLaw(lawName: String)
 
   fun contains(lawName: String): Boolean
+
+  fun getAiGenerationsUsedToday(): Int
+
+  fun incrementAiGenerationCounter()
+
+  fun setAiGenerationCounterDate(date: String)
+
+  fun getAiGenerationCounterDate(): String?
 }
 
 const val OVERTIME_MIGRATION_ACCEPTED = "overtimeMigrationAccept"
 const val OVERTIME_MIGRATION_REJECTED = "overtimeMigrationReject"
 const val PRIVACY_POLICY_ACCEPTED = "privacyPolicyAcceptance"
 const val ARCHIVE_LAW_KEY = "archive"
+const val AI_GENERATIONS_USED_KEY = "ai_generations_used"
+const val AI_GENERATIONS_DATE_KEY = "ai_generations_date"
 
 class PrefsLocalStorage(
   private val sharedPrefs: SharedPreferences
@@ -61,6 +71,23 @@ class PrefsLocalStorage(
 
   override fun contains(lawName: String): Boolean {
     return sharedPrefs.contains("$ARCHIVE_LAW_KEY/$lawName")
+  }
+
+  override fun getAiGenerationsUsedToday(): Int {
+    return sharedPrefs.getInt(AI_GENERATIONS_USED_KEY, 0)
+  }
+
+  override fun incrementAiGenerationCounter() {
+    val currentCount = getAiGenerationsUsedToday()
+    sharedPrefs.edit { putInt(AI_GENERATIONS_USED_KEY, currentCount + 1) }
+  }
+
+  override fun setAiGenerationCounterDate(date: String) {
+    sharedPrefs.edit { putString(AI_GENERATIONS_DATE_KEY, date) }
+  }
+
+  override fun getAiGenerationCounterDate(): String? {
+    return sharedPrefs.getString(AI_GENERATIONS_DATE_KEY, null)
   }
 }
 

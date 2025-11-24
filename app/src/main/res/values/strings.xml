@@ -113,4 +113,26 @@
     <string name="our_partners_title">Наши партнери</string>
     <string name="report_bug_title">Пријави грешка</string>
     <string name="update_available_title">Ажурирај нова верзија</string>
+    <string name="ai_prompt_textfield_label_text">Опишете го настанот со клучни зборови</string>
+    <string name="ai_prompt_textfield_hint_text">Пример: \nТепачка, Улица _________, Две машки лица, Физичка пресметка, Легитимирање, ППН, Известена Дежурна служба.</string>
+    <string name="ai_prompt_button_text">Креирај белешка</string>
+    <string name="ai_prompt_loading_text">Службената белешка се генерира...\n Генерирањето може да трае и до 30 секудни.</string>
+    <string name="ai_prompt_title_text">Креирај белешка</string>
+    <string name="ai_generated_document_title">Генерирана белешка</string>
+
+    <!-- Prompt Information Screen Strings -->
+    <string name="prompt_information_screen_title">Начин на користење</string>
+    <string name="prompt_information_what_is_heading">Што е ова?</string>
+    <string name="prompt_information_what_is_description">Генератор на белешки сo помош на вештачка интелигенција.</string>
+    <string name="prompt_information_how_to_use_heading">Како правилно да го користам генераторот?</string>
+    <string name="prompt_information_keywords_instruction">Внесете само КЛУЧНИ ЗБОРОВИ.\n\nПример:\nТепачка, Улица _________, Две машки лица, Физичка пресметка, Легитимирање, ППН, Известена Дежурна служба.</string>
+    <string name="prompt_information_important_heading">Важно!</string>
+    <string name="prompt_information_personal_data_warning">ПО СЕКОЈА ЦЕНА ИЗБЕГНУВАЈТЕ ДА ВНЕСУВАТЕ ЛИЧНИ ПОДАТОЦИ ОД СТРАНКИ!\nСекој обид на внес на матичен број, дата на раѓање или телефонски број ќе бидат одбиени и белешката нема да биде креирана.</string>
+    <string name="prompt_information_disclaimer">Оваа функција е наменета за образовна и инспиративна намена при изговување на вашиот материјал. Содржината генерирана од овој систем е само сугестија и не треба да се користи како крајна верзија!</string>
+    <string name="prompt_information_continue_button">Продолжи</string>
+
+    <!-- AI Generation Limit Strings -->
+    <string name="ai_generate_button_text">Креирај белешка</string>
+    <string name="ai_generate_button_counter_format">Креирај белешка (%d/5)</string>
+    <string name="ai_limit_reached_button_text">Дневниот лимит е исполнет. Обидете се повторно утре</string>
 </resources>
