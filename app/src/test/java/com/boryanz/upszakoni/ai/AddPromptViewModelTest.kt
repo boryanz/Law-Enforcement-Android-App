@@ -90,7 +90,12 @@ class AddPromptViewModelTest {
     )
     val viewModel = AddPromptViewModel(FakeAiCheckerUseCase(0))
     viewModel.onUiEvent(AddPromptUiEvent.PromptChanged("Liceto Petko Petkovski so EMBG 1904995450079 bese legitimirano"))
-    assertEquals(intial.copy(prompt = "Liceto Petko Petkovski so EMBG 1904995450079 bese legitimirano", hasPromptError = true), viewModel.uiState.value)
+    assertEquals(
+      intial.copy(
+        prompt = "Liceto Petko Petkovski so EMBG 1904995450079 bese legitimirano",
+        hasPromptError = true
+      ), viewModel.uiState.value
+    )
   }
 
   @Test
@@ -104,66 +109,95 @@ class AddPromptViewModelTest {
     )
     val viewModel = AddPromptViewModel(FakeAiCheckerUseCase(0))
     viewModel.onUiEvent(AddPromptUiEvent.PromptChanged("Liceto Petko Petkovski so Licna karta N1234567 bese legitimirano"))
-    assertEquals(intial.copy(prompt = "Liceto Petko Petkovski so Licna karta N1234567 bese legitimirano", hasPromptError = true), viewModel.uiState.value)
+    assertEquals(
+      intial.copy(
+        prompt = "Liceto Petko Petkovski so Licna karta N1234567 bese legitimirano",
+        hasPromptError = true
+      ), viewModel.uiState.value
+    )
   }
 
   @Ignore("Add this validation in later phase since it's not that critical data")
   @Test
-  fun `when ai prompt contains Macedonian mobile phone number then update ui state with error`() = runTest {
-    val intial = AddPromptUiState(
-      prompt = "",
-      examplePrompt = PromptType.COMPLAINT.prompt,
-      hasPromptError = false,
-      aiGenerationsUsed = 0,
-      isAiLimitReached = false
-    )
-    val viewModel = AddPromptViewModel(FakeAiCheckerUseCase(0))
-    viewModel.onUiEvent(AddPromptUiEvent.PromptChanged("Liceto Petko Petkovski so broj na telefon +38971203123 bese legitimirano"))
-    assertEquals(intial.copy(prompt = "Liceto Petko Petkovski so broj na telefon +38971203123 bese legitimirano", hasPromptError = true), viewModel.uiState.value)
-  }
+  fun `when ai prompt contains Macedonian mobile phone number then update ui state with error`() =
+    runTest {
+      val intial = AddPromptUiState(
+        prompt = "",
+        examplePrompt = PromptType.COMPLAINT.prompt,
+        hasPromptError = false,
+        aiGenerationsUsed = 0,
+        isAiLimitReached = false
+      )
+      val viewModel = AddPromptViewModel(FakeAiCheckerUseCase(0))
+      viewModel.onUiEvent(AddPromptUiEvent.PromptChanged("Liceto Petko Petkovski so broj na telefon +38971203123 bese legitimirano"))
+      assertEquals(
+        intial.copy(
+          prompt = "Liceto Petko Petkovski so broj na telefon +38971203123 bese legitimirano",
+          hasPromptError = true
+        ), viewModel.uiState.value
+      )
+    }
 
   @Ignore("Add this validation in later phase since it's not that critical data")
   @Test
-  fun `when ai prompt contains Macedonian mobile phone number with spaces then update ui state with error`() = runTest {
-    val intial = AddPromptUiState(
-      prompt = "",
-      examplePrompt = PromptType.COMPLAINT.prompt,
-      hasPromptError = false,
-      aiGenerationsUsed = 0,
-      isAiLimitReached = false
-    )
-    val viewModel = AddPromptViewModel(FakeAiCheckerUseCase(0))
-    viewModel.onUiEvent(AddPromptUiEvent.PromptChanged("Liceto Petko Petkovski so broj na telefon +389 71 123 456 bese legitimirano"))
-    assertEquals(intial.copy(prompt = "Liceto Petko Petkovski so broj na telefon +389 71 123 456 bese legitimirano", hasPromptError = true), viewModel.uiState.value)
-  }
+  fun `when ai prompt contains Macedonian mobile phone number with spaces then update ui state with error`() =
+    runTest {
+      val intial = AddPromptUiState(
+        prompt = "",
+        examplePrompt = PromptType.COMPLAINT.prompt,
+        hasPromptError = false,
+        aiGenerationsUsed = 0,
+        isAiLimitReached = false
+      )
+      val viewModel = AddPromptViewModel(FakeAiCheckerUseCase(0))
+      viewModel.onUiEvent(AddPromptUiEvent.PromptChanged("Liceto Petko Petkovski so broj na telefon +389 71 123 456 bese legitimirano"))
+      assertEquals(
+        intial.copy(
+          prompt = "Liceto Petko Petkovski so broj na telefon +389 71 123 456 bese legitimirano",
+          hasPromptError = true
+        ), viewModel.uiState.value
+      )
+    }
 
   @Ignore("Add this validation in later phase since it's not that critical data")
   @Test
-  fun `when ai prompt contains Macedonian mobile phone number with dashes then update ui state with error`() = runTest {
-    val intial = AddPromptUiState(
-      prompt = "",
-      examplePrompt = PromptType.COMPLAINT.prompt,
-      hasPromptError = false,
-      aiGenerationsUsed = 0,
-      isAiLimitReached = false
-    )
-    val viewModel = AddPromptViewModel(FakeAiCheckerUseCase(0))
-    viewModel.onUiEvent(AddPromptUiEvent.PromptChanged("Liceto Petko Petkovski so broj na telefon 071/123/456 bese legitimirano"))
-    assertEquals(intial.copy(prompt = "Liceto Petko Petkovski so broj na telefon +389 71 123 456 bese legitimirano", hasPromptError = true), viewModel.uiState.value)
-  }
+  fun `when ai prompt contains Macedonian mobile phone number with dashes then update ui state with error`() =
+    runTest {
+      val intial = AddPromptUiState(
+        prompt = "",
+        examplePrompt = PromptType.COMPLAINT.prompt,
+        hasPromptError = false,
+        aiGenerationsUsed = 0,
+        isAiLimitReached = false
+      )
+      val viewModel = AddPromptViewModel(FakeAiCheckerUseCase(0))
+      viewModel.onUiEvent(AddPromptUiEvent.PromptChanged("Liceto Petko Petkovski so broj na telefon 071/123/456 bese legitimirano"))
+      assertEquals(
+        intial.copy(
+          prompt = "Liceto Petko Petkovski so broj na telefon +389 71 123 456 bese legitimirano",
+          hasPromptError = true
+        ), viewModel.uiState.value
+      )
+    }
 
   @Ignore("Add this validation in later phase since it's not that critical data")
   @Test
-  fun `when ai prompt contains Macedonian mobile phone number with hyphens then update ui state with error`() = runTest {
-    val intial = AddPromptUiState(
-      prompt = "",
-      examplePrompt = PromptType.COMPLAINT.prompt,
-      hasPromptError = false,
-      aiGenerationsUsed = 0,
-      isAiLimitReached = false
-    )
-    val viewModel = AddPromptViewModel(FakeAiCheckerUseCase(0))
-    viewModel.onUiEvent(AddPromptUiEvent.PromptChanged("Liceto Petko Petkovski so broj na telefon 071-123-456 bese legitimirano"))
-    assertEquals(intial.copy(prompt = "Liceto Petko Petkovski so broj na telefon +389 71 123 456 bese legitimirano", hasPromptError = true), viewModel.uiState.value)
-  }
+  fun `when ai prompt contains Macedonian mobile phone number with hyphens then update ui state with error`() =
+    runTest {
+      val intial = AddPromptUiState(
+        prompt = "",
+        examplePrompt = PromptType.COMPLAINT.prompt,
+        hasPromptError = false,
+        aiGenerationsUsed = 0,
+        isAiLimitReached = false
+      )
+      val viewModel = AddPromptViewModel(FakeAiCheckerUseCase(0))
+      viewModel.onUiEvent(AddPromptUiEvent.PromptChanged("Liceto Petko Petkovski so broj na telefon 071-123-456 bese legitimirano"))
+      assertEquals(
+        intial.copy(
+          prompt = "Liceto Petko Petkovski so broj na telefon +389 71 123 456 bese legitimirano",
+          hasPromptError = true
+        ), viewModel.uiState.value
+      )
+    }
 }
