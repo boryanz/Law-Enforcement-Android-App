@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.navigation.compose.rememberNavController
+import com.boryanz.upszakoni.ui.screens.ai.navigation.GenerateDocumentNavigationGraph
 import com.boryanz.upszakoni.ui.theme.UpsTheme
 
 class GenerateDocumentActivity : ComponentActivity() {
@@ -22,7 +23,7 @@ class GenerateDocumentActivity : ComponentActivity() {
     setContent {
       UpsTheme {
         val navHostController = rememberNavController()
-        GenerateDocumentNavigation(
+        GenerateDocumentNavigationGraph(
           navHostController = navHostController,
           onBackClick = { finish() }
         )

@@ -25,6 +25,8 @@ interface SharedPrefsManager {
 
   fun incrementAiGenerationCounter()
 
+  fun resetAiGenerationCounter()
+
   fun setAiGenerationCounterDate(date: String)
 
   fun getAiGenerationCounterDate(): String?
@@ -80,6 +82,10 @@ class PrefsLocalStorage(
   override fun incrementAiGenerationCounter() {
     val currentCount = getAiGenerationsUsedToday()
     sharedPrefs.edit { putInt(AI_GENERATIONS_USED_KEY, currentCount + 1) }
+  }
+
+  override fun resetAiGenerationCounter() {
+    sharedPrefs.edit { putInt(AI_GENERATIONS_USED_KEY, 0) }
   }
 
   override fun setAiGenerationCounterDate(date: String) {

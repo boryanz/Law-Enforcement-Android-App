@@ -1,12 +1,14 @@
-package com.boryanz.upszakoni.ui.screens.ai
+package com.boryanz.upszakoni.ui.screens.ai.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
+import com.boryanz.upszakoni.ui.screens.ai.addprompt.AddPromptScreen
+import com.boryanz.upszakoni.ui.screens.ai.document.DocumentScreen
+import com.boryanz.upszakoni.ui.screens.ai.information.PromptInformationScreen
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -16,14 +18,13 @@ data object PromptInformationDestination
 data object AddPromptDestination
 
 @Serializable
-data object DocumentDestination
+data class DocumentDestination(val fullPrompt: String, val examplePrompt: String)
 
 @Composable
-fun GenerateDocumentNavigation(
+fun GenerateDocumentNavigationGraph(
   navHostController: NavHostController = rememberNavController(),
   onBackClick: () -> Unit
 ) {
-  val generatedDocument = remember { mutableStateOf("") }
 
   NavHost(
     navController = navHostController,
@@ -41,16 +42,22 @@ fun GenerateDocumentNavigation(
     composable<AddPromptDestination> {
       AddPromptScreen(
         onBackClicked = { navHostController.navigateUp() },
-        onDocumentGenerated = { document ->
-          generatedDocument.value = document
-          navHostController.navigate(DocumentDestination)
+        onGenerateDocumentClicked = { fullPrompt, examplePrompt ->
+          navHostController.navigate(
+            DocumentDestination(
+              fullPrompt = fullPrompt,
+              examplePrompt = examplePrompt
+            )
+          )
         }
       )
     }
 
     composable<DocumentDestination> {
+      val route = it.toRoute<DocumentDestination>()
       DocumentScreen(
-        document = generatedDocument.value,
+        fullPrompt = route.fullPrompt,
+        examplePrompt = route.examplePrompt,
         onBackClicked = { navHostController.navigateUp() }
       )
     }

@@ -122,17 +122,17 @@
 
     <!-- Prompt Information Screen Strings -->
     <string name="prompt_information_screen_title">Начин на користење</string>
-    <string name="prompt_information_what_is_heading">Што е ова?</string>
-    <string name="prompt_information_what_is_description">Генератор на белешки сo помош на вештачка интелигенција.</string>
+    <string name="prompt_information_what_is_heading">Што е AI - генератор за белешки?</string>
+    <string name="prompt_information_what_is_description">AI генератор користи вештачка интелигенција за пишување службени белешки за полициски настани. Поддржува три типа: поплаки, ЈРМ и обезбедување на места на настан. Генерира правно одржани документи со фокус на превземените мерки.</string>
     <string name="prompt_information_how_to_use_heading">Како правилно да го користам генераторот?</string>
-    <string name="prompt_information_keywords_instruction">Внесете само КЛУЧНИ ЗБОРОВИ.\n\nПример:\nТепачка, Улица _________, Две машки лица, Физичка пресметка, Легитимирање, ППН, Известена Дежурна служба.</string>
-    <string name="prompt_information_important_heading">Важно!</string>
-    <string name="prompt_information_personal_data_warning">ПО СЕКОЈА ЦЕНА ИЗБЕГНУВАЈТЕ ДА ВНЕСУВАТЕ ЛИЧНИ ПОДАТОЦИ ОД СТРАНКИ!\nСекој обид на внес на матичен број, дата на раѓање или телефонски број ќе бидат одбиени и белешката нема да биде креирана.</string>
-    <string name="prompt_information_disclaimer">Оваа функција е наменета за образовна и инспиративна намена при изговување на вашиот материјал. Содржината генерирана од овој систем е само сугестија и не треба да се користи како крајна верзија!</string>
+    <string name="prompt_information_keywords_instruction">Внесете само КЛУЧНИ ЗБОРОВИ, релевантни за случајот. Не мора да го внесувате целиот тек на настанот, доколку клучните зборови се во редослед на случувањето, генераторот ќе генерира хронолошки како настанот се случил.\n\nПример:\nТепачка на улица Франце Прешерн бб, две машки лица, извршено легитимирање а потоа и приведување, едно лице пружаше отпор.</string>
+    <string name="prompt_information_important_heading">Важни забелешки</string>
+    <string name="prompt_information_personal_data_warning">⚠️ КОРИСТЕЊЕ НА ЛИЧНИ ПОДАТОЦИ ОД СТРАНКИ Е ЗАБРАНЕТО!!! \nСите лични податоци (ЕМБГ, тел. броеви) ќе бидат автоматски одбиени!</string>
+    <string name="prompt_information_disclaimer">Содржината генирана од овој систем е сугестија за ваша професионална разработка. Секогаш проверете и приспособете ја содржината врз основа на вашиот начин на пишување материјал и конкретните факти.\nИмате дневен лимит од 5 генерирања (ресетирање во полноќ)\n\nГенароторот го користите на сопствена одговорност!</string>
     <string name="prompt_information_continue_button">Продолжи</string>
 
     <!-- AI Generation Limit Strings -->
     <string name="ai_generate_button_text">Креирај белешка</string>
     <string name="ai_generate_button_counter_format">Креирај белешка (%d/5)</string>
-    <string name="ai_limit_reached_button_text">Дневниот лимит е исполнет. Обидете се повторно утре</string>
+    <string name="ai_limit_reached_button_text">Дневниот лимит е исполнет</string>
 </resources>
