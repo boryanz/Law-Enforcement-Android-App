@@ -15,6 +15,7 @@ koin-bom = "3.5.6"
 androidxNavigation = "2.8.5"
 coil = "2.7.0"
 okhttp = "4.12.0"
+libPhoneNumber = "8.13.55"
 androidxCoreSplashscreen = "1.0.1"
 kotlinxSerializationJson = "1.7.1"
 appcompat = "1.7.0"
@@ -58,6 +59,7 @@ androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", versi
 androidx-compose-material = { group = "androidx.compose.material", name = "material" }
 androidx-compose-material-iconsExtended = { group = "androidx.compose.material", name = "material-icons-extended" }
 androidx-custom-tabs = { group = "androidx.browser", name = "browser", version.ref = "browser" }
+lib-phone-number = { group = "com.googlecode.libphonenumber", name = "libphonenumber", version.ref = "libPhoneNumber" }
 androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version.ref = "kotlin" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }

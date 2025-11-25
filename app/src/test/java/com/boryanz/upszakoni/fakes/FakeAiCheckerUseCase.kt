@@ -2,8 +2,9 @@ package com.boryanz.upszakoni.fakes
 
 import com.boryanz.upszakoni.domain.ai.AiGenerationChecker
 
-class FakeAiCheckerUseCase: AiGenerationChecker {
+class FakeAiCheckerUseCase(val counter: Int = 0) : AiGenerationChecker {
+
   override fun generationsUsed(): Int {
-    TODO("Not yet implemented")
+    return counter
   }
 }

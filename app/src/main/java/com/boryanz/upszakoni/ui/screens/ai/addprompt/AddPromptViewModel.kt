@@ -32,7 +32,12 @@ data class AddPromptUiState(
 
 const val MAX_AI_GENERATIONS_PER_DAY = 5
 
+
 class AddPromptViewModel(private val aiGenerationChecker: AiGenerationChecker) : ViewModel() {
+
+  private val embgRegex = Regex("(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[0-2])[0-9]{9}")
+  val idCardRegex = Regex("\\b[A-Z]\\d{7}\\b")
+
   private val _uiState = MutableStateFlow(AddPromptUiState())
   val uiState = _uiState.asStateFlow()
 
@@ -43,10 +48,14 @@ class AddPromptViewModel(private val aiGenerationChecker: AiGenerationChecker) :
     when (event) {
       OnCreate -> initializeAiGenerationCounter()
       is PromptChanged -> {
+        val hasError = event.value.isBlank()
+            || embgRegex.containsMatchIn(event.value)
+            || idCardRegex.containsMatchIn(event.value)
+
         _uiState.update {
           it.copy(
             prompt = event.value,
-            hasPromptError = event.value.isBlank()
+            hasPromptError = hasError
           )
         }
       }

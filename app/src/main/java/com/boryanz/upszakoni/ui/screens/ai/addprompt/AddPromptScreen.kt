@@ -56,7 +56,6 @@ fun AddPromptScreen(
     }
   }
 
-
   UpsScaffold(
     topBarTitle = { Text(stringResource(R.string.ai_prompt_title_text)) },
     navigationIcon = { Icons.Back(onClick = onBackClicked) }
@@ -109,7 +108,7 @@ fun AddPromptScreen(
 
         Button.Primary(
           title = buttonTitle,
-          isEnabled = uiState.prompt.isNotBlank() && !uiState.isAiLimitReached,
+          isEnabled = !uiState.hasPromptError,
           onClick = { viewModel.onUiEvent(GenerateClicked) }
         )
 
