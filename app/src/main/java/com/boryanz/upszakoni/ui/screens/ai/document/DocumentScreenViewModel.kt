@@ -2,6 +2,7 @@ package com.boryanz.upszakoni.ui.screens.ai.document
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsManager
 import com.boryanz.upszakoni.domain.ai.AiGenerator
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,7 +16,10 @@ data class DocumentScreenUiState(
   val dataChunk: String = ""
 )
 
-class DocumentScreenViewModel(private val aiGenerator: AiGenerator) : ViewModel() {
+class DocumentScreenViewModel(
+  private val aiGenerator: AiGenerator,
+  private val sharedPrefsManager: SharedPrefsManager,
+) : ViewModel() {
 
   private val _uiState: MutableStateFlow<DocumentScreenUiState> =
     MutableStateFlow(DocumentScreenUiState())
@@ -23,13 +27,14 @@ class DocumentScreenViewModel(private val aiGenerator: AiGenerator) : ViewModel(
 
   fun startDocumentGeneration(fullPrompt: String, examplePrompt: String) = viewModelScope.launch {
     _uiState.update { it.copy(isLoading = true) }
-    aiGenerator.generateDocument(fullPrompt, examplePrompt).collect { newChunk ->
+    aiGenerator.generateDocument(examplePrompt, fullPrompt).collect { newChunk ->
       _uiState.update { uiState ->
         uiState.copy(
           isLoading = false,
-          dataChunk = uiState.dataChunk + newChunk.text
+          dataChunk = uiState.dataChunk + newChunk.text.orEmpty()
         )
       }
     }
+    sharedPrefsManager.incrementAiGenerationCounter()
   }
 }

@@ -67,6 +67,7 @@ class AddPromptViewModel(private val aiGenerationChecker: AiGenerationChecker) :
             examplePrompt = uiState.value.examplePrompt
           )
         )
+
       }
 
       is OnPromptTypeChanged -> _uiState.update { it.copy(examplePrompt = event.prompt) }
@@ -75,7 +76,9 @@ class AddPromptViewModel(private val aiGenerationChecker: AiGenerationChecker) :
 
   private fun initializeAiGenerationCounter() {
     val generationsUsed = aiGenerationChecker.generationsUsed()
+    println("#### How much generations used: $generationsUsed")
     val isLimitReached = generationsUsed >= MAX_AI_GENERATIONS_PER_DAY
+    println("#### Is limit reached: $isLimitReached")
     _uiState.update {
       it.copy(
         aiGenerationsUsed = generationsUsed,
@@ -83,5 +86,4 @@ class AddPromptViewModel(private val aiGenerationChecker: AiGenerationChecker) :
       )
     }
   }
-
 }

@@ -1,14 +1,12 @@
 package com.boryanz.upszakoni.domain.ai
 
-import android.text.format.DateUtils
 import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsManager
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 
-class
-CheckAiGenerationsUseCase(
+class CheckAiGenerationsUseCase(
   private val sharedPrefsManager: SharedPrefsManager
 ) : AiGenerationChecker {
 
@@ -22,7 +20,7 @@ CheckAiGenerationsUseCase(
     val lastCounterDate =
       sharedPrefsManager.getAiGenerationCounterDate()?.parseDate(FORMAT_ISO_8601_DATE)
 
-    val isNotToday = lastCounterDate?.isToday()?.not() == true
+    val isNotToday = lastCounterDate?.isToday() == false
     if (isNotToday) {
       sharedPrefsManager.setAiGenerationCounterDate(today)
       sharedPrefsManager.resetAiGenerationCounter()
@@ -38,7 +36,14 @@ CheckAiGenerationsUseCase(
     )
   }
 
-  private fun Date.isToday() = DateUtils.isToday(this.time)
+  private fun Date.isToday(): Boolean {
+    val today = getCurrentDate().parseDate(FORMAT_ISO_8601_DATE) ?: return false
+
+    val todayDateOnly = today.formatDate("yyyy-MM-dd", getGmtTimeZone())
+    val thisDateOnly = this.formatDate("yyyy-MM-dd", getGmtTimeZone())
+
+    return todayDateOnly == thisDateOnly
+  }
 
   fun getGmtTimeZone(): TimeZone {
     return TimeZone.getTimeZone(GMT_TIME_ZONE_PLUS_2)

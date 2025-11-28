@@ -4,6 +4,7 @@ import com.boryanz.upszakoni.ui.screens.ai.AI_SYSTEM_PROMPT
 import com.google.firebase.ai.GenerativeModel
 import com.google.firebase.ai.type.GenerateContentResponse
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 
 class GenerateAiDocument(
   private val gemini2flashGenModel: GenerativeModel,
@@ -18,6 +19,11 @@ class GenerateAiDocument(
         Од корисникот: $userPrompt
       """.trimIndent()
 
-   return gemini2flashGenModel.generateContentStream(prompt)
+    try {
+      return gemini2flashGenModel.generateContentStream(prompt)
+    } catch (e: Exception) {
+      println("#### Exception occured: ${e.message}")
+      return emptyFlow()
+    }
   }
 }
