@@ -114,7 +114,7 @@
     <string name="report_bug_title">Пријави грешка</string>
     <string name="update_available_title">Ажурирај нова верзија</string>
     <string name="ai_prompt_textfield_label_text">Опишете го настанот со клучни зборови</string>
-    <string name="ai_prompt_textfield_hint_text">Пример: \nТепачка, Улица _________, Две машки лица, Физичка пресметка, Легитимирање, ППН, Известена Дежурна служба.</string>
+    <string name="ai_prompt_textfield_hint_text">Пример: \nЈРМ, тепачка, Франце Прешерн бб, две машки лица, легитмирани, разговор со сведоци, приведување.</string>
     <string name="ai_prompt_button_text">Креирај белешка</string>
     <string name="ai_prompt_loading_text">Службената белешка се генерира...\n Генерирањето може да трае и до 30 секудни.</string>
     <string name="ai_prompt_title_text">Креирај белешка</string>
@@ -135,4 +135,5 @@
     <string name="ai_generate_button_text">Креирај белешка</string>
     <string name="ai_generate_button_counter_format">Креирај белешка (%d/5)</string>
     <string name="ai_limit_reached_button_text">Дневниот лимит е исполнет</string>
+    <string name="no_internet_connection_text">Нема интернет конекција.</string>
 </resources>

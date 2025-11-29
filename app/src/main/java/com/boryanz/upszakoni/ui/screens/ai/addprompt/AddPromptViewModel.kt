@@ -2,10 +2,8 @@ package com.boryanz.upszakoni.ui.screens.ai.addprompt
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.boryanz.upszakoni.domain.ai.AiGenerationChecker
 import com.boryanz.upszakoni.domain.ai.PromptType
 import com.boryanz.upszakoni.ui.screens.ai.addprompt.AddPromptUiEvent.GenerateClicked
-import com.boryanz.upszakoni.ui.screens.ai.addprompt.AddPromptUiEvent.OnCreate
 import com.boryanz.upszakoni.ui.screens.ai.addprompt.AddPromptUiEvent.OnPromptTypeChanged
 import com.boryanz.upszakoni.ui.screens.ai.addprompt.AddPromptUiEvent.PromptChanged
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -26,11 +24,7 @@ data class AddPromptUiState(
   val prompt: String = "",
   val examplePrompt: String = PromptType.COMPLAINT.prompt,
   val hasPromptError: Boolean = false,
-  val aiGenerationsUsed: Int = 0,
-  val isAiLimitReached: Boolean = false,
 )
-
-const val MAX_AI_GENERATIONS_PER_DAY = 5
 
 fun interface Validator {
   fun validate(input: String): Boolean
@@ -44,7 +38,7 @@ val idCardValidator = Validator { input ->
   Regex("\\b[A-Z]\\d{7}\\b").containsMatchIn(input)
 }
 
-class AddPromptViewModel(private val aiGenerationChecker: AiGenerationChecker) : ViewModel() {
+class AddPromptViewModel() : ViewModel() {
 
   private val _uiState = MutableStateFlow(AddPromptUiState())
   val uiState = _uiState.asStateFlow()
@@ -54,7 +48,6 @@ class AddPromptViewModel(private val aiGenerationChecker: AiGenerationChecker) :
 
   fun onUiEvent(event: AddPromptUiEvent) = viewModelScope.launch {
     when (event) {
-      OnCreate -> initializeAiGenerationCounter()
       is PromptChanged -> {
         val hasError = event.value.isBlank()
             || embgValidator.validate(event.value)
@@ -82,16 +75,16 @@ class AddPromptViewModel(private val aiGenerationChecker: AiGenerationChecker) :
     }
   }
 
-  private fun initializeAiGenerationCounter() {
-    val generationsUsed = aiGenerationChecker.generationsUsed()
-    println("#### How much generations used: $generationsUsed")
-    val isLimitReached = generationsUsed >= MAX_AI_GENERATIONS_PER_DAY
-    println("#### Is limit reached: $isLimitReached")
-    _uiState.update {
-      it.copy(
-        aiGenerationsUsed = generationsUsed,
-        isAiLimitReached = isLimitReached
-      )
-    }
-  }
+//  private fun initializeAiGenerationCounter() {
+//    val generationsUsed = aiGenerationChecker.generationsUsed()
+//    println("#### How much generations used: $generationsUsed")
+//    val isLimitReached = generationsUsed >= MAX_AI_GENERATIONS_PER_DAY
+//    println("#### Is limit reached: $isLimitReached")
+//    _uiState.update {
+//      it.copy(
+//        aiGenerationsUsed = generationsUsed,
+//        isAiLimitReached = isLimitReached
+//      )
+//    }
+//  }
 }

@@ -1,6 +1,7 @@
 package com.boryanz.upszakoni.ui.screens.ai.document
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -48,35 +49,50 @@ fun DocumentScreen(
     topBarTitle = { Text(stringResource(R.string.ai_generated_document_title)) },
     navigationIcon = { Icons.Back(onClick = onBackClicked) }
   ) { paddingValues ->
-    if (uiState.isLoading) {
-      Column(
-        modifier = Modifier
-          .fillMaxSize()
-          .padding(paddingValues),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-      ) {
-        CircularProgressIndicator()
-        Spacer.Vertical(16.dp)
-        Text(
-          modifier = Modifier.fillMaxWidth(),
-          textAlign = TextAlign.Center,
-          text = stringResource(R.string.ai_prompt_loading_text),
-          style = MaterialTheme.typography.bodyLarge
-        )
+    when {
+      !uiState.hasConnection -> {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+          Text(
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Center,
+            text = stringResource(R.string.no_internet_connection_text),
+            style = MaterialTheme.typography.bodyLarge
+          )
+        }
       }
-    } else {
-      Column(
-        modifier = Modifier
-          .fillMaxSize()
-          .padding(paddingValues)
-          .padding(horizontal = 12.dp, vertical = 16.dp)
-          .verticalScroll(rememberScrollState())
-      ) {
-        Text(
-          modifier = Modifier.fillMaxWidth(),
-          text = AnnotatedString.fromHtml(htmlString = uiState.dataChunk)
-        )
+
+      uiState.isLoading -> {
+        Column(
+          modifier = Modifier
+            .fillMaxSize()
+            .padding(paddingValues),
+          horizontalAlignment = Alignment.CenterHorizontally,
+          verticalArrangement = Arrangement.Center
+        ) {
+          CircularProgressIndicator()
+          Spacer.Vertical(16.dp)
+          Text(
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Center,
+            text = stringResource(R.string.ai_prompt_loading_text),
+            style = MaterialTheme.typography.bodyLarge
+          )
+        }
+      }
+
+      else -> {
+        Column(
+          modifier = Modifier
+            .fillMaxSize()
+            .padding(paddingValues)
+            .padding(horizontal = 12.dp, vertical = 16.dp)
+            .verticalScroll(rememberScrollState())
+        ) {
+          Text(
+            modifier = Modifier.fillMaxWidth(),
+            text = AnnotatedString.fromHtml(htmlString = uiState.dataChunk.orEmpty())
+          )
+        }
       }
     }
 

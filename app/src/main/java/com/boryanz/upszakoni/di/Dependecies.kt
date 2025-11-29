@@ -72,7 +72,7 @@ val appModule = module {
   factory<GetOwnedItemsUseCase> { GetOwnedItemsUseCaseImpl(get()) }
   factory<DeleteOwnedItemUseCase> { DeleteOwnedItemUseCaseImpl(get()) }
   factory<AddOwnedItemUseCase> { AddOwnedItemUseCaseImpl(get()) }
-  viewModel { DocumentScreenViewModel(get(), get()) }
+  viewModel { DocumentScreenViewModel(get()) }
   viewModel { ArchivedLawsViewModel(get(), get(), get<AnalyticsLogger>()) }
   viewModel { BonusSalaryParametersViewModel(get()) }
   viewModel { MigrationProposalViewModel(get(), get(), get()) }
@@ -85,5 +85,5 @@ val appModule = module {
   viewModel { NewOverTimeInputViewModel(get()) }
   viewModel { OwnedItemViewModel(get()) }
   viewModel { OwnedItemsListViewModel(get(), get()) }
-  viewModel { AddPromptViewModel(get()) }
+  viewModel { AddPromptViewModel() }
 }

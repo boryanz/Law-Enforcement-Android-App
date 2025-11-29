@@ -25,7 +25,6 @@ class CheckAiGenerationsUseCase(
       sharedPrefsManager.resetAiGenerationCounter()
     }
 
-    // Always save today's date to track the current generation date
     sharedPrefsManager.setAiGenerationCounterDate(today)
 
     return sharedPrefsManager.getAiGenerationsUsedToday()

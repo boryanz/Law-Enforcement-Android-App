@@ -16,8 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.boryanz.upszakoni.R
 import com.boryanz.upszakoni.domain.ai.PromptType
@@ -28,7 +26,6 @@ import com.boryanz.upszakoni.ui.components.Spacer
 import com.boryanz.upszakoni.ui.components.UpsScaffold
 import com.boryanz.upszakoni.ui.components.input.TextFieldInput
 import com.boryanz.upszakoni.ui.screens.ai.addprompt.AddPromptUiEvent.GenerateClicked
-import com.boryanz.upszakoni.ui.screens.ai.addprompt.AddPromptUiEvent.OnCreate
 import com.boryanz.upszakoni.ui.screens.ai.addprompt.AddPromptUiEvent.OnPromptTypeChanged
 import com.boryanz.upszakoni.ui.screens.ai.addprompt.AddPromptUiEvent.PromptChanged
 import com.boryanz.upszakoni.utils.collectEvents
@@ -36,7 +33,6 @@ import org.koin.androidx.compose.koinViewModel
 
 sealed interface AddPromptUiEvent {
 
-  data object OnCreate : AddPromptUiEvent
   data class PromptChanged(val value: String) : AddPromptUiEvent
 
   data class OnPromptTypeChanged(val prompt: String) : AddPromptUiEvent
@@ -51,10 +47,6 @@ fun AddPromptScreen(
 ) {
   val viewModel: AddPromptViewModel = koinViewModel()
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-
-  LifecycleEventEffect(Lifecycle.Event.ON_CREATE) {
-    viewModel.onUiEvent(OnCreate)
-  }
 
   viewModel.event.collectEvents { event ->
     when (event) {
@@ -108,15 +100,11 @@ fun AddPromptScreen(
           .fillMaxWidth(),
         verticalArrangement = Arrangement.Bottom
       ) {
-        val buttonTitle = if (uiState.isAiLimitReached) {
-          stringResource(R.string.ai_limit_reached_button_text)
-        } else {
-          stringResource(R.string.ai_generate_button_counter_format, uiState.aiGenerationsUsed)
-        }
+
 
         Button.Primary(
-          title = buttonTitle,
-          isEnabled = !uiState.isAiLimitReached && !uiState.hasPromptError,
+          title = stringResource(R.string.ai_generate_button_text),
+          isEnabled = !uiState.hasPromptError && uiState.prompt.isNotEmpty(),
           onClick = { viewModel.onUiEvent(GenerateClicked) }
         )
 
