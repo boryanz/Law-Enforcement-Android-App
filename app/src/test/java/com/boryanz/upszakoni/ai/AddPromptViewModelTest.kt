@@ -2,7 +2,6 @@ package com.boryanz.upszakoni.ai
 
 import com.boryanz.upszakoni.MainDispatcherRule
 import com.boryanz.upszakoni.domain.ai.PromptType
-import com.boryanz.upszakoni.fakes.FakeAiCheckerUseCase
 import com.boryanz.upszakoni.ui.screens.ai.addprompt.AddPromptUiEvent
 import com.boryanz.upszakoni.ui.screens.ai.addprompt.AddPromptUiState
 import com.boryanz.upszakoni.ui.screens.ai.addprompt.AddPromptViewModel
@@ -18,47 +17,14 @@ class AddPromptViewModelTest {
   @get:Rule
   val mainDispatcherRule = MainDispatcherRule()
 
-
-  @Test
-  fun `when ai generations are used up update ui state with isLimitReached = true`() = runTest {
-    val expectedUiState = AddPromptUiState(
-      prompt = "",
-      examplePrompt = PromptType.COMPLAINT.prompt,
-      hasPromptError = false,
-      aiGenerationsUsed = 5,
-      isAiLimitReached = true
-    )
-    val viewModel = AddPromptViewModel(FakeAiCheckerUseCase(5))
-
-    viewModel.onUiEvent(AddPromptUiEvent.OnCreate)
-
-    assertEquals(expectedUiState, viewModel.uiState.value)
-  }
-
-  @Test
-  fun `when ai generations are NOT used up then update ui state accordingly`() = runTest {
-    val expectedUiState = AddPromptUiState(
-      prompt = "",
-      examplePrompt = PromptType.COMPLAINT.prompt,
-      hasPromptError = false,
-      aiGenerationsUsed = 2,
-      isAiLimitReached = false
-    )
-    val viewModel = AddPromptViewModel(FakeAiCheckerUseCase(2))
-    viewModel.onUiEvent(AddPromptUiEvent.OnCreate)
-    assertEquals(expectedUiState, viewModel.uiState.value)
-  }
-
   @Test
   fun `when ai prompt is changed update the state with a new value`() = runTest {
     val intial = AddPromptUiState(
       prompt = "",
       examplePrompt = PromptType.COMPLAINT.prompt,
       hasPromptError = false,
-      aiGenerationsUsed = 0,
-      isAiLimitReached = false
     )
-    val viewModel = AddPromptViewModel(FakeAiCheckerUseCase(0))
+    val viewModel = AddPromptViewModel()
     viewModel.onUiEvent(AddPromptUiEvent.PromptChanged("Ul. "))
     assertEquals(intial.copy(prompt = "Ul. "), viewModel.uiState.value)
     viewModel.onUiEvent(AddPromptUiEvent.PromptChanged("Ul. Hristo"))
@@ -71,10 +37,8 @@ class AddPromptViewModelTest {
       prompt = "",
       examplePrompt = PromptType.COMPLAINT.prompt,
       hasPromptError = false,
-      aiGenerationsUsed = 0,
-      isAiLimitReached = false
     )
-    val viewModel = AddPromptViewModel(FakeAiCheckerUseCase(0))
+    val viewModel = AddPromptViewModel()
     viewModel.onUiEvent(AddPromptUiEvent.PromptChanged("  "))
     assertEquals(intial.copy(prompt = "  ", hasPromptError = true), viewModel.uiState.value)
   }
@@ -85,10 +49,8 @@ class AddPromptViewModelTest {
       prompt = "",
       examplePrompt = PromptType.COMPLAINT.prompt,
       hasPromptError = false,
-      aiGenerationsUsed = 0,
-      isAiLimitReached = false
     )
-    val viewModel = AddPromptViewModel(FakeAiCheckerUseCase(0))
+    val viewModel = AddPromptViewModel()
     viewModel.onUiEvent(AddPromptUiEvent.PromptChanged("Liceto Petko Petkovski so EMBG 1904995450079 bese legitimirano"))
     assertEquals(
       intial.copy(
@@ -104,10 +66,8 @@ class AddPromptViewModelTest {
       prompt = "",
       examplePrompt = PromptType.COMPLAINT.prompt,
       hasPromptError = false,
-      aiGenerationsUsed = 0,
-      isAiLimitReached = false
     )
-    val viewModel = AddPromptViewModel(FakeAiCheckerUseCase(0))
+    val viewModel = AddPromptViewModel()
     viewModel.onUiEvent(AddPromptUiEvent.PromptChanged("Liceto Petko Petkovski so Licna karta N1234567 bese legitimirano"))
     assertEquals(
       intial.copy(
@@ -125,10 +85,8 @@ class AddPromptViewModelTest {
         prompt = "",
         examplePrompt = PromptType.COMPLAINT.prompt,
         hasPromptError = false,
-        aiGenerationsUsed = 0,
-        isAiLimitReached = false
       )
-      val viewModel = AddPromptViewModel(FakeAiCheckerUseCase(0))
+      val viewModel = AddPromptViewModel()
       viewModel.onUiEvent(AddPromptUiEvent.PromptChanged("Liceto Petko Petkovski so broj na telefon +38971203123 bese legitimirano"))
       assertEquals(
         intial.copy(
@@ -146,10 +104,8 @@ class AddPromptViewModelTest {
         prompt = "",
         examplePrompt = PromptType.COMPLAINT.prompt,
         hasPromptError = false,
-        aiGenerationsUsed = 0,
-        isAiLimitReached = false
       )
-      val viewModel = AddPromptViewModel(FakeAiCheckerUseCase(0))
+      val viewModel = AddPromptViewModel()
       viewModel.onUiEvent(AddPromptUiEvent.PromptChanged("Liceto Petko Petkovski so broj na telefon +389 71 123 456 bese legitimirano"))
       assertEquals(
         intial.copy(
@@ -167,10 +123,8 @@ class AddPromptViewModelTest {
         prompt = "",
         examplePrompt = PromptType.COMPLAINT.prompt,
         hasPromptError = false,
-        aiGenerationsUsed = 0,
-        isAiLimitReached = false
       )
-      val viewModel = AddPromptViewModel(FakeAiCheckerUseCase(0))
+      val viewModel = AddPromptViewModel()
       viewModel.onUiEvent(AddPromptUiEvent.PromptChanged("Liceto Petko Petkovski so broj na telefon 071/123/456 bese legitimirano"))
       assertEquals(
         intial.copy(
@@ -188,10 +142,8 @@ class AddPromptViewModelTest {
         prompt = "",
         examplePrompt = PromptType.COMPLAINT.prompt,
         hasPromptError = false,
-        aiGenerationsUsed = 0,
-        isAiLimitReached = false
       )
-      val viewModel = AddPromptViewModel(FakeAiCheckerUseCase(0))
+      val viewModel = AddPromptViewModel()
       viewModel.onUiEvent(AddPromptUiEvent.PromptChanged("Liceto Petko Petkovski so broj na telefon 071-123-456 bese legitimirano"))
       assertEquals(
         intial.copy(

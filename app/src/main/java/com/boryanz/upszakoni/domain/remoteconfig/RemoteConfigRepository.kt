@@ -32,7 +32,9 @@ class RemoteConfigRepository : FirebaseRemoteConfig {
       remoteConfig.activate().addOnSuccessListener {
         _remoteConfigState.update {
           RemoteConfig(
-            shouldBackportOvertimeTracking = remoteConfig.getBoolean(SHOULD_BACKPORT_OVERTIME_TRACKING),
+            shouldBackportOvertimeTracking = remoteConfig.getBoolean(
+              SHOULD_BACKPORT_OVERTIME_TRACKING
+            ),
             isAiGeneratorAvailable = remoteConfig.getBoolean(IS_AI_GENERATOR_AVAILABLE),
             isAppUpdateAvailable = remoteConfig.getBoolean(IS_APP_UPDATE_AVAILABLE),
             greetingMessage = remoteConfig.getString(GREETING_MESSAGE_STRING_KEY),
