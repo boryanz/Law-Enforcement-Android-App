@@ -71,12 +71,12 @@ fun AddPromptScreen(
       Spacer.Vertical(6.dp)
       SegmentedControl(
         options = listOf(
-          PromptType.COMPLAINT.title,
-          PromptType.PUBLIC_ORDER_AND_PEACE.title,
-          PromptType.SECURING_CRIME_SCENE.title,
+          PromptType.COMPLAINT,
+          PromptType.PUBLIC_ORDER_AND_PEACE,
+          PromptType.SECURING_CRIME_SCENE,
         ),
         onSelectionChanged = {
-          viewModel.onUiEvent(OnPromptTypeChanged(prompt = it))
+          viewModel.onUiEvent(OnPromptTypeChanged(prompt = it.prompt))
         }
       )
       Spacer.Vertical(6.dp)
