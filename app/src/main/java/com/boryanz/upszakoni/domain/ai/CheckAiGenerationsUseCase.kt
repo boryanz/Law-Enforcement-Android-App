@@ -22,9 +22,11 @@ class CheckAiGenerationsUseCase(
 
     val isNotToday = lastCounterDate?.isToday() == false
     if (isNotToday) {
-      sharedPrefsManager.setAiGenerationCounterDate(today)
       sharedPrefsManager.resetAiGenerationCounter()
     }
+
+    // Always save today's date to track the current generation date
+    sharedPrefsManager.setAiGenerationCounterDate(today)
 
     return sharedPrefsManager.getAiGenerationsUsedToday()
   }
