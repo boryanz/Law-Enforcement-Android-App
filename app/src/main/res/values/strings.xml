@@ -136,4 +136,5 @@
     <string name="ai_generate_button_counter_format">Креирај белешка (%d/5)</string>
     <string name="ai_limit_reached_button_text">Дневниот лимит е исполнет</string>
     <string name="no_internet_connection_text">Нема интернет конекција.</string>
+    <string name="ai_generator_title">АИ-генератор на белешки</string>
 </resources>

@@ -106,21 +106,23 @@ fun NavigationDrawer(
               }
             }
             Spacer.Vertical(12.dp)
-            NavigationDrawerItem(
-              icon = {
-                Icon(
-                  modifier = Modifier
-                    .height(20.dp)
-                    .width(20.dp),
-                  imageVector = Icons.Filled.AutoAwesome,
-                  contentDescription = null
-                )
-              },
-              label = { Text(text = "AI-генератор на белешки") },
-              selected = false,
-              onClick = { onItemClicked(NavigationDrawerDestination.generate_document) }
-            )
-            HorizontalDivider()
+            if (featureFlags?.isAiGeneratorAvailable == true) {
+              NavigationDrawerItem(
+                icon = {
+                  Icon(
+                    modifier = Modifier
+                      .height(20.dp)
+                      .width(20.dp),
+                    imageVector = Icons.Filled.AutoAwesome,
+                    contentDescription = null
+                  )
+                },
+                label = { Text(text = stringResource(R.string.ai_generator_title)) },
+                selected = false,
+                onClick = { onItemClicked(NavigationDrawerDestination.generate_document) }
+              )
+              HorizontalDivider()
+            }
             NavigationDrawerItem(
               icon = {
                 Icon(
