@@ -22,6 +22,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import com.boryanz.upszakoni.domain.ai.PromptType
 import com.boryanz.upszakoni.ui.theme.Base100
 import com.boryanz.upszakoni.ui.theme.BaseContent1
 import com.boryanz.upszakoni.ui.theme.UpsTheme
@@ -29,8 +30,8 @@ import com.boryanz.upszakoni.ui.theme.UpsTheme
 @Composable
 fun SegmentedControl(
   modifier: Modifier = Modifier,
-  options: List<String> = listOf(),
-  onSelectionChanged: (String) -> Unit
+  options: List<PromptType> = listOf(),
+  onSelectionChanged: (PromptType) -> Unit
 ) {
   var selectedIndex by remember { mutableIntStateOf(0) }
 
@@ -47,7 +48,7 @@ fun SegmentedControl(
         },
         label = {
           Text(
-            text = option,
+            text = option.title,
             style = MaterialTheme.typography.labelSmall,
             overflow = TextOverflow.Ellipsis,
             maxLines = 1
@@ -81,17 +82,11 @@ private fun SegmentedControlPreview() {
       verticalArrangement = Arrangement.Center
     ) {
       SegmentedControl(
-        options = listOf("Option 1", "Option 2", "Option 3"),
-        onSelectionChanged = { }
-      )
-      Spacer.Vertical(16.dp)
-      SegmentedControl(
-        options = listOf("First", "Second", "Third"),
-        onSelectionChanged = { }
-      )
-      Spacer.Vertical(16.dp)
-      SegmentedControl(
-        options = listOf("Поплака", "Об. место на настан", "ЈРМ"),
+        options = listOf(
+          PromptType.COMPLAINT,
+          PromptType.PUBLIC_ORDER_AND_PEACE,
+          PromptType.SECURING_CRIME_SCENE
+        ),
         onSelectionChanged = { }
       )
     }
