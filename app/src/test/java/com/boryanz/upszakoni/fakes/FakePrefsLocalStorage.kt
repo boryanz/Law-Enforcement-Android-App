@@ -35,4 +35,24 @@ class FakePrefsLocalStorage(private val data: MutableMap<String, Any>) : SharedP
   override fun contains(lawName: String): Boolean {
     return data.containsKey("archive/$lawName")
   }
+
+  override fun getAiGenerationsUsedToday(): Int {
+    TODO("Not yet implemented")
+  }
+
+  override fun incrementAiGenerationCounter() {
+    TODO("Not yet implemented")
+  }
+
+  override fun resetAiGenerationCounter() {
+    TODO("Not yet implemented")
+  }
+
+  override fun setAiGenerationCounterDate(date: String) {
+    TODO("Not yet implemented")
+  }
+
+  override fun getAiGenerationCounterDate(): String? {
+    TODO("Not yet implemented")
+  }
 }

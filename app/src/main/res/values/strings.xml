@@ -113,4 +113,28 @@
     <string name="our_partners_title">Наши партнери</string>
     <string name="report_bug_title">Пријави грешка</string>
     <string name="update_available_title">Ажурирај нова верзија</string>
+    <string name="ai_prompt_textfield_label_text">Опишете го настанот со клучни зборови</string>
+    <string name="ai_prompt_textfield_hint_text">Пример: \nЈРМ, тепачка, Франце Прешерн бб, две машки лица, легитмирани, разговор со сведоци, приведување.</string>
+    <string name="ai_prompt_button_text">Креирај белешка</string>
+    <string name="ai_prompt_loading_text">Службената белешка се генерира...\n Генерирањето може да трае и до 30 секудни.</string>
+    <string name="ai_prompt_title_text">Креирај белешка</string>
+    <string name="ai_generated_document_title">Генерирана белешка</string>
+
+    <!-- Prompt Information Screen Strings -->
+    <string name="prompt_information_screen_title">Начин на користење</string>
+    <string name="prompt_information_what_is_heading">Што е АИ генератор?</string>
+    <string name="prompt_information_what_is_description">АИ генератор користи вештачка интелигенција за пишување белешки за полициски настани. Во моментов, поддржува три типа: Поплаки, ЈРМ и Обезбедување на места на настан. Генерира правно одржани документи со фокус на превземените мерки. Имајте на ум дека генераторот не е целосно истрениран модел и може да големи отстапувања во однос на белешката. Колку попрецизен внес ќе дадете, толку попрецизно ќе врати.</string>
+    <string name="prompt_information_how_to_use_heading">Како се користи?</string>
+    <string name="prompt_information_keywords_instruction">Не мора да го раскажувате целиот настан или интервенција. Само со внесување на клучни зборови од настанот и тоа по редослед на случување.\n\nПример:\nЈРМ, тепачка, Франце Прешерн бб, две машки лица, легитимирани, приведени, едно од лицата во алкохолизирана состојба.</string>
+    <string name="prompt_information_important_heading">Важно</string>
+    <string name="prompt_information_personal_data_warning">⚠️ Внесување на лични податоци од лица е забрането со закон!!! \nСите лични податоци (ЕМБГ, тел. броеви) ќе бидат автоматски одбиени!</string>
+    <string name="prompt_information_disclaimer">Содржината генирана од овој систем е сугестија за ваша професионална разработка. Секогаш проверете и прилагодете ја содржината врз основа на вашиот начин на пишување материјал и конкретните факти.\nИмате дневен лимит од 5 генерирања (ресетирање во полноќ)\n\nГенароторот го користите на сопствена одговорност!</string>
+    <string name="prompt_information_continue_button">Продолжи</string>
+
+    <!-- AI Generation Limit Strings -->
+    <string name="ai_generate_button_text">Креирај белешка</string>
+    <string name="ai_generate_button_counter_format">Креирај белешка (%d/5)</string>
+    <string name="ai_limit_reached_button_text">Дневниот лимит е исполнет</string>
+    <string name="no_internet_connection_text">Нема интернет конекција.</string>
+    <string name="ai_generator_title">АИ-генератор на белешки</string>
 </resources>

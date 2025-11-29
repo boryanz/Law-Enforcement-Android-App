@@ -13,6 +13,10 @@ import com.boryanz.upszakoni.domain.DaysInMonthDataGenerator
 import com.boryanz.upszakoni.domain.GenerateDaysInMonthsUseCase
 import com.boryanz.upszakoni.domain.GetLawsUseCase
 import com.boryanz.upszakoni.domain.LawsUseCase
+import com.boryanz.upszakoni.domain.ai.AiGenerationChecker
+import com.boryanz.upszakoni.domain.ai.AiGenerator
+import com.boryanz.upszakoni.domain.ai.CheckAiGenerationsUseCase
+import com.boryanz.upszakoni.domain.ai.GenerateAiDocument
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepositoryImpl
 import com.boryanz.upszakoni.domain.owneditem.AddOwnedItemUseCase
@@ -26,6 +30,8 @@ import com.boryanz.upszakoni.domain.remoteconfig.RemoteConfigRepository
 import com.boryanz.upszakoni.ui.navigation.navgraph.overtimetracking.OvertimeTrackNavigationGraphViewModel
 import com.boryanz.upszakoni.ui.owneditem.addowneditem.OwnedItemViewModel
 import com.boryanz.upszakoni.ui.owneditem.overview.OwnedItemsListViewModel
+import com.boryanz.upszakoni.ui.screens.ai.addprompt.AddPromptViewModel
+import com.boryanz.upszakoni.ui.screens.ai.document.DocumentScreenViewModel
 import com.boryanz.upszakoni.ui.screens.archivedlaws.ArchivedLawsViewModel
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardViewModel
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.monthly.OvertimeMonthlyCalendarViewModel
@@ -35,6 +41,10 @@ import com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput.daily.NewOverT
 import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BonusSalaryParametersViewModel
 import com.boryanz.upszakoni.ui.screens.informations.InformationScreenViewModel
 import com.boryanz.upszakoni.ui.screens.laws.LawsViewModel
+import com.google.firebase.Firebase
+import com.google.firebase.ai.GenerativeModel
+import com.google.firebase.ai.ai
+import com.google.firebase.ai.type.GenerativeBackend
 import com.google.firebase.analytics.FirebaseAnalytics
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -53,10 +63,16 @@ val appModule = module {
   single<FirebaseRemoteConfig> { RemoteConfigRepository() }
   single<FirebaseAnalytics> { FirebaseAnalytics.getInstance(androidContext()) }
   single<AnalyticsLogger> { FirebaseAnalyticsManager(get()) }
+  factory<GenerativeModel> {
+    Firebase.ai(backend = GenerativeBackend.googleAI()).generativeModel("gemini-2.5-flash")
+  }
   factory<LawsUseCase> { GetLawsUseCase(androidContext()) }
+  factory<AiGenerationChecker> { CheckAiGenerationsUseCase(get()) }
+  factory<AiGenerator> { GenerateAiDocument(get()) }
   factory<GetOwnedItemsUseCase> { GetOwnedItemsUseCaseImpl(get()) }
   factory<DeleteOwnedItemUseCase> { DeleteOwnedItemUseCaseImpl(get()) }
   factory<AddOwnedItemUseCase> { AddOwnedItemUseCaseImpl(get()) }
+  viewModel { DocumentScreenViewModel(get()) }
   viewModel { ArchivedLawsViewModel(get(), get(), get<AnalyticsLogger>()) }
   viewModel { BonusSalaryParametersViewModel(get()) }
   viewModel { MigrationProposalViewModel(get(), get(), get()) }
@@ -69,4 +85,5 @@ val appModule = module {
   viewModel { NewOverTimeInputViewModel(get()) }
   viewModel { OwnedItemViewModel(get()) }
   viewModel { OwnedItemsListViewModel(get(), get()) }
+  viewModel { AddPromptViewModel() }
 }

@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Inventory
 import androidx.compose.material.icons.filled.Menu
@@ -105,6 +106,23 @@ fun NavigationDrawer(
               }
             }
             Spacer.Vertical(12.dp)
+            if (featureFlags?.isAiGeneratorAvailable == true) {
+              NavigationDrawerItem(
+                icon = {
+                  Icon(
+                    modifier = Modifier
+                      .height(20.dp)
+                      .width(20.dp),
+                    imageVector = Icons.Filled.AutoAwesome,
+                    contentDescription = null
+                  )
+                },
+                label = { Text(text = stringResource(R.string.ai_generator_title)) },
+                selected = false,
+                onClick = { onItemClicked(NavigationDrawerDestination.generate_document) }
+              )
+              HorizontalDivider()
+            }
             NavigationDrawerItem(
               icon = {
                 Icon(
