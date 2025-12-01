@@ -5,7 +5,6 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.Lifecycle.Event.ON_CREATE
 import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.boryanz.upszakoni.ui.components.Loader
 import com.boryanz.upszakoni.utils.collectEvents
 import org.koin.androidx.compose.koinViewModel
 
@@ -38,8 +37,6 @@ fun BonusSalaryDashboardScreen(
       BonusSalaryDashboardEvent.AllDataDeleted -> onBackClicked()
     }
   }
-
-  if (uiState.isLoading) Loader()
 
   BonusSalaryDashboardContent(
     uiState = uiState,

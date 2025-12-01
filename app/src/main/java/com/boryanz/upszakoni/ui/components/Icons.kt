@@ -83,10 +83,12 @@ object Icons {
 
   @Composable
   fun Delete(
+    modifier: Modifier = Modifier,
     tint: Color = Base100,
     onClick: () -> Unit
   ) {
     Base(
+      modifier = modifier,
       imageVector = Icons.Default.DeleteOutline,
       tint = tint,
       onClick = onClick
@@ -95,10 +97,12 @@ object Icons {
 
   @Composable
   fun Undo(
+    modifier: Modifier = Modifier,
     tint: Color = Base100,
     onClick: () -> Unit
   ) {
     Base(
+      modifier = modifier,
       imageVector = Icons.AutoMirrored.Filled.Undo,
       tint = tint,
       onClick = onClick
