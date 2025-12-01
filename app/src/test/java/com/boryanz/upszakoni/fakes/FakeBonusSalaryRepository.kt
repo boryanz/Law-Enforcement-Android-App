@@ -20,6 +20,8 @@ class FakeBonusSalaryRepository(
   private val shouldFetchMonthlyStatsFail: Boolean = false,
 ) : BonusSalaryRepository {
 
+  var isAllDataDeleted: Boolean = false
+
   override suspend fun insertTreshold(bonusSalaryTreshold: BonusSalaryTreshold): Result<Unit> {
     TODO("Not yet implemented")
   }
@@ -71,7 +73,7 @@ class FakeBonusSalaryRepository(
   }
 
   override suspend fun deleteAllAndGenerateDefaultData(defaultData: List<DayInMonth>) {
-    TODO("Not yet implemented")
+    isAllDataDeleted = true
   }
 
   override fun getAverageHoursPerMonth(): Int = 10
