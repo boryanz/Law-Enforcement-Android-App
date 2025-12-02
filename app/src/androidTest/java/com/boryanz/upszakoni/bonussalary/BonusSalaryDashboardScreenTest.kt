@@ -1,4 +1,4 @@
-package com.boryanz.upszakoni
+package com.boryanz.upszakoni.bonussalary
 
 import androidx.activity.ComponentActivity
 import androidx.compose.runtime.getValue
@@ -9,6 +9,7 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import com.boryanz.upszakoni.R
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardContent
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardUiEvent
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardUiState

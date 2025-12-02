@@ -32,6 +32,7 @@ import com.boryanz.upszakoni.ui.owneditem.addowneditem.OwnedItemViewModel
 import com.boryanz.upszakoni.ui.owneditem.overview.OwnedItemsListViewModel
 import com.boryanz.upszakoni.ui.screens.ai.addprompt.AddPromptViewModel
 import com.boryanz.upszakoni.ui.screens.ai.document.DocumentScreenViewModel
+import com.boryanz.upszakoni.ui.screens.ai.history.DocumentHistoryViewModel
 import com.boryanz.upszakoni.ui.screens.archivedlaws.ArchivedLawsViewModel
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardViewModel
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.monthly.OvertimeMonthlyCalendarViewModel
@@ -86,4 +87,5 @@ val appModule = module {
   viewModel { OwnedItemViewModel(get()) }
   viewModel { OwnedItemsListViewModel(get(), get()) }
   viewModel { AddPromptViewModel() }
+  viewModel { DocumentHistoryViewModel() }
 }

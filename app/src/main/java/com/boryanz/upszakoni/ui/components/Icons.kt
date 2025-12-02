@@ -60,10 +60,12 @@ object Icons {
   @Composable
   fun Back(
     tint: Color = Base100,
+    contentDescription: String = "back_button",
     onClick: () -> Unit,
   ) {
     Base(
       imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+      contentDescription = contentDescription,
       tint = tint,
       onClick = onClick
     )
@@ -113,6 +115,7 @@ object Icons {
   fun Base(
     modifier: Modifier = Modifier,
     imageVector: ImageVector,
+    contentDescription: String = "base icon",
     tint: Color = LocalContentColor.current,
     onClick: () -> Unit,
     isEnabled: Boolean = true,
@@ -125,9 +128,8 @@ object Icons {
         Icon(
           imageVector = imageVector,
           tint = tint,
-          contentDescription = "base icon",
-
-          )
+          contentDescription = contentDescription,
+        )
       })
   }
 }
