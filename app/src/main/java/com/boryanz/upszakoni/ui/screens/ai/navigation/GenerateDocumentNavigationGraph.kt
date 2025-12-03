@@ -20,7 +20,7 @@ data object PromptInformationDestination
 data object AddPromptDestination
 
 @Serializable
-data class DocumentDestination(val fullPrompt: String, val examplePrompt: String)
+data class DocumentDestination(val fullPrompt: String, val examplePrompt: String, val type: String)
 
 @Composable
 fun GenerateDocumentNavigationGraph(
@@ -50,11 +50,12 @@ fun GenerateDocumentNavigationGraph(
     composable<AddPromptDestination> {
       AddPromptScreen(
         onBackClicked = { navHostController.navigateUp() },
-        onGenerateDocumentClicked = { fullPrompt, examplePrompt ->
+        onGenerateDocumentClicked = { fullPrompt, examplePrompt, type ->
           navHostController.navigate(
             DocumentDestination(
               fullPrompt = fullPrompt,
-              examplePrompt = examplePrompt
+              examplePrompt = examplePrompt,
+              type = type
             )
           )
         }
@@ -66,6 +67,7 @@ fun GenerateDocumentNavigationGraph(
       DocumentScreen(
         fullPrompt = route.fullPrompt,
         examplePrompt = route.examplePrompt,
+        type = route.type,
         onBackClicked = { navHostController.navigateUp() }
       )
     }

@@ -16,7 +16,7 @@ abstract class BaseDocumentsDao<T> {
 }
 
 @Dao
-abstract class DocumentsDocumentsDao : BaseDocumentsDao<GeneratedDocument>() {
+abstract class DocumentsHistoryDao : BaseDocumentsDao<GeneratedDocument>() {
 
   @Insert(onConflict = REPLACE)
   abstract override fun insert(item: GeneratedDocument)

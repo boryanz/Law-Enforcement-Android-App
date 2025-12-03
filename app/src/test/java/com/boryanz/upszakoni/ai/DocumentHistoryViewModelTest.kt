@@ -34,7 +34,6 @@ class DocumentHistoryViewModelTest {
     //Given
     val expectedUiState = DocumentHistoryUiState(
       isLoading = false,
-      showDeleteDialog = false,
       generatedDocuments = emptyList(),
       documentToDelete = null
     )
@@ -54,7 +53,6 @@ class DocumentHistoryViewModelTest {
     )
     val expectedUiState = DocumentHistoryUiState(
       isLoading = false,
-      showDeleteDialog = true,
       generatedDocuments = emptyList(),
       documentToDelete = document
     )
@@ -69,7 +67,6 @@ class DocumentHistoryViewModelTest {
   fun `hide alert dialog when user dismiss it`() = runTest {
     val expectedUiState = DocumentHistoryUiState(
       isLoading = false,
-      showDeleteDialog = false,
       generatedDocuments = emptyList(),
       documentToDelete = null
     )
@@ -85,7 +82,6 @@ class DocumentHistoryViewModelTest {
   fun `delete document when user confirms alert dialog`() = runTest {
     val expectedUiState = DocumentHistoryUiState(
       isLoading = false,
-      showDeleteDialog = false,
       generatedDocuments = emptyList(),
       documentToDelete = null
     )
@@ -101,7 +97,6 @@ class DocumentHistoryViewModelTest {
   fun `get all available documents from dao`() = runTest {
     val expectedUiState = DocumentHistoryUiState(
       isLoading = false,
-      showDeleteDialog = false,
       generatedDocuments = documents,
       documentToDelete = null
     )

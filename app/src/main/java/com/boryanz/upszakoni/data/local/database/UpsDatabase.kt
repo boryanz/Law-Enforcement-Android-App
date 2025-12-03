@@ -24,7 +24,7 @@ abstract class UpsDatabase : RoomDatabase() {
   abstract fun bonusSalaryDao(): BonusSalaryDao
   abstract fun ownedItemsDao(): OwnedItemsDao
 
-  abstract fun documentsDao(): DocumentsDocumentsDao
+  abstract fun documentsDao(): DocumentsHistoryDao
 
   companion object {
     @Volatile
