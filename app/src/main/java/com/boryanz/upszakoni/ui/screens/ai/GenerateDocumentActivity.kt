@@ -25,7 +25,7 @@ class GenerateDocumentActivity : ComponentActivity() {
         val navHostController = rememberNavController()
         GenerateDocumentNavigationGraph(
           navHostController = navHostController,
-          onBackClick = { finish() }
+          onBackClicked = { finish() }
         )
       }
     }

@@ -23,6 +23,7 @@ fun DocumentHistoryScreen(
   onBackClicked: () -> Unit,
   onAddDocumentClicked: () -> Unit,
   onDocumentClicked: (content: String) -> Unit,
+  onMoreInformationClicked: () -> Unit,
 ) {
   val viewmodel = koinViewModel<DocumentHistoryViewModel>()
   val uiState by viewmodel.uiState.collectAsStateWithLifecycle()
@@ -36,6 +37,7 @@ fun DocumentHistoryScreen(
     onUserEvent = viewmodel::onUserEvent,
     onAddDocumentClicked = onAddDocumentClicked,
     onDocumentClicked = { onDocumentClicked(it) },
+    onMoreInformationClicked = onMoreInformationClicked,
     onBackClicked = onBackClicked,
   )
 }

@@ -79,14 +79,14 @@ fun AddPromptScreen(
           viewModel.onUiEvent(OnPromptTypeChanged(prompt = it.prompt, type = it.title))
         }
       )
-      Spacer.Vertical(6.dp)
+      Spacer.Vertical(4.dp)
       TextFieldInput.BaseOutline(
         modifier = Modifier.weight(1f),
         labelText = stringResource(R.string.ai_prompt_textfield_label_text),
         value = uiState.prompt,
         isError = uiState.hasPromptError,
-        textStyle = MaterialTheme.typography.bodyMedium,
-        labelTextStyle = MaterialTheme.typography.bodyMedium,
+        textStyle = MaterialTheme.typography.bodyLarge,
+        labelTextStyle = MaterialTheme.typography.bodyLarge,
         onValueChanged = { viewModel.onUiEvent(PromptChanged(it)) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
         hint = stringResource(R.string.ai_prompt_textfield_hint_text),

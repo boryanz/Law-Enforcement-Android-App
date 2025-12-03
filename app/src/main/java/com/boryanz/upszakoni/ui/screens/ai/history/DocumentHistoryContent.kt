@@ -12,6 +12,7 @@ import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -39,6 +40,7 @@ fun DocumentHistoryContent(
   onUserEvent: (DocumentHistoryUserEvent) -> Unit,
   onAddDocumentClicked: () -> Unit,
   onDocumentClicked: (content: String) -> Unit,
+  onMoreInformationClicked: () -> Unit,
   onBackClicked: () -> Unit,
 ) {
   UpsScaffold(
@@ -50,6 +52,12 @@ fun DocumentHistoryContent(
     },
     navigationIcon = {
       com.boryanz.upszakoni.ui.components.Icons.Back(onClick = onBackClicked)
+    },
+    trailingIcon = {
+      com.boryanz.upszakoni.ui.components.Icons.Base(
+        imageVector = Icons.Outlined.Info,
+        onClick = onMoreInformationClicked
+      )
     }
   ) { paddingValues ->
     if (uiState.documentToDelete != null) {
@@ -192,7 +200,8 @@ private fun DocumentHistoryContentPreview(
       onDocumentClicked = {},
       onAddDocumentClicked = {},
       onBackClicked = {},
-      onUserEvent = {}
+      onUserEvent = {},
+      onMoreInformationClicked = {}
     )
   }
 }
