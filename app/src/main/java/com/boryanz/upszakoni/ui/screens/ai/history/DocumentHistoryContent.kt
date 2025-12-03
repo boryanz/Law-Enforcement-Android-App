@@ -34,6 +34,7 @@ import com.boryanz.upszakoni.ui.theme.UpsTheme
 fun DocumentHistoryContent(
   uiState: DocumentHistoryUiState,
   onUserEvent: (DocumentHistoryUserEvent) -> Unit,
+  onAddDocumentClicked: () -> Unit,
   onDocumentClicked: (content: String) -> Unit,
   onBackClicked: () -> Unit,
 ) {
@@ -41,7 +42,7 @@ fun DocumentHistoryContent(
     topBarTitle = { Text(stringResource(R.string.document_history_screen_title)) },
     floatingActionButton = {
       if (!uiState.isLoading) {
-        FabButton(onUserEvent = { onUserEvent(DocumentHistoryUserEvent.FABClicked) })
+        FabButton(onClick = onAddDocumentClicked)
       }
     },
     navigationIcon = {
@@ -85,9 +86,7 @@ fun CompleteData(
         document = document,
         onDocumentClicked = { onDocumentClicked(it) },
         onDeleteDocumentClicked = {
-          onUserEvent(
-            DocumentHistoryUserEvent.DocumentDeleteClicked(it)
-          )
+          onUserEvent(DocumentHistoryUserEvent.DocumentDeleteClicked(document))
         }
       )
     }
@@ -95,11 +94,11 @@ fun CompleteData(
 }
 
 @Composable
-fun FabButton(onUserEvent: (DocumentHistoryUserEvent) -> Unit) {
+fun FabButton(onClick: () -> Unit) {
   FloatingActionButton(
     contentColor = BaseContent,
     backgroundColor = Base100,
-    onClick = { onUserEvent(DocumentHistoryUserEvent.FABClicked) }
+    onClick = onClick
   ) {
     Icon(imageVector = Icons.Default.Add, contentDescription = "generate_document_fab")
   }
@@ -169,6 +168,7 @@ private fun DocumentHistoryContentPreview(
     DocumentHistoryContent(
       uiState = uiState,
       onDocumentClicked = {},
+      onAddDocumentClicked = {},
       onBackClicked = {},
       onUserEvent = {}
     )

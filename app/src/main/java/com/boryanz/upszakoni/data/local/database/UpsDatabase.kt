@@ -11,17 +11,20 @@ import com.boryanz.upszakoni.data.local.database.model.bonussalary.DayInMonth
 import com.boryanz.upszakoni.data.local.database.model.bonussalary.MonthlyStats
 import com.boryanz.upszakoni.data.local.database.model.owneditem.OwnedItem
 import com.boryanz.upszakoni.ui.components.defaultMonthlyStats
+import com.boryanz.upszakoni.ui.screens.ai.history.GeneratedDocument
 import java.util.concurrent.Executors
 
 @Database(
-  entities = [BonusSalaryTreshold::class, MonthlyStats::class, DayInMonth::class, OwnedItem::class],
-  version = 5,
+  entities = [BonusSalaryTreshold::class, MonthlyStats::class, DayInMonth::class, OwnedItem::class, GeneratedDocument::class],
+  version = 6,
   exportSchema = false
 )
 abstract class UpsDatabase : RoomDatabase() {
 
   abstract fun bonusSalaryDao(): BonusSalaryDao
   abstract fun ownedItemsDao(): OwnedItemsDao
+
+  abstract fun documentsDao(): DocumentsDocumentsDao
 
   companion object {
     @Volatile
