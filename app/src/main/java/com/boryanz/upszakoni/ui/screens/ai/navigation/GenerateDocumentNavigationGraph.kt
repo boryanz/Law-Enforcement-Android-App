@@ -8,6 +8,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.boryanz.upszakoni.ui.screens.ai.addprompt.AddPromptScreen
 import com.boryanz.upszakoni.ui.screens.ai.document.DocumentScreen
+import com.boryanz.upszakoni.ui.screens.ai.history.DocumentHistoryDestination
+import com.boryanz.upszakoni.ui.screens.ai.history.DocumentHistoryScreen
 import com.boryanz.upszakoni.ui.screens.ai.information.PromptInformationScreen
 import kotlinx.serialization.Serializable
 
@@ -32,10 +34,16 @@ fun GenerateDocumentNavigationGraph(
   ) {
     composable<PromptInformationDestination> {
       PromptInformationScreen(
-        onContinueClicked = {
-          navHostController.navigate(AddPromptDestination)
-        },
+        onContinueClicked = { navHostController.navigate(AddPromptDestination) },
         onBackClicked = onBackClick
+      )
+    }
+
+    composable<DocumentHistoryDestination> {
+      DocumentHistoryScreen(
+        onBackClicked = { navHostController.navigateUp() },
+        onAddDocumentClicked = { navHostController.navigate(AddPromptDestination) },
+        onDocumentClicked = {}
       )
     }
 
