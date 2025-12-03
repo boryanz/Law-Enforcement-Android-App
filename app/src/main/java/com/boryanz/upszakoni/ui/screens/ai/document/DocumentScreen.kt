@@ -33,6 +33,7 @@ import org.koin.androidx.compose.koinViewModel
 fun DocumentScreen(
   fullPrompt: String,
   examplePrompt: String,
+  type: String,
   onBackClicked: () -> Unit,
 ) {
   val viewModel = koinViewModel<DocumentScreenViewModel>()
@@ -41,7 +42,8 @@ fun DocumentScreen(
   LifecycleEventEffect(Lifecycle.Event.ON_CREATE) {
     viewModel.startDocumentGeneration(
       fullPrompt = fullPrompt,
-      examplePrompt = examplePrompt
+      examplePrompt = examplePrompt,
+      type = type
     )
   }
 

@@ -2,7 +2,7 @@ name: PR Builder
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [ main, develop ]
 
 jobs:
   build:
@@ -25,5 +25,5 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew assembleDebug
       
-    - name: Run tests
+    - name: Run unit tests
       run: ./gradlew testDebugUnitTest

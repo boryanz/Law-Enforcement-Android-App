@@ -35,7 +35,7 @@ sealed interface AddPromptUiEvent {
 
   data class PromptChanged(val value: String) : AddPromptUiEvent
 
-  data class OnPromptTypeChanged(val prompt: String) : AddPromptUiEvent
+  data class OnPromptTypeChanged(val prompt: String, val type: String) : AddPromptUiEvent
   data object GenerateClicked : AddPromptUiEvent
 }
 
@@ -43,7 +43,7 @@ sealed interface AddPromptUiEvent {
 @Composable
 fun AddPromptScreen(
   onBackClicked: () -> Unit,
-  onGenerateDocumentClicked: (String, String) -> Unit,
+  onGenerateDocumentClicked: (String, String, String) -> Unit,
 ) {
   val viewModel: AddPromptViewModel = koinViewModel()
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -51,7 +51,7 @@ fun AddPromptScreen(
   viewModel.event.collectEvents { event ->
     when (event) {
       is AddPromptEvent.GenerateDocument -> {
-        onGenerateDocumentClicked(event.fullPrompt, event.examplePrompt)
+        onGenerateDocumentClicked(event.fullPrompt, event.examplePrompt, event.type)
       }
     }
   }
@@ -76,17 +76,17 @@ fun AddPromptScreen(
           PromptType.SECURING_CRIME_SCENE,
         ),
         onSelectionChanged = {
-          viewModel.onUiEvent(OnPromptTypeChanged(prompt = it.prompt))
+          viewModel.onUiEvent(OnPromptTypeChanged(prompt = it.prompt, type = it.title))
         }
       )
-      Spacer.Vertical(6.dp)
+      Spacer.Vertical(4.dp)
       TextFieldInput.BaseOutline(
         modifier = Modifier.weight(1f),
         labelText = stringResource(R.string.ai_prompt_textfield_label_text),
         value = uiState.prompt,
         isError = uiState.hasPromptError,
-        textStyle = MaterialTheme.typography.bodyMedium,
-        labelTextStyle = MaterialTheme.typography.bodyMedium,
+        textStyle = MaterialTheme.typography.bodyLarge,
+        labelTextStyle = MaterialTheme.typography.bodyLarge,
         onValueChanged = { viewModel.onUiEvent(PromptChanged(it)) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
         hint = stringResource(R.string.ai_prompt_textfield_hint_text),
