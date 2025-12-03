@@ -13,10 +13,13 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -49,6 +52,26 @@ fun DocumentHistoryContent(
       com.boryanz.upszakoni.ui.components.Icons.Back(onClick = onBackClicked)
     }
   ) { paddingValues ->
+    if (uiState.documentToDelete != null) {
+      AlertDialog(
+        modifier = Modifier.testTag("delete_doc_alert"),
+        onDismissRequest = { onUserEvent(DocumentHistoryUserEvent.DeleteDialogDismissed) },
+        text = { androidx.compose.material3.Text("Дали сте сигурни дека сакате да ја избришете белешката?") },
+        confirmButton = {
+          TextButton(
+            onClick = { onUserEvent(DocumentHistoryUserEvent.DeleteDialogConfirmed) }
+          ) {
+            androidx.compose.material3.Text("Избриши")
+          }
+        },
+        dismissButton = {
+          TextButton(onClick = { onUserEvent(DocumentHistoryUserEvent.DeleteDialogDismissed) }) {
+            androidx.compose.material3.Text("Откажи")
+          }
+        }
+      )
+    }
+
     when {
       uiState.isLoading -> Loader()
       else -> {
@@ -125,7 +148,6 @@ fun EmptyState(paddingValues: PaddingValues) {
 val documentHistoryUiState = DocumentHistoryUiState(
   isLoading = false,
   generatedDocuments = emptyList(),
-  showDeleteDialog = false
 )
 
 val generatedDocs = listOf(
@@ -154,7 +176,7 @@ class DocumentHistoryUiStateProvider : PreviewParameterProvider<DocumentHistoryU
     get() = sequenceOf(
       documentHistoryUiState,
       documentHistoryUiState.copy(isLoading = true),
-      documentHistoryUiState.copy(showDeleteDialog = true),
+      documentHistoryUiState.copy(documentToDelete = generatedDocs[0]),
       documentHistoryUiState.copy(generatedDocuments = generatedDocs)
     )
 }

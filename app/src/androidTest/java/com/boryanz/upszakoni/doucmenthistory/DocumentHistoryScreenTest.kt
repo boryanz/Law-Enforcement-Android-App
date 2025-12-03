@@ -14,7 +14,6 @@ import com.boryanz.upszakoni.ui.screens.ai.history.DocumentHistoryContent
 import com.boryanz.upszakoni.ui.screens.ai.history.DocumentHistoryUiState
 import com.boryanz.upszakoni.ui.screens.ai.history.DocumentHistoryUserEvent
 import com.boryanz.upszakoni.ui.screens.ai.history.GeneratedDocument
-import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 
@@ -23,24 +22,39 @@ class DocumentHistoryScreenTest {
   @get:Rule
   val rule = createAndroidComposeRule<ComponentActivity>()
 
-  private fun setupScreen(
-    uiState: DocumentHistoryUiState = DocumentHistoryUiState(),
-    onFabClicked: (String) -> Unit = {},
-  ) {
+  val documents = listOf(
+    GeneratedDocument(
+      id = 1,
+      title = "ЈРМ",
+      content = "Нарушување на ЈРМ со тепачка во толпа...",
+      generatedDate = "30.11.2025"
+    ),
+  )
+
+  private fun setupScreen(uiState: DocumentHistoryUiState = DocumentHistoryUiState()) {
     var uiState by mutableStateOf(uiState)
 
     rule.setContent {
       DocumentHistoryContent(
         uiState = uiState,
         onBackClicked = {},
+        onAddDocumentClicked = {},
         onDocumentClicked = {},
         onUserEvent = { event ->
           when (event) {
-            DocumentHistoryUserEvent.DeleteDialogConfirmed -> TODO()
-            DocumentHistoryUserEvent.DeleteDialogDismissed -> TODO()
-            is DocumentHistoryUserEvent.DocumentDeleteClicked -> {}
+            DocumentHistoryUserEvent.DeleteDialogConfirmed -> {
+              uiState = uiState.copy(documentToDelete = null)
+            }
+
+            DocumentHistoryUserEvent.DeleteDialogDismissed -> {
+              uiState = uiState.copy(documentToDelete = null)
+            }
+
+            is DocumentHistoryUserEvent.DocumentDeleteClicked -> {
+              uiState = uiState.copy(documentToDelete = documents[0])
+            }
+
             DocumentHistoryUserEvent.OnCreate -> {}
-            DocumentHistoryUserEvent.FABClicked -> onFabClicked("FAB_clicked")
           }
         }
       )
@@ -56,6 +70,48 @@ class DocumentHistoryScreenTest {
   }
 
   @Test
+  fun alertDialogShouldBeShownWhenUserClickDeleteDocument() {
+    setupScreen(
+      uiState = DocumentHistoryUiState(
+        documentToDelete = GeneratedDocument(
+          id = 1,
+          title = "Title",
+          content = "Content",
+          generatedDate = "22.11.2025"
+        )
+      )
+    )
+
+    rule.onNodeWithTag("delete_doc_alert").assertExists()
+  }
+
+  @Test
+  fun hideDeleteAlertDialogWhenUserDismissIt() {
+    setupScreen(DocumentHistoryUiState(documentToDelete = documents[0]))
+    /*At this point dialog is shown*/
+    rule.onNodeWithTag("delete_doc_alert").assertExists()
+
+    /*Then user performs click to dismiss it*/
+    rule.onNodeWithText("Откажи").assertExists().also { it.performClick() }
+
+    /*Now alert dialog should be removed*/
+    rule.onNodeWithTag("delete_doc_alert").assertDoesNotExist()
+  }
+
+  @Test
+  fun hideDeleteAlertDialogWhenUserConfirmsIt() {
+    setupScreen(DocumentHistoryUiState(documentToDelete = documents[0]))
+    /*At this point dialog is shown*/
+    rule.onNodeWithTag("delete_doc_alert").assertExists()
+
+    /*Then user performs click to dismiss it*/
+    rule.onNodeWithText("Избриши").assertExists().also { it.performClick() }
+
+    /*Now alert dialog should be removed*/
+    rule.onNodeWithTag("delete_doc_alert").assertDoesNotExist()
+  }
+
+  @Test
   fun showNoGenerateDocumentsWhenNothingIsFetchedFromLocalDb() {
     setupScreen()
     rule.onNodeWithContentDescription("back_button").assertExists()
@@ -67,34 +123,9 @@ class DocumentHistoryScreenTest {
       .assertExists()
   }
 
-  @Test
-  fun whenUserClickFloatingActionButtonThenNavigateNext() {
-    val infoText = rule.activity.getString(R.string.no_ai_generated_documents_info_text)
-    var fabClick = ""
-    setupScreen(onFabClicked = { fabClick = it })
-    rule.onNodeWithContentDescription("back_button").assertExists()
-    /* Loading state is not shown */
-    rule.onNodeWithTag("loader").assertDoesNotExist()
-
-    /* When list is empty */
-    rule.onNodeWithText(infoText).assertExists()
-    rule.onNodeWithContentDescription("generate_document_fab").assertExists()
-    rule.onNodeWithContentDescription("generate_document_fab").performClick()
-    rule.waitForIdle()
-
-    assertEquals("FAB_clicked", fabClick)
-  }
 
   @Test
   fun whenDocumentsAreFetchedThenShowThem() {
-    val documents = listOf(
-      GeneratedDocument(
-        id = 1,
-        title = "ЈРМ",
-        content = "Нарушување на ЈРМ со тепачка во толпа...",
-        generatedDate = "30.11.2025"
-      ),
-    )
     setupScreen(uiState = DocumentHistoryUiState(generatedDocuments = documents))
     rule.onNodeWithContentDescription("back_button").assertExists()
     /* Loading state is not shown */

@@ -7,7 +7,6 @@ import androidx.room.PrimaryKey
 data class DocumentHistoryUiState(
   val isLoading: Boolean = false,
   val generatedDocuments: List<GeneratedDocument> = emptyList(),
-  val showDeleteDialog: Boolean = false,
   val documentToDelete: GeneratedDocument? = null
 )
 

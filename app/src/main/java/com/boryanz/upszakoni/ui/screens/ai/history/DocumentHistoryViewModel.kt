@@ -34,19 +34,13 @@ class DocumentHistoryViewModel(private val dao: BaseDocumentsDao<GeneratedDocume
 
       DeleteDialogDismissed -> {
         _uiState.update { uiState ->
-          uiState.copy(
-            documentToDelete = null,
-            showDeleteDialog = false
-          )
+          uiState.copy(documentToDelete = null)
         }
       }
 
       is DocumentDeleteClicked -> {
         _uiState.update { uiState ->
-          uiState.copy(
-            documentToDelete = event.document,
-            showDeleteDialog = true
-          )
+          uiState.copy(documentToDelete = event.document)
         }
       }
     }

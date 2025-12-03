@@ -40,7 +40,7 @@ fun GeneratedDocumentItem(
           )
           Spacer.Horizontal(4.dp)
           androidx.compose.material3.Text(
-            modifier = Modifier.align(Alignment.Bottom),
+            modifier = Modifier.align(Alignment.CenterVertically),
             text = document.generatedDate,
             style = MaterialTheme.typography.bodyMedium,
           )
