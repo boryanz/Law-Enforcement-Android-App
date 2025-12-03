@@ -23,7 +23,7 @@ sealed interface AddPromptEvent {
 
 data class AddPromptUiState(
   val prompt: String = "",
-  val type: String = PromptType.COMPLAINT.name,
+  val type: String = PromptType.COMPLAINT.title,
   val examplePrompt: String = PromptType.COMPLAINT.prompt,
   val hasPromptError: Boolean = false,
 )

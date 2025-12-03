@@ -11,6 +11,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.fromHtml
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.boryanz.upszakoni.ui.components.RowItem
@@ -45,11 +48,18 @@ fun GeneratedDocumentItem(
             style = MaterialTheme.typography.bodyMedium,
           )
         }
-
-        Spacer.Vertical(2.dp)
+        Spacer.Vertical(4.dp)
         androidx.compose.material3.Text(
-          text = document.content,
-          style = MaterialTheme.typography.bodyMedium,
+          text = AnnotatedString.fromHtml(
+            document.content.replace(
+              oldValue = "СЛУЖБЕНА БЕЛЕШКА",
+              newValue = "",
+              ignoreCase = false
+            )
+          ),
+          style = MaterialTheme.typography.bodyLarge,
+          maxLines = 2,
+          overflow = TextOverflow.Ellipsis
         )
       }
 

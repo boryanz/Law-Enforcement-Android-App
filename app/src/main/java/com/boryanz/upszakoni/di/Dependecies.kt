@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.boryanz.upszakoni.analytics.AnalyticsLogger
 import com.boryanz.upszakoni.analytics.FirebaseAnalyticsManager
-import com.boryanz.upszakoni.data.local.database.BaseDocumentsDao
 import com.boryanz.upszakoni.data.local.database.BonusSalaryDao
+import com.boryanz.upszakoni.data.local.database.DocumentsHistoryDao
 import com.boryanz.upszakoni.data.local.database.OwnedItemsDao
 import com.boryanz.upszakoni.data.local.database.UpsDatabase
 import com.boryanz.upszakoni.data.local.sharedprefs.PrefsLocalStorage
@@ -34,7 +34,6 @@ import com.boryanz.upszakoni.ui.owneditem.overview.OwnedItemsListViewModel
 import com.boryanz.upszakoni.ui.screens.ai.addprompt.AddPromptViewModel
 import com.boryanz.upszakoni.ui.screens.ai.document.DocumentScreenViewModel
 import com.boryanz.upszakoni.ui.screens.ai.history.DocumentHistoryViewModel
-import com.boryanz.upszakoni.ui.screens.ai.history.GeneratedDocument
 import com.boryanz.upszakoni.ui.screens.archivedlaws.ArchivedLawsViewModel
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardViewModel
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.monthly.OvertimeMonthlyCalendarViewModel
@@ -60,7 +59,8 @@ val appModule = module {
   single<SharedPrefsManager> { PrefsLocalStorage(get()) }
   single<UpsDatabase> { UpsDatabase.getInstance(androidContext()) }
   single<BonusSalaryDao> { get<UpsDatabase>().bonusSalaryDao() }
-  single<BaseDocumentsDao<GeneratedDocument>> { get<UpsDatabase>().documentsDao() }
+  single<DocumentsHistoryDao> { get<UpsDatabase>().documentsDao() }
+  single { get<DocumentsHistoryDao>() as com.boryanz.upszakoni.data.local.database.BaseDocumentsDao<com.boryanz.upszakoni.ui.screens.ai.history.GeneratedDocument> }
   single<OwnedItemsDao> { get<UpsDatabase>().ownedItemsDao() }
   factory<DaysInMonthDataGenerator> { GenerateDaysInMonthsUseCase() }
   single<BonusSalaryRepository> { BonusSalaryRepositoryImpl(get()) }

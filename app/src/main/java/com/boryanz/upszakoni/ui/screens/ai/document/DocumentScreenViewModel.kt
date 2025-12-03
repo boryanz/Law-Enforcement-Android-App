@@ -6,10 +6,13 @@ import com.boryanz.upszakoni.data.local.database.DocumentsHistoryDao
 import com.boryanz.upszakoni.domain.ai.AiGenerator
 import com.boryanz.upszakoni.ui.screens.ai.history.GeneratedDocument
 import com.boryanz.upszakoni.utils.ConnectionUtils
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -24,6 +27,7 @@ data class DocumentScreenUiState(
 class DocumentScreenViewModel(
   private val historyDao: DocumentsHistoryDao,
   private val aiGenerator: AiGenerator,
+  private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
 
   private val _uiState: MutableStateFlow<DocumentScreenUiState> =
@@ -51,8 +55,10 @@ class DocumentScreenViewModel(
           )
         }
       }
-      uiState.value.generatedDocument?.let { generatedDocument ->
-        historyDao.insert(generatedDocument)
+      withContext(dispatcher) {
+        uiState.value.generatedDocument?.let { generatedDocument ->
+          historyDao.insert(generatedDocument)
+        }
       }
     }
 

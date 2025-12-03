@@ -138,5 +138,5 @@
     <string name="no_internet_connection_text">Нема интернет конекција.</string>
     <string name="ai_generator_title">AI-генератор на белешки</string>
     <string name="no_ai_generated_documents_info_text">Немате генерирани документи</string>
-    <string name="document_history_screen_title">Белешки</string>
+    <string name="document_history_screen_title">Генерирани Белешки</string>
 </resources>

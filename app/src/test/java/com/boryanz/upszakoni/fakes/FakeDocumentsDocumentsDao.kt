@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.flowOf
 class FakeDocumentsDocumentsDao(val documents: List<GeneratedDocument>) :
   BaseDocumentsDao<GeneratedDocument>() {
 
-  override fun insert(item: GeneratedDocument) {
+  override suspend fun insert(item: GeneratedDocument) {
     TODO("Not yet implemented")
   }
 
@@ -16,7 +16,7 @@ class FakeDocumentsDocumentsDao(val documents: List<GeneratedDocument>) :
     return flowOf(documents)
   }
 
-  override fun delete(item: GeneratedDocument) {
+  override suspend fun delete(item: GeneratedDocument) {
     TODO("Not yet implemented")
   }
 }

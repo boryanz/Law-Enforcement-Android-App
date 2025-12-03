@@ -34,7 +34,7 @@ fun GenerateDocumentNavigationGraph(
   ) {
     composable<PromptInformationDestination> {
       PromptInformationScreen(
-        onContinueClicked = { navHostController.navigate(AddPromptDestination) },
+        onContinueClicked = { navHostController.navigate(DocumentHistoryDestination) },
         onBackClicked = onBackClick
       )
     }

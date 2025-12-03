@@ -10,11 +10,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -56,17 +56,17 @@ fun DocumentHistoryContent(
       AlertDialog(
         modifier = Modifier.testTag("delete_doc_alert"),
         onDismissRequest = { onUserEvent(DocumentHistoryUserEvent.DeleteDialogDismissed) },
-        text = { androidx.compose.material3.Text("Дали сте сигурни дека сакате да ја избришете белешката?") },
+        text = { Text("Дали сте сигурни дека сакате да ја избришете белешката?") },
         confirmButton = {
           TextButton(
             onClick = { onUserEvent(DocumentHistoryUserEvent.DeleteDialogConfirmed) }
           ) {
-            androidx.compose.material3.Text("Избриши")
+            Text("Избриши")
           }
         },
         dismissButton = {
           TextButton(onClick = { onUserEvent(DocumentHistoryUserEvent.DeleteDialogDismissed) }) {
-            androidx.compose.material3.Text("Откажи")
+            Text("Откажи")
           }
         }
       )
@@ -139,7 +139,7 @@ fun EmptyState(paddingValues: PaddingValues) {
     Text(
       modifier = Modifier.fillMaxWidth(),
       textAlign = TextAlign.Center,
-      style = MaterialTheme.typography.bodyMedium,
+      style = MaterialTheme.typography.bodyLarge,
       text = stringResource(R.string.no_ai_generated_documents_info_text)
     )
   }
