@@ -94,6 +94,8 @@ dependencies {
   implementation(libs.androidx.activity)
   implementation(libs.androidx.constraintlayout)
   implementation(libs.mockk)
+  implementation(libs.retrofit.converter.jackson)
+  implementation(libs.jackson.module.kotlin)
   testImplementation(libs.junit)
   testImplementation(libs.kotlinx.coroutines.test)
   androidTestImplementation(libs.androidx.junit)

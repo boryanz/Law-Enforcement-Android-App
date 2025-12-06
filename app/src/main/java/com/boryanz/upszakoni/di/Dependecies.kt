@@ -48,9 +48,15 @@ import com.google.firebase.ai.GenerativeModel
 import com.google.firebase.ai.ai
 import com.google.firebase.ai.type.GenerativeBackend
 import com.google.firebase.analytics.FirebaseAnalytics
+import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
+import retrofit2.Retrofit
+import retrofit2.converter.jackson.JacksonConverterFactory
+import java.util.concurrent.TimeUnit
+
+private const val TIMEOUT = 30L
 
 val appModule = module {
   single<SharedPreferences> {
@@ -70,6 +76,23 @@ val appModule = module {
   factory<GenerativeModel> {
     Firebase.ai(backend = GenerativeBackend.googleAI()).generativeModel("gemini-2.5-flash")
   }
+
+  single {
+    OkHttpClient.Builder()
+      .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
+      .readTimeout(TIMEOUT, TimeUnit.SECONDS)
+      .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
+      .build()
+  }
+
+  single {
+    Retrofit.Builder()
+      .baseUrl("https://tools-test.netcetera.com/lunch/api/")
+      .client(get())
+      .addConverterFactory(JacksonConverterFactory.create())
+      .build()
+  }
+
   factory<LawsUseCase> { GetLawsUseCase(androidContext()) }
   factory<AiGenerationChecker> { CheckAiGenerationsUseCase(get()) }
   factory<AiGenerator> { GenerateAiDocument(get()) }
