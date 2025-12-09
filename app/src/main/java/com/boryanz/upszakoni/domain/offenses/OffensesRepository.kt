@@ -1,7 +1,9 @@
 package com.boryanz.upszakoni.domain.offenses
 
+import com.boryanz.upszakoni.data.mappers.toDomain
 import com.boryanz.upszakoni.data.remote.service.OffensesApiService
 import com.boryanz.upszakoni.domain.Result
+import com.boryanz.upszakoni.domain.offenses.model.Offense
 import com.boryanz.upszakoni.domain.safeApi
 
 class OffensesRepository(private val api: OffensesApiService) : OffensesProvider {

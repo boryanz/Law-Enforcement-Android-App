@@ -1,4 +1,4 @@
-package com.boryanz.upszakoni.domain.offenses
+package com.boryanz.upszakoni.domain.offenses.model
 
 data class Offense(
   val lawArticle: String,

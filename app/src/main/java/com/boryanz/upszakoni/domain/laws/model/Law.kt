@@ -1,4 +1,4 @@
-package com.boryanz.upszakoni.domain.laws
+package com.boryanz.upszakoni.domain.laws.model
 
 data class Law(
   val id: String,

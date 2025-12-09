@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.boryanz.upszakoni.analytics.AnalyticsLogger
 import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsManager
-import com.boryanz.upszakoni.data.remote.service.LawApiService
-import com.boryanz.upszakoni.domain.LawsUseCase
+import com.boryanz.upszakoni.domain.fold
+import com.boryanz.upszakoni.domain.laws.LawsProvider
 import com.boryanz.upszakoni.domain.remoteconfig.FirebaseRemoteConfig
 import com.boryanz.upszakoni.domain.remoteconfig.RemoteConfig
 import com.boryanz.upszakoni.ui.screens.common.ScreenAction
@@ -17,11 +17,10 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class LawsViewModel(
-  private val getLawsUseCase: LawsUseCase,
   private val remoteConfigRepository: FirebaseRemoteConfig,
   private val localStorage: SharedPrefsManager,
-  private val analyticsLogger: AnalyticsLogger,
-  private val lawApiService: LawApiService,
+  analyticsLogger: AnalyticsLogger,
+  private val lawsRepository: LawsProvider
 ) : ViewModel() {
 
   private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
@@ -40,20 +39,25 @@ class LawsViewModel(
         is ScreenAction.LawSwiped -> {
           localStorage.archiveLaw(event.lawName)
           _uiState.update {
-            it.copy(laws = uiState.value.laws.filterAvailableLaws())
+            it.copy(laws = uiState.value.laws.filter { localStorage.contains(it.title) })
           }
         }
 
         is ScreenAction.GetLaws -> {
-          val response = lawApiService.getLaws()
-          _uiState.update {
-            UiState(response.map { it.title })
-          }
+          lawsRepository.getLaws().fold(
+            onSuccess = { response ->
+              _uiState.update { UiState(response) }
+            },
+            onFailure = {
+              // send event
+            }
+          )
+        }
+
+        is ScreenAction.LawClicked -> {
+
         }
       }
     }
   }
-
-  private fun List<String>.filterAvailableLaws() =
-    filterNot { localStorage.contains(it) }
 }

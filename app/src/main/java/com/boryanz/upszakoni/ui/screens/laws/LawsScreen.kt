@@ -61,7 +61,7 @@ fun LawsScreen(
     onShareAppClicked = onShareAppClicked,
     onAppUpdateClicked = onAppUpdateClicked,
     onFeedbackFormClicked = onFeedbackFormClicked
-  ) {
+  ) { paddingValues ->
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     var searchQuery by remember { mutableStateOf("") }
     val lazyListState = rememberLazyListState()
@@ -69,7 +69,7 @@ fun LawsScreen(
     Column(
       modifier = Modifier
         .fillMaxSize()
-        .padding(it)
+        .padding(paddingValues)
         .padding(8.dp),
       horizontalAlignment = Alignment.CenterHorizontally,
       verticalArrangement = Arrangement.Top
@@ -90,17 +90,17 @@ fun LawsScreen(
       Spacer(modifier = Modifier.padding(vertical = 4.dp))
       LazyColumn {
         items(
-          uiState.laws.filter { it.contains(searchQuery, ignoreCase = true) },
-          key = { it }) {
+          uiState.laws.filter { it.title.contains(searchQuery, ignoreCase = true) },
+          key = { it.title }) {
           SwipeToDismiss(
             content = {
               TitleItem(
                 isEnabled = true,
-                title = it,
-                onClick = { onLawClick("$it.pdf") })
+                title = it.title,
+                onClick = { onLawClick(it.id) })
             },
             onItemSwiped = {
-              viewModel.onUiEvent(ScreenAction.LawSwiped(it))
+              viewModel.onUiEvent(ScreenAction.LawSwiped(it.title))
               Toast.makeText(context, R.string.laws_archived_message, Toast.LENGTH_SHORT)
                 .show()
 

@@ -1,7 +1,9 @@
 package com.boryanz.upszakoni.domain.laws
 
+import com.boryanz.upszakoni.data.mappers.toDomain
 import com.boryanz.upszakoni.data.remote.service.LawApiService
 import com.boryanz.upszakoni.domain.Result
+import com.boryanz.upszakoni.domain.laws.model.Law
 import com.boryanz.upszakoni.domain.safeApi
 import okhttp3.ResponseBody
 
