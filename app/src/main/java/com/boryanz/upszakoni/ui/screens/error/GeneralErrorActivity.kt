@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.SignalWifiConnectedNoInternet4
+import androidx.compose.material.icons.filled.ErrorOutline
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -27,10 +27,11 @@ import com.boryanz.upszakoni.ui.components.Spacer
 import com.boryanz.upszakoni.ui.components.UpsScaffold
 import com.boryanz.upszakoni.ui.theme.UpsTheme
 
-class NoConnectionActivity : ComponentActivity() {
+
+class GeneralErrorActivity : ComponentActivity() {
 
   companion object Companion {
-    fun createIntent(context: Context) = Intent(context, NoConnectionActivity::class.java)
+    fun createIntent(context: Context) = Intent(context, GeneralErrorActivity::class.java)
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,14 +39,14 @@ class NoConnectionActivity : ComponentActivity() {
 
     setContent {
       UpsTheme {
-        NoConnectionContent { finish() }
+        GeneralErrorContent { finish() }
       }
     }
   }
 }
 
 @Composable
-fun NoConnectionContent(onClick: () -> Unit) {
+fun GeneralErrorContent(onClick: () -> Unit) {
   UpsScaffold(
     topBarTitle = {},
     navigationIcon = {
@@ -61,17 +62,17 @@ fun NoConnectionContent(onClick: () -> Unit) {
     ) {
       Icon(
         modifier = Modifier.size(32.dp),
-        imageVector = Icons.Default.SignalWifiConnectedNoInternet4,
+        imageVector = Icons.Default.ErrorOutline,
         contentDescription = ""
       )
       Spacer.Vertical(8.dp)
       Text(
-        text = stringResource(R.string.no_internet_connection_title),
+        text = stringResource(R.string.general_error_title),
         style = MaterialTheme.typography.titleMedium
       )
       Spacer.Vertical(4.dp)
       Text(
-        text = stringResource(R.string.no_internet_connection_description),
+        text = stringResource(R.string.general_error_description),
         textAlign = TextAlign.Center
       )
     }
@@ -80,6 +81,6 @@ fun NoConnectionContent(onClick: () -> Unit) {
 
 @Preview
 @Composable
-private fun NoConnectionContentPreview() {
-  NoConnectionContent {}
+private fun GeneralErrorContentPreview() {
+  GeneralErrorContent {}
 }
