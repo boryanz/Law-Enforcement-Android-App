@@ -1,8 +1,6 @@
 package com.boryanz.upszakoni.data
 
-import com.boryanz.upszakoni.R
 import com.boryanz.upszakoni.data.model.Category
-import com.boryanz.upszakoni.data.model.DashboardItem
 import com.boryanz.upszakoni.data.model.Offense
 import com.boryanz.upszakoni.data.model.PhoneNumber
 import com.boryanz.upszakoni.data.model.TitleItem
@@ -95,39 +93,6 @@ val goldenQuestions = listOf(
   TitleItem("Зошто се случил настанот?"),
   TitleItem("Со кого се случил настанот (учесници)?"),
   TitleItem("Кој е сторител?"),
-)
-
-val dashboardItems = listOf(
-  DashboardItem(
-    id = NavigationDrawerDestination.laws,
-    title = "Закони",
-    drawableRes = R.drawable.zakonishta
-  ),
-  DashboardItem(
-    id = NavigationDrawerDestination.offenses,
-    title = "Чести прекршоци",
-    drawableRes = R.drawable.offenses
-  ),
-  DashboardItem(
-    id = NavigationDrawerDestination.crimes,
-    title = "Чести кривични дела",
-    drawableRes = R.drawable.kriminal
-  ),
-  DashboardItem(
-    id = NavigationDrawerDestination.writing_guide,
-    title = "Водич за службени белешки",
-    drawableRes = R.drawable.question_solid
-  ),
-  DashboardItem(
-    id = NavigationDrawerDestination.authorities,
-    title = "Полицски овластувања",
-    drawableRes = R.drawable.police
-  ),
-  DashboardItem(
-    id = NavigationDrawerDestination.wanted_criminals,
-    title = "Потраги и исчезнати лица",
-    drawableRes = R.drawable.prekrsok
-  ),
 )
 
 val offensesItems = listOf(
