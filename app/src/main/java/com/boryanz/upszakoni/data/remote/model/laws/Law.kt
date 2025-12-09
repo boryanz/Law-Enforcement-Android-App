@@ -1,4 +1,4 @@
-package com.boryanz.upszakoni.data.remote.model
+package com.boryanz.upszakoni.data.remote.model.laws
 
 import com.fasterxml.jackson.annotation.JsonProperty
 

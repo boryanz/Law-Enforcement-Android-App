@@ -2,6 +2,7 @@ package com.boryanz.upszakoni.data.remote.interceptors
 
 import com.boryanz.upszakoni.data.remote.interceptors.UpsErrorCodes.INTERNAL_SERVER_ERROR
 import com.boryanz.upszakoni.data.remote.interceptors.UpsErrorCodes.NOT_FOUND
+import com.boryanz.upszakoni.utils.ConnectionUtils
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
@@ -10,6 +11,9 @@ class ErrorInterceptor : Interceptor {
 
   @Throws(IOException::class)
   override fun intercept(chain: Interceptor.Chain): Response {
+    if (!ConnectionUtils.hasConnection()) {
+      throw UpsException.NoNetworkException()
+    }
 
     try {
       val request = chain.request()
@@ -34,6 +38,7 @@ class ErrorInterceptor : Interceptor {
 
 sealed class UpsException : Exception() {
   class GeneralException : UpsException()
+  class NoNetworkException : UpsException()
   class InternalServerErrorException : UpsException()
   class NotFoundException : UpsException()
 }

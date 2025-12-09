@@ -1,7 +1,7 @@
 package com.boryanz.upszakoni.di
 
-import com.boryanz.upszakoni.domain.DaysInMonthDataGenerator
-import com.boryanz.upszakoni.domain.GenerateDaysInMonthsUseCase
+import com.boryanz.upszakoni.domain.bonussalary.DaysInMonthDataGenerator
+import com.boryanz.upszakoni.domain.bonussalary.GenerateDaysInMonthsUseCase
 import com.boryanz.upszakoni.domain.GetLawsUseCase
 import com.boryanz.upszakoni.domain.LawsUseCase
 import com.boryanz.upszakoni.domain.ai.AiGenerationChecker
