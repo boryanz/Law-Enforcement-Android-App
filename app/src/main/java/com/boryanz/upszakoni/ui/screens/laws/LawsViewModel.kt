@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.boryanz.upszakoni.analytics.AnalyticsLogger
 import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsManager
-import com.boryanz.upszakoni.data.remote.LawApiService
+import com.boryanz.upszakoni.data.remote.service.LawApiService
 import com.boryanz.upszakoni.domain.LawsUseCase
 import com.boryanz.upszakoni.domain.remoteconfig.FirebaseRemoteConfig
 import com.boryanz.upszakoni.domain.remoteconfig.RemoteConfig

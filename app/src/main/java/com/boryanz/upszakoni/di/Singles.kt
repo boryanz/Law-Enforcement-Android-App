@@ -10,7 +10,7 @@ import com.boryanz.upszakoni.data.local.database.OwnedItemsDao
 import com.boryanz.upszakoni.data.local.database.UpsDatabase
 import com.boryanz.upszakoni.data.local.sharedprefs.PrefsLocalStorage
 import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsManager
-import com.boryanz.upszakoni.data.remote.LawApiService
+import com.boryanz.upszakoni.data.remote.service.LawApiService
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepositoryImpl
 import com.boryanz.upszakoni.domain.remoteconfig.FirebaseRemoteConfig
