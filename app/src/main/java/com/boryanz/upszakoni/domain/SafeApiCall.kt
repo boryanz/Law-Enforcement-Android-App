@@ -3,9 +3,16 @@ package com.boryanz.upszakoni.domain
 import com.boryanz.upszakoni.data.remote.interceptors.UpsException.GeneralException
 import com.boryanz.upszakoni.data.remote.interceptors.UpsException.InternalServerErrorException
 import com.boryanz.upszakoni.data.remote.interceptors.UpsException.NoNetworkException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeout
 
-inline fun <S> safeApi(block: () -> S): Result<S> = try {
-  Result.Success(block())
+suspend inline fun <S> safeApi(crossinline block: suspend () -> S): Result<S> = try {
+  withContext(Dispatchers.IO) {
+    withTimeout(5000) {
+      Result.Success(block())
+    }
+  }
 } catch (e: Exception) {
   when (e) {
     is NoNetworkException -> Result.Error(error = UpsError.NoInternetConnectionError)

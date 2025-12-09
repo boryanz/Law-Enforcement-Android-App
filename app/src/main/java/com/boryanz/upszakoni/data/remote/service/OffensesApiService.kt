@@ -9,5 +9,5 @@ interface OffensesApiService {
   @GET("api/offenses/{type}")
   suspend fun getOffensesByType(
     @Path("type") type: String
-  ): OffenseResponse
+  ): List<OffenseResponse>
 }

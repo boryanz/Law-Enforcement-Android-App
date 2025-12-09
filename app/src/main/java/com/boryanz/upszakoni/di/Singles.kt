@@ -12,8 +12,13 @@ import com.boryanz.upszakoni.data.local.sharedprefs.PrefsLocalStorage
 import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsManager
 import com.boryanz.upszakoni.data.remote.interceptors.ErrorInterceptor
 import com.boryanz.upszakoni.data.remote.service.LawApiService
+import com.boryanz.upszakoni.data.remote.service.OffensesApiService
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepositoryImpl
+import com.boryanz.upszakoni.domain.laws.LawsProvider
+import com.boryanz.upszakoni.domain.laws.LawsRepository
+import com.boryanz.upszakoni.domain.offenses.OffensesProvider
+import com.boryanz.upszakoni.domain.offenses.OffensesRepository
 import com.boryanz.upszakoni.domain.remoteconfig.FirebaseRemoteConfig
 import com.boryanz.upszakoni.domain.remoteconfig.RemoteConfigRepository
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -43,6 +48,7 @@ fun Module.singles() {
       .build()
   }
   single<LawApiService> { get<Retrofit>().create(LawApiService::class.java) }
+  single<OffensesApiService> { get<Retrofit>().create(OffensesApiService::class.java) }
 
   single<SharedPreferences> {
     androidContext().getSharedPreferences("Ups shared prefs", Context.MODE_PRIVATE)
@@ -57,4 +63,6 @@ fun Module.singles() {
   single<FirebaseRemoteConfig> { RemoteConfigRepository() }
   single<FirebaseAnalytics> { FirebaseAnalytics.getInstance(androidContext()) }
   single<AnalyticsLogger> { FirebaseAnalyticsManager(get()) }
+  single<OffensesProvider> { OffensesRepository(get()) }
+  single<LawsProvider> { LawsRepository(get()) }
 }
