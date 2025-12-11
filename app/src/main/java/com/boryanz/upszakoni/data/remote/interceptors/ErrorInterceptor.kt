@@ -15,24 +15,18 @@ class ErrorInterceptor : Interceptor {
       throw UpsException.NoNetworkException()
     }
 
-    try {
-      val request = chain.request()
-      val response = chain.proceed(request)
-      if (!response.isSuccessful) {
-        when (response.code) {
-          INTERNAL_SERVER_ERROR -> throw UpsException.InternalServerErrorException()
-          NOT_FOUND -> throw UpsException.NotFoundException()
-          else -> throw UpsException.GeneralException()
-        }
-      }
-      return response
-    } catch (e: Exception) {
-      if (e is UpsException) {
-        throw e
-      } else {
-        throw UpsException.GeneralException()
+    val request = chain.request()
+    val response = chain.proceed(request)
+
+    if (!response.isSuccessful) {
+      when (response.code) {
+        INTERNAL_SERVER_ERROR -> throw UpsException.InternalServerErrorException()
+        NOT_FOUND -> throw UpsException.NotFoundException()
+        else -> throw UpsException.GeneralException()
       }
     }
+
+    return response
   }
 }
 
@@ -46,5 +40,5 @@ sealed class UpsException : Exception() {
 data object UpsErrorCodes {
   const val NOT_FOUND = 404
   const val INTERNAL_SERVER_ERROR = 500
-  const val BAD_REQUEST = 500
+  const val BAD_REQUEST = 400
 }

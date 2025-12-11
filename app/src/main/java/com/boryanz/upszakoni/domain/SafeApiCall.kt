@@ -1,24 +1,47 @@
 package com.boryanz.upszakoni.domain
 
-import com.boryanz.upszakoni.data.remote.interceptors.UpsException.GeneralException
-import com.boryanz.upszakoni.data.remote.interceptors.UpsException.InternalServerErrorException
-import com.boryanz.upszakoni.data.remote.interceptors.UpsException.NoNetworkException
+import com.boryanz.upszakoni.data.remote.interceptors.UpsErrorCodes
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
+import retrofit2.HttpException
+import java.io.IOException
+import java.net.ConnectException
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 
-suspend inline fun <S> safeApi(crossinline block: suspend () -> S): Result<S> = try {
+suspend fun <S> safeApi(block: suspend () -> S): Result<S> = try {
   withContext(Dispatchers.IO) {
     withTimeout(5000) {
       Result.Success(block())
     }
   }
 } catch (e: Exception) {
+  println("SafeApi caught exception: ${e::class.simpleName} - ${e.message}")
+  e.printStackTrace()
+
   when (e) {
-    is NoNetworkException -> Result.Error(error = UpsError.NoInternetConnectionError)
-    is GeneralException -> Result.Error(error = UpsError.GeneralError)
-    is InternalServerErrorException -> Result.Error(error = UpsError.GeneralError)
-    else -> Result.Error(UpsError.GeneralError)
+    is HttpException -> {
+      when (e.code()) {
+        UpsErrorCodes.NOT_FOUND -> Result.Error(error = UpsError.GeneralError)
+        UpsErrorCodes.INTERNAL_SERVER_ERROR -> Result.Error(error = UpsError.GeneralError)
+        else -> Result.Error(error = UpsError.GeneralError)
+      }
+    }
+
+    // Network-related exceptions
+    is UnknownHostException -> Result.Error(error = UpsError.NoInternetConnectionError)
+    is ConnectException -> Result.Error(error = UpsError.NoInternetConnectionError)
+    is SocketTimeoutException -> Result.Error(error = UpsError.NoInternetConnectionError)
+    is TimeoutCancellationException -> Result.Error(error = UpsError.NoInternetConnectionError)
+    is IOException -> Result.Error(error = UpsError.NoInternetConnectionError)
+
+    // Fallback for any other exception
+    else -> {
+      println("Unexpected exception type: ${e::class.java.name}")
+      Result.Error(UpsError.GeneralError)
+    }
   }
 }
 

@@ -15,10 +15,6 @@ interface SharedPrefsManager {
 
   fun isPrivacyPolicyAccepted(): Boolean
 
-  fun archiveLaw(lawName: String)
-
-  fun removeArchivedLaw(lawName: String)
-
   fun contains(lawName: String): Boolean
 
   fun getAiGenerationsUsedToday(): Int
@@ -61,14 +57,6 @@ class PrefsLocalStorage(
 
   override fun isPrivacyPolicyAccepted(): Boolean {
     return sharedPrefs.getBoolean(PRIVACY_POLICY_ACCEPTED, false)
-  }
-
-  override fun archiveLaw(lawName: String) {
-    sharedPrefs.edit { putString("$ARCHIVE_LAW_KEY/$lawName", lawName) }
-  }
-
-  override fun removeArchivedLaw(lawName: String) {
-    sharedPrefs.edit { remove("$ARCHIVE_LAW_KEY/$lawName") }
   }
 
   override fun contains(lawName: String): Boolean {

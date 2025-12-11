@@ -7,7 +7,6 @@ import com.boryanz.upszakoni.ui.owneditem.overview.OwnedItemsListViewModel
 import com.boryanz.upszakoni.ui.screens.ai.addprompt.AddPromptViewModel
 import com.boryanz.upszakoni.ui.screens.ai.document.DocumentScreenViewModel
 import com.boryanz.upszakoni.ui.screens.ai.history.DocumentHistoryViewModel
-import com.boryanz.upszakoni.ui.screens.archivedlaws.ArchivedLawsViewModel
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardViewModel
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.monthly.OvertimeMonthlyCalendarViewModel
 import com.boryanz.upszakoni.ui.screens.bonussalary.migration.MigrationProposalViewModel
@@ -21,12 +20,11 @@ import org.koin.core.module.Module
 
 fun Module.viewModels() {
   viewModel { DocumentScreenViewModel(get(), get()) }
-  viewModel { ArchivedLawsViewModel(get(), get(), get<AnalyticsLogger>()) }
   viewModel { BonusSalaryParametersViewModel(get()) }
   viewModel { MigrationProposalViewModel(get(), get(), get()) }
   viewModel { OverTimeInputViewModel(get(), get<AnalyticsLogger>()) }
   viewModel { BonusSalaryDashboardViewModel(get(), get(), get<AnalyticsLogger>(), get()) }
-  viewModel { LawsViewModel(get(), get(), get(), get<AnalyticsLogger>(), get()) }
+  viewModel { LawsViewModel(get(), get()) }
   viewModel { InformationScreenViewModel(get()) }
   viewModel { OvertimeTrackNavigationGraphViewModel(get()) }
   viewModel { OvertimeMonthlyCalendarViewModel(get()) }

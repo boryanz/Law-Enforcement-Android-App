@@ -17,6 +17,8 @@ import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepositoryImpl
 import com.boryanz.upszakoni.domain.laws.LawsProvider
 import com.boryanz.upszakoni.domain.laws.LawsRepository
+import com.boryanz.upszakoni.domain.laws.LocalPdfCache
+import com.boryanz.upszakoni.domain.laws.PdfCache
 import com.boryanz.upszakoni.domain.offenses.OffensesProvider
 import com.boryanz.upszakoni.domain.offenses.OffensesRepository
 import com.boryanz.upszakoni.domain.remoteconfig.FirebaseRemoteConfig
@@ -36,7 +38,7 @@ fun Module.singles() {
       .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
       .readTimeout(TIMEOUT, TimeUnit.SECONDS)
       .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
-      .addInterceptor(ErrorInterceptor())
+      // ErrorInterceptor removed - exceptions handled in safeApi instead
       .build()
   }
 
@@ -64,5 +66,6 @@ fun Module.singles() {
   single<FirebaseAnalytics> { FirebaseAnalytics.getInstance(androidContext()) }
   single<AnalyticsLogger> { FirebaseAnalyticsManager(get()) }
   single<OffensesProvider> { OffensesRepository(get()) }
-  single<LawsProvider> { LawsRepository(get()) }
+  single<LawsProvider> { LawsRepository(get(), get()) }
+  single<PdfCache> { LocalPdfCache(androidContext()) }
 }

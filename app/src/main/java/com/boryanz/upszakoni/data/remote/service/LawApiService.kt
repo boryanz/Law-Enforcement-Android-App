@@ -12,7 +12,7 @@ interface LawApiService {
 
   @GET("api/laws/{id}")
   @Streaming
-  suspend fun getLawById(
+  suspend fun downloadPdf(
     @Path("id") id: String,
   ): ResponseBody
 }

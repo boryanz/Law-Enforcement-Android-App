@@ -1,13 +1,13 @@
 package com.boryanz.upszakoni.di
 
-import com.boryanz.upszakoni.domain.bonussalary.DaysInMonthDataGenerator
-import com.boryanz.upszakoni.domain.bonussalary.GenerateDaysInMonthsUseCase
 import com.boryanz.upszakoni.domain.GetLawsUseCase
 import com.boryanz.upszakoni.domain.LawsUseCase
 import com.boryanz.upszakoni.domain.ai.AiGenerationChecker
 import com.boryanz.upszakoni.domain.ai.AiGenerator
 import com.boryanz.upszakoni.domain.ai.CheckAiGenerationsUseCase
 import com.boryanz.upszakoni.domain.ai.GenerateAiDocument
+import com.boryanz.upszakoni.domain.bonussalary.DaysInMonthDataGenerator
+import com.boryanz.upszakoni.domain.bonussalary.GenerateDaysInMonthsUseCase
 import com.boryanz.upszakoni.domain.owneditem.AddOwnedItemUseCase
 import com.boryanz.upszakoni.domain.owneditem.AddOwnedItemUseCaseImpl
 import com.boryanz.upszakoni.domain.owneditem.DeleteOwnedItemUseCase
