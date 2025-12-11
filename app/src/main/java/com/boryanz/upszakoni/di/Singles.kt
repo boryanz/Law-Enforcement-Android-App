@@ -38,7 +38,7 @@ fun Module.singles() {
       .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
       .readTimeout(TIMEOUT, TimeUnit.SECONDS)
       .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
-      // ErrorInterceptor removed - exceptions handled in safeApi instead
+      .addInterceptor(ErrorInterceptor())
       .build()
   }
 

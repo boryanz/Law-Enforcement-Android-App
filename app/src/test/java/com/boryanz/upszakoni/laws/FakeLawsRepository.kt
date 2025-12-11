@@ -12,7 +12,9 @@ class FakeLawsRepository(private val laws: List<Law> = emptyList()) : LawsProvid
   var downloadedFileName: String = ""
 
   override suspend fun getLaws(): Result<List<Law>> {
-    return if (failWithNoConnectionError) Result.Error(UpsError.NoInternetConnectionError) else {
+    return if (failWithNoConnectionError)
+      Result.Error(UpsError.NoInternetConnectionError)
+    else {
       Result.Success(laws)
     }
   }

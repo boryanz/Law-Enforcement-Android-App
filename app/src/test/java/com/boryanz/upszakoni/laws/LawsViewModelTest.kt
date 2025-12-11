@@ -13,7 +13,9 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.toCollection
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -61,7 +63,7 @@ class LawsViewModelTest {
 
 
   @Test
-  fun `get laws failed with No connection error`() = runTest {
+  fun `get laws failed with No connection error`() = runTest(StandardTestDispatcher()) {
     //Given
     val expectedLaws = listOf(
       Law(
@@ -84,13 +86,14 @@ class LawsViewModelTest {
       },
     )
 
+    //When
     val result = collectFlow(viewmodel.event) {
       viewmodel.onUiEvent(ScreenAction.GetLaws)
+      advanceUntilIdle()
     }
 
     assertTrue(result.first() is LawsEvent.Failure)
     assertEquals(UpsError.NoInternetConnectionError, (result.first() as LawsEvent.Failure).error)
-    //When
 
     //Then
     assertTrue(viewmodel.uiState.value.laws.isEmpty())

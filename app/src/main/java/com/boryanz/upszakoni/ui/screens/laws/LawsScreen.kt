@@ -13,7 +13,6 @@ import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,9 +21,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.boryanz.upszakoni.R
 import com.boryanz.upszakoni.data.NavigationDrawerDestination
+import com.boryanz.upszakoni.domain.BaseError
 import com.boryanz.upszakoni.ui.components.NavigationDrawer
 import com.boryanz.upszakoni.ui.components.Spacer
 import com.boryanz.upszakoni.ui.components.TitleItem
@@ -39,18 +41,18 @@ fun LawsScreen(
   onShareAppClicked: () -> Unit,
   onAppUpdateClicked: () -> Unit,
   onFeedbackFormClicked: () -> Unit,
-  onError: () -> Unit,
+  onError: (BaseError) -> Unit,
 ) {
   val viewModel = koinViewModel<LawsViewModel>()
   val featureFlagsState by viewModel.featureFlagsState.collectAsStateWithLifecycle()
 
-  LaunchedEffect(Unit) {
+  LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
     viewModel.onUiEvent(ScreenAction.GetLaws)
   }
 
   viewModel.event.collectEvents { event ->
     when (event) {
-      is LawsEvent.Failure -> onError()
+      is LawsEvent.Failure -> onError(event.error)
       is LawsEvent.PdfReady -> onPdfReady(event.pdfPath)
     }
   }

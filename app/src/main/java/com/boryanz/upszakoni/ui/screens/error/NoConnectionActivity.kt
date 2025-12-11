@@ -38,48 +38,53 @@ class NoConnectionActivity : ComponentActivity() {
 
     setContent {
       UpsTheme {
-        NoConnectionContent { finish() }
+        NoConnectionScreen { finish() }
       }
     }
   }
 }
 
 @Composable
-fun NoConnectionContent(onClick: () -> Unit) {
+fun NoConnectionScreen(onClick: () -> Unit) {
   UpsScaffold(
     topBarTitle = {},
     navigationIcon = {
       com.boryanz.upszakoni.ui.components.Icons.Back(onClick = onClick)
     }
   ) {
-    Column(
-      modifier = Modifier
-        .fillMaxSize()
-        .padding(12.dp),
-      verticalArrangement = Arrangement.Center,
-      horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-      Icon(
-        modifier = Modifier.size(32.dp),
-        imageVector = Icons.Default.SignalWifiConnectedNoInternet4,
-        contentDescription = ""
-      )
-      Spacer.Vertical(8.dp)
-      Text(
-        text = stringResource(R.string.no_internet_connection_title),
-        style = MaterialTheme.typography.titleMedium
-      )
-      Spacer.Vertical(4.dp)
-      Text(
-        text = stringResource(R.string.no_internet_connection_description),
-        textAlign = TextAlign.Center
-      )
-    }
+    NoConnectionContent()
+  }
+}
+
+@Composable
+fun NoConnectionContent() {
+  Column(
+    modifier = Modifier
+      .fillMaxSize()
+      .padding(12.dp),
+    verticalArrangement = Arrangement.Center,
+    horizontalAlignment = Alignment.CenterHorizontally
+  ) {
+    Icon(
+      modifier = Modifier.size(32.dp),
+      imageVector = Icons.Default.SignalWifiConnectedNoInternet4,
+      contentDescription = ""
+    )
+    Spacer.Vertical(8.dp)
+    Text(
+      text = stringResource(R.string.no_internet_connection_title),
+      style = MaterialTheme.typography.titleMedium
+    )
+    Spacer.Vertical(4.dp)
+    Text(
+      text = stringResource(R.string.no_internet_connection_description),
+      textAlign = TextAlign.Center
+    )
   }
 }
 
 @Preview
 @Composable
-private fun NoConnectionContentPreview() {
-  NoConnectionContent {}
+private fun NoConnectionScreenPreview() {
+  NoConnectionScreen {}
 }

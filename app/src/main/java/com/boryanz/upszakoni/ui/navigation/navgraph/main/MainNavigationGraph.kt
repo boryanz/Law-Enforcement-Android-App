@@ -47,7 +47,6 @@ import com.boryanz.upszakoni.ui.screens.ai.GenerateDocumentActivity
 import com.boryanz.upszakoni.ui.screens.bonussalary.BonusSalaryActivity
 import com.boryanz.upszakoni.ui.screens.common.CommonOffensesAndCrimes
 import com.boryanz.upszakoni.ui.screens.crimequestions.GoldenCrimeQuestionsScreen
-import com.boryanz.upszakoni.ui.screens.error.GeneralErrorActivity
 import com.boryanz.upszakoni.ui.screens.informations.InformationScreen
 import com.boryanz.upszakoni.ui.screens.laws.LawsScreen
 import com.boryanz.upszakoni.ui.screens.partners.PartnersScreen
@@ -155,7 +154,7 @@ fun NavigationGraph(
             url = context.getString(R.string.feedback_form_url)
           )
         },
-        onError = { context.startActivity(GeneralErrorActivity.createIntent(context)) },
+        onError = { it.handle(context) },
         onPdfReady = { openPdfLaw(lawName = it, context = context) }
       )
     }

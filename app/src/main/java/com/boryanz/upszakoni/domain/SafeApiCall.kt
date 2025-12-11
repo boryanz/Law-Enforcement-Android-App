@@ -1,17 +1,14 @@
 package com.boryanz.upszakoni.domain
 
-import com.boryanz.upszakoni.data.remote.interceptors.UpsErrorCodes
+import com.boryanz.upszakoni.data.remote.interceptors.UpsException
+import com.boryanz.upszakoni.utils.ConnectionUtils
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
-import retrofit2.HttpException
-import java.io.IOException
-import java.net.ConnectException
-import java.net.SocketTimeoutException
-import java.net.UnknownHostException
 
 suspend fun <S> safeApi(block: suspend () -> S): Result<S> = try {
+  if (!ConnectionUtils.hasConnection()) throw UpsException.NoNetworkException()
+
   withContext(Dispatchers.IO) {
     withTimeout(5000) {
       Result.Success(block())
@@ -22,20 +19,10 @@ suspend fun <S> safeApi(block: suspend () -> S): Result<S> = try {
   e.printStackTrace()
 
   when (e) {
-    is HttpException -> {
-      when (e.code()) {
-        UpsErrorCodes.NOT_FOUND -> Result.Error(error = UpsError.GeneralError)
-        UpsErrorCodes.INTERNAL_SERVER_ERROR -> Result.Error(error = UpsError.GeneralError)
-        else -> Result.Error(error = UpsError.GeneralError)
-      }
-    }
-
-    // Network-related exceptions
-    is UnknownHostException -> Result.Error(error = UpsError.NoInternetConnectionError)
-    is ConnectException -> Result.Error(error = UpsError.NoInternetConnectionError)
-    is SocketTimeoutException -> Result.Error(error = UpsError.NoInternetConnectionError)
-    is TimeoutCancellationException -> Result.Error(error = UpsError.NoInternetConnectionError)
-    is IOException -> Result.Error(error = UpsError.NoInternetConnectionError)
+    is UpsException.NoNetworkException -> Result.Error(UpsError.NoInternetConnectionError)
+    is UpsException.NotFoundException -> Result.Error(UpsError.GeneralError)
+    is UpsException.InternalServerErrorException -> Result.Error(UpsError.GeneralError)
+    is UpsException.GeneralException -> Result.Error(UpsError.GeneralError)
 
     // Fallback for any other exception
     else -> {
