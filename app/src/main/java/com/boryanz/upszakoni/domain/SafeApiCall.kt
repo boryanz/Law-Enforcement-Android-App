@@ -1,14 +1,11 @@
 package com.boryanz.upszakoni.domain
 
 import com.boryanz.upszakoni.data.remote.interceptors.UpsException
-import com.boryanz.upszakoni.utils.ConnectionUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
 
 suspend fun <S> safeApi(block: suspend () -> S): Result<S> = try {
-  if (!ConnectionUtils.hasConnection()) throw UpsException.NoNetworkException()
-
   withContext(Dispatchers.IO) {
     withTimeout(5000) {
       Result.Success(block())
