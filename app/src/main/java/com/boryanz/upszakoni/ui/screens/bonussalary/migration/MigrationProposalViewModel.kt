@@ -4,8 +4,7 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsManager
-import com.boryanz.upszakoni.domain.DaysInMonthDataGenerator
-import com.boryanz.upszakoni.domain.GenerateDaysInMonthsUseCase
+import com.boryanz.upszakoni.domain.bonussalary.DaysInMonthDataGenerator
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
 import com.boryanz.upszakoni.ui.navigation.destinations.BonusSalaryDashboardDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.ParametersDestination

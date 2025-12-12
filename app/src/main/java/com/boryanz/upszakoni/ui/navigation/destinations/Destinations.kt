@@ -27,9 +27,6 @@ data object PrivacyPolicyDestination
 data object PrivacyPolicyAcceptanceDestination
 
 @Serializable
-data object ArchivedLawsDestination
-
-@Serializable
 data object InformationScreenDestination
 
 @Serializable

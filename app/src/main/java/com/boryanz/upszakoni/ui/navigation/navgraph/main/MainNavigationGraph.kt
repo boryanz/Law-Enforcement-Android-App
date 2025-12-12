@@ -32,7 +32,6 @@ import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsManager
 import com.boryanz.upszakoni.data.offensesItems
 import com.boryanz.upszakoni.data.policeAuthorities
 import com.boryanz.upszakoni.ui.components.Icons
-import com.boryanz.upszakoni.ui.navigation.destinations.ArchivedLawsDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.CrimesDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.GoldenCrimeQuestionsDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.InformationScreenDestination
@@ -45,7 +44,6 @@ import com.boryanz.upszakoni.ui.navigation.destinations.PrivacyPolicyAcceptanceD
 import com.boryanz.upszakoni.ui.navigation.destinations.PrivacyPolicyDestination
 import com.boryanz.upszakoni.ui.owneditem.OwnedItemsActivity
 import com.boryanz.upszakoni.ui.screens.ai.GenerateDocumentActivity
-import com.boryanz.upszakoni.ui.screens.archivedlaws.ArchivedLawsScreen
 import com.boryanz.upszakoni.ui.screens.bonussalary.BonusSalaryActivity
 import com.boryanz.upszakoni.ui.screens.common.CommonOffensesAndCrimes
 import com.boryanz.upszakoni.ui.screens.crimequestions.GoldenCrimeQuestionsScreen
@@ -148,12 +146,6 @@ fun NavigationGraph(
         onItemClick = { navigationDrawerDestination ->
           navHostController.navigateToDrawerDestination(navigationDrawerDestination)
         },
-        onLawClick = { lawName ->
-          openPdfLaw(lawName, context)
-        },
-        onArchivedLawsClicked = {
-          navHostController.navigate(ArchivedLawsDestination)
-        },
         onShareAppClicked = onShareAppClicked,
         onAppUpdateClicked = onAppUpdateClicked,
         onFeedbackFormClicked = {
@@ -161,14 +153,9 @@ fun NavigationGraph(
             context = context,
             url = context.getString(R.string.feedback_form_url)
           )
-        }
-      )
-    }
-
-    composable<ArchivedLawsDestination> {
-      ArchivedLawsScreen(
-        onItemClick = { lawName -> openPdfLaw(lawName, context) },
-        onBackClicked = { navHostController.navigateUp() }
+        },
+        onError = { it.handle(context) },
+        onPdfReady = { openPdfLaw(lawName = it, context = context) }
       )
     }
 
