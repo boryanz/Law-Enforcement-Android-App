@@ -24,14 +24,6 @@ class FakePrefsLocalStorage(private val data: MutableMap<String, Any>) : SharedP
     return data["privacyPolicyAcceptance"] as? Boolean ?: false
   }
 
-  override fun archiveLaw(lawName: String) {
-    data["archive/$lawName"] = lawName
-  }
-
-  override fun removeArchivedLaw(lawName: String) {
-    data.remove("archive/$lawName")
-  }
-
   override fun contains(lawName: String): Boolean {
     return data.containsKey("archive/$lawName")
   }

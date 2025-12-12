@@ -36,10 +36,15 @@ junitJupiter = "5.8.1"
 kotlinxCoroutines = "1.10.1"
 mockk = "1.13.10"
 firebaseBom = "34.6.0"
+jacksonModuleKotlin = "2.18.3"
+converterJackson = "2.9.0"
+
 
 
 
 [libraries]
+retrofit-converter-jackson = { group = "com.squareup.retrofit2", name = "converter-jackson", version.ref = "converterJackson" }
+jackson-module-kotlin = { group = "com.fasterxml.jackson.module", name = "jackson-module-kotlin", version.ref = "jacksonModuleKotlin" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
 accompanist-permissions = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "accompanist" }
