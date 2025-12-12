@@ -8,6 +8,10 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.boryanz.upszakoni.ui.screens.ai.addprompt.AddPromptScreen
 import com.boryanz.upszakoni.ui.screens.ai.document.DocumentScreen
+import com.boryanz.upszakoni.ui.screens.ai.history.DocumentHistoryDestination
+import com.boryanz.upszakoni.ui.screens.ai.history.DocumentHistoryScreen
+import com.boryanz.upszakoni.ui.screens.ai.history.GeneratedDocumentOverviewScreen
+import com.boryanz.upszakoni.ui.screens.ai.history.GeneratedDocumentOverviewScreenDestination
 import com.boryanz.upszakoni.ui.screens.ai.information.PromptInformationScreen
 import kotlinx.serialization.Serializable
 
@@ -18,35 +22,54 @@ data object PromptInformationDestination
 data object AddPromptDestination
 
 @Serializable
-data class DocumentDestination(val fullPrompt: String, val examplePrompt: String)
+data class DocumentDestination(val fullPrompt: String, val examplePrompt: String, val type: String)
 
 @Composable
 fun GenerateDocumentNavigationGraph(
   navHostController: NavHostController = rememberNavController(),
-  onBackClick: () -> Unit
+  onBackClicked: () -> Unit
 ) {
 
   NavHost(
     navController = navHostController,
-    startDestination = PromptInformationDestination,
+    startDestination = DocumentHistoryDestination,
   ) {
-    composable<PromptInformationDestination> {
-      PromptInformationScreen(
-        onContinueClicked = {
-          navHostController.navigate(AddPromptDestination)
+    composable<DocumentHistoryDestination> {
+      DocumentHistoryScreen(
+        onBackClicked = onBackClicked ,
+        onAddDocumentClicked = { navHostController.navigate(AddPromptDestination) },
+        onDocumentClicked = {
+          navHostController.navigate(
+            GeneratedDocumentOverviewScreenDestination(
+              it
+            )
+          )
         },
-        onBackClicked = onBackClick
+        onMoreInformationClicked = { navHostController.navigate(PromptInformationDestination) }
+      )
+    }
+
+    composable<PromptInformationDestination> {
+      PromptInformationScreen(onBackClicked = navHostController::navigateUp)
+    }
+
+    composable<GeneratedDocumentOverviewScreenDestination> {
+      val route = it.toRoute<GeneratedDocumentOverviewScreenDestination>()
+      GeneratedDocumentOverviewScreen(
+        content = route.content,
+        onBackClicked = navHostController::navigateUp,
       )
     }
 
     composable<AddPromptDestination> {
       AddPromptScreen(
         onBackClicked = { navHostController.navigateUp() },
-        onGenerateDocumentClicked = { fullPrompt, examplePrompt ->
+        onGenerateDocumentClicked = { fullPrompt, examplePrompt, type ->
           navHostController.navigate(
             DocumentDestination(
               fullPrompt = fullPrompt,
-              examplePrompt = examplePrompt
+              examplePrompt = examplePrompt,
+              type = type
             )
           )
         }
@@ -58,6 +81,7 @@ fun GenerateDocumentNavigationGraph(
       DocumentScreen(
         fullPrompt = route.fullPrompt,
         examplePrompt = route.examplePrompt,
+        type = route.type,
         onBackClicked = { navHostController.navigateUp() }
       )
     }

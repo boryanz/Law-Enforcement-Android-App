@@ -60,10 +60,12 @@ object Icons {
   @Composable
   fun Back(
     tint: Color = Base100,
+    contentDescription: String = "back_button",
     onClick: () -> Unit,
   ) {
     Base(
       imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+      contentDescription = contentDescription,
       tint = tint,
       onClick = onClick
     )
@@ -83,10 +85,12 @@ object Icons {
 
   @Composable
   fun Delete(
+    modifier: Modifier = Modifier,
     tint: Color = Base100,
     onClick: () -> Unit
   ) {
     Base(
+      modifier = modifier,
       imageVector = Icons.Default.DeleteOutline,
       tint = tint,
       onClick = onClick
@@ -95,10 +99,12 @@ object Icons {
 
   @Composable
   fun Undo(
+    modifier: Modifier = Modifier,
     tint: Color = Base100,
     onClick: () -> Unit
   ) {
     Base(
+      modifier = modifier,
       imageVector = Icons.AutoMirrored.Filled.Undo,
       tint = tint,
       onClick = onClick
@@ -109,6 +115,7 @@ object Icons {
   fun Base(
     modifier: Modifier = Modifier,
     imageVector: ImageVector,
+    contentDescription: String = "base icon",
     tint: Color = LocalContentColor.current,
     onClick: () -> Unit,
     isEnabled: Boolean = true,
@@ -121,9 +128,8 @@ object Icons {
         Icon(
           imageVector = imageVector,
           tint = tint,
-          contentDescription = "base icon",
-
-          )
+          contentDescription = contentDescription,
+        )
       })
   }
 }

@@ -49,7 +49,7 @@ fun SegmentedControl(
         label = {
           Text(
             text = option.title,
-            style = MaterialTheme.typography.labelSmall,
+            style = MaterialTheme.typography.labelLarge,
             overflow = TextOverflow.Ellipsis,
             maxLines = 1
           )

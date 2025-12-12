@@ -16,12 +16,14 @@ import kotlinx.coroutines.launch
 sealed interface AddPromptEvent {
   data class GenerateDocument(
     val examplePrompt: String,
-    val fullPrompt: String
+    val fullPrompt: String,
+    val type: String,
   ) : AddPromptEvent
 }
 
 data class AddPromptUiState(
   val prompt: String = "",
+  val type: String = PromptType.COMPLAINT.title,
   val examplePrompt: String = PromptType.COMPLAINT.prompt,
   val hasPromptError: Boolean = false,
 )
@@ -65,26 +67,19 @@ class AddPromptViewModel() : ViewModel() {
         _event.emit(
           AddPromptEvent.GenerateDocument(
             fullPrompt = uiState.value.prompt,
-            examplePrompt = uiState.value.examplePrompt
+            examplePrompt = uiState.value.examplePrompt,
+            type = uiState.value.type
           )
         )
 
       }
 
-      is OnPromptTypeChanged -> _uiState.update { it.copy(examplePrompt = event.prompt) }
+      is OnPromptTypeChanged -> _uiState.update {
+        it.copy(
+          examplePrompt = event.prompt,
+          type = event.type
+        )
+      }
     }
   }
-
-//  private fun initializeAiGenerationCounter() {
-//    val generationsUsed = aiGenerationChecker.generationsUsed()
-//    println("#### How much generations used: $generationsUsed")
-//    val isLimitReached = generationsUsed >= MAX_AI_GENERATIONS_PER_DAY
-//    println("#### Is limit reached: $isLimitReached")
-//    _uiState.update {
-//      it.copy(
-//        aiGenerationsUsed = generationsUsed,
-//        isAiLimitReached = isLimitReached
-//      )
-//    }
-//  }
 }

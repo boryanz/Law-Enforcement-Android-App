@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import com.boryanz.upszakoni.analytics.AnalyticsLogger
 import com.boryanz.upszakoni.analytics.FirebaseAnalyticsManager
 import com.boryanz.upszakoni.data.local.database.BonusSalaryDao
+import com.boryanz.upszakoni.data.local.database.DocumentsHistoryDao
 import com.boryanz.upszakoni.data.local.database.OwnedItemsDao
 import com.boryanz.upszakoni.data.local.database.UpsDatabase
 import com.boryanz.upszakoni.data.local.sharedprefs.PrefsLocalStorage
@@ -32,6 +33,7 @@ import com.boryanz.upszakoni.ui.owneditem.addowneditem.OwnedItemViewModel
 import com.boryanz.upszakoni.ui.owneditem.overview.OwnedItemsListViewModel
 import com.boryanz.upszakoni.ui.screens.ai.addprompt.AddPromptViewModel
 import com.boryanz.upszakoni.ui.screens.ai.document.DocumentScreenViewModel
+import com.boryanz.upszakoni.ui.screens.ai.history.DocumentHistoryViewModel
 import com.boryanz.upszakoni.ui.screens.archivedlaws.ArchivedLawsViewModel
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardViewModel
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.monthly.OvertimeMonthlyCalendarViewModel
@@ -57,6 +59,8 @@ val appModule = module {
   single<SharedPrefsManager> { PrefsLocalStorage(get()) }
   single<UpsDatabase> { UpsDatabase.getInstance(androidContext()) }
   single<BonusSalaryDao> { get<UpsDatabase>().bonusSalaryDao() }
+  single<DocumentsHistoryDao> { get<UpsDatabase>().documentsDao() }
+  single { get<DocumentsHistoryDao>() as com.boryanz.upszakoni.data.local.database.BaseDocumentsDao<com.boryanz.upszakoni.ui.screens.ai.history.GeneratedDocument> }
   single<OwnedItemsDao> { get<UpsDatabase>().ownedItemsDao() }
   factory<DaysInMonthDataGenerator> { GenerateDaysInMonthsUseCase() }
   single<BonusSalaryRepository> { BonusSalaryRepositoryImpl(get()) }
@@ -72,7 +76,7 @@ val appModule = module {
   factory<GetOwnedItemsUseCase> { GetOwnedItemsUseCaseImpl(get()) }
   factory<DeleteOwnedItemUseCase> { DeleteOwnedItemUseCaseImpl(get()) }
   factory<AddOwnedItemUseCase> { AddOwnedItemUseCaseImpl(get()) }
-  viewModel { DocumentScreenViewModel(get()) }
+  viewModel { DocumentScreenViewModel(get(), get()) }
   viewModel { ArchivedLawsViewModel(get(), get(), get<AnalyticsLogger>()) }
   viewModel { BonusSalaryParametersViewModel(get()) }
   viewModel { MigrationProposalViewModel(get(), get(), get()) }
@@ -86,4 +90,5 @@ val appModule = module {
   viewModel { OwnedItemViewModel(get()) }
   viewModel { OwnedItemsListViewModel(get(), get()) }
   viewModel { AddPromptViewModel() }
+  viewModel { DocumentHistoryViewModel(get()) }
 }

@@ -25,7 +25,6 @@ import com.boryanz.upszakoni.ui.components.UpsScaffold
 
 @Composable
 fun PromptInformationScreen(
-  onContinueClicked: () -> Unit,
   onBackClicked: () -> Unit,
 ) {
   UpsScaffold(
@@ -106,7 +105,7 @@ fun PromptInformationScreen(
           .fillMaxWidth()
           .padding(vertical = 16.dp),
         title = stringResource(R.string.prompt_information_continue_button),
-        onClick = onContinueClicked
+        onClick = onBackClicked
       )
     }
   }
@@ -116,7 +115,6 @@ fun PromptInformationScreen(
 @Composable
 fun PromptInformationScreenPreview() {
   PromptInformationScreen(
-    onContinueClicked = {},
     onBackClicked = {}
   )
 }
