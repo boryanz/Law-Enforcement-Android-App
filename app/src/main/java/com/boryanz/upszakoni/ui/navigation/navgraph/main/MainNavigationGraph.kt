@@ -8,6 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.boryanz.upszakoni.R
 import com.boryanz.upszakoni.analytics.AnalyticsLogger
 import com.boryanz.upszakoni.customtab.CustomTabLauncher
@@ -26,17 +27,16 @@ import com.boryanz.upszakoni.data.NavigationDrawerDestination.phone_numbers
 import com.boryanz.upszakoni.data.NavigationDrawerDestination.privacy_policy
 import com.boryanz.upszakoni.data.NavigationDrawerDestination.wanted_criminals
 import com.boryanz.upszakoni.data.NavigationDrawerDestination.writing_guide
-import com.boryanz.upszakoni.data.crimesItems
 import com.boryanz.upszakoni.data.goldenQuestions
 import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsManager
-import com.boryanz.upszakoni.data.offensesItems
 import com.boryanz.upszakoni.data.policeAuthorities
 import com.boryanz.upszakoni.ui.components.Icons
 import com.boryanz.upszakoni.ui.navigation.destinations.CrimesDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.GoldenCrimeQuestionsDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.InformationScreenDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.LawsDestination
-import com.boryanz.upszakoni.ui.navigation.destinations.OffensesDestination
+import com.boryanz.upszakoni.ui.navigation.destinations.OffensesDetailsDestination
+import com.boryanz.upszakoni.ui.navigation.destinations.OffensesOverviewDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.PartnersDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.PhoneNumbersDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.PoliceAuthoritiesDestination
@@ -45,7 +45,8 @@ import com.boryanz.upszakoni.ui.navigation.destinations.PrivacyPolicyDestination
 import com.boryanz.upszakoni.ui.owneditem.OwnedItemsActivity
 import com.boryanz.upszakoni.ui.screens.ai.GenerateDocumentActivity
 import com.boryanz.upszakoni.ui.screens.bonussalary.BonusSalaryActivity
-import com.boryanz.upszakoni.ui.screens.common.CommonOffensesAndCrimes
+import com.boryanz.upszakoni.ui.screens.common.OffensesDetailsScreen
+import com.boryanz.upszakoni.ui.screens.common.OffensesOverviewScreen
 import com.boryanz.upszakoni.ui.screens.crimequestions.GoldenCrimeQuestionsScreen
 import com.boryanz.upszakoni.ui.screens.informations.InformationScreen
 import com.boryanz.upszakoni.ui.screens.laws.LawsScreen
@@ -86,19 +87,29 @@ fun NavigationGraph(
       )
     }
 
-    composable<OffensesDestination> {
-      CommonOffensesAndCrimes(
-        title = stringResource(R.string.offenses_title),
-        commonCrimesItems = offensesItems,
+    composable<OffensesOverviewDestination> {
+      OffensesOverviewScreen(
+        onItemClicked = { law ->
+          navHostController.navigate(
+            OffensesDetailsDestination(
+              lawId = law.lawId,
+              title = law.title
+            )
+          )
+        },
         onBackClicked = { navHostController.navigateUp() }
       )
     }
 
-    composable<CrimesDestination> {
-      CommonOffensesAndCrimes(
-        title = stringResource(R.string.crimes_title),
-        commonCrimesItems = crimesItems,
-        onBackClicked = { navHostController.navigateUp() }
+    composable<OffensesDetailsDestination> {
+      val args = it.toRoute<OffensesDetailsDestination>()
+      val id = args.lawId
+      val title = args.title
+      OffensesDetailsScreen(
+        lawId = id,
+        title = title,
+        onBackClicked = { navHostController.navigateUp() },
+        onFailure = { baseError -> baseError.handle(context) }
       )
     }
 
@@ -180,7 +191,7 @@ private fun openPdfLaw(
 fun NavHostController.navigateToDrawerDestination(navigationDrawerDestination: NavigationDrawerDestination) {
   when (navigationDrawerDestination) {
     laws -> navigate(LawsDestination)
-    offenses -> navigate(OffensesDestination)
+    offenses -> navigate(OffensesOverviewDestination)
     crimes -> navigate(CrimesDestination)
     authorities -> navigate(PoliceAuthoritiesDestination)
     writing_guide -> navigate(GoldenCrimeQuestionsDestination)

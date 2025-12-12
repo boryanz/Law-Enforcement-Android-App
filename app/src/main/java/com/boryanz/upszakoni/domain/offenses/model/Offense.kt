@@ -7,5 +7,5 @@ data class Offense(
   val keywords: List<String>
 ) {
 
-  val title = "$lawArticle - $fine"
+  val title = "$lawArticle ${"-".takeIf { fine.isNotEmpty() }.orEmpty()} $fine"
 }
