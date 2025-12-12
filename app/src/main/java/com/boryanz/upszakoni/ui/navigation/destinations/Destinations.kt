@@ -9,7 +9,10 @@ data object LawsDestination
 data object CrimesDestination
 
 @Serializable
-data object OffensesDestination
+data object OffensesOverviewDestination
+
+@Serializable
+data class OffensesDetailsDestination(val lawId: String, val title: String)
 
 @Serializable
 data object PoliceAuthoritiesDestination
