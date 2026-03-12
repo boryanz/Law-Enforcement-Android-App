@@ -95,7 +95,6 @@ fun LawsScreen(
           uiState.laws.filter { it.title.contains(searchQuery, ignoreCase = true) },
           key = { it.title }) {
           TitleItem(
-            isEnabled = true,
             title = it.title,
             onClick = {
               viewModel.onUiEvent(

@@ -9,7 +9,7 @@ data class OffenseResponse(
   @param:JsonProperty("description")
   val description: String,
   @param:JsonProperty("fine")
-  val fine: String,
+  val fine: String?,
   @param:JsonProperty("keywords")
   val keywords: List<String>
 )

@@ -165,21 +165,6 @@ fun NavigationDrawer(
               selected = false,
               onClick = { onItemClicked(NavigationDrawerDestination.offenses) }
             )
-            HorizontalDivider()
-            NavigationDrawerItem(
-              icon = {
-                Icon(
-                  modifier = Modifier
-                    .height(20.dp)
-                    .width(20.dp),
-                  painter = painterResource(R.drawable.kriminal),
-                  contentDescription = null
-                )
-              },
-              label = { Text(text = stringResource(R.string.common_crimes_title)) },
-              selected = false,
-              onClick = { onItemClicked(NavigationDrawerDestination.crimes) }
-            )
             Spacer.Vertical(14.dp)
             NavigationDrawerItem(
               icon = {

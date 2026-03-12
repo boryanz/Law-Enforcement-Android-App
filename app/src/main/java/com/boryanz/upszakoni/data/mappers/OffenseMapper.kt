@@ -6,6 +6,6 @@ import com.boryanz.upszakoni.domain.offenses.model.Offense
 fun OffenseResponse.toDomain() = Offense(
   lawArticle = this.article,
   description = this.description,
-  fine = this.fine,
+  fine = this.fine.orEmpty(),
   keywords = this.keywords
 )

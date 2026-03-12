@@ -143,4 +143,10 @@
     <string name="no_internet_connection_description">Проверете ја вашата интернет врска и обидете се повторно</string>
     <string name="general_error_description">Во моментов се работи на отстранување на грешката. Благодариме на трпението.</string>
     <string name="general_error_title">Техничка грешка</string>
+    <string name="ecology_offense_law">Закон за јавна чистота</string>
+    <string name="traffic_offense_law">ЗБСП</string>
+    <string name="vehicle_offense_law">Закон за возила</string>
+    <string name="public_peace_offense_law">ЗППЈРМ</string>
+    <string name="weapons_offense_law">Закон за оружје</string>
+    <string name="others_offense_law">Останати</string>
 </resources>

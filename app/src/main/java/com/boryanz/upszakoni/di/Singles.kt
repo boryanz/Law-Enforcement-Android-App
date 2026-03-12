@@ -15,7 +15,7 @@ import com.boryanz.upszakoni.data.remote.service.LawApiService
 import com.boryanz.upszakoni.data.remote.service.OffensesApiService
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepositoryImpl
-import com.boryanz.upszakoni.domain.laws.LawsProvider
+import com.boryanz.upszakoni.domain.laws.LawsRepo
 import com.boryanz.upszakoni.domain.laws.LawsRepository
 import com.boryanz.upszakoni.domain.laws.LocalPdfCache
 import com.boryanz.upszakoni.domain.laws.PdfCache
@@ -66,6 +66,6 @@ fun Module.singles() {
   single<FirebaseAnalytics> { FirebaseAnalytics.getInstance(androidContext()) }
   single<AnalyticsLogger> { FirebaseAnalyticsManager(get()) }
   single<OffensesProvider> { OffensesRepository(get()) }
-  single<LawsProvider> { LawsRepository(get(), get()) }
+  single<LawsRepo> { LawsRepository(get(), get()) }
   single<PdfCache> { LocalPdfCache(androidContext()) }
 }

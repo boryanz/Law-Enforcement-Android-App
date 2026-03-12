@@ -13,6 +13,7 @@ import com.boryanz.upszakoni.ui.screens.bonussalary.migration.MigrationProposalV
 import com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput.OverTimeInputViewModel
 import com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput.daily.NewOverTimeInputViewModel
 import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BonusSalaryParametersViewModel
+import com.boryanz.upszakoni.ui.screens.common.OffenseViewModel
 import com.boryanz.upszakoni.ui.screens.informations.InformationScreenViewModel
 import com.boryanz.upszakoni.ui.screens.laws.LawsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -33,4 +34,5 @@ fun Module.viewModels() {
   viewModel { OwnedItemsListViewModel(get(), get()) }
   viewModel { AddPromptViewModel() }
   viewModel { DocumentHistoryViewModel(get()) }
+  viewModel { OffenseViewModel(get()) }
 }

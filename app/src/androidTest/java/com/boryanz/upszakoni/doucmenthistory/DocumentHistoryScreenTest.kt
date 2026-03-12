@@ -38,6 +38,7 @@ class DocumentHistoryScreenTest {
       DocumentHistoryContent(
         uiState = uiState,
         onBackClicked = {},
+        onMoreInformationClicked = {},
         onAddDocumentClicked = {},
         onDocumentClicked = {},
         onUserEvent = { event ->

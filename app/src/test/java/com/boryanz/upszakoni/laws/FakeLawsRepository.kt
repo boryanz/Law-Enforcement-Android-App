@@ -2,10 +2,10 @@ package com.boryanz.upszakoni.laws
 
 import com.boryanz.upszakoni.domain.Result
 import com.boryanz.upszakoni.domain.UpsError
-import com.boryanz.upszakoni.domain.laws.LawsProvider
+import com.boryanz.upszakoni.domain.laws.LawsRepo
 import com.boryanz.upszakoni.domain.laws.model.Law
 
-class FakeLawsRepository(private val laws: List<Law> = emptyList()) : LawsProvider {
+class FakeLawsRepository(private val laws: List<Law> = emptyList()) : LawsRepo {
 
   var failWithNoConnectionError: Boolean = false
 
