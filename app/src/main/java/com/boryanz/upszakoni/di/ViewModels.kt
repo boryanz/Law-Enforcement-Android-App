@@ -2,6 +2,7 @@ package com.boryanz.upszakoni.di
 
 import com.boryanz.upszakoni.analytics.AnalyticsLogger
 import com.boryanz.upszakoni.ui.navigation.navgraph.overtimetracking.OvertimeTrackNavigationGraphViewModel
+import com.boryanz.upszakoni.ui.screens.home.HomeViewModel
 import com.boryanz.upszakoni.ui.owneditem.addowneditem.OwnedItemViewModel
 import com.boryanz.upszakoni.ui.owneditem.overview.OwnedItemsListViewModel
 import com.boryanz.upszakoni.ui.screens.ai.addprompt.AddPromptViewModel
@@ -35,4 +36,5 @@ fun Module.viewModels() {
   viewModel { AddPromptViewModel() }
   viewModel { DocumentHistoryViewModel(get()) }
   viewModel { OffenseViewModel(get()) }
+  viewModel { HomeViewModel(get(), get(), get(), get()) }
 }

@@ -33,18 +33,6 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.screens.bonussalary.BonusSalaryActivity"
-            android:exported="false"
-            android:theme="@style/Theme.KataSampleApp" />
-        <activity
-            android:name=".ui.owneditem.OwnedItemsActivity"
-            android:exported="false"
-            android:theme="@style/Theme.KataSampleApp" />
-        <activity
-            android:name=".ui.screens.ai.GenerateDocumentActivity"
-            android:exported="false"
-            android:theme="@style/Theme.KataSampleApp" />
-        <activity
             android:name=".ui.screens.error.GeneralErrorActivity"
             android:exported="false"
             android:theme="@style/Theme.KataSampleApp" />

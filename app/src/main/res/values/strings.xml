@@ -143,6 +143,20 @@
     <string name="no_internet_connection_description">Проверете ја вашата интернет врска и обидете се повторно</string>
     <string name="general_error_description">Во моментов се работи на отстранување на грешката. Благодариме на трпението.</string>
     <string name="general_error_title">Техничка грешка</string>
+    <!-- Bottom Navigation & New Screens -->
+    <string name="home_tab_title">Дома</string>
+    <string name="work_tab_title">Работа</string>
+    <string name="more_tab_title">Повеќе</string>
+    <string name="overtime_hours_subtitle">Прати ги твоите прекувремени часови</string>
+    <string name="owned_items_subtitle">Управувај со задолжената опрема</string>
+    <string name="ai_generator_subtitle">Генерирај службена белешка со AI</string>
+    <string name="quick_actions_title">Брзи акции</string>
+    <string name="stats_title">Статистика</string>
+    <string name="home_greeting_default">Добредојде!</string>
+    <string name="phone_numbers_more_title">Броеви на ПС</string>
+    <string name="external_links_title">Надворешни линкови</string>
+    <string name="share_app_title">Сподели апликација</string>
+
     <string name="ecology_offense_law">Закон за јавна чистота</string>
     <string name="traffic_offense_law">ЗБСП</string>
     <string name="vehicle_offense_law">Закон за возила</string>

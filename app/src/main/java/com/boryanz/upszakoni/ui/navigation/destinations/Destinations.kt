@@ -3,6 +3,31 @@ package com.boryanz.upszakoni.ui.navigation.destinations
 import kotlinx.serialization.Serializable
 
 @Serializable
+data object HomeDestination
+
+@Serializable
+data object WorkHomeDestination
+
+@Serializable
+data object MoreDestination
+
+// Nav graph routes
+@Serializable
+data object HomeNavGraph
+
+@Serializable
+data object LawsNavGraph
+
+@Serializable
+data object OffensesNavGraph
+
+@Serializable
+data object WorkNavGraph
+
+@Serializable
+data object MoreNavGraph
+
+@Serializable
 data object LawsDestination
 
 @Serializable
