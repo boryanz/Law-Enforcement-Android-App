@@ -8,7 +8,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.boryanz.upszakoni.R
-import com.boryanz.upszakoni.analytics.AnalyticsLogger
 import com.boryanz.upszakoni.customtab.CustomTabLauncher
 import com.boryanz.upszakoni.data.NavigationDrawerDestination
 import com.boryanz.upszakoni.data.NavigationDrawerDestination.bonus_salary_feature
@@ -47,7 +46,6 @@ fun NavigationGraph(
 ) {
   val context = LocalContext.current
   val storage: SharedPrefsManager = koinInject()
-  val analyticsLogger: AnalyticsLogger = koinInject()
 
   NavHost(
     navController = navHostController,
