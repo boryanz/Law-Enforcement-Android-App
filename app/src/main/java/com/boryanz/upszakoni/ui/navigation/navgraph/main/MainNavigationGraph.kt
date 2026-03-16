@@ -121,6 +121,7 @@ fun NavHostController.navigateToDrawerDestination(navigationDrawerDestination: N
     bonus_salary_feature -> context.startActivity(
       BonusSalaryActivity.createIntent(context)
     )
+
     owned_items -> context.startActivity(OwnedItemsActivity.createIntent(context))
     information -> navigate(InformationScreenDestination)
     generate_document -> context.startActivity(GenerateDocumentActivity.createIntent(context))
