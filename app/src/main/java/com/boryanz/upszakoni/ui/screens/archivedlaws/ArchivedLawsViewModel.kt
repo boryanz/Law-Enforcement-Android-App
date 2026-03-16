@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 class ArchivedLawsViewModel(
   private val getLawsUseCase: LawsUseCase,
   private val localStorage: SharedPrefsManager,
-  private val analyticsLogger: AnalyticsLogger,
+  analyticsLogger: AnalyticsLogger,
 ) : ViewModel() {
 
   private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())

@@ -6,21 +6,6 @@ import kotlinx.serialization.Serializable
 data object LawsDestination
 
 @Serializable
-data object CrimesDestination
-
-@Serializable
-data object OffensesDestination
-
-@Serializable
-data object PoliceAuthoritiesDestination
-
-@Serializable
-data object GoldenCrimeQuestionsDestination
-
-@Serializable
-data object PhoneNumbersDestination
-
-@Serializable
 data object PrivacyPolicyDestination
 
 @Serializable
@@ -31,9 +16,6 @@ data object ArchivedLawsDestination
 
 @Serializable
 data object InformationScreenDestination
-
-@Serializable
-data object PartnersDestination
 
 @Serializable
 data object OwnedItemsListScreenDestination
