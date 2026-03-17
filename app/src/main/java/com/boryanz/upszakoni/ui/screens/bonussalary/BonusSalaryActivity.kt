@@ -38,7 +38,8 @@ class BonusSalaryActivity : ComponentActivity() {
               BonusSalaryNavigationGraph(
                 shouldBackportOvertimeTracking = true,
                 onMigrationAccepted = { restartActivity() },
-                onBackNavigated = { finish() })
+                onBackNavigated = { finish() },
+              )
             }
 
             hasUserMigratedToNewOvertimeTracking() -> {

@@ -14,9 +14,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Inventory
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Timelapse
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.SystemUpdate
 import androidx.compose.material3.DrawerValue
@@ -29,6 +27,7 @@ import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,32 +35,31 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.boryanz.upszakoni.R
 import com.boryanz.upszakoni.data.NavigationDrawerDestination
-import com.boryanz.upszakoni.domain.remoteconfig.RemoteConfig
-import com.boryanz.upszakoni.ui.components.Icons.Archive
-import com.boryanz.upszakoni.ui.components.Icons.Share
+import com.boryanz.upszakoni.domain.remoteconfig.FirebaseRemoteConfig
 import com.boryanz.upszakoni.ui.theme.Base100
 import kotlinx.coroutines.launch
+import org.koin.compose.koinInject
 
 @Composable
 fun NavigationDrawer(
   screenTitle: String,
   onItemClicked: (NavigationDrawerDestination) -> Unit,
-  onArchivedLawsClicked: () -> Unit,
-  onShareAppClicked: () -> Unit,
-  onAppUpdateClicked: () -> Unit,
-  onFeedbackFormClicked: () -> Unit,
-  featureFlags: RemoteConfig? = null,
+  trailingContent: @Composable () -> Unit = {},
+  floatingActionButton: (@Composable () -> Unit)? = null,
   content: @Composable (PaddingValues) -> Unit,
 ) {
+  val appCallbacks = LocalAppCallbacks.current
+  val remoteConfig = koinInject<FirebaseRemoteConfig>()
+  val featureFlags by remoteConfig.remoteConfigState.collectAsStateWithLifecycle()
+
   val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
   val scope = rememberCoroutineScope()
 
   BackHandler(enabled = drawerState.isOpen, onBack = {
-    scope.launch {
-      drawerState.close()
-    }
+    scope.launch { drawerState.close() }
   })
 
   ModalNavigationDrawer(
@@ -95,24 +93,20 @@ fun NavigationDrawer(
                   modifier = Modifier.padding(horizontal = 8.dp),
                   fontWeight = FontWeight.Bold
                 )
-                featureFlags?.greetingMessage?.let { message ->
-                  if (message.isNotBlank()) {
-                    Text(
-                      text = message,
-                      modifier = Modifier.padding(horizontal = 8.dp),
-                    )
-                  }
+                if (featureFlags.greetingMessage.isNotBlank()) {
+                  Text(
+                    text = featureFlags.greetingMessage,
+                    modifier = Modifier.padding(horizontal = 8.dp),
+                  )
                 }
               }
             }
             Spacer.Vertical(12.dp)
-            if (featureFlags?.isAiGeneratorAvailable == true) {
+            if (featureFlags.isAiGeneratorAvailable) {
               NavigationDrawerItem(
                 icon = {
                   Icon(
-                    modifier = Modifier
-                      .height(20.dp)
-                      .width(20.dp),
+                    modifier = Modifier.height(20.dp).width(20.dp),
                     imageVector = Icons.Filled.AutoAwesome,
                     contentDescription = null
                   )
@@ -123,44 +117,13 @@ fun NavigationDrawer(
               )
               HorizontalDivider()
             }
-            NavigationDrawerItem(
-              icon = {
-                Icon(
-                  modifier = Modifier
-                    .height(20.dp)
-                    .width(20.dp),
-                  imageVector = Icons.Filled.Timelapse,
-                  contentDescription = null
-                )
-              },
-              label = { Text(text = stringResource(R.string.overtime_hours_title)) },
-              selected = false,
-              onClick = { onItemClicked(NavigationDrawerDestination.bonus_salary_feature) }
-            )
-            HorizontalDivider()
-            NavigationDrawerItem(
-              icon = {
-                Icon(
-                  modifier = Modifier
-                    .height(20.dp)
-                    .width(20.dp),
-                  imageVector = Icons.Filled.Inventory,
-                  contentDescription = null
-                )
-              },
-              label = { Text(text = stringResource(R.string.owned_items_title)) },
-              selected = false,
-              onClick = { onItemClicked(NavigationDrawerDestination.owned_items) }
-            )
             Spacer.Vertical(14.dp)
-            if (!featureFlags?.usefulInformations.isNullOrEmpty()) {
+            if (featureFlags.usefulInformations.isNotEmpty()) {
               HorizontalDivider()
               NavigationDrawerItem(
                 icon = {
                   Icon(
-                    modifier = Modifier
-                      .height(20.dp)
-                      .width(20.dp),
+                    modifier = Modifier.height(20.dp).width(20.dp),
                     imageVector = Icons.Outlined.Info,
                     contentDescription = null
                   )
@@ -174,9 +137,7 @@ fun NavigationDrawer(
             NavigationDrawerItem(
               icon = {
                 Icon(
-                  modifier = Modifier
-                    .height(20.dp)
-                    .width(20.dp),
+                  modifier = Modifier.height(20.dp).width(20.dp),
                   painter = painterResource(R.drawable.vesti),
                   contentDescription = null
                 )
@@ -189,32 +150,28 @@ fun NavigationDrawer(
             NavigationDrawerItem(
               icon = {
                 Icon(
-                  modifier = Modifier
-                    .height(20.dp)
-                    .width(20.dp),
+                  modifier = Modifier.height(20.dp).width(20.dp),
                   imageVector = Icons.Default.Edit,
                   contentDescription = null
                 )
               },
               label = { Text(text = stringResource(R.string.report_bug_title)) },
               selected = false,
-              onClick = onFeedbackFormClicked
+              onClick = appCallbacks.onFeedbackFormClicked
             )
-            if (featureFlags?.isAppUpdateAvailable == true) {
+            if (featureFlags.isAppUpdateAvailable) {
               HorizontalDivider()
               NavigationDrawerItem(
                 icon = {
                   Icon(
-                    modifier = Modifier
-                      .height(20.dp)
-                      .width(20.dp),
+                    modifier = Modifier.height(20.dp).width(20.dp),
                     imageVector = Icons.Outlined.SystemUpdate,
                     contentDescription = null
                   )
                 },
                 label = { Text(text = stringResource(R.string.update_available_title)) },
                 selected = false,
-                onClick = onAppUpdateClicked
+                onClick = appCallbacks.onAppUpdateClicked
               )
             }
           }
@@ -225,14 +182,11 @@ fun NavigationDrawer(
   ) {
     UpsScaffold(
       topBarTitle = { Text(screenTitle) },
+      floatingActionButton = floatingActionButton,
       navigationIcon = {
         IconButton(onClick = {
           scope.launch {
-            if (drawerState.isClosed) {
-              drawerState.open()
-            } else {
-              drawerState.close()
-            }
+            if (drawerState.isClosed) drawerState.open() else drawerState.close()
           }
         }) {
           Icon(
@@ -242,11 +196,7 @@ fun NavigationDrawer(
           )
         }
       },
-      trailingIcon = {
-        Share(onClick = onShareAppClicked)
-        Archive(onClick = onArchivedLawsClicked)
-      }
-
+      trailingIcon = { trailingContent() },
     ) { paddingValues ->
       content(paddingValues)
     }

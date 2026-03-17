@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.boryanz.upszakoni.R
 import com.boryanz.upszakoni.data.NavigationDrawerDestination
+import com.boryanz.upszakoni.ui.components.LocalAppCallbacks
 import com.boryanz.upszakoni.ui.components.NavigationDrawer
 import com.boryanz.upszakoni.ui.components.Spacer
 import com.boryanz.upszakoni.ui.components.SwipeToDismiss
@@ -42,12 +43,8 @@ fun LawsScreen(
   onLawClick: (String) -> Unit,
   onItemClick: (NavigationDrawerDestination) -> Unit,
   onArchivedLawsClicked: () -> Unit,
-  onShareAppClicked: () -> Unit,
-  onAppUpdateClicked: () -> Unit,
-  onFeedbackFormClicked: () -> Unit
 ) {
   val viewModel = koinViewModel<LawsViewModel>()
-  val featureFlagsState by viewModel.featureFlagsState.collectAsStateWithLifecycle()
   val context = LocalContext.current
 
   LaunchedEffect(Unit) {
@@ -56,11 +53,11 @@ fun LawsScreen(
   NavigationDrawer(
     screenTitle = stringResource(R.string.laws_screen_title),
     onItemClicked = { onItemClick(it) },
-    onArchivedLawsClicked = onArchivedLawsClicked,
-    featureFlags = featureFlagsState,
-    onShareAppClicked = onShareAppClicked,
-    onAppUpdateClicked = onAppUpdateClicked,
-    onFeedbackFormClicked = onFeedbackFormClicked
+    trailingContent = {
+      val appCallbacks = LocalAppCallbacks.current
+      com.boryanz.upszakoni.ui.components.Icons.Share(onClick = appCallbacks.onShareAppClicked)
+      com.boryanz.upszakoni.ui.components.Icons.Archive(onClick = onArchivedLawsClicked)
+    },
   ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     var searchQuery by remember { mutableStateOf("") }

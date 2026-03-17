@@ -5,12 +5,13 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.boryanz.upszakoni.data.NavigationDrawerDestination
 import com.boryanz.upszakoni.data.local.database.model.owneditem.OwnedItem
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun OwnedItemsListScreen(
-  onBackClicked: () -> Unit,
+  onDrawerItemClicked: (NavigationDrawerDestination) -> Unit,
   onItemClick: (OwnedItem) -> Unit = {},
   onAddItemClicked: () -> Unit = {},
 ) {
@@ -23,9 +24,9 @@ fun OwnedItemsListScreen(
 
   OwnedItemsListContent(
     uiState = uiState,
-    onBackClicked = onBackClicked,
+    onDrawerItemClicked = onDrawerItemClicked,
     onItemClick = onItemClick,
     onAddItemClicked = onAddItemClicked,
-    onUiEvent = { viewModel.onUiEvent(it) }
+    onUiEvent = { viewModel.onUiEvent(it) },
   )
 }

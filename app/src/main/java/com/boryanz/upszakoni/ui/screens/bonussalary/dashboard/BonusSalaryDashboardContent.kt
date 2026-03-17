@@ -19,13 +19,14 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import com.boryanz.upszakoni.R
+import com.boryanz.upszakoni.data.NavigationDrawerDestination
 import com.boryanz.upszakoni.ui.components.AutoAdvancePager
 import com.boryanz.upszakoni.ui.components.Button
 import com.boryanz.upszakoni.ui.components.Icons
 import com.boryanz.upszakoni.ui.components.Loader
 import com.boryanz.upszakoni.ui.components.MonthsGridLayout
+import com.boryanz.upszakoni.ui.components.NavigationDrawer
 import com.boryanz.upszakoni.ui.components.Spacer
-import com.boryanz.upszakoni.ui.components.UpsScaffold
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardUiEvent.DeleteAllActionButtonClicked
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardUiEvent.DeleteButtonClicked
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardUiEvent.UndoDeleteAllActionClicked
@@ -37,17 +38,15 @@ fun BonusSalaryDashboardContent(
   uiState: BonusSalaryDashboardUiState,
   onUiEvent: (BonusSalaryDashboardUiEvent) -> Unit,
   onMonthClicked: (String) -> Unit,
-  onBackClicked: () -> Unit,
+  onDrawerItemClicked: (NavigationDrawerDestination) -> Unit,
   onEditClicked: () -> Unit,
   onNonWorkingDaysClicked: (String) -> Unit,
 ) {
   if (uiState.isLoading) Loader() else {
-    UpsScaffold(
-      topBarTitle = { Text(stringResource(R.string.bonus_salary_dashboard_title)) },
-      navigationIcon = {
-        Icons.Back(onClick = onBackClicked)
-      },
-      trailingIcon = {
+    NavigationDrawer(
+      screenTitle = stringResource(R.string.bonus_salary_dashboard_title),
+      onItemClicked = onDrawerItemClicked,
+      trailingContent = {
         Icons.Edit(onClick = onEditClicked)
         if (uiState.deleteAllState != null) {
           Icons.Undo(onClick = { onUiEvent(UndoDeleteAllActionClicked) })
@@ -205,7 +204,7 @@ private fun BonusSalaryDashboardContentPreview(
       uiState = uiState,
       onUiEvent = {},
       onMonthClicked = {},
-      onBackClicked = {},
+      onDrawerItemClicked = {},
       onEditClicked = {},
       onNonWorkingDaysClicked = {}
     )

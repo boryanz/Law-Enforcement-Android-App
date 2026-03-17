@@ -7,6 +7,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.boryanz.upszakoni.data.NavigationDrawerDestination
 import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BonusSalaryParametersUiEvent.AbsenceLimitChanged
 import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BonusSalaryParametersUiEvent.OvertimeLimitChanged
 import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BonusSalaryParametersUiEvent.SaveParametersClicked
@@ -23,6 +24,7 @@ sealed interface BonusSalaryParametersUiEvent {
 @Composable
 fun BonusSalaryParametersScreen(
   onParametersSaved: () -> Unit,
+  onDrawerItemClicked: (NavigationDrawerDestination) -> Unit = {},
 ) {
   BackHandler { /*block back button*/ }
   val viewmodel = koinViewModel<BonusSalaryParametersViewModel>()
@@ -37,6 +39,7 @@ fun BonusSalaryParametersScreen(
     onSaveClicked = { viewmodel.onUiEvent(SaveParametersClicked(onParametersSaved)) },
     onAbsenceDaysLimitValueChanged = { viewmodel.onUiEvent(AbsenceLimitChanged(it)) },
     onOvertimeHoursValueChanged = { viewmodel.onUiEvent(OvertimeLimitChanged(it)) },
+    onDrawerItemClicked = onDrawerItemClicked,
   )
 }
 

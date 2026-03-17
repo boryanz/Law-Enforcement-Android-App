@@ -13,9 +13,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.boryanz.upszakoni.R
+import com.boryanz.upszakoni.data.NavigationDrawerDestination
 import com.boryanz.upszakoni.ui.components.Button
+import com.boryanz.upszakoni.ui.components.NavigationDrawer
 import com.boryanz.upszakoni.ui.components.Spacer
-import com.boryanz.upszakoni.ui.components.UpsScaffold
 import com.boryanz.upszakoni.ui.components.input.TextFieldInput
 
 @Composable
@@ -24,9 +25,11 @@ fun BonusSalaryParametersContent(
     onOvertimeHoursValueChanged: (String) -> Unit,
     onAbsenceDaysLimitValueChanged: (String) -> Unit,
     onSaveClicked: () -> Unit,
+    onDrawerItemClicked: (NavigationDrawerDestination) -> Unit = {},
 ) {
-    UpsScaffold(
-        topBarTitle = { Text(stringResource(R.string.parameters_title)) },
+    NavigationDrawer(
+        screenTitle = stringResource(R.string.parameters_title),
+        onItemClicked = onDrawerItemClicked,
     ) {
         Column(
             modifier = Modifier

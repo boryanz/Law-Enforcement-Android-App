@@ -2,12 +2,14 @@ package com.boryanz.upszakoni.ui.navigation.navgraph.overtimetracking
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import com.boryanz.upszakoni.data.NavigationDrawerDestination
 import com.boryanz.upszakoni.data.model.TitleItem
 import com.boryanz.upszakoni.ui.navigation.destinations.BonusSalaryDashboardDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.NewOvertimeInputDestination
@@ -18,6 +20,7 @@ import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboa
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.NonWorkingDaysInfoScreen
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.monthly.OvertimeMonthlyCalendarScreen
 import com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput.daily.NewOvertimeInputScreen
+import com.boryanz.upszakoni.ui.screens.ai.GenerateDocumentActivity
 import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BonusSalaryParametersScreen
 import com.boryanz.upszakoni.utils.noEnterTransition
 import com.boryanz.upszakoni.utils.noExitTransition
@@ -28,9 +31,18 @@ fun OverTimeTrackNavigationGraph(
   navHostController: NavHostController = rememberNavController(),
   onBackNavigated: () -> Unit,
 ) {
+  val context = LocalContext.current
   val viewModel = koinViewModel<OvertimeTrackNavigationGraphViewModel>()
   val hasTresholdSet by viewModel.hasTresholdSet.collectAsStateWithLifecycle()
   if (hasTresholdSet == null) return
+
+  val drawerHandler: (NavigationDrawerDestination) -> Unit = { destination ->
+    when (destination) {
+      NavigationDrawerDestination.generate_document ->
+        context.startActivity(GenerateDocumentActivity.createIntent(context))
+      else -> onBackNavigated()
+    }
+  }
 
   val startDestination: Any = if (hasTresholdSet == true) {
     BonusSalaryDashboardDestination
@@ -47,7 +59,8 @@ fun OverTimeTrackNavigationGraph(
 
     composable<ParametersDestination> {
       BonusSalaryParametersScreen(
-        onParametersSaved = { navHostController.navigate(BonusSalaryDashboardDestination) }
+        onParametersSaved = { navHostController.navigate(BonusSalaryDashboardDestination) },
+        onDrawerItemClicked = drawerHandler,
       )
     }
 
@@ -57,12 +70,9 @@ fun OverTimeTrackNavigationGraph(
         onEditClicked = { navHostController.navigate(ParametersDestination) },
         onMonthClicked = { navHostController.navigate(OvertimeMonthlyCalendarDestination(it)) },
         onNonWorkingDaysClicked = {
-          navHostController.navigate(
-            NonWorkingDaysInfoDestination(
-              it
-            )
-          )
-        }
+          navHostController.navigate(NonWorkingDaysInfoDestination(it))
+        },
+        onDrawerItemClicked = drawerHandler,
       )
     }
 

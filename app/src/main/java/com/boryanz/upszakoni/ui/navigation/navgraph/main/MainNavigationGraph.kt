@@ -7,14 +7,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.boryanz.upszakoni.R
-import com.boryanz.upszakoni.customtab.CustomTabLauncher
 import com.boryanz.upszakoni.data.NavigationDrawerDestination
-import com.boryanz.upszakoni.data.NavigationDrawerDestination.bonus_salary_feature
 import com.boryanz.upszakoni.data.NavigationDrawerDestination.generate_document
 import com.boryanz.upszakoni.data.NavigationDrawerDestination.information
 import com.boryanz.upszakoni.data.NavigationDrawerDestination.laws
-import com.boryanz.upszakoni.data.NavigationDrawerDestination.owned_items
 import com.boryanz.upszakoni.data.NavigationDrawerDestination.privacy_policy
 import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsManager
 import com.boryanz.upszakoni.ui.components.Icons
@@ -23,10 +19,8 @@ import com.boryanz.upszakoni.ui.navigation.destinations.InformationScreenDestina
 import com.boryanz.upszakoni.ui.navigation.destinations.LawsDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.PrivacyPolicyAcceptanceDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.PrivacyPolicyDestination
-import com.boryanz.upszakoni.ui.owneditem.OwnedItemsActivity
 import com.boryanz.upszakoni.ui.screens.ai.GenerateDocumentActivity
 import com.boryanz.upszakoni.ui.screens.archivedlaws.ArchivedLawsScreen
-import com.boryanz.upszakoni.ui.screens.bonussalary.BonusSalaryActivity
 import com.boryanz.upszakoni.ui.screens.informations.InformationScreen
 import com.boryanz.upszakoni.ui.screens.laws.LawsScreen
 import com.boryanz.upszakoni.ui.screens.privacypolicy.PrivacyPolicyAcceptanceScreen
@@ -41,8 +35,6 @@ import org.koin.compose.koinInject
 @Composable
 fun NavigationGraph(
   navHostController: NavHostController = rememberNavController(),
-  onShareAppClicked: () -> Unit,
-  onAppUpdateClicked: () -> Unit,
 ) {
   val context = LocalContext.current
   val storage: SharedPrefsManager = koinInject()
@@ -85,14 +77,6 @@ fun NavigationGraph(
         onArchivedLawsClicked = {
           navHostController.navigate(ArchivedLawsDestination)
         },
-        onShareAppClicked = onShareAppClicked,
-        onAppUpdateClicked = onAppUpdateClicked,
-        onFeedbackFormClicked = {
-          CustomTabLauncher().launch(
-            context = context,
-            url = context.getString(R.string.feedback_form_url)
-          )
-        }
       )
     }
 
@@ -118,11 +102,6 @@ fun NavHostController.navigateToDrawerDestination(navigationDrawerDestination: N
   when (navigationDrawerDestination) {
     laws -> navigate(LawsDestination)
     privacy_policy -> navigate(PrivacyPolicyDestination)
-    bonus_salary_feature -> context.startActivity(
-      BonusSalaryActivity.createIntent(context)
-    )
-
-    owned_items -> context.startActivity(OwnedItemsActivity.createIntent(context))
     information -> navigate(InformationScreenDestination)
     generate_document -> context.startActivity(GenerateDocumentActivity.createIntent(context))
   }
