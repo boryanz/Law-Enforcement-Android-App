@@ -14,13 +14,11 @@ import com.boryanz.upszakoni.data.NavigationDrawerDestination.laws
 import com.boryanz.upszakoni.data.NavigationDrawerDestination.privacy_policy
 import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsManager
 import com.boryanz.upszakoni.ui.components.Icons
-import com.boryanz.upszakoni.ui.navigation.destinations.ArchivedLawsDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.InformationScreenDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.LawsDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.PrivacyPolicyAcceptanceDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.PrivacyPolicyDestination
 import com.boryanz.upszakoni.ui.screens.ai.GenerateDocumentActivity
-import com.boryanz.upszakoni.ui.screens.archivedlaws.ArchivedLawsScreen
 import com.boryanz.upszakoni.ui.screens.informations.InformationScreen
 import com.boryanz.upszakoni.ui.screens.laws.LawsScreen
 import com.boryanz.upszakoni.ui.screens.privacypolicy.PrivacyPolicyAcceptanceScreen
@@ -74,16 +72,6 @@ fun NavigationGraph(
         onLawClick = { lawName ->
           openPdfLaw(lawName, context)
         },
-        onArchivedLawsClicked = {
-          navHostController.navigate(ArchivedLawsDestination)
-        },
-      )
-    }
-
-    composable<ArchivedLawsDestination> {
-      ArchivedLawsScreen(
-        onItemClick = { lawName -> openPdfLaw(lawName, context) },
-        onBackClicked = { navHostController.navigateUp() }
       )
     }
   }

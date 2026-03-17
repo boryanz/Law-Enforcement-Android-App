@@ -106,7 +106,9 @@ fun NavigationDrawer(
               NavigationDrawerItem(
                 icon = {
                   Icon(
-                    modifier = Modifier.height(20.dp).width(20.dp),
+                    modifier = Modifier
+                      .height(20.dp)
+                      .width(20.dp),
                     imageVector = Icons.Filled.AutoAwesome,
                     contentDescription = null
                   )
@@ -117,13 +119,13 @@ fun NavigationDrawer(
               )
               HorizontalDivider()
             }
-            Spacer.Vertical(14.dp)
             if (featureFlags.usefulInformations.isNotEmpty()) {
-              HorizontalDivider()
               NavigationDrawerItem(
                 icon = {
                   Icon(
-                    modifier = Modifier.height(20.dp).width(20.dp),
+                    modifier = Modifier
+                      .height(20.dp)
+                      .width(20.dp),
                     imageVector = Icons.Outlined.Info,
                     contentDescription = null
                   )
@@ -137,7 +139,9 @@ fun NavigationDrawer(
             NavigationDrawerItem(
               icon = {
                 Icon(
-                  modifier = Modifier.height(20.dp).width(20.dp),
+                  modifier = Modifier
+                    .height(20.dp)
+                    .width(20.dp),
                   painter = painterResource(R.drawable.vesti),
                   contentDescription = null
                 )
@@ -150,7 +154,9 @@ fun NavigationDrawer(
             NavigationDrawerItem(
               icon = {
                 Icon(
-                  modifier = Modifier.height(20.dp).width(20.dp),
+                  modifier = Modifier
+                    .height(20.dp)
+                    .width(20.dp),
                   imageVector = Icons.Default.Edit,
                   contentDescription = null
                 )
@@ -164,7 +170,9 @@ fun NavigationDrawer(
               NavigationDrawerItem(
                 icon = {
                   Icon(
-                    modifier = Modifier.height(20.dp).width(20.dp),
+                    modifier = Modifier
+                      .height(20.dp)
+                      .width(20.dp),
                     imageVector = Icons.Outlined.SystemUpdate,
                     contentDescription = null
                   )
