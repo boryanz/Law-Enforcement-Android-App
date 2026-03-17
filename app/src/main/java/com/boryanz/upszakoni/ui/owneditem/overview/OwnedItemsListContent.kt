@@ -27,8 +27,7 @@ import com.boryanz.upszakoni.data.local.database.model.owneditem.ItemCategory
 import com.boryanz.upszakoni.data.local.database.model.owneditem.OwnedItem
 import com.boryanz.upszakoni.ui.components.NavigationDrawer
 import com.boryanz.upszakoni.ui.owneditem.addowneditem.OwnedItem
-import com.boryanz.upszakoni.ui.theme.Base100
-import com.boryanz.upszakoni.ui.theme.BaseContent
+import com.boryanz.upszakoni.ui.theme.AppTheme
 import com.boryanz.upszakoni.ui.theme.UpsTheme
 
 @Composable
@@ -63,8 +62,8 @@ fun OwnedItemsListContent(
     onItemClicked = onDrawerItemClicked,
     floatingActionButton = {
       FloatingActionButton(
-        containerColor = Base100,
-        contentColor = BaseContent,
+        containerColor = AppTheme.colors.primaryContainer,
+        contentColor = AppTheme.colors.onPrimaryContainer,
         onClick = onAddItemClicked,
       ) {
         Icon(

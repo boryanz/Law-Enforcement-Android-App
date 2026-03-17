@@ -2,7 +2,6 @@ package com.boryanz.upszakoni.ui.components
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,8 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.boryanz.upszakoni.ui.theme.Base100
-import com.boryanz.upszakoni.ui.theme.BaseContent1
+import com.boryanz.upszakoni.ui.theme.AppTheme
 import com.boryanz.upszakoni.ui.theme.UpsTheme
 
 object NumberPicker {
@@ -41,8 +39,7 @@ object NumberPicker {
     maxValue: Int = 100,
     label: String? = null
   ) {
-    val isDarkMode = isSystemInDarkTheme()
-    val textColor = if (isDarkMode) Base100 else BaseContent1
+    val textColor = AppTheme.colors.primary
     val disabledColor = textColor.copy(alpha = 0.5f)
 
     Column(
@@ -114,8 +111,7 @@ object NumberPicker {
     minValue: Int = 0,
     maxValue: Int = 100
   ) {
-    val isDarkMode = isSystemInDarkTheme()
-    val textColor = if (isDarkMode) Base100 else BaseContent1
+    val textColor = AppTheme.colors.primary
     val disabledColor = textColor.copy(alpha = 0.5f)
 
     Row(

@@ -35,8 +35,7 @@ import com.boryanz.upszakoni.ui.components.Icons
 import com.boryanz.upszakoni.ui.components.Spacer
 import com.boryanz.upszakoni.ui.components.UpsScaffold
 import com.boryanz.upszakoni.ui.components.input.TextFieldInput
-import com.boryanz.upszakoni.ui.theme.BaseContent
-import com.boryanz.upszakoni.ui.theme.BaseContent1
+import com.boryanz.upszakoni.ui.theme.AppTheme
 import com.boryanz.upszakoni.ui.theme.UpsTheme
 
 @Composable
@@ -151,9 +150,9 @@ fun DaysInMonthGridLayout(
         ?: 0) > 0
       val minimumHoursReachedColor =
         if (hasHours) {
-          BaseContent1
+          AppTheme.colors.primary
         } else {
-          BaseContent
+          AppTheme.colors.outline
         }
       TextFieldInput.BaseOutline(
         modifier = Modifier

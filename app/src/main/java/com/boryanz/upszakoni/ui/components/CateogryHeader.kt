@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.boryanz.upszakoni.ui.theme.BaseContent1
+import com.boryanz.upszakoni.ui.theme.AppTheme
 
 @Composable
 fun CategoryHeader(name: String) {
@@ -22,7 +22,7 @@ fun CategoryHeader(name: String) {
             .fillMaxWidth()
             .wrapContentHeight()
             .background(
-                color = BaseContent1,
+                color = AppTheme.colors.primary,
                 shape = RoundedCornerShape(
                     topStart = 4.dp,
                     topEnd = 4.dp,
