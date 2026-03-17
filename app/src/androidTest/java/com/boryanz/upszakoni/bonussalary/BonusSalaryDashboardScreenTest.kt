@@ -47,9 +47,8 @@ class BonusSalaryDashboardScreenTest {
           }
         },
         onMonthClicked = {},
-        onBackClicked = {},
-        onEditClicked = {},
         onNonWorkingDaysClicked = {},
+        onDrawerItemClicked = {},
       )
     }
   }
@@ -106,33 +105,4 @@ class BonusSalaryDashboardScreenTest {
     composeTestRule.onNodeWithText(deleteButtonText2).assertExists()
     composeTestRule.onNodeWithText(deleteButtonText3).assertDoesNotExist()
   }
-
-  @Test
-  fun loadingState_showsLoaderThenContent() {
-    var uiState by mutableStateOf(BonusSalaryDashboardUiState(isLoading = true))
-
-    composeTestRule.setContent {
-      BonusSalaryDashboardContent(
-        uiState = uiState,
-        onUiEvent = {},
-        onMonthClicked = {},
-        onBackClicked = {},
-        onEditClicked = {},
-        onNonWorkingDaysClicked = {},
-      )
-    }
-
-    composeTestRule.onNodeWithTag("loader").assertExists()
-    val yearlyStatsTitle = composeTestRule.activity.getString(R.string.bonus_salary_yearly_stats)
-    composeTestRule.onNodeWithText(yearlyStatsTitle).assertDoesNotExist()
-
-    // When data is fetched and loading completes
-    val loadedUiState = BonusSalaryDashboardUiState(isLoading = false)
-    uiState = loadedUiState
-    composeTestRule.waitForIdle()
-
-    //Then visible after setting loading to false
-    composeTestRule.onNodeWithText(yearlyStatsTitle).assertExists()
-  }
-
 }

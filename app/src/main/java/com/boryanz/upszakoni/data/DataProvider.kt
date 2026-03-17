@@ -3,8 +3,6 @@ package com.boryanz.upszakoni.data
 enum class NavigationDrawerDestination {
   laws,
   privacy_policy,
-  bonus_salary_feature,
-  owned_items,
   information,
   generate_document
 }

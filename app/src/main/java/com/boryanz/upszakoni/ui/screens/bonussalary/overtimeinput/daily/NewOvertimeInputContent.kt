@@ -27,8 +27,7 @@ import com.boryanz.upszakoni.ui.components.Icons
 import com.boryanz.upszakoni.ui.components.Spacer.Vertical
 import com.boryanz.upszakoni.ui.components.UpsScaffold
 import com.boryanz.upszakoni.ui.components.input.TextFieldInput
-import com.boryanz.upszakoni.ui.theme.Base100
-import com.boryanz.upszakoni.ui.theme.BaseContent1
+import com.boryanz.upszakoni.ui.theme.AppTheme
 import com.boryanz.upszakoni.ui.theme.UpsTheme
 
 @Composable
@@ -51,7 +50,7 @@ fun NewOvertimeInputContent(
         trailingIcon = {
             Icons.Save(onClick = onSaveClicked,
                 isEnabled = !uiState.hasOvertimeError,
-                tint = if (uiState.hasOvertimeError) BaseContent1 else Base100
+                tint = AppTheme.colors.primary
             )
         }
     ) { paddingValues ->

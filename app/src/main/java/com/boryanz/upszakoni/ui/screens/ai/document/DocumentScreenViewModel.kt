@@ -30,8 +30,7 @@ class DocumentScreenViewModel(
   private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
 
-  private val _uiState: MutableStateFlow<DocumentScreenUiState> =
-    MutableStateFlow(DocumentScreenUiState())
+  private val _uiState = MutableStateFlow(DocumentScreenUiState())
   val uiState = _uiState.asStateFlow()
 
   fun startDocumentGeneration(fullPrompt: String, examplePrompt: String, type: String) =

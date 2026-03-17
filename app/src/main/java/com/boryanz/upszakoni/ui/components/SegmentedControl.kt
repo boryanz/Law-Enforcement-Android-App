@@ -23,8 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.boryanz.upszakoni.domain.ai.PromptType
-import com.boryanz.upszakoni.ui.theme.Base100
-import com.boryanz.upszakoni.ui.theme.BaseContent1
+import com.boryanz.upszakoni.ui.theme.AppTheme
 import com.boryanz.upszakoni.ui.theme.UpsTheme
 
 @Composable
@@ -59,8 +58,8 @@ fun SegmentedControl(
           count = options.size
         ),
         colors = SegmentedButtonDefaults.colors(
-          activeContainerColor = BaseContent1,
-          activeContentColor = Base100,
+          activeContainerColor = AppTheme.colors.primary,
+          activeContentColor = AppTheme.colors.onPrimary,
           inactiveContainerColor = Color.Transparent,
         ),
         icon = { /* Not needed */ },

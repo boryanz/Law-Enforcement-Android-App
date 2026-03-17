@@ -1,14 +1,17 @@
 package com.boryanz.upszakoni.ui.navigation.navgraph
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import com.boryanz.upszakoni.data.NavigationDrawerDestination
 import com.boryanz.upszakoni.data.local.database.model.owneditem.ItemCategory
 import com.boryanz.upszakoni.ui.navigation.destinations.OwnedItemScreenDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.OwnedItemsListScreenDestination
 import com.boryanz.upszakoni.ui.owneditem.addowneditem.OwnedItemScreen
+import com.boryanz.upszakoni.ui.screens.ai.GenerateDocumentActivity
 import com.boryanz.upszakoni.ui.owneditem.overview.OwnedItemsListScreen
 import com.boryanz.upszakoni.utils.noEnterTransition
 import com.boryanz.upszakoni.utils.noExitTransition
@@ -17,7 +20,15 @@ import com.boryanz.upszakoni.utils.noExitTransition
 fun OwnedItemsNavigationGraph(
   onBackNavigated: () -> Unit,
 ) {
+  val context = LocalContext.current
   val navController = rememberNavController()
+  val drawerHandler: (NavigationDrawerDestination) -> Unit = { destination ->
+    when (destination) {
+      NavigationDrawerDestination.generate_document ->
+        context.startActivity(GenerateDocumentActivity.createIntent(context))
+      else -> onBackNavigated()
+    }
+  }
 
   NavHost(
     navController = navController,
@@ -27,7 +38,7 @@ fun OwnedItemsNavigationGraph(
   ) {
     composable<OwnedItemsListScreenDestination> {
       OwnedItemsListScreen(
-        onBackClicked = onBackNavigated,
+        onDrawerItemClicked = drawerHandler,
         onItemClick = { item ->
           navController.navigate(
             OwnedItemScreenDestination(
@@ -47,7 +58,7 @@ fun OwnedItemsNavigationGraph(
               category = ItemCategory.OTHER.name
             )
           )
-        }
+        },
       )
     }
 

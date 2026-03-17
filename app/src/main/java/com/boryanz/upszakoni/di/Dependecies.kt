@@ -28,19 +28,16 @@ import com.boryanz.upszakoni.domain.owneditem.GetOwnedItemsUseCase
 import com.boryanz.upszakoni.domain.owneditem.GetOwnedItemsUseCaseImpl
 import com.boryanz.upszakoni.domain.remoteconfig.FirebaseRemoteConfig
 import com.boryanz.upszakoni.domain.remoteconfig.RemoteConfigRepository
-import com.boryanz.upszakoni.ui.navigation.navgraph.overtimetracking.OvertimeTrackNavigationGraphViewModel
 import com.boryanz.upszakoni.ui.owneditem.addowneditem.OwnedItemViewModel
 import com.boryanz.upszakoni.ui.owneditem.overview.OwnedItemsListViewModel
 import com.boryanz.upszakoni.ui.screens.ai.addprompt.AddPromptViewModel
 import com.boryanz.upszakoni.ui.screens.ai.document.DocumentScreenViewModel
 import com.boryanz.upszakoni.ui.screens.ai.history.DocumentHistoryViewModel
-import com.boryanz.upszakoni.ui.screens.archivedlaws.ArchivedLawsViewModel
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardViewModel
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.monthly.OvertimeMonthlyCalendarViewModel
 import com.boryanz.upszakoni.ui.screens.bonussalary.migration.MigrationProposalViewModel
 import com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput.OverTimeInputViewModel
 import com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput.daily.NewOverTimeInputViewModel
-import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BonusSalaryParametersViewModel
 import com.boryanz.upszakoni.ui.screens.informations.InformationScreenViewModel
 import com.boryanz.upszakoni.ui.screens.laws.LawsViewModel
 import com.google.firebase.Firebase
@@ -77,14 +74,11 @@ val appModule = module {
   factory<DeleteOwnedItemUseCase> { DeleteOwnedItemUseCaseImpl(get()) }
   factory<AddOwnedItemUseCase> { AddOwnedItemUseCaseImpl(get()) }
   viewModel { DocumentScreenViewModel(get(), get()) }
-  viewModel { ArchivedLawsViewModel(get(), get(), get<AnalyticsLogger>()) }
-  viewModel { BonusSalaryParametersViewModel(get()) }
   viewModel { MigrationProposalViewModel(get(), get(), get()) }
   viewModel { OverTimeInputViewModel(get(), get<AnalyticsLogger>()) }
   viewModel { BonusSalaryDashboardViewModel(get(), get(), get<AnalyticsLogger>(), get()) }
-  viewModel { LawsViewModel(get(), get(), get(), get<AnalyticsLogger>()) }
+  viewModel { LawsViewModel(get(), get<AnalyticsLogger>()) }
   viewModel { InformationScreenViewModel(get()) }
-  viewModel { OvertimeTrackNavigationGraphViewModel(get()) }
   viewModel { OvertimeMonthlyCalendarViewModel(get()) }
   viewModel { NewOverTimeInputViewModel(get()) }
   viewModel { OwnedItemViewModel(get()) }

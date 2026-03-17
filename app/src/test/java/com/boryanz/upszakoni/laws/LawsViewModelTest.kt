@@ -3,8 +3,6 @@ package com.boryanz.upszakoni.laws
 import com.boryanz.upszakoni.MainDispatcherRule
 import com.boryanz.upszakoni.fakes.FakeAnalyticsManager
 import com.boryanz.upszakoni.fakes.FakeLawsUseCase
-import com.boryanz.upszakoni.fakes.FakePrefsLocalStorage
-import com.boryanz.upszakoni.fakes.FakeRemoteConfigRepository
 import com.boryanz.upszakoni.ui.screens.common.ScreenAction
 import com.boryanz.upszakoni.ui.screens.common.UiState
 import com.boryanz.upszakoni.ui.screens.laws.LawsViewModel
@@ -29,8 +27,6 @@ class LawsViewModelTest {
     //Given
     viewmodel = LawsViewModel(
       getLawsUseCase = FakeLawsUseCase(),
-      remoteConfigRepository = FakeRemoteConfigRepository(),
-      localStorage = FakePrefsLocalStorage(data = mutableMapOf()),
       analyticsLogger = FakeAnalyticsManager()
     )
     val expectedUiState =
@@ -41,22 +37,6 @@ class LawsViewModelTest {
 
     //Then
     assertEquals(expectedUiState, viewmodel.uiState.value)
-  }
-
-  @OptIn(ExperimentalCoroutinesApi::class)
-  @Test
-  fun `archive law successfully`() = runTest {
-    //Given
-    viewmodel = LawsViewModel(getLawsUseCase = FakeLawsUseCase(), remoteConfigRepository = FakeRemoteConfigRepository(), localStorage = FakePrefsLocalStorage(data = mutableMapOf("archive/закон за прекршоци" to true)), analyticsLogger = FakeAnalyticsManager())
-    val expectedAfterSwipe = UiState(listOf("закон за возила", "закон за странците"))
-    val swipedLaw = "закон за прекшоци"
-
-    //When
-    viewmodel.onUiEvent(ScreenAction.GetLaws)
-    viewmodel.onUiEvent(ScreenAction.LawSwiped(swipedLaw))
-
-    //Then
-    assertEquals(expectedAfterSwipe, viewmodel.uiState.value)
   }
 }
 

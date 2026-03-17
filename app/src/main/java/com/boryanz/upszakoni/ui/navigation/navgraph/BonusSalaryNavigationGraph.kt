@@ -1,22 +1,23 @@
 package com.boryanz.upszakoni.ui.navigation.navgraph
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import com.boryanz.upszakoni.data.NavigationDrawerDestination
 import com.boryanz.upszakoni.data.model.TitleItem
 import com.boryanz.upszakoni.ui.navigation.destinations.BonusSalaryDashboardDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.MigrationProposalDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.NonWorkingDaysInfoDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.OvertimeInputDestination
-import com.boryanz.upszakoni.ui.navigation.destinations.ParametersDestination
+import com.boryanz.upszakoni.ui.screens.ai.GenerateDocumentActivity
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardScreen
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.NonWorkingDaysInfoScreen
 import com.boryanz.upszakoni.ui.screens.bonussalary.migration.MigrationProposalScreen
 import com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput.BonusSalaryOverTimeInputScreen
-import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BonusSalaryParametersScreen
 import com.boryanz.upszakoni.utils.noEnterTransition
 import com.boryanz.upszakoni.utils.noExitTransition
 
@@ -28,6 +29,14 @@ fun BonusSalaryNavigationGraph(
   onBackNavigated: () -> Unit,
   onMigrationAccepted: () -> Unit,
 ) {
+  val context = LocalContext.current
+  val drawerHandler: (NavigationDrawerDestination) -> Unit = { destination ->
+    when (destination) {
+      NavigationDrawerDestination.generate_document ->
+        context.startActivity(GenerateDocumentActivity.createIntent(context))
+      else -> onBackNavigated()
+    }
+  }
 
   NavHost(
     navController = navHostController,
@@ -42,24 +51,15 @@ fun BonusSalaryNavigationGraph(
         onMigrationCancelled = { navHostController.navigate(it) }
       )
     }
-    composable<ParametersDestination> {
-      BonusSalaryParametersScreen(
-        onParametersSaved = { navHostController.navigate(BonusSalaryDashboardDestination) }
-      )
-    }
 
     composable<BonusSalaryDashboardDestination> {
       BonusSalaryDashboardScreen(
         onBackClicked = onBackNavigated,
-        onEditClicked = { navHostController.navigate(ParametersDestination) },
         onMonthClicked = { navHostController.navigate(OvertimeInputDestination(it)) },
         onNonWorkingDaysClicked = {
-          navHostController.navigate(
-            NonWorkingDaysInfoDestination(
-              it
-            )
-          )
-        }
+          navHostController.navigate(NonWorkingDaysInfoDestination(it))
+        },
+        onDrawerItemClicked = drawerHandler,
       )
     }
 

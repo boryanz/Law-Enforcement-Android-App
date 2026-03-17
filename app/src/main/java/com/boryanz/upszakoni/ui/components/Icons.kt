@@ -15,13 +15,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.boryanz.upszakoni.ui.theme.Base100
 
 object Icons {
 
   @Composable
   fun Save(
-    tint: Color = Base100,
+    tint: Color = LocalContentColor.current,
     onClick: () -> Unit,
     isEnabled: Boolean = true,
   ) {
@@ -35,7 +34,7 @@ object Icons {
 
   @Composable
   fun Edit(
-    tint: Color = Base100,
+    tint: Color = LocalContentColor.current,
     onClick: () -> Unit,
   ) {
     Base(
@@ -47,7 +46,7 @@ object Icons {
 
   @Composable
   fun Share(
-    tint: Color = Base100,
+    tint: Color = LocalContentColor.current,
     onClick: () -> Unit,
   ) {
     Base(
@@ -59,7 +58,7 @@ object Icons {
 
   @Composable
   fun Back(
-    tint: Color = Base100,
+    tint: Color = LocalContentColor.current,
     contentDescription: String = "back_button",
     onClick: () -> Unit,
   ) {
@@ -73,7 +72,7 @@ object Icons {
 
   @Composable
   fun Archive(
-    tint: Color = Base100,
+    tint: Color = LocalContentColor.current,
     onClick: () -> Unit
   ) {
     Base(
@@ -86,7 +85,7 @@ object Icons {
   @Composable
   fun Delete(
     modifier: Modifier = Modifier,
-    tint: Color = Base100,
+    tint: Color = LocalContentColor.current,
     onClick: () -> Unit
   ) {
     Base(
@@ -100,7 +99,7 @@ object Icons {
   @Composable
   fun Undo(
     modifier: Modifier = Modifier,
-    tint: Color = Base100,
+    tint: Color = LocalContentColor.current,
     onClick: () -> Unit
   ) {
     Base(

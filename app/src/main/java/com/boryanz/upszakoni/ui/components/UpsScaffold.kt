@@ -1,15 +1,20 @@
 package com.boryanz.upszakoni.ui.components
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import com.boryanz.upszakoni.ui.theme.Base100
-import com.boryanz.upszakoni.ui.theme.BaseContent1
 import com.boryanz.upszakoni.ui.theme.UpsTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -21,29 +26,40 @@ fun UpsScaffold(
   trailingIcon: @Composable (() -> Unit)? = null,
   content: @Composable (PaddingValues) -> Unit,
 ) {
-  Scaffold(
-    floatingActionButton = { floatingActionButton?.let { it() } },
-    topBar = {
-      CenterAlignedTopAppBar(
-        title = topBarTitle,
-        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-          containerColor = BaseContent1,
-          titleContentColor = Base100,
-          navigationIconContentColor = Base100,
-          actionIconContentColor = Base100
-        ),
-        navigationIcon = {
-          if (navigationIcon != null) {
-            navigationIcon()
-          }
-        },
-        actions = { trailingIcon?.let { it() } }
-      )
-    },
-    content = { paddingValues ->
-      content(paddingValues)
-    }
-  )
+  val backgroundColor = if (isSystemInDarkTheme()) Color(0xFF0A0A0A) else MaterialTheme.colorScheme.background
+
+  Box(
+    modifier = Modifier
+      .fillMaxSize()
+      .background(backgroundColor)
+  ) {
+    Scaffold(
+      containerColor = Color.Transparent,
+      contentColor = MaterialTheme.colorScheme.onBackground,
+      floatingActionButton = { floatingActionButton?.let { it() } },
+      topBar = {
+        CenterAlignedTopAppBar(
+          title = topBarTitle,
+          colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+            containerColor = Color.Transparent,
+            scrolledContainerColor = MaterialTheme.colorScheme.background,
+            titleContentColor = MaterialTheme.colorScheme.onBackground,
+            navigationIconContentColor = MaterialTheme.colorScheme.onBackground,
+            actionIconContentColor = MaterialTheme.colorScheme.onBackground,
+          ),
+          navigationIcon = {
+            if (navigationIcon != null) {
+              navigationIcon()
+            }
+          },
+          actions = { trailingIcon?.let { it() } }
+        )
+      },
+      content = { paddingValues ->
+        content(paddingValues)
+      }
+    )
+  }
 }
 
 
@@ -52,15 +68,8 @@ fun UpsScaffold(
 @Composable
 private fun UpsScaffoldPreview() {
   UpsTheme {
-    CenterAlignedTopAppBar(
-      title = { Text("Something") },
-      colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-        containerColor = BaseContent1,
-        titleContentColor = Base100,
-        navigationIconContentColor = Base100,
-        actionIconContentColor = Base100
-      ),
-      navigationIcon = { }
-    )
+    UpsScaffold(
+      topBarTitle = { Text("Something") },
+    ) {}
   }
 }

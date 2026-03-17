@@ -32,8 +32,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardUiState
-import com.boryanz.upszakoni.ui.theme.BaseContent
-import com.boryanz.upszakoni.ui.theme.BaseContent1
+import com.boryanz.upszakoni.ui.theme.AppTheme
 import kotlinx.coroutines.delay
 
 @Composable
@@ -85,7 +84,7 @@ fun PagerContent(description: String?, progress: Float?) {
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight(align = Alignment.CenterVertically)
-            .border(width = 1.dp, shape = RoundedCornerShape(4.dp), color = BaseContent)
+            .border(width = 1.dp, shape = RoundedCornerShape(4.dp), color = AppTheme.colors.outline)
             .padding(20.dp),
         verticalArrangement = Arrangement.Center
     ) {
@@ -98,7 +97,7 @@ fun PagerContent(description: String?, progress: Float?) {
             Spacer.Vertical(4.dp)
             LinearProgressIndicator(
                 progress = { it },
-                color = BaseContent1,
+                color = AppTheme.colors.primary,
                 trackColor = Color.LightGray,
                 strokeCap = StrokeCap.Square,
                 gapSize = 0.dp,
@@ -118,7 +117,7 @@ fun PagerIndicator(pageCount: Int, currentPageIndex: Int, modifier: Modifier = M
             horizontalArrangement = Arrangement.Center
         ) {
             repeat(pageCount) { iteration ->
-                val color = if (currentPageIndex == iteration) Color.LightGray else BaseContent1
+                val color = if (currentPageIndex == iteration) Color.LightGray else AppTheme.colors.primary
                 Box(
                     modifier = modifier
                         .padding(2.dp)

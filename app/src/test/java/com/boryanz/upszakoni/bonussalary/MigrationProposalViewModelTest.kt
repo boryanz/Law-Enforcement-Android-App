@@ -4,11 +4,8 @@ import com.boryanz.upszakoni.MainDispatcherRule
 import com.boryanz.upszakoni.fakes.FakeBonusSalaryRepository
 import com.boryanz.upszakoni.fakes.FakeGenerateDaysInMonthsUseCase
 import com.boryanz.upszakoni.fakes.FakePrefsLocalStorage
-import com.boryanz.upszakoni.fakes.Treshold
 import com.boryanz.upszakoni.ui.navigation.destinations.BonusSalaryDashboardDestination
-import com.boryanz.upszakoni.ui.navigation.destinations.ParametersDestination
 import com.boryanz.upszakoni.ui.screens.bonussalary.migration.BonusSalaryUiState.DashboardDestination
-import com.boryanz.upszakoni.ui.screens.bonussalary.migration.BonusSalaryUiState.DefaultDestination
 import com.boryanz.upszakoni.ui.screens.bonussalary.migration.BonusSalaryUiState.ScreenContent
 import com.boryanz.upszakoni.ui.screens.bonussalary.migration.MigrationProposalViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -64,42 +61,4 @@ class MigrationProposalViewModelTest {
         viewModel.uiState.value
       )
     }
-
-  @Test
-  fun `set DefaultDestination state when treshold values from repository are null`() = runTest {
-    //Given
-    viewModel = MigrationProposalViewModel(
-      bonusSalaryRepository = FakeBonusSalaryRepository(treshold = Treshold.NoTreshold),
-      generateDefaultDaysInMonthsUseCase = FakeGenerateDaysInMonthsUseCase(),
-      localStorage = FakePrefsLocalStorage(data = mutableMapOf("overtimeMigrationReject" to true))
-    )
-
-    //When
-    viewModel.checkIfUserAlreadyHaveData()
-
-    //Then
-    assertEquals(
-      DefaultDestination(startDestination = ParametersDestination),
-      viewModel.uiState.value
-    )
-  }
-
-  @Test
-  fun `set DefaultDestination state when error occurs from repository`() = runTest {
-    //Given
-    viewModel = MigrationProposalViewModel(
-      bonusSalaryRepository = FakeBonusSalaryRepository(Treshold.Error),
-      generateDefaultDaysInMonthsUseCase = FakeGenerateDaysInMonthsUseCase(),
-      localStorage = FakePrefsLocalStorage(data = mutableMapOf("overtimeMigrationReject" to true))
-    )
-
-    //When
-    viewModel.checkIfUserAlreadyHaveData()
-
-    //Then
-    assertEquals(
-      DefaultDestination(startDestination = ParametersDestination),
-      viewModel.uiState.value
-    )
-  }
 }

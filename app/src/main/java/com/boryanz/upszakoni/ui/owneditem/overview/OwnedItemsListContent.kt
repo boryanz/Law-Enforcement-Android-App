@@ -22,19 +22,18 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import com.boryanz.upszakoni.R
+import com.boryanz.upszakoni.data.NavigationDrawerDestination
 import com.boryanz.upszakoni.data.local.database.model.owneditem.ItemCategory
 import com.boryanz.upszakoni.data.local.database.model.owneditem.OwnedItem
-import com.boryanz.upszakoni.ui.components.Icons
-import com.boryanz.upszakoni.ui.components.UpsScaffold
+import com.boryanz.upszakoni.ui.components.NavigationDrawer
 import com.boryanz.upszakoni.ui.owneditem.addowneditem.OwnedItem
-import com.boryanz.upszakoni.ui.theme.Base100
-import com.boryanz.upszakoni.ui.theme.BaseContent
+import com.boryanz.upszakoni.ui.theme.AppTheme
 import com.boryanz.upszakoni.ui.theme.UpsTheme
 
 @Composable
 fun OwnedItemsListContent(
   uiState: OwnedItemsListUiState,
-  onBackClicked: () -> Unit,
+  onDrawerItemClicked: (NavigationDrawerDestination) -> Unit,
   onItemClick: (OwnedItem) -> Unit,
   onAddItemClicked: () -> Unit,
   onUiEvent: (OwnedItemsListUiEvent) -> Unit,
@@ -58,11 +57,13 @@ fun OwnedItemsListContent(
     )
   }
 
-  UpsScaffold(
+  NavigationDrawer(
+    screenTitle = stringResource(R.string.owned_items_list_screen_title),
+    onItemClicked = onDrawerItemClicked,
     floatingActionButton = {
       FloatingActionButton(
-        containerColor = Base100,
-        contentColor = BaseContent,
+        containerColor = AppTheme.colors.primaryContainer,
+        contentColor = AppTheme.colors.onPrimaryContainer,
         onClick = onAddItemClicked,
       ) {
         Icon(
@@ -71,10 +72,6 @@ fun OwnedItemsListContent(
         )
       }
     },
-    topBarTitle = { Text(stringResource(R.string.owned_items_list_screen_title)) },
-    navigationIcon = {
-      Icons.Back(onClick = onBackClicked)
-    }
   ) { paddingValues ->
     if (uiState.isLoading) {
       Column(
@@ -189,7 +186,7 @@ private fun OwnedItemsListContentEmptyPreview() {
         items = emptyList(),
         isLoading = false
       ),
-      onBackClicked = {},
+      onDrawerItemClicked = {},
       onItemClick = {},
       onAddItemClicked = {},
       onUiEvent = {}
@@ -206,7 +203,7 @@ private fun OwnedItemsListContentLoadingPreview() {
         items = emptyList(),
         isLoading = true
       ),
-      onBackClicked = {},
+      onDrawerItemClicked = {},
       onItemClick = {},
       onAddItemClicked = {},
       onUiEvent = {}
@@ -222,7 +219,7 @@ private fun OwnedItemsListContentWithDataPreview(
   UpsTheme {
     OwnedItemsListContent(
       uiState = uiState,
-      onBackClicked = {},
+      onDrawerItemClicked = {},
       onItemClick = {},
       onAddItemClicked = {},
       onUiEvent = {}
@@ -263,7 +260,7 @@ private fun OwnedItemsListContentWithDeleteDialogPreview() {
           category = ItemCategory.AMMUNITION.name, date = "21.11.2025"
         ),
       ),
-      onBackClicked = {},
+      onDrawerItemClicked = {},
       onItemClick = {},
       onAddItemClicked = {},
       onUiEvent = {}

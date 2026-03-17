@@ -56,7 +56,8 @@ class DocumentHistoryScreenTest {
 
             DocumentHistoryUserEvent.OnCreate -> {}
           }
-        }
+        },
+        onMoreInformationClicked = {}
       )
     }
   }

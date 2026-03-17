@@ -23,8 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.boryanz.upszakoni.data.local.database.model.bonussalary.MonthlyStats
 import com.boryanz.upszakoni.ui.components.input.TextFieldInput
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardUiState
-import com.boryanz.upszakoni.ui.theme.BaseContent
-import com.boryanz.upszakoni.ui.theme.BaseContent1
+import com.boryanz.upszakoni.ui.theme.AppTheme
 import com.boryanz.upszakoni.ui.theme.UpsTheme
 
 @Composable
@@ -42,9 +41,9 @@ fun MonthsGridLayout(
     items(uiState.monthlyOvertime) { month ->
       val hasHours = (runCatching { month.overtimeHours.toInt() }.getOrNull() ?: 0) > 0
       val minimumHoursReachedColor = if (hasHours) {
-        BaseContent1
+        AppTheme.colors.primary
       } else {
-        BaseContent
+        AppTheme.colors.outline
       }
 
       TextFieldInput.BaseOutline(

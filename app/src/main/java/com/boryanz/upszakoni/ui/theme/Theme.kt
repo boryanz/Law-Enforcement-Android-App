@@ -1,57 +1,46 @@
 package com.boryanz.upszakoni.ui.theme
 
-import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
-
-private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
-)
-
-private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
-)
+import androidx.compose.runtime.CompositionLocalProvider
 
 @Composable
 fun UpsTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
-
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+    val appColors = if (darkTheme) darkAppColors() else lightAppColors()
+    val colorScheme = if (darkTheme) {
+        darkColorScheme(
+            primary = appColors.primary,
+            onPrimary = appColors.onPrimary,
+            primaryContainer = appColors.primaryContainer,
+            onPrimaryContainer = appColors.onPrimaryContainer,
+            background = appColors.background,
+            onBackground = appColors.onBackground,
+            surface = appColors.surface,
+            onSurface = appColors.onSurface,
+            outline = appColors.outline,
+            outlineVariant = appColors.outlineVariant,
+        )
+    } else {
+        lightColorScheme(
+            primary = appColors.primary,
+            onPrimary = appColors.onPrimary,
+            primaryContainer = appColors.primaryContainer,
+            onPrimaryContainer = appColors.onPrimaryContainer,
+            background = appColors.background,
+            onBackground = appColors.onBackground,
+            surface = appColors.surface,
+            onSurface = appColors.onSurface,
+            outline = appColors.outline,
+            outlineVariant = appColors.outlineVariant,
+        )
     }
-
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
-    )
+    CompositionLocalProvider(LocalAppColors provides appColors) {
+        MaterialTheme(colorScheme = colorScheme, typography = Typography, content = content)
+    }
 }

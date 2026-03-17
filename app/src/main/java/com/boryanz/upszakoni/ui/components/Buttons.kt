@@ -29,8 +29,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import com.boryanz.upszakoni.ui.theme.Base100
-import com.boryanz.upszakoni.ui.theme.BaseContent1
+import com.boryanz.upszakoni.ui.theme.AppTheme
 import com.boryanz.upszakoni.ui.theme.UpsTheme
 
 object Button {
@@ -53,7 +52,7 @@ object Button {
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
-                tint = Base100,
+                tint = AppTheme.colors.primary,
                 imageVector = imageVector,
                 contentDescription = ""
             )
@@ -127,9 +126,9 @@ object Button {
             onClick = onClick,
             enabled = isEnabled,
             colors = ButtonColors(
-                containerColor = BaseContent1,
-                contentColor = Base100,
-                disabledContentColor = Base100,
+                containerColor = AppTheme.colors.primary,
+                contentColor = AppTheme.colors.onPrimary,
+                disabledContentColor = AppTheme.colors.onPrimary,
                 disabledContainerColor = Color.Gray,
             ),
             shape = RoundedCornerShape(4.dp)

@@ -12,24 +12,17 @@ import kotlin.math.ceil
 
 const val NUMBER_OF_MONTHS = 12
 
+private const val DEFAULT_THRESHOLD_ID = "bonus_salary_treshold"
+private const val DEFAULT_OVERTIME_HOURS = "150"
+private const val DEFAULT_ABSENCE_DAYS = "21"
+
 class BonusSalaryRepositoryImpl(
   private val dao: BonusSalaryDao,
   private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : BonusSalaryRepository {
 
-  /**
-   * Calculated value after setting the treshold hours.
-   */
   private var averageOvertimeHours: Int = -1
-
-  /**
-   * Cached value on insert
-   */
   private var minimumOvertimeHours: Int = -1
-
-  /**
-   * Cached value on insert
-   */
   private var maximumAvailablePaidDays: Int = -1
 
   override suspend fun insertTreshold(bonusSalaryTreshold: BonusSalaryTreshold): Result<Unit> =
@@ -42,10 +35,19 @@ class BonusSalaryRepositoryImpl(
   override suspend fun getTreshold(id: String): Result<BonusSalaryTreshold?> =
     runCatching {
       withContext(ioDispatcher) {
-        dao.getTreshold(id).also { treshold ->
-          treshold?.let {
-            cacheTresholdValues(it)
-          }
+        val existing = dao.getTreshold(id)
+        if (existing != null) {
+          cacheTresholdValues(existing)
+          existing
+        } else {
+          val defaults = BonusSalaryTreshold(
+            id = id,
+            minimumOvertimeHours = DEFAULT_OVERTIME_HOURS,
+            maximumAbsenceDays = DEFAULT_ABSENCE_DAYS,
+          )
+          dao.insertTreshold(defaults)
+          cacheTresholdValues(defaults)
+          defaults
         }
       }
     }
@@ -99,13 +101,17 @@ class BonusSalaryRepositoryImpl(
   override suspend fun deleteAllAndGenerateDefaultData(defaultData: List<DayInMonth>) {
     runCatching {
       withContext(ioDispatcher) {
+        val defaults = BonusSalaryTreshold(
+          id = DEFAULT_THRESHOLD_ID,
+          minimumOvertimeHours = DEFAULT_OVERTIME_HOURS,
+          maximumAbsenceDays = DEFAULT_ABSENCE_DAYS,
+        )
         dao.deleteAllDaysInMonths()
         dao.deleteTreshold()
         dao.insertAllMonthlyStats(defaultMonthlyStats)
         dao.insertAllDaysInMonthsStats(dailyStats = defaultData)
-        averageOvertimeHours = -1
-        minimumOvertimeHours = -1
-        maximumAvailablePaidDays = -1
+        dao.insertTreshold(defaults)
+        cacheTresholdValues(defaults)
       }
     }
   }

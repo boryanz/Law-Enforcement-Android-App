@@ -5,12 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.boryanz.upszakoni.data.local.sharedprefs.SharedPrefsManager
 import com.boryanz.upszakoni.domain.DaysInMonthDataGenerator
-import com.boryanz.upszakoni.domain.GenerateDaysInMonthsUseCase
 import com.boryanz.upszakoni.domain.bonussalary.BonusSalaryRepository
 import com.boryanz.upszakoni.ui.navigation.destinations.BonusSalaryDashboardDestination
-import com.boryanz.upszakoni.ui.navigation.destinations.ParametersDestination
 import com.boryanz.upszakoni.ui.screens.bonussalary.migration.BonusSalaryGraphUiAction.MigrationAccepted
-import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BONUS_SALARY_TRESHOLD
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -54,27 +51,15 @@ class MigrationProposalViewModel(
       return@launch
     }
 
-    bonusSalaryRepository.getTreshold(BONUS_SALARY_TRESHOLD).fold(
+    bonusSalaryRepository.getTreshold("bonus_salary_treshold").fold(
       onSuccess = {
-        if (it != null) {
-          _uiState.emit(
-            BonusSalaryUiState.DashboardDestination(
-              BonusSalaryDashboardDestination
-            )
-          )
-        } else {
-          _uiState.emit(
-            BonusSalaryUiState.DefaultDestination(
-              ParametersDestination
-            )
-          )
-        }
+        _uiState.emit(
+          BonusSalaryUiState.DashboardDestination(BonusSalaryDashboardDestination)
+        )
       },
       onFailure = {
         _uiState.emit(
-          BonusSalaryUiState.DefaultDestination(
-            ParametersDestination
-          )
+          BonusSalaryUiState.DashboardDestination(BonusSalaryDashboardDestination)
         )
       }
     )
