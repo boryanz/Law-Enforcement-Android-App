@@ -34,7 +34,6 @@ import com.boryanz.upszakoni.R
 import com.boryanz.upszakoni.data.NavigationDrawerDestination
 import com.boryanz.upszakoni.ui.components.Button
 import com.boryanz.upszakoni.ui.components.Icons
-import com.boryanz.upszakoni.ui.components.Loader
 import com.boryanz.upszakoni.ui.components.MonthsGridLayout
 import com.boryanz.upszakoni.ui.components.NavigationDrawer
 import com.boryanz.upszakoni.ui.components.Spacer
@@ -53,65 +52,64 @@ fun BonusSalaryDashboardContent(
   onDrawerItemClicked: (NavigationDrawerDestination) -> Unit,
   onNonWorkingDaysClicked: (String) -> Unit,
 ) {
-  if (uiState.isLoading) Loader() else {
-    NavigationDrawer(
-      screenTitle = stringResource(R.string.bonus_salary_dashboard_title),
-      onItemClicked = onDrawerItemClicked,
-      trailingContent = {
-        if (uiState.deleteAllState != null) {
-          Icons.Undo(onClick = { onUiEvent(UndoDeleteAllActionClicked) })
-        } else {
-          Icons.Delete(
-            modifier = Modifier.testTag("deleteAllAction"),
-            onClick = { onUiEvent(DeleteAllActionButtonClicked) }
-          )
-        }
-      }
-    ) { paddingValues ->
-      Column(
-        modifier = Modifier
-          .padding(paddingValues)
-          .padding(12.dp)
-          .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.Top,
-      ) {
-        if (uiState.deleteAllState != null) {
-          Text(stringResource(R.string.bonus_salary_reset_hours_title), textAlign = TextAlign.Start)
-          Spacer.Vertical(4.dp)
-          Text(
-            modifier = Modifier.fillMaxWidth(),
-            text = stringResource(R.string.bonus_salary_reset_warning),
-            textAlign = TextAlign.Start,
-            style = MaterialTheme.typography.bodySmall
-          )
-          Spacer.Vertical(8.dp)
-          Button.Primary(
-            modifier = Modifier.testTag("deleteAllButton"),
-            title = stringResource(
-              R.string.bonus_salary_reset_button_format,
-              uiState.deleteAllState.buttonClickCounter
-            ),
-            onClick = { onUiEvent(DeleteButtonClicked) }
-          )
-          Spacer.Vertical(16.dp)
-        }
-        Text(stringResource(R.string.bonus_salary_yearly_stats), textAlign = TextAlign.Start)
-        Spacer.Vertical(16.dp)
-        uiState.overtimeDonutState?.let {
-          OvertimeDonutChart(it)
-        }
-        Spacer.Vertical(8.dp)
-        MonthsGridLayout(
-          uiState = uiState,
-          onClick = { onMonthClicked(it) },
-          paddingValues = PaddingValues(vertical = 8.dp)
+
+  NavigationDrawer(
+    screenTitle = stringResource(R.string.bonus_salary_dashboard_title),
+    onItemClicked = onDrawerItemClicked,
+    trailingContent = {
+      if (uiState.deleteAllState != null) {
+        Icons.Undo(onClick = { onUiEvent(UndoDeleteAllActionClicked) })
+      } else {
+        Icons.Delete(
+          modifier = Modifier.testTag("deleteAllAction"),
+          onClick = { onUiEvent(DeleteAllActionButtonClicked) }
         )
-        if (!uiState.nonWorkingDays.isNullOrBlank()) {
-          Spacer.Vertical(8.dp)
-          Button.Outlined(
-            title = stringResource(R.string.bonus_salary_non_working_days),
-            onClick = { onNonWorkingDaysClicked(uiState.nonWorkingDays) })
-        }
+      }
+    }
+  ) { paddingValues ->
+    Column(
+      modifier = Modifier
+        .padding(paddingValues)
+        .padding(12.dp)
+        .verticalScroll(rememberScrollState()),
+      verticalArrangement = Arrangement.Top,
+    ) {
+      if (uiState.deleteAllState != null) {
+        Text(stringResource(R.string.bonus_salary_reset_hours_title), textAlign = TextAlign.Start)
+        Spacer.Vertical(4.dp)
+        Text(
+          modifier = Modifier.fillMaxWidth(),
+          text = stringResource(R.string.bonus_salary_reset_warning),
+          textAlign = TextAlign.Start,
+          style = MaterialTheme.typography.bodySmall
+        )
+        Spacer.Vertical(8.dp)
+        Button.Primary(
+          modifier = Modifier.testTag("deleteAllButton"),
+          title = stringResource(
+            R.string.bonus_salary_reset_button_format,
+            uiState.deleteAllState.buttonClickCounter
+          ),
+          onClick = { onUiEvent(DeleteButtonClicked) }
+        )
+        Spacer.Vertical(16.dp)
+      }
+      Text(stringResource(R.string.bonus_salary_yearly_stats), textAlign = TextAlign.Start)
+      Spacer.Vertical(16.dp)
+      uiState.overtimeDonutState?.let {
+        OvertimeDonutChart(it)
+      }
+      Spacer.Vertical(8.dp)
+      MonthsGridLayout(
+        uiState = uiState,
+        onClick = { onMonthClicked(it) },
+        paddingValues = PaddingValues(vertical = 8.dp)
+      )
+      if (!uiState.nonWorkingDays.isNullOrBlank()) {
+        Spacer.Vertical(8.dp)
+        Button.Outlined(
+          title = stringResource(R.string.bonus_salary_non_working_days),
+          onClick = { onNonWorkingDaysClicked(uiState.nonWorkingDays) })
       }
     }
   }
@@ -241,7 +239,6 @@ val initialUiState = BonusSalaryDashboardUiState(
   ),
   deleteAllState = null,
   nonWorkingDays = "Неработни денови",
-  isLoading = false
 )
 
 class BonusSalaryDashboardPreviewProvider : PreviewParameterProvider<BonusSalaryDashboardUiState> {
@@ -259,7 +256,6 @@ class BonusSalaryDashboardPreviewProvider : PreviewParameterProvider<BonusSalary
           isGoalReached = true,
         )
       ),
-      initialUiState.copy(isLoading = true),
     )
 
 }

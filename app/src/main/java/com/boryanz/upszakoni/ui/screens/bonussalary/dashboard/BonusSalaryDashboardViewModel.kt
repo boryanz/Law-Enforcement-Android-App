@@ -29,7 +29,6 @@ data class BonusSalaryDashboardUiState(
   val overtimeDonutState: OvertimeDonutState? = null,
   val deleteAllState: DeleteAllState? = null,
   val nonWorkingDays: String? = null,
-  val isLoading: Boolean = false,
 ) {
   data class MonthlyOvertime(
     val month: String = "",
@@ -79,7 +78,6 @@ class BonusSalaryDashboardViewModel(
   }
 
   fun onUiEvent(event: BonusSalaryDashboardUiEvent) = viewModelScope.launch {
-    _uiState.update { it.copy(isLoading = true) }
     when (event) {
       FetchMonthlyStats -> {
         bonusSalaryRepository.getTreshold("bonus_salary_treshold")
@@ -97,7 +95,6 @@ class BonusSalaryDashboardViewModel(
                 monthlyOvertime = monthlyOvertime,
                 overtimeDonutState = overtimeDonut,
                 nonWorkingDays = nonWorkingDaysFlag,
-                isLoading = false
               )
             )
           },
@@ -111,7 +108,6 @@ class BonusSalaryDashboardViewModel(
       DeleteAllActionButtonClicked -> _uiState.update { uiState ->
         uiState.copy(
           deleteAllState = DeleteAllState(buttonClickCounter = DELETE_ALL_BUTTON_COUNTER),
-          isLoading = false
         )
       }
 
@@ -120,19 +116,18 @@ class BonusSalaryDashboardViewModel(
         val counter = uiState.deleteAllState?.buttonClickCounter?.minus(1) ?: 0
         if (counter == 0) {
           bonusSalaryRepository.deleteAllAndGenerateDefaultData(defaultData = generateDefaultDaysInMonthsUseCase())
-          _uiState.update { uiState -> uiState.copy(deleteAllState = null, isLoading = false) }
+          _uiState.update { uiState -> uiState.copy(deleteAllState = null) }
           _event.emit(BonusSalaryDashboardEvent.AllDataDeleted)
           return@launch
         }
 
         uiState.copy(
-          isLoading = false,
           deleteAllState = currentDeleteState?.copy(buttonClickCounter = counter)
         )
       }
 
       UndoDeleteAllActionClicked -> _uiState.update { uiState ->
-        uiState.copy(deleteAllState = null, isLoading = false)
+        uiState.copy(deleteAllState = null)
       }
     }
   }

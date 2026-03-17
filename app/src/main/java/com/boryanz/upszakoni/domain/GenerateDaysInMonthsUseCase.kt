@@ -11,7 +11,7 @@ interface DaysInMonthDataGenerator {
   operator fun invoke(): List<DayInMonth>
 }
 
-class GenerateDaysInMonthsUseCase() : DaysInMonthDataGenerator {
+class GenerateDaysInMonthsUseCase : DaysInMonthDataGenerator {
   @SuppressLint("NewApi")
   override operator fun invoke(): List<DayInMonth> {
     return defaultMonthlyStats.map { month ->
