@@ -1,7 +1,6 @@
 package com.boryanz.upszakoni.ui.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,10 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.tooling.preview.Preview
 import com.boryanz.upszakoni.ui.theme.UpsTheme
 
@@ -29,33 +25,10 @@ fun UpsScaffold(
   trailingIcon: @Composable (() -> Unit)? = null,
   content: @Composable (PaddingValues) -> Unit,
 ) {
-  val background = MaterialTheme.colorScheme.background
-  val gradientBrush = if (isSystemInDarkTheme()) {
-    Brush.linearGradient(
-      colors = listOf(
-        Color(0xFF0A0A0A),
-        Color(0xFF0A0A0A),
-        Color(0xFF0A0A0A),
-        Color(0xFF2C2C2C),
-      ),
-      start = Offset(0f, Float.POSITIVE_INFINITY),
-      end = Offset(Float.POSITIVE_INFINITY, 0f),
-    )
-  } else {
-    Brush.linearGradient(
-      colors = listOf(
-        lerp(background, Color.Black, 0.07f),
-        lerp(background, Color.White, 0.04f),
-      ),
-      start = Offset(0f, Float.POSITIVE_INFINITY),
-      end = Offset(Float.POSITIVE_INFINITY, 0f),
-    )
-  }
-
   Box(
     modifier = Modifier
       .fillMaxSize()
-      .background(gradientBrush)
+      .background(Color(0xFF0A0A0A))
   ) {
     Scaffold(
       containerColor = Color.Transparent,
