@@ -13,7 +13,7 @@ import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboa
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardUiEvent.UndoDeleteAllActionClicked
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardUiState.DeleteAllState
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardUiState.MonthlyOvertime
-import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardUiState.SliderState
+import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardUiState.OvertimeDonutState
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -26,6 +26,7 @@ private const val DELETE_ALL_BUTTON_COUNTER = 3
 data class BonusSalaryDashboardUiState(
   val monthlyOvertime: List<MonthlyOvertime> = emptyList(),
   val sliderState: List<SliderState?>? = null,
+  val overtimeDonutState: OvertimeDonutState? = null,
   val deleteAllState: DeleteAllState? = null,
   val nonWorkingDays: String? = null,
   val isLoading: Boolean = false,
@@ -38,6 +39,13 @@ data class BonusSalaryDashboardUiState(
   data class SliderState(
     val value: String,
     val progress: Float?,
+  )
+
+  data class OvertimeDonutState(
+    val accumulatedHours: Int,
+    val targetHours: Int,
+    val progress: Float,
+    val isGoalReached: Boolean,
   )
 
   data class DeleteAllState(val buttonClickCounter: Int = 0)
@@ -74,10 +82,10 @@ class BonusSalaryDashboardViewModel(
     _uiState.update { it.copy(isLoading = true) }
     when (event) {
       FetchMonthlyStats -> {
+        bonusSalaryRepository.getTreshold("bonus_salary_treshold")
         bonusSalaryRepository.getYearlyStatistics().fold(
           onSuccess = { yearlyStatistics ->
-            val usedUp = getUsedUpState(yearlyStatistics)
-            val remainingUntil = getRemainingUntilState(yearlyStatistics)
+            val overtimeDonut = getOvertimeDonutState(yearlyStatistics)
             val monthlyOvertime = yearlyStatistics.map {
               MonthlyOvertime(
                 month = it.month,
@@ -87,7 +95,7 @@ class BonusSalaryDashboardViewModel(
             _uiState.emit(
               BonusSalaryDashboardUiState(
                 monthlyOvertime = monthlyOvertime,
-                sliderState = listOf(usedUp, remainingUntil),
+                overtimeDonutState = overtimeDonut,
                 nonWorkingDays = nonWorkingDaysFlag,
                 isLoading = false
               )
@@ -129,37 +137,19 @@ class BonusSalaryDashboardViewModel(
     }
   }
 
-  private fun getRemainingUntilState(yearlyStats: List<MonthlyStats>): SliderState? {
+  private fun getOvertimeDonutState(yearlyStats: List<MonthlyStats>): OvertimeDonutState? {
     val minimumRequiredHours = bonusSalaryRepository.getMinimumRequiredHours()
+    if (minimumRequiredHours <= 0) return null
     val totalOverTimeHours = runCatching {
       yearlyStats.sumOf { it.currentOvertimeHours.toInt() }
     }.getOrNull() ?: return null
 
-    val remainingUntilHours = minimumRequiredHours - totalOverTimeHours
-    if (remainingUntilHours <= 0) return SliderState(
-      value = "Остварено право на бонус плата!",
-      progress = null
-    )
-
-    val progressIndicatorValue =
-      ((totalOverTimeHours.toFloat() / bonusSalaryRepository.getMinimumRequiredHours()
-        .toFloat()))
-    return SliderState(
-      value = "$remainingUntilHours часови до бонус плата",
-      progress = progressIndicatorValue
-    )
-  }
-
-  private fun getUsedUpState(yearlyStats: List<MonthlyStats>): SliderState? {
-    val usedUpDays = runCatching {
-      yearlyStats.sumOf { it.currentAbsenceDays.toInt() + it.currentPaidAbsenceDays.toInt() }
-    }.getOrNull() ?: return null
-
-    val progressIndicatorValue =
-      ((usedUpDays.toFloat() / bonusSalaryRepository.getMaximumPaidAbsenceDays().toFloat()))
-    return SliderState(
-      value = "Искористени $usedUpDays денови до сега",
-      progress = progressIndicatorValue
+    val progress = (totalOverTimeHours.toFloat() / minimumRequiredHours.toFloat()).coerceAtMost(1f)
+    return OvertimeDonutState(
+      accumulatedHours = totalOverTimeHours,
+      targetHours = minimumRequiredHours,
+      progress = progress,
+      isGoalReached = totalOverTimeHours >= minimumRequiredHours,
     )
   }
 }

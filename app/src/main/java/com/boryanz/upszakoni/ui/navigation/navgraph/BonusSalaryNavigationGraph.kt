@@ -13,13 +13,11 @@ import com.boryanz.upszakoni.ui.navigation.destinations.BonusSalaryDashboardDest
 import com.boryanz.upszakoni.ui.navigation.destinations.MigrationProposalDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.NonWorkingDaysInfoDestination
 import com.boryanz.upszakoni.ui.navigation.destinations.OvertimeInputDestination
-import com.boryanz.upszakoni.ui.navigation.destinations.ParametersDestination
+import com.boryanz.upszakoni.ui.screens.ai.GenerateDocumentActivity
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.BonusSalaryDashboardScreen
 import com.boryanz.upszakoni.ui.screens.bonussalary.dashboard.NonWorkingDaysInfoScreen
 import com.boryanz.upszakoni.ui.screens.bonussalary.migration.MigrationProposalScreen
 import com.boryanz.upszakoni.ui.screens.bonussalary.overtimeinput.BonusSalaryOverTimeInputScreen
-import com.boryanz.upszakoni.ui.screens.ai.GenerateDocumentActivity
-import com.boryanz.upszakoni.ui.screens.bonussalary.parameters.BonusSalaryParametersScreen
 import com.boryanz.upszakoni.utils.noEnterTransition
 import com.boryanz.upszakoni.utils.noExitTransition
 
@@ -53,17 +51,10 @@ fun BonusSalaryNavigationGraph(
         onMigrationCancelled = { navHostController.navigate(it) }
       )
     }
-    composable<ParametersDestination> {
-      BonusSalaryParametersScreen(
-        onParametersSaved = { navHostController.navigate(BonusSalaryDashboardDestination) },
-        onDrawerItemClicked = drawerHandler,
-      )
-    }
 
     composable<BonusSalaryDashboardDestination> {
       BonusSalaryDashboardScreen(
         onBackClicked = onBackNavigated,
-        onEditClicked = { navHostController.navigate(ParametersDestination) },
         onMonthClicked = { navHostController.navigate(OvertimeInputDestination(it)) },
         onNonWorkingDaysClicked = {
           navHostController.navigate(NonWorkingDaysInfoDestination(it))

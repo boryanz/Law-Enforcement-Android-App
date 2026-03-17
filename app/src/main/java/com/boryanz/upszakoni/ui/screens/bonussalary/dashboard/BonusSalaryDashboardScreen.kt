@@ -20,7 +20,6 @@ sealed interface BonusSalaryDashboardUiEvent {
 
 @Composable
 fun BonusSalaryDashboardScreen(
-  onEditClicked: () -> Unit,
   onBackClicked: () -> Unit,
   onMonthClicked: (String) -> Unit,
   onNonWorkingDaysClicked: (String) -> Unit,
@@ -45,7 +44,6 @@ fun BonusSalaryDashboardScreen(
     onUiEvent = viewModel::onUiEvent,
     onMonthClicked = onMonthClicked,
     onDrawerItemClicked = onDrawerItemClicked,
-    onEditClicked = onEditClicked,
     onNonWorkingDaysClicked = { onNonWorkingDaysClicked(it) },
   )
 }

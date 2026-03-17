@@ -39,7 +39,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.boryanz.upszakoni.R
 import com.boryanz.upszakoni.data.NavigationDrawerDestination
 import com.boryanz.upszakoni.domain.remoteconfig.FirebaseRemoteConfig
-import com.boryanz.upszakoni.ui.theme.Base100
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
@@ -199,7 +198,6 @@ fun NavigationDrawer(
         }) {
           Icon(
             imageVector = Icons.Default.Menu,
-            tint = Base100,
             contentDescription = "Menu"
           )
         }

@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,7 +28,6 @@ import com.boryanz.upszakoni.R
 import com.boryanz.upszakoni.data.NavigationDrawerDestination
 import com.boryanz.upszakoni.ui.components.LocalAppCallbacks
 import com.boryanz.upszakoni.ui.components.NavigationDrawer
-import com.boryanz.upszakoni.ui.components.Spacer
 import com.boryanz.upszakoni.ui.components.TitleItem
 import com.boryanz.upszakoni.ui.screens.common.ScreenAction
 import org.koin.androidx.compose.koinViewModel
@@ -75,16 +75,16 @@ fun LawsScreen(
         }
       )
       Spacer(modifier = Modifier.padding(vertical = 4.dp))
-      LazyColumn {
+      LazyColumn(modifier = Modifier.weight(1f)) {
         items(
           uiState.laws.filter { it.contains(searchQuery, ignoreCase = true) },
-          key = { it }) {
+          key = { it }
+        ) { law ->
           TitleItem(
             isEnabled = true,
-            title = it,
-            onClick = { onLawClick("$it.pdf") })
-
-          Spacer.Vertical(2.dp)
+            title = law,
+            onClick = { onLawClick("$law.pdf") })
+          HorizontalDivider()
         }
       }
     }
