@@ -26,14 +26,11 @@ class BonusSalaryDashboardViewModelTest {
 
   private lateinit var viewmodel: BonusSalaryDashboardViewModel
 
-  private val expUsedUpHours = BonusSalaryDashboardUiState.SliderState(
-    value = "Искористени 0 денови до сега",
-    progress = 0f
-  )
-
-  private val expUntilBonusSalary = BonusSalaryDashboardUiState.SliderState(
-    value = "31 часови до бонус плата",
-    progress = 0.794702f
+  private val expOvertimeDonutState = BonusSalaryDashboardUiState.OvertimeDonutState(
+    accumulatedHours = 120,
+    targetHours = 151,
+    progress = 120f / 151f,
+    isGoalReached = false,
   )
 
   private val defaultRemoteConfig = RemoteConfig(
@@ -69,9 +66,8 @@ class BonusSalaryDashboardViewModelTest {
     assertEquals(
       BonusSalaryDashboardUiState(
         monthlyOvertime = monthlyOvertimeState,
-        sliderState = listOf(expUsedUpHours, expUntilBonusSalary),
+        overtimeDonutState = expOvertimeDonutState,
         nonWorkingDays = "no working days",
-        isLoading = false
       ),
       viewmodel.uiState.value
     )
@@ -89,10 +85,9 @@ class BonusSalaryDashboardViewModelTest {
     assertEquals(
       BonusSalaryDashboardUiState(
         monthlyOvertime = monthlyOvertimeState,
-        sliderState = listOf(expUsedUpHours, expUntilBonusSalary),
+        overtimeDonutState = expOvertimeDonutState,
         deleteAllState = BonusSalaryDashboardUiState.DeleteAllState(buttonClickCounter = 3),
         nonWorkingDays = "no working days",
-        isLoading = false
       ),
       viewmodel.uiState.value
     )
@@ -111,10 +106,9 @@ class BonusSalaryDashboardViewModelTest {
     assertEquals(
       BonusSalaryDashboardUiState(
         monthlyOvertime = monthlyOvertimeState,
-        sliderState = listOf(expUsedUpHours, expUntilBonusSalary),
+        overtimeDonutState = expOvertimeDonutState,
         deleteAllState = null,
         nonWorkingDays = "no working days",
-        isLoading = false
       ),
       viewmodel.uiState.value
     )
@@ -133,10 +127,9 @@ class BonusSalaryDashboardViewModelTest {
     assertEquals(
       BonusSalaryDashboardUiState(
         monthlyOvertime = monthlyOvertimeState,
-        sliderState = listOf(expUsedUpHours, expUntilBonusSalary),
+        overtimeDonutState = expOvertimeDonutState,
         deleteAllState = BonusSalaryDashboardUiState.DeleteAllState(buttonClickCounter = 2),
         nonWorkingDays = "no working days",
-        isLoading = false
       ),
       viewmodel.uiState.value
     )
@@ -147,10 +140,9 @@ class BonusSalaryDashboardViewModelTest {
     //Given
     val expectedUiState = BonusSalaryDashboardUiState(
       monthlyOvertime = monthlyOvertimeState,
-      sliderState = listOf(expUsedUpHours, expUntilBonusSalary),
+      overtimeDonutState = expOvertimeDonutState,
       deleteAllState = BonusSalaryDashboardUiState.DeleteAllState(buttonClickCounter = 2),
       nonWorkingDays = "no working days",
-      isLoading = false
     )
     val fakeBonusSalaryRepository = FakeBonusSalaryRepository(Treshold.HaveTreshold)
     createViewmodel(bonusSalaryRepository = fakeBonusSalaryRepository)

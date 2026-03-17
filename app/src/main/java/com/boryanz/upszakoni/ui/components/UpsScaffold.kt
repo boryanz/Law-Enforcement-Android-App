@@ -1,6 +1,7 @@
 package com.boryanz.upszakoni.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,10 +26,12 @@ fun UpsScaffold(
   trailingIcon: @Composable (() -> Unit)? = null,
   content: @Composable (PaddingValues) -> Unit,
 ) {
+  val backgroundColor = if (isSystemInDarkTheme()) Color(0xFF0A0A0A) else MaterialTheme.colorScheme.background
+
   Box(
     modifier = Modifier
       .fillMaxSize()
-      .background(Color(0xFF0A0A0A))
+      .background(backgroundColor)
   ) {
     Scaffold(
       containerColor = Color.Transparent,
