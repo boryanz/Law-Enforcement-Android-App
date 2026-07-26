@@ -15,7 +15,7 @@ android {
   defaultConfig {
     applicationId = "com.boryanz.upszakoni"
     minSdk = 29
-    targetSdk = 35
+    targetSdk = 36
     versionCode = 16
     versionName = "1.2.7"
 
